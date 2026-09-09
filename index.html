@@ -140,6 +140,12 @@
 .ic { display: inline-block; width: 16px; height: 16px; background-color: var(--c-slate); -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; flex: none; }
 .ic--brand { background-color: var(--c-brand); } .ic--text { background-color: var(--c-text); } .ic--white { background-color: #fff; } .ic--red { background-color: var(--c-red); } .ic--green { background-color: var(--c-green-2); } .ic--blue { background-color: var(--c-blue); }
 
+/* Kartochkaning istalgan yeri bosiladi — panelni ochadi */
+.wcard { cursor: pointer; transition: transform .12s ease; }
+.wcard:active { transform: scale(.985); }
+.wcard--missing, .wcard--skeleton { cursor: default; }
+.wcard--missing:active, .wcard--skeleton:active { transform: none; }
+
 /* Pastki panel (bottom sheet) — kartochkadagi tugma bosilganda ochiladi.
    Uch turi bor: sheet (pastdan chiqadi), full (butun ekran), alert (markazda kichik oyna). */
 
@@ -259,6 +265,12 @@
 /* Ajratgich */
 .s-div { height: 1px; background: var(--c-line-2); margin: 2px 0; }
 .s-lab { font: var(--t-tiny); font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--c-text-2); }
+
+/* Tanlanadigan elementlar bosilganda javob bersin */
+.s-cal__d, .s-chip, .s-item, .s-btn { transition: transform .1s ease, background-color .15s ease; }
+.s-cal__d:active, .s-chip:active, .s-btn:active { transform: scale(.96); }
+.s-item[data-open] { cursor: pointer; }
+.s-item[data-open]:active { transform: scale(.99); }
 
 /* Ko'rib chiqish sahifasi: telefon ramkasi + boshqaruv paneli.
    Kartochka stillari card-base.css da, tokenlar tokens.css da — bu yerda qayta aniqlanmaydi. */
@@ -803,12 +815,37 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   }
   host.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeSheet(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !host.hidden) closeSheet(); });
-  // Kartochkadagi yoki panel ichidagi [data-open] bosilganda mos panel ochiladi
+  // 1) [data-open] bosilsa — mos panel. 2) Kartochkaning istalgan yeri bosilsa — uning asosiy paneli.
   document.addEventListener('click', e => {
-    const b = e.target.closest('[data-open]'); if (!b) return;
-    const card = b.closest('[data-widget]'); if (!card) return;
+    const b = e.target.closest('[data-open]');
+    if (b) {
+      const owner = b.closest('[data-widget]'); if (!owner) return;
+      e.preventDefault();
+      openSheet(owner.dataset.widget, b.dataset.open);
+      return;
+    }
+    if (e.target.closest('.sheeth')) return;              // panel ichidagi boshqa bosishlar
+    const card = e.target.closest('article.wcard[data-widget]');
+    if (!card || card.classList.contains('wcard--missing')) return;
+    const first = card.querySelector('[data-open]');       // kartochkaning asosiy paneli
+    if (!first) return;
     e.preventDefault();
-    openSheet(card.dataset.widget, b.dataset.open);
+    openSheet(card.dataset.widget, first.dataset.open);
+  });
+
+  // Panel ichidagi tanlovlar tirik bo'lsin: kalendar kuni, vaqt chipi, segment
+  document.addEventListener('click', e => {
+    const day = e.target.closest('.s-cal__d');
+    if (day && !day.classList.contains('s-cal__d--out') && !day.classList.contains('s-cal__d--off')) {
+      day.parentNode.querySelectorAll('.s-cal__d--sel').forEach(x => x.classList.remove('s-cal__d--sel'));
+      day.classList.add('s-cal__d--sel');
+      return;
+    }
+    const chip = e.target.closest('.s-chip');
+    if (chip && !chip.classList.contains('s-chip--off')) {
+      chip.parentNode.querySelectorAll('.s-chip--sel').forEach(x => x.classList.remove('s-chip--sel'));
+      chip.classList.add('s-chip--sel');
+    }
   });
 
   function buildSheetList() {
