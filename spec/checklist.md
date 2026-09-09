@@ -62,16 +62,31 @@
 | «i» | `no-tasks` | оддий огоҳлантириш (компакт варақ): «Kunlik vazifalar» + иловадаги матн «Bugungi vazifalaringiz va ularning bajarilish holatini shu kartada kuzatishingiz mumkin.» + «Tushunarli» |
 | Чип, сатр, степпер, пилл, hint | — | алоҳида босилмайди — карточка босилиши ҳисобланади |
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Ҳали чизилмаган, мазмун чизмаси:
+Жами 8 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-1. Дастак, сарлавҳа «Kunlik vazifalar», ўнгда чип `N/3`; сатр «8 sentabr · 7 soat qoldi».
-2. Катта степпер (32 pt доиралар) + мукофот пилли — карточкадаги билан бир хил ҳолатлар.
-3. Курслар рўйхати (`groups[]`), ҳар қатор 56 pt: чекбокс (`circle` / `check` / `checking`), курс номи («English», «Grafik dizayn», «Blockly Dasturlash»), кичик сатрда вазифа тури («Amaliy vazifani bajaring» / «Uy vazifasini yuboring» / «Vazifangiz tekshirilmoqda»), ўнгда `arrow_right.svg`; босилса вазифа экранига ўтади. Иловадаги ҳозирги карточка қаторлари шу ерга кўчади.
-4. Мукофот блоки: «+30 coin» — `ready` → «Mukofotni olish» тугмаси; `claimed` → «Olindi» + ҳавола «Coinlar tarixi»; `pending_rewards[]` бир нечта бўлса рўйхат.
-5. Изоҳ қатори: «Vazifalar har kuni 00:00 da (Toshkent vaqti) yangilanadi». Стрик билан боғлиқлиги тасдиқланса — «Bajarilgan kun streakni saqlaydi» қатори.
-6. Бўш ҳолат: `notification_empty` робот + «Kunlik vazifalar mavjud emas» + «Kurslarni ko'rish».
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `tasks` | пастки панел | карточка: `not-started`, `in-progress` | маълумот қаторлари, рўйхат, рангли изоҳ | Davom etish |
+| `due-soon` | пастки панел | карточка: `due-soon` | рўйхат, рангли изоҳ | Davom etish |
+| `checking` | пастки панел | карточка: `awaiting-check` | рўйхат, рангли изоҳ | Vazifani ko'rish |
+| `reward` | пастки панел | карточка: `reward-ready` | маълумот қаторлари, рангли изоҳ, робот расми | Mukofotni olish |
+| `claimed` | пастки панел | карточка: `claimed`; панел: `reward` | маълумот қаторлари, рангли изоҳ, робот расми | Coinlar tarixi |
+| `empty` | пастки панел | карточка: `no-tasks` | маълумот қаторлари, рангли изоҳ, робот расми | Mening kurslarim |
+| `about` | огоҳлантириш | карточка: `no-tasks` | матн | Tushunarli |
+| `error` | огоҳлантириш | карточка: `error` | матн | Qayta urinish |
+
+### Панелларнинг тугмалари
+
+- **`tasks`** (Kunlik vazifalar): «Davom etish» · «Yopish»
+- **`due-soon`** (Kunlik vazifalar): «Davom etish» · «Yopish»
+- **`checking`** (Vazifangiz tekshirilmoqda): «Vazifani ko'rish» · «Yopish»
+- **`reward`** (Barcha vazifalar bajarildi): «Mukofotni olish» · «Yopish»
+- **`claimed`** (+30 coin olindi): «Coinlar tarixi» · «Yopish»
+- **`empty`** (Kunlik vazifalar mavjud emas): «Mening kurslarim» · «Yopish»
+- **`about`** (Kunlik vazifalar): «Tushunarli»
+- **`error`** (Kunlik vazifalar yuklanmadi): «Qayta urinish» · «Keyinroq»
 
 ## 6. Расмлар ва иконкалар
 

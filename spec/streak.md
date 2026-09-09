@@ -68,25 +68,29 @@ RU сонлар: `1 день / 2–4 дня / 5+ дней` — Flutter `intl` pl
 
 Ўчирилган тугма йўқ: ҳар ҳолатда битта ижро этиладиган ҳаракат бор. Модалларнинг ёпилиши — Android back, свайп-паст, ёпиш тугмаси.
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Ҳали чизилмаган; карточкадан чиқарилган мазмун:
+Жами 7 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-**A. Стрик календари — тўлиқ экранли варақ** (веб `StreakCalenderView`, манба архивда йўқ)
-1. Бош қисм: `strike.png` ёки Lottie `fire.json` (≤ 96 pt) + катта сон «12 kun».
-2. Иккита статистика пилли: `Joriy streak · 12 kun`, `Eng yaxshi streak · 30 kun` (илова сатрлари).
-3. Freeze қатори: 2 та муз кубик (`streak_freeze` / `inactive_freeze`) + «freeze balansingiz: 1 / 2», ёнида «Qoidalar ›» (B варақ).
-4. Ой сарлавҳаси «Sentabr 2026» + ‹ › ой алмаштиргич (илова ой номлари бош ҳарф билан).
-5. Ойлик сетка, ҳафта кунига текисланган (`Du … Ya`), катак ≥ 40 pt: олов / муз / бўш / бугун ҳалқа / келгуси пунктир — карточкадаги доира варианти билан бир хил.
-6. `MonthlyChallenge` блоки — **манба олингач** алоҳида чизилади, ҳозирча жой белгиси.
-7. Пастда «Tushunarli» ёки ёпиш тугмаси.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `calendar` | тўлиқ экран | карточка: `normal`, `record`, `frozen-today` | маълумот қаторлари, рўйхат, легенда, робот расми | Streak qoidalari |
+| `about` | пастки панел | карточка: `normal`, `record`, `today-pending`, `frozen-today`, `lost`, `new-user`; панел: `calendar`, `restart`, `start`, `no-freeze` | рўйхат, рангли изоҳ | Tushunarli |
+| `today` | пастки панел | карточка: `today-pending` | рўйхат, рангли изоҳ | Darsni boshlash |
+| `restart` | пастки панел | карточка: `lost` | маълумот қаторлари, рўйхат, рангли изоҳ | Darsni boshlash |
+| `start` | пастки панел | карточка: `new-user` | рўйхат, рангли изоҳ, робот расми | Birinchi darsni boshlash |
+| `no-freeze` | огоҳлантириш | карточка: `lost` | матн | Streak qoidalari |
+| `error` | огоҳлантириш | карточка: `error` | матн | Qayta urinish |
 
-**B. «Streak haqida» — компакт варақ** (веб `streak_title` / `streak_note` изоҳ модали)
-1. Сарлавҳа «Strayk bu nima?» → макетда «Streak nima?» (имло маҳсулот эгаси қарорига боғлиқ).
-2. Абзац: илованинг «— bu sizning faoliyatingiz uchun chiroq! 🔥», «Muntazam mashg'ulotlarni to'xtatsangiz - strayklar nollanadi».
-3. Freeze бўлими: «2 ta Muzlatish» + «Har oy sizga 2 ta muzlatish imkoniyati beriladi. Agar bir kun dars qilolmasangiz, muzlatish seriyangizni saqlab qoladi.» + жорий баланс.
-4. Нима фаоллик ҳисобланади (бэкенддан аниқлангач бир гап).
-5. Тугма «Tushunarli».
+### Панелларнинг тугмалари
+
+- **`calendar`** (Aktivlik streaki): «Streak qoidalari» · «Yopish»
+- **`about`** (Streak nima?): «Tushunarli»
+- **`today`** (Bugun olov hali yonmagan): «Darsni boshlash» · «Keyinroq»
+- **`restart`** (Streak nolga tushdi): «Darsni boshlash» · «Streak qoidalari»
+- **`start`** (Streak bugundan boshlanadi): «Birinchi darsni boshlash» · «Streak nima?»
+- **`no-freeze`** (Muzlatish qolmadi): «Streak qoidalari» · «Tushunarli»
+- **`error`** (Streak ma'lumoti kelmadi): «Qayta urinish» · «Keyinroq»
 
 ## 6. Расмлар ва иконкалар
 

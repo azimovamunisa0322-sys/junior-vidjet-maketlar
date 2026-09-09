@@ -60,17 +60,29 @@
 
 Диалог тўқнашуви: чат маршрути очиқ пайтда уй экранининг автоматик варақлари (қолдирилган тадбир) кўрсатилмайди; қайтганда навбат қайта ишлайди.
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Бу карточканинг «тафсилот варағи» **йўқ** — тафсилот илованинг мавжуд `ta_chat` экрани. Карточкадан чиқарилган ва чат экранига ўтиши керак бўлган мазмун:
+Жами 7 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-- Саломлашув `ta_chat.greeting` («Salom! Sizda dars bo'yicha qanday savollaringiz bor?») — веб `mentor_question` изоҳининг ўрни.
-- Ментор қатори: исм, сурат (`images/mentor.png` 48×45 — фақат реал одам бўлса), онлайн/оффлайн статуси, ишлаш соатлари (агар бэкенд берса).
-- Тўлиқ савол-жавоб треди (карточкада фақат 2 қаторли парча), юборилган/ўқилган вақтлар, «Kutilmoqda» белгиси.
-- Тезкор ҳаракатлар: «Savolim bor», «Qo'shimcha darsga yozilish» (`ta_chat.quick_book`), «Mentorni almashtirish», «Boshidan boshlash».
-- Чат хатолари илованинг ўз сатрлари билан: `rate_limited`, `message_too_long`, `empty_message`, `not_authorized`, `network`, `generic`.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `chat` | пастки панел | карточка: `online`; панел: `answered`, `mentors` | маълумот қаторлари, рўйхат, рангли изоҳ, робот расми | Chatni ochish |
+| `ai` | пастки панел | карточка: `ai-only` | маълумот қаторлари, рангли изоҳ | Chatni ochish |
+| `offline` | пастки панел | карточка: `offline` | маълумот қаторлари, рўйхат, рангли изоҳ | Savolni yozib qoldirish |
+| `pending` | пастки панел | карточка: `pending` | маълумот қаторлари, рангли изоҳ | Chatni ochish |
+| `answered` | пастки панел | карточка: `answered` | маълумот қаторлари, рангли изоҳ | Javobni chatda ochish |
+| `mentors` | пастки панел | панел: `chat`, `offline`, `pending` | матн | Aziz Karimov bilan davom etish |
+| `locked` | огоҳлантириш | карточка: `locked` | рангли изоҳ | To'lovga o'tish |
 
-Агар келажакда карточка сарлавҳасига «i» тугма қўшилса — компакт варақ: «Mentor yordami nima?» 2–3 гап + «Tushunarli».
+### Панелларнинг тугмалари
+
+- **`chat`** (Mentor yordami): «Chatni ochish» · «Mentorni almashtirish»
+- **`ai`** (AI yordamchi): «Chatni ochish» · «Yopish»
+- **`offline`** (Mentor hozir oflayn): «Savolni yozib qoldirish» · «Boshqa mentorni tanlash»
+- **`pending`** (Savolingiz yuborildi): «Chatni ochish» · «Mentorni almashtirish»
+- **`answered`** (Aziz Karimovdan javob): «Javobni chatda ochish» · «Yangi savol berish»
+- **`mentors`** (Mentorni tanlash): «Aziz Karimov bilan davom etish» · «Bekor qilish»
+- **`locked`** (Chat vaqtincha yopiq): «To'lovga o'tish» · «Tushunarli»
 
 ## 6. Расмлар ва иконкалар
 

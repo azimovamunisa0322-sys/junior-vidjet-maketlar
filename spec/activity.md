@@ -58,15 +58,35 @@
 | `Vazifani ko'rish` | 273×44 | Қайтарилган вазифа экранига ўтади |
 | `Qayta urinish` | 150×44 | Сўровни қайта юборади |
 
-## 5. Пастки панел мазмуни
+## 5. Пастки панеллар
 
-Тўлиқ ой календари. Ҳали чизилмаган, кейинги қадамда.
+Жами 10 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-- Сарлавҳа: ой номи ва йил, чап-ўнг ўқлар билан ой алмаштириш. Келажак ойга ўтиш ўчирилган.
-- 7 устунли сетка, ҳафта кунлари сарлавҳаси, ойнинг биринчи кунигача бўш катаклар.
-- Катакни босганда пастда шу куннинг тафсилоти: сана ва ҳафта куни, ҳолат изоҳи, курслар рўйхати, ҳар бирида модул ва дарс номи, ҳамда 3 қадам (`Dars`, `Test`, `Amaliy`) белгиси билан.
-- Пастда легенда, 5 ҳолат тушунтириши билан.
-- Юкланиш ва хато ҳолатлари панел ичида.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `calendar` | тўлиқ экран | карточка: `normal`, `perfect-week`; панел: `day-full`, `day-part`, `day`, `day-view`, `day-empty`, `today`, `empty` | календарь, легенда | Bugungi kunni ochish |
+| `day-full` | пастки панел | панел: `calendar` | рангли изоҳ | Darsni qayta ko'rish |
+| `day-part` | пастки панел | панел: `calendar` | рангли изоҳ | Amaliy vazifani yuborish |
+| `day` | пастки панел | карточка: `has-rejected`; панел: `calendar` | рангли изоҳ | Vazifani ko'rish |
+| `day-view` | пастки панел | панел: `calendar` | рангли изоҳ | Testni boshlash |
+| `day-empty` | пастки панел | панел: `calendar` | рангли изоҳ, бўш ҳолат | Bugungi kunni ochish |
+| `today` | пастки панел | карточка: `today-empty`; панел: `calendar`, `day-empty` | рангли изоҳ | Darsni davom ettirish |
+| `empty` | пастки панел | карточка: `empty-month` | рангли изоҳ, легенда, робот расми | Darsni boshlash |
+| `month-loading` | тўлиқ экран | панел: `calendar` | календарь, рангли изоҳ | Yuklanmoqda |
+| `error` | огоҳлантириш | карточка: `error` | матн | Qayta urinish |
+
+### Панелларнинг тугмалари
+
+- **`calendar`** (Faollik kalendari): «Bugungi kunni ochish» · «Yopish»
+- **`day-full`** (3-sentabr, seshanba): «Darsni qayta ko'rish» · «Kalendarga qaytish»
+- **`day-part`** (4-sentabr, chorshanba): «Amaliy vazifani yuborish» · «Kalendarga qaytish»
+- **`day`** (5-sentabr, payshanba): «Vazifani ko'rish» · «Kalendarni ochish»
+- **`day-view`** (6-sentabr, juma): «Testni boshlash» · «Kalendarga qaytish»
+- **`day-empty`** (7-sentabr, shanba): «Bugungi kunni ochish» · «Kalendarga qaytish»
+- **`today`** (Bugun — 8-sentabr, yakshanba): «Darsni davom ettirish» · «Kalendarni ochish»
+- **`empty`** (Bu oyda faollik yo'q): «Darsni boshlash» · «Kalendarni ochish»
+- **`month-loading`** (Faollik kalendari): «Yuklanmoqda» · «Yopish»
+- **`error`** (Ma'lumotni olishning iloji bo'lmadi): «Qayta urinish» · «Keyinroq»
 
 ## 6. Расм ва иконкалар
 

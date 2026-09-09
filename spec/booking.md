@@ -32,7 +32,6 @@
 | `data-state` | Қачон кўринади | Нима кўрсатилади | UZ матн | RU матн |
 |---|---|---|---|---|
 | `demo-upcoming` (асосий) | `demoDay`, `status ≠ no_show`, тадбир куни бугун эмас, `canReschedule` | Апельсин сана, нейтрал саноқ чипи (кун), апельсин изоҳ (ментор · курс · модул), `Batafsil` + кўчириш ibtn (`time.svg`). Робот йўқ | `Demo Day` / `12 sentabr, 14:00` / `3 kun qoldi` / `Mentor: Aziz Karimov · Blockly Dasturlash · Modul 3` / `Batafsil` | `Demo Day` / `12 сентября, 14:00` / `через 3 дня` / `Ментор: Азиз Каримов · Blockly программирование · Модуль 3` / `Подробнее` |
-| `demo-upcoming` + `canReschedule = false` (модификатор, алоҳида чизилмаган) | Кўчириш бэкендда ёпилган | Ўша карточка, ibtn `.bk-ibtn--locked` + `lock.svg`; изоҳ ўрнида сабаб: нейтрал `--c-row` | `Vaqtni ko'chirish yopilgan. Savol bo'lsa mentorga yozing` | `Перенос закрыт. Есть вопрос — напишите ментору` |
 | `demo-today` | Тадбир куни бугун, ҳали бошланмаган | `Bugun, HH:mm`, апельсин чип соат/дақиқа, `robot7` (бош бармоқ) ўнг-пастда 64 pt, изоҳ ва пастки қатор `.bk-pad` | `Bugun, 14:00` / `3 soat qoldi` / `Mentor: Aziz Karimov · Blockly Dasturlash` / `Batafsil` | `Сегодня, 14:00` / `через 3 часа` / `Ментор: Азиз Каримов · Blockly программирование` / `Подробнее` |
 | `demo-active` | Фаза `active`/`live` | Чип `Boshlandi` (нуқта + матн, апельсин), изоҳ — ментор кутмоқда, асосий тугма `Mentorga yozish` (`ta_chat`), ibtn `arrow_right` тафсилот. Робот йўқ | `Bugun, 14:00` / `Boshlandi` / `Dars boshlandi — Aziz Karimov sizni kutmoqda.` / `Mentorga yozish` | `Сегодня, 14:00` / `Идёт` / `Урок начался — Азиз Каримов ждёт вас.` / `Написать ментору` |
 | `demo-missed` | `status = no_show`, `canReschedule` | Қизил сана, пушти чип `Kelmadi` (илова сатри), пушти изоҳ, `time_up` робот 56 pt ўнг-пастда, тугма `Qayta yozilish` (қайта ёзилиш панели). `canReschedule = false` бўлса тугма `Mentorga yozish` — боши берк йўқ | `5 sentabr, 14:00` / `Kelmadi` / `Demo Day'ga kelmadingiz. Yangi vaqt tanlang.` / `Qayta yozilish` | `5 сентября, 14:00` / `Не пришёл` (илова) ёки `Пропущено` / `Вы пропустили Demo Day. Выберите новое время.` / `Записаться снова` |
@@ -65,25 +64,47 @@
 | `Qayta urinish` | `error` | Bookings сўровини қайтаради; карточка `loading` га ўтади |
 | Саноқ чипи (пассив) | `upcoming` | Фақат кўринаётган карточкада 1 с да янгиланади (кун → соат → дақиқа босқичлари); карточка экрандан чиқса тўхтайди. Тартиб қайта ҳисобланмайди — саҳифа бармоқ остида силжимайди |
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Ҳали чизилмаган; карточкадан чиқарилган ҳамма маълумот шу ерда. Пастки панел, тортиш дастаси, скроллланувчи тана, тугмалар пастда қотирилган.
+Жами 16 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-**Тадбир тафсилоти** (`demo-*`, `extra-*`):
-- Сарлавҳа `Demo Day` / `Qo'shimcha dars`, ҳолат чипи (карточкадагидек), тўлиқ сана «12 sentabr 2026, 14:00».
-- Ментор қатори: `mentor.png` 48×45 + «Aziz Karimov» + `Mentorga yozish` ҳаволаси.
-- Курс · модул · мавзу (борлари); демо кунда модул прогресси — илова чеклист трекидек (`--c-line-2` трек, `--c-brand` тўлдирувчи, «Modul 3 · 68 %», 0–100 кламп, қиймат йўқ бўлса қатор йўқ).
-- Тўлиқ саноқ «2 kun 5 soat 12 daqiqa» бир қаторда (тўрт блок эмас).
-- Ҳаракатлар: демо — `Vaqtni ko'chirish` (блокланган бўлса сўник + сабаб матни тагида); қўшимча дарс — `O'chirish` (контур, қизил; блокланган бўлса сўник + илова сабаби); ҳамма учун `Mentorga yozish`.
-- Қолдирилган тадбирда: `time_up` робот ≤ 96 pt, `Kelmadi` чипи, «Nima bo'ldi?» матни, `Qayta yozilish` (демо) / `Mentorga yozish`.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `demo` | пастки панел | карточка: `demo-upcoming`, `demo-today`; панел: `list` | маълумот қаторлари, рўйхат, рангли изоҳ | Vaqtni ko'chirish |
+| `demo-active` | пастки панел | карточка: `demo-active` | маълумот қаторлари, рўйхат, рангли изоҳ | Mentorga yozish |
+| `extra` | пастки панел | карточка: `extra-upcoming`; панел: `list` | маълумот қаторлари, рўйхат, рангли изоҳ | Mentorga yozish |
+| `extra-locked` | пастки панел | карточка: `extra-cancel-locked` | маълумот қаторлари, рўйхат, рангли изоҳ | Mentorga yozish |
+| `reschedule` | тўлиқ экран | карточка: `demo-upcoming`, `demo-today`; панел: `demo`, `demo-missed` | календарь, вақт чиплари, маълумот қаторлари, рўйхат, легенда | Tasdiqlash |
+| `mentor-updating` | огоҳлантириш | **фақат кўриб чиқиш рўйхатидан** | матн | Mentorga yozish |
+| `reschedule-locked` | огоҳлантириш | **фақат кўриб чиқиш рўйхатидан** | матн | Mentorga yozish |
+| `cancel-locked` | огоҳлантириш | карточка: `extra-cancel-locked`; панел: `extra-locked` | матн | Mentorga yozish |
+| `cancel-confirm` | пастки панел | карточка: `extra-upcoming`; панел: `extra` | маълумот қаторлари, рангли изоҳ | Ha, o'chirish |
+| `demo-missed` | пастки панел | карточка: `demo-missed`; панел: `missed-all` | маълумот қаторлари, рангли изоҳ, робот расми | Qayta yozilish |
+| `extra-missed` | пастки панел | карточка: `extra-missed`; панел: `missed-all` | маълумот қаторлари, рангли изоҳ, робот расми | Mentorga yozish |
+| `missed-all` | пастки панел | **фақат кўриб чиқиш рўйхатидан** | рўйхат, рангли изоҳ, робот расми | Tushunarli |
+| `list` | пастки панел | карточка: `multi` | рўйхат | Qo'shimcha darsga yozilish |
+| `book` | пастки панел | карточка: `empty`; панел: `extra-missed`, `list` | рўйхат, рангли изоҳ | Qo'shimcha darsga yozilish |
+| `mentor` | пастки панел | карточка: `demo-active`; панел: `demo`, `demo-active`, `extra`, `extra-locked`, `mentor-updating`, `reschedule-locked`, `cancel-locked`, `demo-missed`, `extra-missed` | маълумот қаторлари, рўйхат, рангли изоҳ | Chatni ochish |
+| `error` | огоҳлантириш | карточка: `error` | матн | Qayta urinish |
 
-**Рўйхат** (`multi`, `Hammasini ko'rish`):
-- Сарлавҳа `Mening faol bandlovlarim` (илова сатри), ҳар бандлов қатори: тур нуқтаси, ном, сана/вақт, саноқ чипи, `›`; босилса тадбир тафсилотига ўтади.
-- Пастда `Qo'shimcha darsga yozilish` асосий тугма, `Bandlov tarixi` ҳаволаси.
+### Панелларнинг тугмалари
 
-**Огоҳлантиришлар** (компакт): блокланган бекор/кўчириш — бир абзац + `Tushunarli`; ўчириш тасдиғи — 4-бўлимдаги матн ва икки тугма.
-
-**Қолдирилган тадбирлар авто-панели** (веб'даги авто-модал ўрнига): ҳар ишга туширишда бир марта, ҳамма қолдирилган тадбирлар бир панелда («2 ta dars qoldirildi»), кўрилганлик аккаунт бўйича сақланади. Альтернатива — панелсиз, карточкадаги `Kelmadi` чипи етарли (маҳсулот эгаси ҳал қилади).
+- **`demo`** (Demo Day): «Vaqtni ko'chirish» · «Mentorga yozish»
+- **`demo-active`** (Demo Day): «Mentorga yozish» · «Yopish»
+- **`extra`** (Qo'shimcha dars): «Mentorga yozish» · «Darsni o'chirish»
+- **`extra-locked`** (Qo'shimcha dars): «Mentorga yozish» · «Darsni o'chirish»
+- **`reschedule`** (Demo Day'ni ko'chirish): «Tasdiqlash» · «Bekor qilish»
+- **`mentor-updating`** (Bo'sh vaqtlarni ko'rsatib bo'lmadi): «Mentorga yozish» · «Tushunarli»
+- **`reschedule-locked`** (Vaqtni ko'chirib bo'lmaydi): «Mentorga yozish» · «Tushunarli»
+- **`cancel-locked`** (Darsni o'chirib bo'lmaydi): «Mentorga yozish» · «Tushunarli»
+- **`cancel-confirm`** (Darsni o'chirishni xohlaysizmi?): «Ha, o'chirish» · «Bekor qilish»
+- **`demo-missed`** (Demo Day'ga kelmadingiz): «Qayta yozilish» · «Mentorga yozish»
+- **`extra-missed`** (Qo'shimcha darsga kelmadingiz): «Mentorga yozish» · «Qo'shimcha darsga yozilish»
+- **`missed-all`** (2 ta dars qoldirildi): «Tushunarli»
+- **`list`** (Mening faol bandlovlarim): «Qo'shimcha darsga yozilish» · «Bandlov tarixi»
+- **`book`** (Qo'shimcha darsga yozilish): «Qo'shimcha darsga yozilish» · «Yopish»
+- **`mentor`** (Mentorga yozish): «Chatni ochish» · «Yopish»
+- **`error`** (Bandlovlar yuklanmadi): «Qayta urinish» · «Keyinroq»
 
 ## 6. Расмлар ва иконкалар
 

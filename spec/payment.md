@@ -70,19 +70,35 @@
 
 Ҳолат ўзгариши (масалан `due-soon` → `due-today`) фақат маълумот янгиланганда, бармоқ остида карточка силжимайди; чип матни ярим тунда ўз-ўзидан алмашмайди (кейинги сўровда).
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Ҳали чизилмаган; карточкадан чиқарилган мазмун шу ерда:
+Жами 10 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-1. Тортиш дастаси, сарлавҳа `To'lov`, ўнгда ҳолат чипи (карточкадагининг ўзи).
-2. Катта сумма (28/600) `450 000 so'm`, тагида сана `Muddat: 15 sentabr 2026` (йил фақат панелда).
-3. Илованинг тўлиқ сатри: `To'lov muddati {days} kun ichida tugaydi. Iltimos, to'lovni amalga oshiring.` / `Akkauntingiz to'lov qilinmaganligi sababli muzlatildi` / бугун ва ўтган муддат учун янги сатрлар (маҳсулот эгаси тасдиқлайди).
-4. Бонус қатори (`reward > 0`): `coin.png` + `Muddatidan oldin to'lasangiz +30 coin` — сариқ пилл услубида.
-5. Асосий тугма `To'lovga o'tish` (48 pt, илова ичидаги браузер, `actionUrl`); иккиламчи `Havolani nusxalash` — toast `Havola nusxalandi` фақат clipboard муваффақиятида, хатода `Nusxalab bo'lmadi`.
-6. Йиғилувчи қисм `Boshqa qurilmadan to'lash` → QR (`actionUrl`, ≤ 180 pt) — QR карточкада ҳам, панелнинг асосий кўринишида ҳам йўқ.
-7. `frozen` ва `actionUrl` йўқ тармоғи: `Moliya bo'limi bilan bog'laning` + телефон / Telegram қаторлари.
-8. `demo-only` тармоғи: `robot5.png` (ўйланган) 96 pt + матн + битта `Tushunarli`; тўлов тугмаси йўқ.
-9. Панел очилганда тўлов объекти қотирилади (60 с янгилаш панел ичидаги QR/URL ни алмаштирмайди); `payment` йўқолса панел ўзи ёпилади.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `details` | пастки панел | карточка: `days-left`, `due-soon` | сумма, маълумот қаторлари, рўйхат, рангли изоҳ | To'lovga o'tish |
+| `due-today` | пастки панел | карточка: `due-today` | сумма, маълумот қаторлари, рўйхат, рангли изоҳ | To'lovga o'tish |
+| `overdue` | пастки панел | карточка: `overdue` | сумма, маълумот қаторлари, рангли изоҳ | To'lovga o'tish |
+| `frozen` | пастки панел | карточка: `frozen` | сумма, маълумот қаторлари, рўйхат, рангли изоҳ | To'lovga o'tish |
+| `bonus` | пастки панел | карточка: `bonus` | сумма, маълумот қаторлари, рангли изоҳ | To'lovga o'tish |
+| `demo` | пастки панел | карточка: `demo-only` | маълумот қаторлари, рангли изоҳ | Menejer bilan bog'lanish |
+| `qr` | пастки панел | панел: `details`, `due-today` | маълумот қаторлари, рангли изоҳ | Havolani nusxalash |
+| `contact` | пастки панел | карточка: `frozen`; панел: `overdue`, `frozen`, `demo`, `no-link`, `error` | рўйхат, рангли изоҳ | Qo'ng'iroq qilish |
+| `no-link` | огоҳлантириш | **фақат кўриб чиқиш рўйхатидан** | матн | Moliya bo'limi bilan bog'lanish |
+| `error` | огоҳлантириш | карточка: `error` | матн | Qayta urinish |
+
+### Панелларнинг тугмалари
+
+- **`details`** (To'lov): «To'lovga o'tish» · «Havolani nusxalash»
+- **`due-today`** (To'lov): «To'lovga o'tish» · «Havolani nusxalash»
+- **`overdue`** (To'lov muddati o'tdi): «To'lovga o'tish» · «Moliya bo'limi bilan bog'lanish»
+- **`frozen`** (Akkaunt muzlatilgan): «To'lovga o'tish» · «Moliya bo'limi bilan bog'lanish»
+- **`bonus`** (Muddatidan oldin to'lang): «To'lovga o'tish» · «Havolani nusxalash»
+- **`demo`** (Demo hisob): «Menejer bilan bog'lanish» · «Tushunarli»
+- **`qr`** (Boshqa qurilmadan to'lash): «Havolani nusxalash» · «Yopish»
+- **`contact`** (Bog'lanish): «Qo'ng'iroq qilish» · «Yopish»
+- **`no-link`** (To'lov havolasi hozircha yo'q): «Moliya bo'limi bilan bog'lanish» · «Yopish»
+- **`error`** (To'lov ma'lumoti yuklanmadi): «Qayta urinish» · «Moliya bo'limi bilan bog'lanish»
 
 ## 6. Расмлар ва иконкалар
 

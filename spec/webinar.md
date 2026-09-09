@@ -63,19 +63,21 @@ RU узунлик изоҳлари: `Следующий вебинар` 150 pt �
 | Чип, изоҳ | алоҳида босилмайди | карточка босишига киради | — |
 | Автоматик | — | Чип дақиқада бир; фаза ўзгарганда (`upcoming → joinOpen`, `joinOpen → live`) карточка **дарҳол** қайта чизилади ва bookings сўрови қайта юборилади (очилиш дақиқасидаги эски `canJoin` муаммоси); илова фонга ўтиб қайтганда (`AppLifecycleState.resumed`) ва push босилганда ҳам қайта сўраш. Карусель тартиби фақат маълумот янгилангандагина, фойдаланувчи каруселни ушлаб турганда эмас | — |
 
-## 5. Пастки панел (bottom sheet) мазмуни
+## 5. Пастки панеллар
 
-Ҳали чизилмаган; илова услубидаги умумий варақ қолипи (тортиш дастаси, сарлавҳа, скроллланувчи тана, пастда қотирилган тугма, Android back / свайп ёпади). Карточкадан чиқарилган мазмун:
+Жами 3 та панел. Уч тури бор: **пастки панел** (пастдан чиқади), **тўлиқ экран** (календарь, вақт танлаш), **огоҳлантириш** (бир абзац матн ва тугма). Ёпиш: орқа фонга босиш, ✕ тугмаси ёки Android «орқага».
 
-1. Сарлавҳа: мавзу (тўлиқ, 2–3 қатор), пастида курс ва модул (`Blockly Dasturlash · Modul 3`).
-2. Ҳолат чипи (карточкадаги билан бир хил) ва сана/вақт тўлиқ: «Payshanba, 10 sentabr · 19:30–20:30, Toshkent vaqti» (давомийлик маълумотда бўлса).
-3. Тўлиқ тескари саноқ — тўрт блок `kun · soat · daqiqa · soniya` (табулар рақамлар, секундда бир, фақат панел очиқлигида). `joinOpen` да «Kirish ochiq» матни, `live` да «Boshlandi HH:mm da».
-4. Ментор қатори: `mentor.png` аватар 40, `Aziz Karimov`, «Mentor».
-5. Кириш блоки: асосий тугма «Darsga qo'shilish» (карточкадаги қоидалар билан); тагида «Havolani nusxalash» (фақат `joinUrl` бор ва нусхалаш муваффақиятли бўлганда toast «Havola nusxalandi»); ҳавола қисқартирилган (`zoom.us/j/…`).
-6. Сабаб блоки (ўчирилган ҳолатларда): карточка изоҳининг тўлиқ шакли — «Kirish darsdan 10 daqiqa oldin, 19:20 da ochiladi» / «Mentor havolani hali qo'shmagan. Havola paydo bo'lishi bilan bu yerda ko'rinadi» / «Jadval yangilanmoqda. Yangi vaqt tasdiqlangach xabar beramiz». Ёнида иккиламчи амал «Mentorga yozish» → `ta_chat` экрани.
-7. Эслатма: «Eslatma qo'yish» — қурилма календарига 19:20 га воқеа (ихтиёрий, маҳсулот эгаси тасдиқласа).
-8. `ended`: «Vebinar yakunlandi» + агар `recordingUrl` бўлса «Yozuvni ko'rish» (2-савол), бўлмаса «Keyingi vebinar e'lon qilinganda xabar beramiz».
-9. `error`: панел очилмайди — карточкадаги «Qayta urinish» етарли.
+| `data-sheet` | Тури | Қаердан очилади | Ичида нима бор | Асосий тугма |
+|---|---|---|---|---|
+| `details` | пастки панел | карточка: `upcoming`, `upcoming-today`, `updating` | маълумот қаторлари, рангли изоҳ | Darsga qo'shilish |
+| `join` | пастки панел | карточка: `join-open`, `live` | маълумот қаторлари, рангли изоҳ | Darsga qo'shilish |
+| `no-link` | огоҳлантириш | карточка: `no-link`, `live-no-link` | матн | Tushunarli |
+
+### Панелларнинг тугмалари
+
+- **`details`** (Sikllar va shartlar): «Darsga qo'shilish» · «Yopish»
+- **`join`** (Sikllar va shartlar): «Darsga qo'shilish»
+- **`no-link`** (Havola hali tayyor emas): «Tushunarli»
 
 ## 6. Расмлар ва иконкалар
 
