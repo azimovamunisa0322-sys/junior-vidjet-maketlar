@@ -46,7 +46,7 @@
   /* Geometriya */
   --r-card: 18px; --r-inner: 12px; --r-btn: 12px; --r-pill: 999px;
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
-  --card-w: 304px; --card-h: 178px; --card-pad: 12px;   /* ilovadagi o'lchov: 304x178 pt */
+  --card-w: 332px; --card-h: 178px; --card-pad: 12px;   /* yon padding 16 — sahifadagi boshqa bo'limlar bilan bir xil */
   --shadow-card: 0 6px 18px rgba(28, 39, 76, 0.06);
 
   /* Tipografika (pt = px) */
@@ -398,14 +398,16 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .mascot, .mascot__img, .banner__shadow { animation: none; }
 }
 
-/* Ilovadan o'lchab olindi: band 225, tepada 19 bo'sh joy, kartochka 178, pastda 28 (nuqtalar bilan) */
-.band { height: 225px; margin-top: 30px; padding-top: 19px; background: var(--c-band); display: flex; flex-direction: column; }
+/* Band 225 = 16 (tepa) + 178 (kartochka) + 12 + 19 (nuqtalar).
+   Yon padding 16 — «O'yinlar» va «Kurslar» bo'limlari bilan bir xil chiziqda. */
+.band { height: 225px; margin-top: 30px; padding-top: 16px; background: var(--c-band); display: flex; flex-direction: column; }
 .track {
-  position: relative; flex: none; display: flex; gap: 7px; padding: 0 43px 9px;
+  position: relative; flex: none; display: flex; gap: 8px; padding: 0 16px 12px;
+  scroll-padding-left: 16px;   /* snap paddingni yeb qo'ymasin: kartochka 16 da to'xtasin */
   overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .track::-webkit-scrollbar { display: none; }
-.track > .wcard { flex: none; scroll-snap-align: center; }
+.track > .wcard { flex: none; scroll-snap-align: start; }   /* chap cheti sahifa bilan tekis */
 .dots { height: 19px; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .dot { display: block; width: 8px; height: 8px; border-radius: 4px; background: #D6D8D7; transition: width .2s, background-color .2s; }
 .dot.is-active { width: 16px; height: 5px; border-radius: 3px; background: var(--c-brand); }
@@ -820,7 +822,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     ['recommendation', 'Тавсия',           'Tavsiya'],
     ['activity',       'Фаоллик',          'Faollik'],
   ];
-  const TRACK_PAD = 43; // karusel trekining yon paddingi: (390 − 304) / 2
+  const TRACK_PAD = 16; // karusel trekining yon paddingi — sahifadagi boshqa bo'limlar bilan bir xil
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const make = (tag, className, html) => {
@@ -963,7 +965,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     }));
     markOverflow();
   }
-  // 304×178 dan toshgan kartochkani qizil bilan belgilaymiz (.wcard overflow:hidden, shuning uchun scrollHeight ishonchli)
+  // 332×178 dan toshgan kartochkani qizil bilan belgilaymiz (.wcard overflow:hidden, shuning uchun scrollHeight ishonchli)
   async function markOverflow() {
     if (document.fonts) await document.fonts.ready;
     gallery.querySelectorAll('article.wcard').forEach(a => {
