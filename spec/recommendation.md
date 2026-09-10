@@ -100,7 +100,7 @@ Toast йўқ: барча натижалар ё маршрут, ё варақ, ё
 
 ## 7. Flutter учун изоҳлар
 
-- **Карточка:** `Container`/`DecoratedBox` (`BoxDecoration`: `color: tokens.card`, `borderRadius: 18`, `boxShadow: tokens.cardShadow`), `Padding(12)`, `Column` (`crossAxisAlignment: stretch`) → `head` `Row(spaceBetween, crossAxisAlignment: start)`, `Expanded(body)`, `foot` `Row`. Ўлчам каруселдан (`PageView` `viewportFraction` ≈ 0.92 ёки `SizedBox(344×192)`), ҳамма карточка бир баландликда.
+- **Карточка:** `Container`/`DecoratedBox` (`BoxDecoration`: `color: tokens.card`, `borderRadius: 18`, `boxShadow: tokens.cardShadow`), `Padding(12)`, `Column` (`crossAxisAlignment: stretch`) → `head` `Row(spaceBetween, crossAxisAlignment: start)`, `Expanded(body)`, `foot` `Row`. Ўлчам каруселдан (`PageView` `viewportFraction` ≈ 0.88 — 344 / 390, ёки `SizedBox(344×192)`), ҳамма карточка бир баландликда.
 - **Токенлар:** `ThemeExtension<JuniorTokens>` — `card`, `row`, `line2`, `text`, `text2`, `slate`, `brand`, `brandSoft`, `red`, радиуслар `rCard 18 / rInner 12 / rBtn 12`, `TextStyle` лар `title 15w600/18`, `num 20w600/24`, `small 12w500/15`, `btn 13w600/16`; шрифт `SFpro` 400/500/600 (`pubspec` да мавжуд).
 - **Эскиз:** `ClipRRect(8)` + `SizedBox(70×40)` + `Image.network(banner, fit: BoxFit.cover, errorBuilder: → заҳира, loadingBuilder: → --c-row бўш қути)`; `CachedNetworkImage` бўлса `errorWidget`/`placeholder`. Заҳира: `Container(color: brandSoft, child: SvgPicture.asset('book.svg', colorFilter: brand, 20))`.
 - **Ном:** `Text(name, style: num, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false)` ичида `Expanded` (`min-width: 0` муқобили). Сатр: `Text(style: small, color: text2, maxLines: 1, ellipsis)`.
