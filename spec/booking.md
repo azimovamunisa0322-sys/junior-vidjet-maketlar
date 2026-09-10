@@ -12,26 +12,26 @@
 
 ## 2. Анатомия
 
-Карточка `332×178 pt` (`--card-w`/`--card-h`), падинг `12` (`--card-pad`) → ички қути `308×154`, радиус `--r-card` 18, фон `--c-card` `#FFFFFF`, соя `--shadow-card` `0 6 18 rgba(28,39,76,.06)`. Тик оқим, элементлар ораси `--s-2` 8 pt.
+Карточка `344×192 pt` (`--card-w`/`--card-h`), падинг `12` (`--card-pad`) → ички қути `320×168`, радиус `--r-card` 18, фон `--c-card` `#FFFFFF`, соя `--shadow-card` `0 6 18 rgba(28,39,76,.06)`. Тик оқим, элементлар ораси `--s-2` 8 pt.
 
 Баландлик бюджети ҳолат турига қараб:
 
 | Қолип | Ҳолатлар | Ҳисоб |
 |---|---|---|
-| **Таймерли** | `demo-upcoming`, `demo-today` | сарлавҳа 35 (18 + 2 + 15) + 8 + тана 67 (таймер 45, тагида 22 pt бўш) + 8 + пастки қатор 36 = 154 |
-| Изоҳли | `demo-active`, `demo-missed` | сарлавҳа 35 + 8 + тана 67 (изоҳ ≤ 46, тагида 21 pt бўш) + 8 + 36 = 154 |
-| Рўйхатли | `multi` | сарлавҳа 35 + 8 + тана 67 (рўйхат 52, тагида 15 pt бўш) + 8 + 36 = 154 |
-| Сатрсиз | `empty`, `error` | сарлавҳа 18 + 8 + тана 84 (матн 16 / хато қатори 40) + 8 + 36 = 154 |
+| **Таймерли** | `demo-upcoming`, `demo-today` | сарлавҳа 35 (18 + 2 + 15) + 8 + тана 81 (таймер 45, тагида 36 pt бўш) + 8 + пастки қатор 36 = 168 |
+| Изоҳли | `demo-active`, `demo-missed` | сарлавҳа 35 + 8 + тана 81 (изоҳ ≤ 46, тагида 35 pt бўш) + 8 + 36 = 168 |
+| Рўйхатли | `multi` | сарлавҳа 35 + 8 + тана 81 (рўйхат 52, тагида 29 pt бўш) + 8 + 36 = 168 |
+| Сатрсиз | `empty`, `error` | сарлавҳа 18 + 8 + тана 98 (матн 16 / хато қатори 40) + 8 + 36 = 168 |
 | Скелет | `loading` | сарлавҳа 32 (16 + 4 + 12) + 8 + тана + 8 + 36 |
 
 | Элемент | Ўлчам | Шрифт | Ранг | Изоҳ |
 |---|---|---|---|---|
 | `.wcard__title` | 18 pt қатор, ≤ 22 белги | `--t-title` 600 15/18, letter-spacing −0.1 | `--c-text` `#000000` | `Demo Day`; йиғма/бўш/хато карточкада илова атамаси `Mening bandlovlarim` |
 | `.wcard__sub` | 15 pt қатор, юқоридан 2 pt, ≤ 30 белги | `--t-small` 500 12/15 | демо `--c-brand` `#FF4F28` (`--brand`), қолдирилган `--c-red` `#ED0000` (`--red`), йиғма `--c-text-2` `#999999` | Сана ва вақт: `12 sentabr, 14:00`, бугун бўлса `Bugun, 14:00` (Тошкент, қаттиқ UTC+5, 24 соатли). Сана бир марта чиқади — веб `detail_time` такрори йўқ |
-| **`.wtimer`** (таймерли ҳолатлар) | 308×45, 4 устун `1fr`, ора 6 → ҳар катак `72,5×45` | — | — | Чипнинг ўрнини босди. `data-cd="KK:SS:DD:SS"`, `js/app.js` `tickCountdowns()` ҳар 1 с да 4 та `<b>` ни янгилайди. Тўлиқ қоида — [`spec/taymer.md`](taymer.md) |
-| `.wtimer__b` | 72,5 кенг, падинг `6 0 5`, радиус `--r-inner` 12 | — | фон `--c-row` `#F8F8FC` | 4 та бир хил катак: кун · соат · дақиқа · сония |
+| **`.wtimer`** (таймерли ҳолатлар) | 320×45, 4 устун `1fr`, ора 6 → ҳар катак `75,5×45` | — | — | Чипнинг ўрнини босди. `data-cd="KK:SS:DD:SS"`, `js/app.js` `tickCountdowns()` ҳар 1 с да 4 та `<b>` ни янгилайди. Тўлиқ қоида — [`spec/taymer.md`](taymer.md) |
+| `.wtimer__b` | 75,5 кенг, падинг `6 0 5`, радиус `--r-inner` 12 | — | фон `--c-row` `#F8F8FC` | 4 та бир хил катак: кун · соат · дақиқа · сония |
 | `.wtimer__b b` (рақам) | 23 pt қатор | 600 20/23, letter-spacing −0.5, `tabular-nums` | `--c-text` `#000000` | Ҳар доим икки хона: `02`, `41` |
-| `.wtimer__b span` (ёрлиқ) | 11 pt қатор | 500 9/11, letter-spacing +0.3, UPPERCASE | `--c-text-3` `#B4B4B4` | `kun` · `soat` · `daqiqa` · `soniya`. Энг узуни `soniya` ≈ 39 pt ≤ 72,5 |
+| `.wtimer__b span` (ёрлиқ) | 11 pt қатор | 500 9/11, letter-spacing +0.3, UPPERCASE | `--c-text-3` `#B4B4B4` | `kun` · `soat` · `daqiqa` · `soniya`. Энг узуни `soniya` ≈ 39 pt ≤ 75,5 |
 | `.wtimer--soon` | шу ўлчам | — | фон `--c-brand-soft` `#FFEDE7`, рақам `--c-brand` `#FF4F28`, ёрлиқ `--c-brand` `opacity .7` | Тадбир **бугун** бўлганда (`demo-today`) ёқилади |
 | `.wcard__chip` | 22 pt, падинг `0 8`, радиус `--r-pill` 999 | `--t-small`, 600 | фаол `--chip--brand` фон `--c-brand-soft` `#FFEDE7` / матн `--c-brand` `#FF4F28`; қолдирилган `--chip--pink` фон `--c-pink-soft` `#FFE4EA` / матн `--c-red` `#ED0000`; йиғма сон `--chip--brand` | Энди **фақат** `demo-active` (`Boshlandi`), `demo-missed` (`Kelmadi`) ва `multi` (`3 ta`) да қолди. Фаол чипда 6 pt `currentColor` нуқта (`.bk-dot--cur`) + матн, ора 4 |
 | `.wcard__note` | ≤ 2 қатор (2×15 + 8 + 8 = 46), радиус `--r-inner` 12, падинг `8 10` | `--t-small` 500 12/15 | демо `--note--brand` `#FFEDE7`, қолдирилган `--note--pink` `#FFE4EA`; матн `--c-text` `#000000` | Битта асосий факт ёки ҳолат матни. ≤ 80 белги (робот бўлса ≤ 54) |
@@ -45,10 +45,10 @@
 
 Кенглик текшируви (SF Pro тахминий: 15/600 ≈ 8,3 pt/белги, 12/600 ≈ 6,6 pt/белги, 12/500 ≈ 5,3 pt/белги):
 
-- Таймерли ҳолатларда сарлавҳа қаторида чип йўқ → `Demo Day` (≈ 66 pt) бемалол сиғади; `demo-today` да `.bk-hpad` туфайли жой 256 pt, `Bugun, 14:00` (≈ 79 pt) ва сарлавҳа шу ерга жойлашади.
-- Энг оғир жуфтлик энди `demo-active`: `Demo Day` (66) + 8 + чип `Boshlandi` нуқта билан (≈ 85) = 159 ≤ 308.
-- Таймер катаги 72,5 pt: икки хонали рақам 20/600 tabular ≈ 25 pt, энг узун ёрлиқ `soniya` ≈ 39 pt — иккаласи ҳам сиғади, RU ёрлиқлари (`дн`, `ч`, `мин`, `сек`) ундан ҳам қисқа.
-- Изоҳ тўлиқ кенгликда 12/500 ≈ 49 белги/қатор, робот билан (236 pt) ≈ 39 белги/қатор — икки қаторда 54 белгидан ошмасин.
+- Таймерли ҳолатларда сарлавҳа қаторида чип йўқ → `Demo Day` (≈ 66 pt) бемалол сиғади; `demo-today` да `.bk-hpad` туфайли жой 268 pt, `Bugun, 14:00` (≈ 79 pt) ва сарлавҳа шу ерга жойлашади.
+- Энг оғир жуфтлик энди `demo-active`: `Demo Day` (66) + 8 + чип `Boshlandi` нуқта билан (≈ 85) = 159 ≤ 320.
+- Таймер катаги 75,5 pt: икки хонали рақам 20/600 tabular ≈ 25 pt, энг узун ёрлиқ `soniya` ≈ 39 pt — иккаласи ҳам сиғади, RU ёрлиқлари (`дн`, `ч`, `мин`, `сек`) ундан ҳам қисқа.
+- Изоҳ тўлиқ кенгликда 12/500 ≈ 49 белги/қатор, робот билан (248 pt) ≈ 39 белги/қатор — икки қаторда 54 белгидан ошмасин.
 
 ## 3. Ҳолатлар
 
@@ -169,7 +169,7 @@
 ## 7. Flutter учун изоҳлар
 
 - **Токенлар** — `ThemeExtension<JuniorTokens>`: `brand #FF4F28`, `brandSoft #FFEDE7`, `blue #1CB0F6`, `blueSoft #E8F6FE`, `red #ED0000`, `pinkSoft #FFE4EA`, `row #F8F8FC`, `line2 #F0F0F0`, `text #000000`, `text2 #999999`, `text3 #B4B4B4`, `slate #93A2C0`; радиуслар 18/14/12/10/999; `TextTheme` да `title 15/600 h18`, `body 13/500 h16`, `small 12/500 h15`, `tiny 11/500 h14`, `btn 13/600 h16`, оила `SFpro`.
-- **Карточка** — `SizedBox(width: 332, height: 178)` → `DecoratedBox` (радиус 18, соя `0 6 18 rgba(28,39,76,.06)`) → `ClipRRect` → `Stack`: 1) `Padding(12)` + `Column(crossAxisAlignment.stretch)`: head `Row(crossAxisAlignment.start)`, `SizedBox(8)`, `Expanded(body)`, `SizedBox(8)`, foot `Row`; 2) `Positioned(right: 8, top/bottom: 8)` робот `Image.asset` + `IgnorePointer`. Робот пастда бўлса тана ва пастки қаторга `Padding(right: 72)`, юқорида бўлса сарлавҳа устунига `Padding(right: 52)` (46 pt робот) ёки танага `Padding(right: 80)` (72 pt робот).
+- **Карточка** — `SizedBox(width: 344, height: 192)` → `DecoratedBox` (радиус 18, соя `0 6 18 rgba(28,39,76,.06)`) → `ClipRRect` → `Stack`: 1) `Padding(12)` + `Column(crossAxisAlignment.stretch)`: head `Row(crossAxisAlignment.start)`, `SizedBox(8)`, `Expanded(body)`, `SizedBox(8)`, foot `Row`; 2) `Positioned(right: 8, top/bottom: 8)` робот `Image.asset` + `IgnorePointer`. Робот пастда бўлса тана ва пастки қаторга `Padding(right: 72)`, юқорида бўлса сарлавҳа устунига `Padding(right: 52)` (46 pt робот) ёки танага `Padding(right: 80)` (72 pt робот).
 - **Таймер** — карточкада `Row` да 4 та `Expanded` (ора 6, `SizedBox(width: 6)` билан) → `Container(padding: EdgeInsets.fromLTRB(0, 6, 0, 5), radius 12, color row)` + `Column[Text(20/600, tabularFigures, ls −0.5), Text(9/500, ls +0.3, uppercase, text3)]`. Панелда шу қолип 24/28 рақам, `tiny` ёрлиқ, падинг `10 0 9`, радиус 14, ора 8 билан такрорланади. Ҳисоблаш, тик ва тўхтатиш мантиғи битта `CountdownController` да — [`spec/taymer.md`](taymer.md) га қаранг, бу ерда такрорланмайди. Рақамлар албатта `FontFeature.tabularFigures()` билан, акс ҳолда ҳар сонияда катак эни «сакрайди».
 - **Чип** — `Container(height: 22, padding: 0 8, BorderRadius.circular(999))` + `Text(small, w600)`; фаол чипда `Row` [6 pt `DecoratedBox` доира, 4 pt, матн]. Чип босилмайди (`Semantics(label)` билан ўқилади).
 - **Асосий тугма** — `FilledButton` (`minimumSize: Size(0, 36)`, `padding: 0 14`, радиус 12, `textStyle btn`), `Expanded` ичида; `ghost` варианти `FilledButton.tonal` фон `row`. Матн `maxLines: 1, overflow: ellipsis`.

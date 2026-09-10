@@ -8,7 +8,7 @@
 
 ## 2. Анатомия
 
-Карточка: 332×178 pt, padding 12 → ички қути 308×154 pt, радиус 18 (`--r-card`), фон `--c-card #FFFFFF`, соя `--shadow-card`. Ички элементлар вертикал, оралиқ 8 pt (`gap`). Матн семантикаси: апельсин = бренд/яқин муддат, пушти-қизил = ўтган/музлатилган, сариқ = танга бонуси, кўк = маълумот (демо), slate = ноактив.
+Карточка: 344×192 pt, padding 12 → ички қути 320×168 pt, радиус 18 (`--r-card`), фон `--c-card #FFFFFF`, соя `--shadow-card`. Ички элементлар вертикал, оралиқ 8 pt (`gap`). Матн семантикаси: апельсин = бренд/яқин муддат, пушти-қизил = ўтган/музлатилган, сариқ = танга бонуси, кўк = маълумот (демо), slate = ноактив.
 
 | Элемент | Ўлчам | Шрифт | Ранг | Изоҳ |
 |---|---|---|---|---|
@@ -18,7 +18,7 @@
 | `.wcard__chip` | баландлик 22, padding 0 8, pill | 12/600 | default фон `--c-row #F8F8FC` матн `#999999`; `--brand` фон `--c-brand-soft #FFEDE7` матн `#FF4F28`; `--pink` фон `--c-pink-soft #FFE4EA` матн `#ED0000`; `--yellow` фон `#FCF8DC`, чегара 1 pt `#E9BB36`, матн `#D9A621` | иконка 16 pt (`.ic` mask) ёки танга расми 14 pt; иконка–матн оралиғи 4 |
 | `.wcard__body` | ≤ 59 pt (амалда 46) | — | — | флекс, `gap` 6 |
 | `.wcard__num` (сумма) | 1 қатор, ≤ 14 белги | 20/600, lh 24, ls −0.3 | `#000000` | `450 000 so'm` — мингликлар бузилмас бўш жой билан |
-| `.wcard__text.wcard__muted` (изоҳ) | 1 қатор | 13/500, lh 16 | `#999999` | ≤ 28 белги (робот бор бўлса ≤ 236 pt кенглик) |
+| `.wcard__text.wcard__muted` (изоҳ) | 1 қатор | 13/500, lh 16 | `#999999` | ≤ 28 белги (робот бор бўлса ≤ 248 pt кенглик) |
 | `.wcard__note` | 2 қатор, padding 8 10, радиус 12 → 46 pt | 12/500, lh 15 | `--pink` фон `#FFE4EA`; `--blue` фон `#E8F6FE`; матн `#000000` | ≤ 76 белги; `overdue`, `frozen`, `demo-only` да сумма ўрнига |
 | `.pay-pr` | `padding-right: 72` | — | — | робот/соат бор ҳолатларда матн блокига қўйилади |
 | `.wcard__foot` | 36 pt, `gap` 8 | — | — | 1 асосий тугма + 1 иккиламчи |
@@ -26,9 +26,9 @@
 | `.wcard__ibtn` + `.pay-i` | 32×32, радиус 10; ичида 16 pt доира «i», ҳалқа 1.5 pt | 11/600 | фон `#F8F8FC`, ҳалқа ва «i» `--c-slate #93A2C0` | иловада info иконкаси йўқ — матнли «i» |
 | `.wcard__art` | 64×64 (роботлар) / 56×56 (`ta_time`) | — | — | `position: absolute; right: 8; bottom: 8`, `pointer-events: none` |
 
-Баландлик йиғиндиси (ички қути 154 pt; каттайишдан ортган 7 pt ҳамма ҳолатда флекс танага — `.wcard__body` га тушади, сарлавҳа, оралиқлар ва пастки қатор ўзгармайди): `days-left`, `due-soon`, `due-today`, `bonus` → 35 + 8 + (46 + 7) + 8 + 36 = **140**; `overdue`, `frozen`, `demo-only` → 35 + 8 + (46 note + 7) + 8 + 36 = **140**; `loading` → 33 + 8 + (42 + 7) + 8 + 36 = **134**; `error` → 18 + 8 + (38 + 7) + 8 + 36 = **115**. Ҳамма ҳолатда ≥ 14 pt заҳира.
+Баландлик йиғиндиси (ички қути 168 pt; каттайишдан ортган 21 pt ҳамма ҳолатда флекс танага — `.wcard__body` га тушади, сарлавҳа, оралиқлар ва пастки қатор ўзгармайди): `days-left`, `due-soon`, `due-today`, `bonus` → 35 + 8 + (46 + 21) + 8 + 36 = **154**; `overdue`, `frozen`, `demo-only` → 35 + 8 + (46 note + 21) + 8 + 36 = **154**; `loading` → 33 + 8 + (42 + 21) + 8 + 36 = **148**; `error` → 18 + 8 + (38 + 21) + 8 + 36 = **129**. Ҳамма ҳолатда ≥ 14 pt заҳира.
 
-Кенглик (SF Pro метрикасидан ўлчанган, 308 pt қаторда): энг кенг сарлавҳа блоки + чип — `frozen`: 120 + 8 + 100 = 228; `overdue`: 95 + 8 + 115 = 218; RU да `Просрочено на 3 дня` чипи билан 259. Робот остидаги матн 236 pt дан кам: `To'lov muddati bugun tugaydi` 166, `Internetni tekshirib, qayta urining` 183, RU `Срок оплаты истекает сегодня` 183.
+Кенглик (SF Pro метрикасидан ўлчанган, 320 pt қаторда): энг кенг сарлавҳа блоки + чип — `frozen`: 120 + 8 + 100 = 228; `overdue`: 95 + 8 + 115 = 218; RU да `Просрочено на 3 дня` чипи билан 259. Робот остидаги матн 248 pt дан кам: `To'lov muddati bugun tugaydi` 166, `Internetni tekshirib, qayta urining` 183, RU `Срок оплаты истекает сегодня` 183.
 
 ## 3. Ҳолатлар
 
@@ -60,7 +60,7 @@
 
 | Элемент | Кўринувчи ўлчам | Ҳаракат | Нима очади |
 |---|---|---|---|
-| Карточка сирти (чип, сана, сумма, изоҳ) | 332×178 | tap | Тўлов пастки панели (§ 5). `loading` да ҳеч нарса; `error` да «Qayta urinish» билан бир хил |
+| Карточка сирти (чип, сана, сумма, изоҳ) | 344×192 | tap | Тўлов пастки панели (§ 5). `loading` да ҳеч нарса; `error` да «Qayta urinish» билан бир хил |
 | `To'lov qilish` | 36 pt (fit ≈ 98 pt ёки тўлиқ) → hit 44 | tap | `actionUrl` бор → пастки панел, ундаги асосий тугма илова ичидаги браузерни очади; `actionUrl` йўқ → панел «Moliya bilan bog'laning» тармоғи билан. Тугма ҳеч қачон бўш экран очмайди |
 | «i» (`.wcard__ibtn`) | 32×32 → hit 44×44 | tap | Худди карточка сирти — тафсилот панели |
 | `Bog'lanish` (фақат `frozen`) | 36 × ≈ 90 → hit 44 | tap | Панелнинг «Moliya bo'limi» қисми: телефон (`tel:`) ва Telegram ҳаволаси (алоқа маълумоти бэкенддан — очиқ савол) |
@@ -118,7 +118,7 @@
 
 ## 7. Flutter учун изоҳлар
 
-- **Тузилиш:** `SizedBox(332×178)` → `DecoratedBox` (радиус 18, соя `0 6 18 rgba(28,39,76,.06)`) → `Padding(12)` → `Stack` [ `Column` (head `Row`, `Expanded(body)`, foot `Row`), `Positioned(right: 8, bottom: 8, child: IgnorePointer(Image.asset))` ]. Робот бор ҳолатда body матнига `Padding(right: 72)`.
+- **Тузилиш:** `SizedBox(344×192)` → `DecoratedBox` (радиус 18, соя `0 6 18 rgba(28,39,76,.06)`) → `Padding(12)` → `Stack` [ `Column` (head `Row`, `Expanded(body)`, foot `Row`), `Positioned(right: 8, bottom: 8, child: IgnorePointer(Image.asset))` ]. Робот бор ҳолатда body матнига `Padding(right: 72)`.
 - **Токенлар:** `ThemeExtension<JuniorTokens>` — ранглар (`brand #FF4F28`, `brandSoft #FFEDE7`, `pinkSoft #FFE4EA`, `red #ED0000`, `yellowSoft #FCF8DC`, `yellowBorder #E9BB36`, `yellowText #D9A621`, `blue #1CB0F6`, `blueSoft #E8F6FE`, `row #F8F8FC`, `text2 #999999`, `slate #93A2C0`), радиуслар (18/12/10/pill), матн стиллари `TextStyle(fontFamily: 'SFpro', fontSize, fontWeight, height: lh/size)`: title 15/600 h1.2, sub 12/500 h1.25, body 13/500 h1.23, num 20/600 h1.2, btn 13/600.
 - **Ҳолат:** `enum PaymentCardState { daysLeft, dueSoon, dueToday, overdue, frozen, bonus, demoOnly, loading, error }` — `payment` объектидан соф функция билан (§ 3 устуворлик); виджет фақат `state` + `PaymentVm(amount, dueDate, days, coins)` олади. Кун ҳисоби Тошкент (`UTC+5` қаттиқ) бўйича, `dueDate` парс хатоси → `null`.
 - **Динамик:** кун сони, сана (`d MMMM`, ой номлари илова луғатидан, бош ҳарф билан), сумма (`NumberFormat('#,##0', 'uz')` → ажратгич ` ` га алмаштирилади + ` so'm`), бонус сони, RU кўплиги `Intl.plural`.

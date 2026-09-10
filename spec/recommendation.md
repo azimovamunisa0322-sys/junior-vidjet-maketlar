@@ -8,7 +8,7 @@
 
 ## 2. Анатомия
 
-Карточка `332×178 pt`, падинг `12`, ички қути `308×154`, радиус `--r-card` 18, фон `--c-card` `#FFFFFF`, соя `--shadow-card`. Тик оралиқ блоклар орасида `--s-2` 8 pt.
+Карточка `344×192 pt`, падинг `12`, ички қути `320×168`, радиус `--r-card` 18, фон `--c-card` `#FFFFFF`, соя `--shadow-card`. Тик оралиқ блоклар орасида `--s-2` 8 pt.
 
 | Элемент | Ўлчам | Шрифт | Ранг | Изоҳ |
 |---|---|---|---|---|
@@ -19,9 +19,9 @@
 | `.rc-row` | баландлик 40, `gap` 10 | — | — | эскиз + матн устуни |
 | `.rc-thumb` курс эскизи | `70×40`, радиус 8, `object-fit: cover` | — | заҳира фон `--c-row` | курс рўйхатидаги (`Kurslar`) айнан шу баннер, нисбат ≈ 216:123 |
 | `.rc-thumb--empty` заҳира эскиз | `70×40`, радиус 8 | — | фон `--c-brand-soft` `#FFEDE7`, иконка `book.svg` 20×20 `--c-brand` | баннер URL йўқ ёки юкланмади |
-| `.rc-name` курс номи (`.wcard__num`) | 1 қатор, устун кенглиги 228 pt, `…` | 20/600, line-height 24, letter-spacing −0.3 | `--c-text` | ≈ 18–20 лотин белги сиғади; тўлиқ ном варақда |
+| `.rc-name` курс номи (`.wcard__num`) | 1 қатор, устун кенглиги 240 pt, `…` | 20/600, line-height 24, letter-spacing −0.3 | `--c-text` | ≈ 18–20 лотин белги сиғади; тўлиқ ном варақда |
 | `.rc-cap` ҳолат сатри (`.wcard__muted`) | 1 қатор, `…` | 12/500, line-height 15 | `--c-text-2` `#999999` | `Sizga mos kurs` / `Davom etmoqda` |
-| `.wcard__progress` | баландлик 6, радиус 3, тўлиқ кенглик 308 | — | трек `--c-line-2` `#F0F0F0`, тўлдириш `--c-brand` | фақат `in-progress`/`no-image`; кенглик = фоиз |
+| `.wcard__progress` | баландлик 6, радиус 3, тўлиқ кенглик 320 | — | трек `--c-line-2` `#F0F0F0`, тўлдириш `--c-brand` | фақат `in-progress`/`no-image`; кенглик = фоиз |
 | `.wcard__foot` | баландлик 36, `gap` 8 | — | — | асосий тугма (`flex: 1`) + `i` тугма |
 | `.wcard__btn` асосий тугма | баландлик 36, радиус 12, падинг 0 14 | 13/600 | фон `--c-brand`, матн `#FFFFFF` | матн + `arrow_right.svg` 16×16 оқ (маршрутга ўтиш шеврони) |
 | `.wcard__ibtn` «i» тугма | `32×32`, радиус 10 | «i» 14/600 | фон `--c-row`, ҳарф `--c-slate` `#93A2C0` | босиш зонаси ≥ 44 pt (Flutter'да падинг билан) |
@@ -29,9 +29,9 @@
 | `.wcard__art` робот (хато) | `64×64`, ўнг-паст, 8 pt чекка | — | `robot4.png` | матн блокларига `padding-right: 72` |
 | Скелет `.sk` | сарлавҳа 16×60 %, чип 84×22, эскиз 70×40, ном 20×65 %, сатр 12×40 %, тугма 36, `i` 32×32 | — | `#EEF0F3 → #F6F7F9` градиент, 1,2 с | асосий ҳолат тарҳини такрорлайди |
 
-Баландлик ҳисоби (энг тўлиқ ҳолат `in-progress`): head 22 + 8 + body 52 + 8 + foot 36 = **126 ≤ 154**, бўш жой 28 pt. `not-started`: 22 + 8 + 40 + 8 + 36 = 114, бўш жой 40 pt. `error`: 18 + 8 + (16 + 6 + 15) + 8 + 36 = 107, бўш жой 47 pt. Қолган жой (ҳар ҳолатда, янги баландликдан келган +7 pt ҳам) `.wcard__body` га (`flex: 1`) тушади, футер пастга ёпишади.
+Баландлик ҳисоби (энг тўлиқ ҳолат `in-progress`): head 22 + 8 + body 52 + 8 + foot 36 = **126 ≤ 168**, бўш жой 42 pt. `not-started`: 22 + 8 + 40 + 8 + 36 = 114, бўш жой 54 pt. `error`: 18 + 8 + (16 + 6 + 15) + 8 + 36 = 107, бўш жой 61 pt. Қолган жой (ҳар ҳолатда, янги баландликдан келган +21 pt ҳам) `.wcard__body` га (`flex: 1`) тушади, футер пастга ёпишади.
 
-Матн узунлиги (SF Pro файллари билан CoreText'да ўлчанган): сарлавҳа 15/600 = 132 pt (RU «Рекомендуемый курс» 156); чип «Boshlanmagan» = 98 pt («Не начат» 68) — иккаласи бирга 308 га сиғади. Курс номи 20/600 устунда 228 pt: «Web dasturlash» 138, «Matematika» 105, «Grafik dizayn» 116, «Blockly Dasturlash» 164, «Веб-разработка» 153 сиғади; «Графический дизайн» (198) сиғади, 30–50 белгили реал номлар `…` билан кесилади («Grafik dizayn va animatsiya asoslari» → «Grafik dizayn va animat…») — бу кутилган хатти-ҳаракат, тўлиқ ном варақда.
+Матн узунлиги (SF Pro файллари билан CoreText'да ўлчанган): сарлавҳа 15/600 = 132 pt (RU «Рекомендуемый курс» 156); чип «Boshlanmagan» = 98 pt («Не начат» 68) — иккаласи бирга 320 га сиғади. Курс номи 20/600 устунда 240 pt: «Web dasturlash» 138, «Matematika» 105, «Grafik dizayn» 116, «Blockly Dasturlash» 164, «Веб-разработка» 153 сиғади; «Графический дизайн» (198) сиғади, 30–50 белгили реал номлар `…` билан кесилади («Grafik dizayn va animatsiya asoslari» → «Grafik dizayn va animat…») — бу кутилган хатти-ҳаракат, тўлиқ ном варақда.
 
 ## 3. Ҳолатлар
 
@@ -56,7 +56,7 @@
 
 | Элемент | Босиш зонаси | Ҳаракат | Нима очади |
 |---|---|---|---|
-| `.wcard__btn` `Boshlash` / `Davom etish` | 36 pt баландлик, кенглиги 308 − 40; Flutter'да `minHeight: 44` ёки ота-контейнер падинги билан 44 | `Number(course.id)` truthy → курс кириш маршрути (веб `getCourseEntryPath` муқобили); акс ҳолда каталог | Илова ичидаги маршрут (`push`): курс саҳифаси (roadmap / кириш экрани) ёки `Kurslar` каталоги. Эгалик текширилмайди — веб паритети; paywall кераклиги очиқ савол |
+| `.wcard__btn` `Boshlash` / `Davom etish` | 36 pt баландлик, кенглиги 320 − 40; Flutter'да `minHeight: 44` ёки ота-контейнер падинги билан 44 | `Number(course.id)` truthy → курс кириш маршрути (веб `getCourseEntryPath` муқобили); акс ҳолда каталог | Илова ичидаги маршрут (`push`): курс саҳифаси (roadmap / кириш экрани) ёки `Kurslar` каталоги. Эгалик текширилмайди — веб паритети; paywall кераклиги очиқ савол |
 | `.wcard__ibtn` «i» | визуал 32×32, босиш ≥ 44×44 (`padding: 6`) | Тафсилот варағини очади | Пастки варақ (5-бўлим) |
 | `Qayta urinish` (ghost, `error`) | 36 pt, ≥ 44 билан | Сўровни қайта юборади → `loading` → натижа | Тугма босилганда унинг ўрнида 1 та кичик `CircularProgressIndicator` (ёки бутун карточка `loading`) |
 | Карточка танаси, эскиз, ном, чип | — | **Ҳандлер йўқ** — карусель суриш билан тўқнашмаслик учун фақат тугмалар босилади | — |
@@ -100,7 +100,7 @@ Toast йўқ: барча натижалар ё маршрут, ё варақ, ё
 
 ## 7. Flutter учун изоҳлар
 
-- **Карточка:** `Container`/`DecoratedBox` (`BoxDecoration`: `color: tokens.card`, `borderRadius: 18`, `boxShadow: tokens.cardShadow`), `Padding(12)`, `Column` (`crossAxisAlignment: stretch`) → `head` `Row(spaceBetween, crossAxisAlignment: start)`, `Expanded(body)`, `foot` `Row`. Ўлчам каруселдан (`PageView` `viewportFraction` ≈ 0.8 ёки `SizedBox(332×178)`), ҳамма карточка бир баландликда.
+- **Карточка:** `Container`/`DecoratedBox` (`BoxDecoration`: `color: tokens.card`, `borderRadius: 18`, `boxShadow: tokens.cardShadow`), `Padding(12)`, `Column` (`crossAxisAlignment: stretch`) → `head` `Row(spaceBetween, crossAxisAlignment: start)`, `Expanded(body)`, `foot` `Row`. Ўлчам каруселдан (`PageView` `viewportFraction` ≈ 0.92 ёки `SizedBox(344×192)`), ҳамма карточка бир баландликда.
 - **Токенлар:** `ThemeExtension<JuniorTokens>` — `card`, `row`, `line2`, `text`, `text2`, `slate`, `brand`, `brandSoft`, `red`, радиуслар `rCard 18 / rInner 12 / rBtn 12`, `TextStyle` лар `title 15w600/18`, `num 20w600/24`, `small 12w500/15`, `btn 13w600/16`; шрифт `SFpro` 400/500/600 (`pubspec` да мавжуд).
 - **Эскиз:** `ClipRRect(8)` + `SizedBox(70×40)` + `Image.network(banner, fit: BoxFit.cover, errorBuilder: → заҳира, loadingBuilder: → --c-row бўш қути)`; `CachedNetworkImage` бўлса `errorWidget`/`placeholder`. Заҳира: `Container(color: brandSoft, child: SvgPicture.asset('book.svg', colorFilter: brand, 20))`.
 - **Ном:** `Text(name, style: num, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false)` ичида `Expanded` (`min-width: 0` муқобили). Сатр: `Text(style: small, color: text2, maxLines: 1, ellipsis)`.
