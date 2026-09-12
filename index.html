@@ -403,23 +403,22 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .mascot, .mascot__img, .banner__shadow { animation: none; }
 }
 
-/* Kulrang fon kartochkani atigi 4 px bilan o'raydi (mijoz: «1 millimetr qolsin»).
-   Band chapdan 12 da boshlanadi, trek ichida yana 4 → kartochka chap cheti 16 da,
-   ya'ni «O'yinlar» va «Kurslar» bo'limlari bilan bir chiziqda.
-   O'ngda band ekran chetigacha davom etadi — karusel o'sha tomonga suriladi. */
+/* Karusel fonsiz: kartochka «O'yinlar» kartasi kabi sahifa fonida tabiiy soya bilan turadi.
+   Kartochka markazga snap bo'ladi — ekran 390, kartochka 344, demak yon paddinglar 23 va
+   ikki chetda ham qo'shni vidjetdan 15 px ko'rinib turadi: chap-o'ngda yana vidjet borligi bilinadi.
+   Trekning ust-ost paddingi soya kesilmasligi uchun. */
 .band {
-  height: 200px; margin: 26px 0 0 12px; padding: 4px 0;
-  background: var(--c-band); border-radius: 18px 0 0 18px;
+  margin: 26px 0 0;
   display: flex; flex-direction: column;
 }
 .track {
-  position: relative; flex: none; display: flex; gap: 8px; padding: 0 16px 0 4px;
-  scroll-padding-left: 4px;   /* snap paddingni yeb qo'ymasin: kartochka joyida to'xtasin */
+  position: relative; flex: none; display: flex; gap: 8px; padding: 8px 23px 18px;
+  scroll-padding: 0 23px;
   overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .track::-webkit-scrollbar { display: none; }
-.track > .wcard { flex: none; scroll-snap-align: start; }   /* chap cheti sahifa bilan tekis */
-.dots { height: 19px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.track > .wcard { flex: none; scroll-snap-align: center; }   /* markazga to'xtaydi — ikki yonda qo'shnilar ko'rinadi */
+.dots { height: 19px; margin-top: 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .dot { display: block; width: 8px; height: 8px; border-radius: 4px; background: #D6D8D7; transition: width .2s, background-color .2s; }
 .dot.is-active { width: 16px; height: 5px; border-radius: 3px; background: var(--c-brand); }
 
@@ -834,7 +833,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     ['activity',       'Фаоллик',          'Faollik'],
     ['referral',       'Рефералка',        "Do'stingizni taklif qiling"],
   ];
-  const TRACK_PAD = 4;  // trekning chap paddingi; band chapdan 12 da → kartochka 16 da
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const make = (tag, className, html) => {
@@ -917,7 +915,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   }
   function scrollToWidget(key) {
     const card = track.querySelector(`[data-widget="${key}"]`);
-    if (card) track.scrollTo({ left: card.offsetLeft - TRACK_PAD, behavior: 'smooth' });
+    if (card) track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2, behavior: 'smooth' });
   }
   track.addEventListener('scroll', () => requestAnimationFrame(updateDots), { passive: true });
 
