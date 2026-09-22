@@ -67,3 +67,6 @@ python3 bugungi-reja/into-maket/apply.py
 `data-toast` пилюляси чиқади. Ҳар қаторда кун тоифаси чипи бор.
 Скрипт: `bugungi-reja/into-maket/games.py` (қайта ишлатса бўлади).
 Янги ўйин қўшиш — ўша скриптдаги `row(...)` қаторларига қўшинг.
+
+**Бўлимлар тартиби** (2026-09-22): `logo → Bugungi reja → виджетлар → нуқталар → O'yinlar`.
+Ўзгартириш: `bugungi-reja/into-maket/reorder.py`.
