@@ -21,11 +21,22 @@
   border-bottom:5px solid var(--c-bg);
 }
 .plan__decowrap{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+/* Maskot — veb'dagi robo-flag. O'z qobig'i ichida kesiladi, shuning uchun
+   hero'ning overflow'iga tegmaydi va tultip baribir tashqariga chiqa oladi. */
+.plan__robowrap{
+  position:absolute; right:6px; bottom:0; width:118px; height:80px;
+  overflow:hidden; pointer-events:none;
+}
+.plan__robo{
+  position:absolute; right:0; bottom:-7px; height:92px; width:auto;
+  animation:3.2s ease-in-out infinite plan-float;
+}
 .plan__deco{
   position:absolute; right:-64px; top:-78px; width:196px; height:196px;
   border-radius:var(--r-pill); border:10px solid rgba(255,79,40,.16);
 }
 .plan__herotop{ position:relative; display:flex; align-items:center; gap:12px; }
+.plan__hero--robo .plan__sub{ padding-right:96px; }
 .plan__ring{ position:relative; width:70px; height:70px; flex:none; }
 .plan__ring svg{ transform:rotate(-90deg); display:block; }
 .plan__ringtxt{ position:absolute; inset:0; display:grid; place-content:center; text-align:center; line-height:1; }
@@ -184,6 +195,6 @@
 
 @media (prefers-reduced-motion:reduce){
   .plan__deco, .plan__hi, .plan__item, .plan__go .car,
-  .plan__coin.is-shake, .plan__course, .plan__tip{ animation:none !important; }
+  .plan__coin.is-shake, .plan__course, .plan__tip, .plan__robo{ animation:none !important; }
   .plan__cring circle:last-child{ transition:none !important; }
 }

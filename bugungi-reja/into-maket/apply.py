@@ -11,7 +11,7 @@ def datauri(p):
     mime = "image/png" if p.suffix == ".png" else "image/jpeg"
     return "data:%s;base64,%s" % (mime, base64.b64encode(p.read_bytes()).decode())
 
-need = ["r1","r2","r3"] + ["c%d" % i for i in range(1, 12)]
+need = ["r1","r2","r3","roboflag"] + ["c%d" % i for i in range(1, 12)]
 imgs = {}
 for k in need:
     hit = [p for p in ASSETS.iterdir() if p.stem == k]
@@ -39,9 +39,12 @@ i = s.find("</head>")
 assert i > 0 and s.count("</head>") == 1, "</head> aniqlanmadi"
 s = s[:i] + "<style>/* PLAN:CSS:START */" + css + "/* PLAN:CSS:END */</style>\n" + s[i:]
 
-# 2) HTML — banner bilan games orasiga
-anchor = '            <section class="games">'
-assert s.count(anchor) == 1, "games bo'limi aniqlanmadi: %d" % s.count(anchor)
+# 2) HTML — vidjet karuselidan (band) OLDIN.
+#    Diqqat: ilgari bu «games» ga bog'langan edi, lekin o'yinlar bo'limi
+#    vidjetlardan keyinga ko'chirilgach, reja ham o'sha yerga tushib ketdi.
+#    «band» esa doim rejadan keyin turadi, shuning uchun barqaror.
+anchor = '            <section class="band">'
+assert s.count(anchor) == 1, "band bo'limi aniqlanmadi: %d" % s.count(anchor)
 s = s.replace(anchor,
               "            <!-- PLAN:START -->\n" + html + "            <!-- PLAN:END -->\n\n" + anchor, 1)
 
