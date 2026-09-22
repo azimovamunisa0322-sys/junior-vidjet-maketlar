@@ -1,5 +1,33 @@
 
 /* ============================================================
+   VIDJET KARUSELI — yon tomonga suriladi
+   ============================================================ */
+.wrail-wrap{margin:0 -12px}          /* sahifa paddingidan chiqadi */
+.wrail{
+  /* har bir kartochka o'z balandligida — cho'zilmaydi, dizayni buzilmaydi */
+  display:flex;align-items:flex-start;gap:10px;
+  overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;
+  padding:2px 12px 4px;
+  scrollbar-width:none;
+}
+.wrail::-webkit-scrollbar{display:none}
+/* balandlik ko'rinib turgan kartochkaga moslashadi — bo'sh joy qolmaydi */
+.wrail{transition:height .22s cubic-bezier(.2,.8,.3,1)}
+@media (prefers-reduced-motion:reduce){.wrail{transition:none}}
+.wrail-item{
+  width:318px;flex:none;
+  scroll-snap-align:start;
+}
+.wrail-item>.card{width:100%}
+.wdots{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:11px}
+.wdots i{
+  width:6px;height:6px;border-radius:999px;background:#9aa3b259;
+  transition:width .2s ease,background .2s ease;
+}
+.wdots i.on{width:18px;background:var(--brand-500)}
+
+/* ============================================================
    VIDJETLAR — veb versiyadagidek, o'zgarmagan
    ============================================================ */
 

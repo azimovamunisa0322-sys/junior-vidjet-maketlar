@@ -104,6 +104,51 @@ toggler("whyBtn", "whyBody");
   grid.innerHTML = html;
 })();
 
+/* ---------- Vidjet karuseli: nuqtalar ---------- */
+(function () {
+  var rail = document.getElementById("wrail");
+  var dots = document.getElementById("wdots");
+  if (!rail || !dots) return;
+
+  var items = [].slice.call(rail.children);
+  dots.innerHTML = items.map(function (_, i) {
+    return '<i' + (i === 0 ? ' class="on"' : "") + "></i>";
+  }).join("");
+  var marks = [].slice.call(dots.children);
+
+  function sync() {
+    var x = rail.scrollLeft, w = rail.clientWidth;
+    var best = 0, bestD = Infinity, tall = 0;
+
+    items.forEach(function (el, i) {
+      var left = el.offsetLeft - rail.offsetLeft;
+      var d = Math.abs(left - x);
+      if (d < bestD) { bestD = d; best = i; }
+      // ekranda ko'rinayotgan kartochkalarning eng balandi
+      if (left < x + w - 2 && left + el.offsetWidth > x + 2) {
+        var h = el.firstElementChild ? el.firstElementChild.offsetHeight : el.offsetHeight;
+        if (h > tall) tall = h;
+      }
+    });
+
+    marks.forEach(function (m, i) { m.classList.toggle("on", i === best); });
+    if (tall) rail.style.height = (tall + 6) + "px";   // +6 = pastki padding
+  }
+
+  var t = null;
+  rail.addEventListener("scroll", function () {
+    if (t) return;
+    t = requestAnimationFrame(function () { t = null; sync(); });
+  }, { passive: true });
+
+  marks.forEach(function (m, i) {
+    m.addEventListener("click", function () {
+      rail.scrollTo({ left: items[i].offsetLeft - rail.offsetLeft, behavior: "smooth" });
+    });
+  });
+  sync();
+})();
+
 /* ---------- Qurilma soati ---------- */
 (function () {
   var el = document.getElementById("sbClock");
