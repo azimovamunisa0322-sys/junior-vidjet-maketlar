@@ -894,6 +894,23 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .plan__cring circle:last-child{ transition:none !important; }
 }
 /* PLAN:CSS:END */</style>
+<style>/* TOPBAR:CSS:START */
+/* ============================================================
+   TEPA QATOR — logo va o'quvchining umumiy coin / point i.
+   Ilgari ular «Salom!» banneri ichida edi; banner olingach
+   ko'rinmay qolgan edi. Veb versiyada ham header'da turadi.
+   ============================================================ */
+.topbar{ display:flex; align-items:center; gap:10px; padding:4px 16px 14px; }
+.topbar .logo{ height:30px; width:auto; margin:0; flex:none; }
+.topbar__pills{ margin-left:auto; display:flex; align-items:center; gap:8px; }
+.tb-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  height:32px; padding:0 11px; border-radius:var(--r-pill);
+  background:#fff; box-shadow:0 2px 6px rgba(28,39,76,.07);
+  font:600 15px/18px var(--f); color:var(--c-navy);
+}
+.tb-pill img{ width:18px; height:18px; flex:none; }
+/* TOPBAR:CSS:END */</style>
 </head>
 <body>
 <main class="page">
@@ -917,8 +934,15 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
           <div class="content" id="content">
             <section class="scr" data-screen="home">
 
-            <img class="logo" data-a="a28" alt="Junior academy">
-            </span>
+            <!-- TOPBAR:START -->
+            <div class="topbar">
+              <img class="logo" data-a="a28" alt="Junior academy">
+              <span class="topbar__pills">
+                <span class="tb-pill"><img data-a="a8" alt=""><b data-count="1703">1703</b></span>
+                <span class="tb-pill"><img data-a="a20" alt=""><b data-count="1673">1673</b></span>
+              </span>
+            </div>
+            <!-- TOPBAR:END -->
 
             <!-- BANNER:REMOVED — eski «Salom!» banneri olib tashlandi -->
 

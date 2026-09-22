@@ -70,3 +70,8 @@ python3 bugungi-reja/into-maket/apply.py
 
 **Бўлимлар тартиби** (2026-09-22): `logo → Bugungi reja → виджетлар → нуқталар → O'yinlar`.
 Ўзгартириш: `bugungi-reja/into-maket/reorder.py`.
+
+**Тепа қатор** (2026-09-22): лого чапда, ўнгда ўқувчининг умумий **coin (1703)**
+ва **point (1673)** пилюлялари — веб версиядаги header каби. Улар аввал «Salom!»
+баннери ичида эди. Иконкалар макетнинг ўзиникидан (`data-a="a8"`, `data-a="a20"`),
+рақамлар `data-count` билан саналиб чиқади. Скрипт: `bugungi-reja/into-maket/topbar.py`.
