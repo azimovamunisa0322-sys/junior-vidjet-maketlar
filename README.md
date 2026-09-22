@@ -57,3 +57,7 @@ python3 bugungi-reja/into-maket/apply.py
 Эски «Salom! ...» баннери бош экрандан **олиб ташланди** (2026-09-22).
 Уни қайтариш: `git show 646f129:index.html` дан `<section class="banner">`
 блокини олинг. Олиб ташлаш скрипти: `bugungi-reja/into-maket/remove_banner.py`.
+
+Эски **«Kurslar»** бўлими ҳам олиб ташланди (2026-09-22) — унинг ўрнини
+«Bugungi reja» ичидаги йиғиладиган «Barcha kurslarim» (11 та курс) эгаллади.
+Скрипт: `bugungi-reja/into-maket/remove_courses.py`.
