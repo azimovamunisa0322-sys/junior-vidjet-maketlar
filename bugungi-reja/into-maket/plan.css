@@ -81,19 +81,29 @@
 .plan__item--now .plan__step{ background:var(--c-brand); color:#fff; }
 .plan__thumb{ width:62px; height:40px; flex:none; border-radius:9px; object-fit:cover; }
 .plan__info{ min-width:0; flex:1; }
-.plan__name{ margin:0; font:var(--t-title); font-size:15px; color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.plan__name{ margin:0; font:var(--t-title); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .plan__now{
-  display:inline-block; margin-top:4px; padding:2px 7px; border-radius:var(--r-pill);
-  background:var(--c-brand); color:#fff; font:600 9px/12px var(--f);
-  letter-spacing:.04em; text-transform:uppercase;
+  display:inline-block; margin-top:5px; padding:2px 8px; border-radius:var(--r-pill);
+  background:var(--c-brand); color:#fff; font:600 9px/13px var(--f);
+  letter-spacing:.05em; text-transform:uppercase;
 }
 /* Pastki qatorlar belgi ustunidan keyin boshlanadi (30 belgi + 10 oraliq),
    shunda ulovchi chiziq matn ustidan o'tmaydi — veb'dagi kabi hamma
    kontent belgi ustunining o'ng tomonida turadi. */
-.plan__meta{ margin:7px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font:var(--t-tiny); color:var(--c-text-2); }
-.plan__topic{ font-weight:600; color:var(--c-slate); }
-.plan__foot{ margin-top:10px; padding-left:40px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
-.plan__reward{ font:600 12px/15px var(--f); color:var(--c-brand); }
+.plan__meta{ margin:8px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.plan__topic{ font:var(--t-body); color:var(--c-slate); }
+.plan__foot{
+  margin-top:11px; padding:10px 0 0 40px;
+  border-top:1px solid rgba(147,162,192,.18);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+/* Mukofot — 3-daraja: jim kulrang, tanga ikonkasi bilan.
+   Kartadagi yagona kuchli rang «Boshlash» tugmasida qoladi. */
+.plan__reward{
+  display:inline-flex; align-items:center; gap:5px;
+  font:600 12px/15px var(--f); color:var(--c-text-2);
+}
+.plan__reward svg{ width:14px; height:14px; flex:none; }
 .plan__go{
   display:inline-flex; align-items:center; gap:5px; padding:9px 16px;
   border:1px solid var(--c-brand); border-radius:var(--r-pill);
@@ -119,10 +129,10 @@
 .plan__allbtn[aria-expanded="true"] .plan__caret svg{ transform:rotate(180deg); }
 .plan__courses{ display:none; margin-top:8px; flex-direction:column; gap:5px; }
 .plan__courses.is-open{ display:flex; }
-.plan__course{ display:flex; align-items:center; gap:9px; padding:7px 9px; border-radius:11px; background:var(--c-row); }
-.plan__cthumb{ width:50px; height:32px; flex:none; border-radius:7px; object-fit:cover; }
+.plan__course{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:12px; background:var(--c-row); }
+.plan__cthumb{ width:54px; height:35px; flex:none; border-radius:8px; object-fit:cover; }
 .plan__cbody{ min-width:0; flex:1; }
-.plan__cname{ margin:0; font:600 12.5px/15px var(--f); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.plan__cname{ margin:0; font:600 14px/18px var(--f); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-top:4px; }
 .plan__cstate{ padding:2px 7px; border-radius:var(--r-pill); font:600 10px/13px var(--f); white-space:nowrap; }
 .plan__cstate--go{ background:var(--c-green-soft); color:#3E9A00; }
@@ -133,7 +143,7 @@
 .plan__cring{ position:relative; width:36px; height:36px; }
 .plan__cring svg{ transform:rotate(-90deg); display:block; }
 .plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:600 9px/11px var(--f); color:var(--c-navy); }
-.plan__cdars{ font:600 10px/12px var(--f); color:var(--c-slate); text-align:center; white-space:nowrap; }
+.plan__cdars{ font:600 11px/13px var(--f); color:var(--c-slate); text-align:center; white-space:nowrap; }
 .plan__cdars i{ display:block; font-style:normal; font:500 7.5px/10px var(--f); letter-spacing:.06em; color:var(--c-text-3); }
 
 /* ---------- Nega aynan shuncha dars? ---------- */
