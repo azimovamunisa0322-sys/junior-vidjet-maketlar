@@ -76,7 +76,10 @@
   background:var(--c-brand); color:#fff; font:600 9px/12px var(--f);
   letter-spacing:.04em; text-transform:uppercase;
 }
-.plan__meta{ margin:7px 0 0; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font:var(--t-tiny); color:var(--c-text-2); }
+/* Pastki qatorlar belgi ustunidan keyin boshlanadi (30 belgi + 10 oraliq),
+   shunda ulovchi chiziq matn ustidan o'tmaydi — veb'dagi kabi hamma
+   kontent belgi ustunining o'ng tomonida turadi. */
+.plan__meta{ margin:7px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font:var(--t-tiny); color:var(--c-text-2); }
 .plan__topic{ font-weight:600; color:var(--c-slate); }
 .plan__chip{
   display:inline-flex; align-items:center; gap:4px; padding:2px 7px;
@@ -84,7 +87,7 @@
   font:500 11px/14px var(--f); color:var(--c-slate-2);
 }
 .plan__chip svg{ width:11px; height:11px; }
-.plan__foot{ margin-top:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.plan__foot{ margin-top:10px; padding-left:40px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .plan__reward{ font:600 12px/15px var(--f); color:var(--c-brand); }
 .plan__go{
   display:inline-flex; align-items:center; gap:5px; padding:9px 16px;
