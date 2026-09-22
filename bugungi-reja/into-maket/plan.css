@@ -92,9 +92,9 @@
    kontent belgi ustunining o'ng tomonida turadi. */
 .plan__meta{ margin:8px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
 .plan__topic{ font:var(--t-body); color:var(--c-slate); }
+/* Ajratuvchi chiziqsiz — ierarxiya faqat o'lcham va rang bilan beriladi. */
 .plan__foot{
-  margin-top:11px; padding:10px 0 0 40px;
-  border-top:1px solid rgba(147,162,192,.18);
+  margin-top:12px; padding-left:40px;
   display:flex; align-items:center; justify-content:space-between; gap:10px;
 }
 /* Mukofot — 3-daraja: jim kulrang, tanga ikonkasi bilan.
