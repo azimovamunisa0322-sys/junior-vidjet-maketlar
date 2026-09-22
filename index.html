@@ -693,6 +693,23 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 }
 .game__lock svg{ width:18px; height:18px; color:#fff; }
 /* GAMES:CSS:END */</style>
+<style>/* TOPBAR:CSS:START */
+/* ============================================================
+   TEPA QATOR — logo va o'quvchining umumiy coin / point i.
+   Ilgari ular «Salom!» banneri ichida edi; banner olingach
+   ko'rinmay qolgan edi. Veb versiyada ham header'da turadi.
+   ============================================================ */
+.topbar{ display:flex; align-items:center; gap:10px; padding:4px 16px 14px; }
+.topbar .logo{ height:30px; width:auto; margin:0; flex:none; }
+.topbar__pills{ margin-left:auto; display:flex; align-items:center; gap:8px; }
+.tb-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  height:32px; padding:0 11px; border-radius:var(--r-pill);
+  background:#fff; box-shadow:0 2px 6px rgba(28,39,76,.07);
+  font:600 15px/18px var(--f); color:var(--c-navy);
+}
+.tb-pill img{ width:18px; height:18px; flex:none; }
+/* TOPBAR:CSS:END */</style>
 <style>/* PLAN:CSS:START */
 /* ============================================================
    BUGUNGI REJA — veb bosh sahifasidan ko'chirilgan bo'lim.
@@ -787,12 +804,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
    kontent belgi ustunining o'ng tomonida turadi. */
 .plan__meta{ margin:7px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font:var(--t-tiny); color:var(--c-text-2); }
 .plan__topic{ font-weight:600; color:var(--c-slate); }
-.plan__chip{
-  display:inline-flex; align-items:center; gap:4px; padding:2px 7px;
-  border-radius:var(--r-pill); background:#fff; border:1px solid var(--c-line);
-  font:500 11px/14px var(--f); color:var(--c-slate-2);
-}
-.plan__chip svg{ width:11px; height:11px; }
 .plan__foot{ margin-top:10px; padding-left:40px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .plan__reward{ font:600 12px/15px var(--f); color:var(--c-brand); }
 .plan__go{
@@ -894,23 +905,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .plan__cring circle:last-child{ transition:none !important; }
 }
 /* PLAN:CSS:END */</style>
-<style>/* TOPBAR:CSS:START */
-/* ============================================================
-   TEPA QATOR — logo va o'quvchining umumiy coin / point i.
-   Ilgari ular «Salom!» banneri ichida edi; banner olingach
-   ko'rinmay qolgan edi. Veb versiyada ham header'da turadi.
-   ============================================================ */
-.topbar{ display:flex; align-items:center; gap:10px; padding:4px 16px 14px; }
-.topbar .logo{ height:30px; width:auto; margin:0; flex:none; }
-.topbar__pills{ margin-left:auto; display:flex; align-items:center; gap:8px; }
-.tb-pill{
-  display:inline-flex; align-items:center; gap:6px;
-  height:32px; padding:0 11px; border-radius:var(--r-pill);
-  background:#fff; box-shadow:0 2px 6px rgba(28,39,76,.07);
-  font:600 15px/18px var(--f); color:var(--c-navy);
-}
-.tb-pill img{ width:18px; height:18px; flex:none; }
-/* TOPBAR:CSS:END */</style>
 </head>
 <body>
 <main class="page">
@@ -945,6 +939,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
             <!-- TOPBAR:END -->
 
             <!-- BANNER:REMOVED — eski «Salom!» banneri olib tashlandi -->
+
 
 
 
@@ -1001,7 +996,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                     </div>
                     <p class="plan__meta">
                       <span class="plan__topic">CSS Flexbox asoslari</span>
-                      <span class="plan__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>18 dars / 12 kun</span>
                     </p>
                     <div class="plan__foot">
                       <span class="plan__reward">+100 coin</span>
@@ -1020,7 +1014,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                     </div>
                     <p class="plan__meta">
                       <span class="plan__topic">Kasrlar bilan amallar</span>
-                      <span class="plan__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>12 dars / 14 kun</span>
                     </p>
                     <div class="plan__foot">
                       <span class="plan__reward">+100 coin</span>
@@ -1038,7 +1031,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                     </div>
                     <p class="plan__meta">
                       <span class="plan__topic">Present Simple</span>
-                      <span class="plan__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>15 dars / 20 kun</span>
                     </p>
                     <div class="plan__foot">
                       <span class="plan__reward">+100 coin</span>
