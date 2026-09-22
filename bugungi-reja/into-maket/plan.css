@@ -52,6 +52,16 @@
   border-radius:0 3px 3px 0; background:var(--c-brand);
 }
 .plan__row{ display:flex; align-items:center; gap:10px; }
+/* «1-chi → 2-chi → 3-chi» belgilarini ulaydigan vertikal chiziq.
+   Belgi markazi item chetidan 27 px (12 padding + 15).
+   Chiziq ataylab belgilarning tagiga kirib turadi: belgi z-index:1
+   bilan ustidan chizilgani uchun uch tomoni doim toza ko'rinadi va
+   qatorlar balandligi o'zgarsa ham uzilib qolmaydi. */
+.plan__item:not(:last-child)::after{
+  content:""; position:absolute; left:26px; top:40px; bottom:-30px;
+  width:2px; border-radius:1px; background:rgba(154,163,178,.28);
+}
+.plan__step{ position:relative; z-index:1; }
 .plan__step{
   display:grid; place-items:center; width:30px; height:30px; flex:none;
   border-radius:10px; font:600 10px/12px var(--f);
