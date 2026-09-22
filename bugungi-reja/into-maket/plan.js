@@ -24,7 +24,7 @@
   if (box) {
     var R = 16, C = 2 * Math.PI * R;
     box.innerHTML = COURSES.map(function (k) {
-      var off = C - C * k.p / 100;
+      var off = C - C * k.p / 100;   // yakuniy holat; boshida C (bo'sh) turadi
       return '<div class="plan__course">' +
         '<img class="plan__cthumb" src="' + (IMG[k.img] || "") + '" alt="">' +
         '<div class="plan__cbody">' +
@@ -39,7 +39,7 @@
             '<svg width="36" height="36">' +
               '<circle cx="18" cy="18" r="' + R + '" fill="none" stroke="#F0F0F0" stroke-width="4"/>' +
               '<circle cx="18" cy="18" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
-                      'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '"/>' +
+                      'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + C.toFixed(2) + '" data-off="' + off.toFixed(2) + '"/>' +
             '</svg>' +
             '<span class="plan__cpct">' + k.p + '%</span>' +
           '</span>' +
@@ -49,15 +49,42 @@
     }).join("");
   }
 
-  function toggle(btnId, boxId) {
+  function fillRings() {
+    if (!box) return;
+    var cs = box.querySelectorAll("circle[data-off]");
+    requestAnimationFrame(function () {
+      cs.forEach(function (c) { c.setAttribute("stroke-dashoffset", c.getAttribute("data-off")); });
+    });
+  }
+
+  function toggle(btnId, boxId, onOpen) {
     var b = document.getElementById(btnId), x = document.getElementById(boxId);
     if (!b || !x) return;
     b.addEventListener("click", function () {
       var open = b.getAttribute("aria-expanded") === "true";
       b.setAttribute("aria-expanded", String(!open));
       x.classList.toggle("is-open", !open);
+      if (!open && onOpen) onOpen();
     });
   }
-  toggle("planAllBtn", "planCourses");
+  toggle("planAllBtn", "planCourses", fillRings);
   toggle("planWhyBtn", "planWhyBody");
+
+  /* ---------- «+300 coin»: qulflangan, bosilganda izoh chiqadi ---------- */
+  (function () {
+    var btn = document.getElementById("planCoinBtn");
+    var tip = document.getElementById("planTip");
+    if (!btn || !tip) return;
+    var t = null;
+
+    btn.addEventListener("click", function () {
+      tip.hidden = false;
+      // animatsiyani qaytadan ishga tushirish uchun
+      tip.style.animation = "none"; void tip.offsetWidth; tip.style.animation = "";
+      btn.classList.remove("is-shake"); void btn.offsetWidth; btn.classList.add("is-shake");
+
+      clearTimeout(t);
+      t = setTimeout(function () { tip.hidden = true; btn.classList.remove("is-shake"); }, 2000);
+    });
+  })();
 })();

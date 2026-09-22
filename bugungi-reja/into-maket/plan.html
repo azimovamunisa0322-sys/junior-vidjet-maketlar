@@ -7,7 +7,7 @@
 
                 <!-- hero -->
                 <div class="plan__hero">
-                  <span class="plan__deco"></span>
+                  <span class="plan__decowrap"><span class="plan__deco"></span></span>
                   <div class="plan__herotop">
                     <div class="plan__ring">
                       <svg width="70" height="70">
@@ -22,10 +22,13 @@
                       <p class="plan__sub">IT dars qilamizmi? <b>4 ta dars</b> tayyor turibdi</p>
                     </div>
                   </div>
-                  <span class="plan__coin">
-                    <svg class="ic-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F3AD16"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/><path d="M12 8.4v7.2M10 10.2h3.1a1.6 1.6 0 0 1 0 3.2H10" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
-                    +300 coin
-                    <svg class="ic-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg>
+                  <span class="plan__coinwrap">
+                    <button class="plan__coin" type="button" id="planCoinBtn" aria-describedby="planTip">
+                      <svg class="ic-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F3AD16"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/><path d="M12 8.4v7.2M10 10.2h3.1a1.6 1.6 0 0 1 0 3.2H10" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+                      +300 coin
+                      <svg class="ic-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg>
+                    </button>
+                    <span class="plan__tip" id="planTip" role="status" hidden>Avval bugungi 4 ta darsni tugating — keyin coin sizniki 🪙</span>
                   </span>
                 </div>
 
@@ -48,6 +51,7 @@
                       <span class="plan__reward">+100 coin</span>
                       <button class="plan__go plan__go--fill" type="button">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>Boshlash
+                        <svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                       </button>
                     </div>
                   </div>
