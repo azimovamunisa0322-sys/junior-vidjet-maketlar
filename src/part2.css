@@ -1,0 +1,137 @@
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.appbar{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;gap:7px;
+  padding:6px 12px 10px;
+  background:#f5f6f8d9;
+  backdrop-filter:blur(12px);
+}
+.icon-btn{
+  display:grid;place-items:center;width:36px;height:36px;flex:none;
+  border-radius:999px;background:var(--white);color:var(--ink-700);
+  box-shadow:var(--shadow-sm);position:relative;
+}
+.icon-btn svg{width:19px;height:19px}
+.appbar .logo{height:26px;width:auto;flex:none;min-width:0}
+.appbar .spacer{margin-left:auto}
+.chip-xp,.chip-coin{
+  display:inline-flex;align-items:center;gap:5px;flex:none;
+  padding:6px 8px;border-radius:999px;font-size:11.5px;font-weight:800;
+  white-space:nowrap;
+}
+.chip-xp{background:#7b61ff1a;box-shadow:inset 0 0 0 1px #7b61ff33;color:var(--xp)}
+.chip-coin{background:#fec80233;box-shadow:inset 0 0 0 1px #fec80280;color:#8a6a00}
+.chip-xp svg,.chip-coin svg{width:14px;height:14px;flex:none}
+.chip-unit{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;opacity:.6}
+.dot-badge{
+  position:absolute;right:9px;top:9px;width:8px;height:8px;border-radius:999px;
+  background:var(--brand-500);box-shadow:0 0 0 2px var(--white);
+}
+
+/* ============================================================
+   UMUMIY QOLIP
+   ============================================================ */
+.page{padding:0 12px 96px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--white);border-radius:var(--r-3xl);box-shadow:var(--shadow-sm);padding:18px}
+.card-lg{background:var(--white);border-radius:28px;box-shadow:var(--shadow-sm);overflow:hidden}
+
+/* ============================================================
+   1. HERO — «Bugun sizni uzoq kutdim!»
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;
+  padding:20px 18px 22px;
+  border-bottom:6px solid var(--surface);
+  background:linear-gradient(135deg,var(--brand-100) 0%,var(--brand-50) 55%,#fff7f2 100%);
+}
+.hero-ring-deco{
+  position:absolute;right:-80px;top:-96px;width:256px;height:256px;
+  border-radius:999px;border:12px solid #ffc2a899;pointer-events:none;
+}
+.hero-top{position:relative;display:flex;align-items:center;gap:14px}
+.ring-wrap{position:relative;width:78px;height:78px;flex:none}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-label{
+  position:absolute;inset:0;display:grid;place-content:center;
+  text-align:center;line-height:1;
+}
+.ring-label .big{font-size:17px;font-weight:900}
+.ring-label .big i{font-style:normal;color:var(--ink-300)}
+.ring-label .cap{
+  margin-top:2px;font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;color:var(--ink-300);
+}
+.hero-title{font-size:25px;font-weight:900;line-height:1.08;letter-spacing:-.01em}
+.hero-sub{margin-top:6px;font-size:14px;font-weight:700;color:var(--ink-700)}
+.hero-sub b{color:var(--brand-600)}
+.coin-pill{
+  position:relative;margin-top:14px;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 15px;border-radius:999px;
+  background:var(--white);color:var(--ink-500);
+  font-size:13px;font-weight:900;
+  box-shadow:var(--shadow-sm),inset 0 0 0 1px #0000000d;
+}
+.coin-pill svg{width:15px;height:15px;flex:none}
+.coin-pill .lock{color:var(--ink-300);width:13px;height:13px}
+
+/* ============================================================
+   2. KUNLIK REJA — dars qatorlari
+   ============================================================ */
+.plan{display:flex;flex-direction:column;gap:9px;padding:12px}
+.plan-item{
+  position:relative;border-radius:var(--r-2xl);background:#f5f6f880;
+  padding:13px 14px;
+}
+.plan-item.is-now{background:var(--brand-50);box-shadow:inset 0 0 0 1px var(--brand-200)}
+.plan-item.is-now::before{
+  content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;
+  border-radius:0 4px 4px 0;background:var(--brand-500);
+}
+.plan-head{display:flex;align-items:center;gap:11px}
+.step{
+  display:grid;place-items:center;width:34px;height:34px;flex:none;
+  border-radius:var(--r-xl);font-size:10.5px;font-weight:900;
+  background:var(--surface);color:var(--ink-500);
+}
+.plan-item.is-now .step{background:var(--brand-500);color:var(--white)}
+.plan-thumb{width:70px;height:44px;flex:none;border-radius:var(--r-lg);object-fit:cover}
+.plan-body{min-width:0;flex:1}
+.plan-name{
+  font-size:15px;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.now-tag{
+  display:inline-block;margin-top:4px;
+  padding:2px 7px;border-radius:999px;background:var(--brand-500);color:var(--white);
+  font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;
+}
+.plan-meta{
+  margin-top:7px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+  font-size:12.5px;color:var(--ink-500);
+}
+.plan-topic{font-weight:600;color:var(--ink-700)}
+.meta-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:999px;background:var(--white);
+  font-size:10.5px;font-weight:700;color:var(--ink-500);
+  box-shadow:inset 0 0 0 1px #0000000d;
+}
+.meta-chip svg{width:11px;height:11px}
+.plan-foot{
+  margin-top:11px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.plan-coin{font-size:12px;font-weight:900;color:var(--brand-600)}
+.btn-start{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 18px;border-radius:999px;
+  font-size:13px;font-weight:900;
+  background:var(--white);color:var(--brand-600);
+  box-shadow:inset 0 0 0 1px var(--brand-200);
+}
+.btn-start.primary{background:var(--brand-500);color:var(--white);box-shadow:none}
+.btn-start svg{width:13px;height:13px}

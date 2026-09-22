@@ -1,0 +1,120 @@
+
+<script>
+/* ============================================================
+   Ma'lumot — veb versiyadagi «O'quvchida 3 ta muddatli kurs»
+   ssenariysidan aynan olingan
+   ============================================================ */
+var COURSES = [
+  {n:"WebStart",            s:"stop", c:"Muddati tugagan",   p:30,  d:"6/20",  cat:"HTML",    img:"c1"},
+  {n:"Dasturlash kursi",    s:"go",   c:"Vaqtida ketyapti",  p:20,  d:"4/63",  cat:"PYTHON",  img:"c2"},
+  {n:"Grafik dizayn",       s:"go",   c:"Vaqtida ketyapti",  p:44,  d:"8/36",  cat:"FIGMA",   img:"c3"},
+  {n:"Kompyuter Savodxonligi", s:"go",c:"Vaqtida ketyapti",  p:64,  d:"9/14",  cat:"OFIS",    img:"c4"},
+  {n:"Blockly Dasturlash",  s:"go",   c:"Vaqtida ketyapti",  p:33,  d:"4/24",  cat:"ASOSLAR", img:"c5"},
+  {n:"Suniy Intellekt",     s:"go",   c:"Vaqtida ketyapti",  p:22,  d:"2/18",  cat:"KIRISH",  img:"c6"},
+  {n:"New Year Event",      s:"go",   c:"Vaqtida ketyapti",  p:13,  d:"1/8",   cat:"EVENT",   img:"c7"},
+  {n:"Telegram Bot",        s:"idle", c:"Hali boshlanmagan", p:0,   d:"0/21",  cat:"KIRISH",  img:"c8"},
+  {n:"Startup maktabi",     s:"idle", c:"Hali boshlanmagan", p:0,   d:"0/12",  cat:"KIRISH",  img:"c9"},
+  {n:"2 Test Course",       s:"idle", c:"Hali boshlanmagan", p:0,   d:"0/10",  cat:"TEST",    img:"c10"},
+  {n:"Junior Kurs",         s:"go",   c:"Tugatilgan",        p:100, d:"14/14", cat:"YAKUN",   img:"c11"}
+];
+
+var IMG = window.__IMG__;
+var STROKE = { go:"#24ae3c", stop:"#d80000", idle:"#9aa3b2" };
+
+/* ---------- Barcha kurslarim ro'yxati ---------- */
+(function () {
+  var list = document.getElementById("allcList");
+  var R = 17, C = 2 * Math.PI * R;
+
+  list.innerHTML = COURSES.map(function (k) {
+    var off = C - C * k.p / 100;
+    return '<li class="course">' +
+      '<img class="course-thumb" src="' + IMG[k.img] + '" alt="">' +
+      '<div class="course-body">' +
+        '<p class="course-name">' + k.n + '</p>' +
+        '<span class="course-left-meta">' +
+          '<span class="course-chip chip-' + k.s + '">' + k.c + '</span>' +
+          '<span class="course-cat">' + k.cat + '</span>' +
+        '</span>' +
+      '</div>' +
+      '<div class="course-right">' +
+        '<span class="ringbox">' +
+          '<svg width="38" height="38">' +
+            '<circle cx="19" cy="19" r="' + R + '" fill="none" stroke="#f5f6f8" stroke-width="4"/>' +
+            '<circle cx="19" cy="19" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
+                    'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '"/>' +
+          '</svg>' +
+          '<span class="pct">' + k.p + '%</span>' +
+        '</span>' +
+        '<span class="course-dars">' + k.d + '<i>DARS</i></span>' +
+        '<span class="course-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>' +
+      '</div>' +
+    '</li>';
+  }).join("");
+})();
+
+/* ---------- Yig'iladigan bloklar ---------- */
+function toggler(btnId, boxId) {
+  var btn = document.getElementById(btnId), box = document.getElementById(boxId);
+  btn.addEventListener("click", function () {
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    box.classList.toggle("open", !open);
+  });
+}
+toggler("allcBtn", "allcList");
+toggler("whyBtn", "whyBody");
+
+/* ---------- Vebinar tescari sanog'i ---------- */
+(function () {
+  var boxes = [].slice.call(document.querySelectorAll("[data-countdown]"));
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function tick() {
+    var now = new Date();
+    boxes.forEach(function (box) {
+      var hm = box.getAttribute("data-countdown").split(":");
+      var t = new Date(now);
+      t.setHours(+hm[0], +hm[1], 0, 0);
+      if (t <= now) t.setDate(t.getDate() + 1);   // o'tib ketgan bo'lsa — ertaga
+      var left = Math.max(0, t - now) / 1000;
+      var d = Math.floor(left / 86400);
+      var h = Math.floor(left % 86400 / 3600);
+      var m = Math.floor(left % 3600 / 60);
+      var s = Math.floor(left % 60);
+      box.querySelector('[data-cd="d"]').textContent = pad(d);
+      box.querySelector('[data-cd="h"]').textContent = pad(h);
+      box.querySelector('[data-cd="m"]').textContent = pad(m);
+      box.querySelector('[data-cd="s"]').textContent = pad(s);
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ---------- Aktivlik kalendari ---------- */
+(function () {
+  var grid = document.getElementById("calGrid");
+  var dows = ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Yk"];
+  var active = [3, 5, 6, 11, 12, 18, 25];      // veb versiyadagi 7 faol kun
+  var html = dows.map(function (d) { return '<span class="cal-dow">' + d + "</span>"; }).join("");
+  for (var i = 1; i <= 30; i++) {
+    html += '<span class="cal-day' + (active.indexOf(i) > -1 ? " on" : "") + '">' + i + "</span>";
+  }
+  grid.innerHTML = html;
+})();
+
+/* ---------- Qurilma soati ---------- */
+(function () {
+  var el = document.getElementById("sbClock");
+  if (!el) return;
+  function tick() {
+    var d = new Date();
+    el.textContent = d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
+  }
+  tick();
+  setInterval(tick, 20000);
+})();
+</script>
+</body>
+</html>

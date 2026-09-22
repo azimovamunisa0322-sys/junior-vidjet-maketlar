@@ -1,0 +1,121 @@
+
+/* ============================================================
+   3. BARCHA KURSLARIM
+   ============================================================ */
+.allc{border-top:6px solid var(--surface);padding:13px 14px}
+.allc-btn{
+  display:flex;width:100%;align-items:center;gap:11px;
+  padding:11px 12px;border-radius:var(--r-2xl);
+  background:var(--brand-100);box-shadow:inset 0 0 0 1px var(--brand-300);
+  text-align:left;
+}
+.allc-ic{
+  display:grid;place-items:center;width:38px;height:38px;flex:none;
+  border-radius:var(--r-2xl);background:var(--brand-500);color:var(--white);
+  box-shadow:var(--shadow-md);
+}
+.allc-ic svg{width:19px;height:19px}
+.allc-txt{min-width:0;flex:1}
+.allc-txt b{display:block;font-size:15px;font-weight:900;line-height:1.2}
+.allc-txt span{display:block;margin-top:2px;font-size:11.5px;font-weight:700;color:var(--brand-600)}
+.allc-caret{
+  display:grid;place-items:center;width:30px;height:30px;flex:none;
+  border-radius:999px;background:var(--white);color:var(--brand-600);box-shadow:var(--shadow-sm);
+}
+.allc-caret svg{width:15px;height:15px;transition:transform .2s ease}
+.allc-btn[aria-expanded="true"] .allc-caret svg{transform:rotate(180deg)}
+.allc-list{display:none;margin-top:9px;flex-direction:column;gap:6px}
+.allc-list.open{display:flex}
+.course{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:var(--r-xl);background:var(--surface);
+}
+.course-thumb{width:54px;height:35px;flex:none;border-radius:var(--r-md,6px);object-fit:cover}
+.course-body{min-width:0;flex:1}
+.course-name{
+  font-size:12.5px;font-weight:900;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.course-chip{
+  display:inline-block;margin-top:4px;
+  padding:2px 8px;border-radius:999px;
+  font-size:10px;font-weight:900;white-space:nowrap;
+}
+.chip-go{background:#24ae3c1a;color:var(--go)}
+.chip-stop{background:#d800001a;color:var(--stop)}
+.chip-idle{background:#9aa3b21f;color:var(--ink-500)}
+.course-left-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px}
+.course-right{display:flex;align-items:center;gap:7px;flex:none}
+.course-right svg{transform:rotate(-90deg)}
+.pct{
+  position:absolute;inset:0;display:grid;place-content:center;
+  font-size:9.5px;font-weight:900;
+}
+.ringbox{position:relative;width:38px;height:38px}
+.course-dars{font-size:10px;font-weight:900;color:var(--ink-500);white-space:nowrap;text-align:center}
+.course-dars i{display:block;font-style:normal;font-size:7.5px;color:var(--ink-300);letter-spacing:.06em}
+.course-cat{
+  font-size:8.5px;font-weight:900;color:var(--ink-300);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.course-chev{color:var(--ink-300);flex:none}
+.course-chev svg{width:15px;height:15px;display:block}
+
+/* ---------- Nega aynan shuncha dars? ---------- */
+.why{border-top:6px solid var(--surface);padding:12px 16px 16px}
+.why-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--ink-500);
+}
+.why-btn svg{width:13px;height:13px}
+.why-btn .caret{transition:transform .2s ease}
+.why-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+.why-body{display:none;margin-top:10px;font-size:12px;line-height:1.55;color:var(--ink-500)}
+.why-body.open{display:block}
+.why-body p+p{margin-top:8px}
+.why-body b{color:var(--ink-900)}
+.why-body .hl{color:var(--brand-600);font-weight:900}
+
+/* ============================================================
+   4. O'YINLAR
+   ============================================================ */
+.games{padding:16px}
+.games-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.games-head h2{font-size:19px;font-weight:900;letter-spacing:-.01em}
+.more-btn{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:999px;background:var(--surface);
+  font-size:12.5px;font-weight:900;color:var(--ink-700);
+}
+.more-btn svg{width:15px;height:15px}
+.games-row{
+  display:flex;gap:11px;overflow-x:auto;
+  padding:0 16px 4px;margin:0 -16px;
+  scrollbar-width:none;scroll-snap-type:x mandatory;
+}
+.games-row::-webkit-scrollbar{display:none}
+.game{width:172px;flex:none;scroll-snap-align:start}
+.game-btn{
+  display:block;width:100%;overflow:hidden;
+  border-radius:var(--r-2xl);background:var(--surface);text-align:left;
+}
+.game-art{position:relative;display:block;height:96px;width:100%;overflow:hidden}
+.game-art svg{width:100%;height:100%;display:block}
+.game-play{
+  position:absolute;right:8px;bottom:8px;
+  display:grid;place-items:center;width:32px;height:32px;
+  border-radius:999px;background:#fffffff2;color:var(--brand-600);box-shadow:var(--shadow-md);
+}
+.game-play svg{width:14px;height:14px}
+.game-txt{display:block;padding:11px}
+.game-name{
+  display:block;font-size:13.5px;font-weight:900;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.game-meta{display:block;margin-top:2px;font-size:11px;color:var(--ink-500)}
+.game-cat{
+  display:inline-block;margin-top:7px;
+  padding:2px 8px;border-radius:999px;background:var(--white);
+  font-size:9.5px;font-weight:900;color:var(--ink-500);
+  text-transform:uppercase;letter-spacing:.04em;
+}
