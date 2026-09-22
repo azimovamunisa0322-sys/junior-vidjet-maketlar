@@ -51,7 +51,7 @@
 .w-when{margin-top:8px;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;color:var(--ink-500)}
 .w-when span{display:inline-flex;align-items:center;gap:4px}
 .w-when svg{width:13px;height:13px;color:var(--brand-500)}
-.w-robo{width:62px;flex:none}
+.w-robo{width:64px;flex:none}
 .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:15px}
 .countdown div{border-radius:var(--r-xl);background:var(--surface);padding:8px 2px;text-align:center}
 .cd-num{font-size:18px;font-weight:800;line-height:1}

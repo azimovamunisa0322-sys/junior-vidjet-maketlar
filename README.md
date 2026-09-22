@@ -19,9 +19,9 @@ Veb sahifadagi hamma qism, veb tartibida:
 | 3 | Kunlik reja | 3 ta dars qatori, «Hozir shuni qiling» belgisi, `+100 coin`, «Boshlash» |
 | 4 | Barcha kurslarim | yig'iladigan, 11 ta kurs: progress halqasi, holat chipi, dars soni, kategoriya |
 | 5 | Nega aynan shuncha dars? | yig'iladigan izoh |
-| 6 | O'yinlar | gorizontal karusel, 3 ta o'yin |
-| 7 | Streak | halqali, 7 kunlik, Joriy / Eng yaxshi |
-| 8 | Keyingi vebinar ×2 | **jonli** teskari sanoq |
+| 6 | Keyingi vebinar ×2 | **jonli** teskari sanoq — veb'dagidek kunlik rejaning yonida, pastga tushmaydi |
+| 7 | O'yinlar | gorizontal karusel, 3 ta o'yin |
+| 8 | Streak | halqali, 7 kunlik, Joriy / Eng yaxshi |
 | 9 | Oylik challenge | binafsha gradient, progress |
 | 10 | Mentor yordami | 24/7, «Mentorga yozish» |
 | 11 | Kunlik vazifalar | 0/3, uchta qator |
@@ -57,6 +57,7 @@ src/part2.css    header, hero, kunlik reja
 src/part3.css    barcha kurslarim, o'yinlar
 src/part4.css    vidjetlar, pastki navigatsiya
 src/part5.html   header + hero + kunlik reja
+src/part5b.html  vebinarlar (reja bilan bir sathda)
 src/part6.html   o'yinlar
 src/part7.html   8 ta vidjet + pastki navigatsiya
 src/part8.html   JS: kurslar ro'yxati, sanoq, kalendar

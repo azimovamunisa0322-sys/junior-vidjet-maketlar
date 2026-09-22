@@ -36,7 +36,7 @@
    ============================================================ */
 .page{padding:0 12px 96px}
 .stack{display:flex;flex-direction:column;gap:14px}
-.card{background:var(--white);border-radius:var(--r-3xl);box-shadow:var(--shadow-sm);padding:18px}
+.card{background:var(--white);border-radius:var(--r-3xl);box-shadow:var(--shadow-sm);padding:20px}
 .card-lg{background:var(--white);border-radius:28px;box-shadow:var(--shadow-sm);overflow:hidden}
 
 /* ============================================================

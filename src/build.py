@@ -13,7 +13,7 @@ imgs = {fn.rsplit(".",1)[0]: datauri(os.path.join(A, fn))
 
 doc = ""
 for p in ["part1.html","part2.css","part3.css","part4.css",
-          "part5.html","part6.html","part7.html","part8.html"]:
+          "part5.html","part5b.html","part6.html","part7.html","part8.html"]:
     doc += open(os.path.join(SP, p), encoding="utf-8").read()
 
 doc = doc.replace("\n<script>\n/* ===", "<script>window.__IMG__=" + json.dumps(imgs) + ";</script>\n<script>\n/* ===", 1)
