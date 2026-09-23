@@ -18,15 +18,14 @@
     {n:"Junior Kurs",            s:"go",   c:"Tugatilgan",        p:100, d:"14/14", cat:"YAKUN",   img:"c11"}
   ];
   var STROKE = { go:"#58CC02", stop:"#ED0000", idle:"#B4B4B4" };
-  var IMG = window.__PLANIMG__ || {};
 
   var box = document.getElementById("planCourses");
   if (box) {
     var R = 16, C = 2 * Math.PI * R;
-    box.innerHTML = COURSES.map(function (k) {
+    box.innerHTML = COURSES.map(function (k, i) {
       var off = C - C * k.p / 100;   // yakuniy holat; boshida C (bo'sh) turadi
       return '<div class="plan__course">' +
-        '<img class="plan__cthumb" src="' + (IMG[k.img] || "") + '" alt="">' +
+        '<span class="plan__cicon plan__cicon--' + (i % 6) + '">' + k.n.charAt(0) + '</span>' +
         '<div class="plan__cbody">' +
           '<p class="plan__cname">' + k.n + '</p>' +
           '<span class="plan__cmeta">' +

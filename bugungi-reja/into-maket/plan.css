@@ -156,7 +156,21 @@
   border-radius:12px; background:var(--c-row);
   box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
 }
-.plan__cthumb{ width:54px; height:35px; flex:none; border-radius:8px; object-fit:cover; }
+/* Muqova rasmi o'rniga oddiy ikonka: kurs nomining bosh harfi.
+   Ranglar maketning o'z palitrasidan, indeks bo'yicha aylanadi. */
+.plan__cicon{
+  flex:none; display:grid; place-items:center;
+  width:38px; height:38px; border-radius:11px;
+  font:800 16px/18px var(--f); color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.22);
+  box-shadow:inset 0 -2px 5px rgba(0,0,0,.12);
+}
+.plan__cicon--0{ background:linear-gradient(160deg,#6FC6FF 0%,#1CB0F6 100%); }
+.plan__cicon--1{ background:linear-gradient(160deg,#8FE05C 0%,#58CC02 100%); }
+.plan__cicon--2{ background:linear-gradient(160deg,#BCA6FF 0%,#8F6FF0 100%); }
+.plan__cicon--3{ background:linear-gradient(160deg,#FFB784 0%,#FF7A3D 100%); }
+.plan__cicon--4{ background:linear-gradient(160deg,#FFD968 0%,#F3AD16 100%); }
+.plan__cicon--5{ background:linear-gradient(160deg,#FFA8BC 0%,#FF6E8E 100%); }
 .plan__cbody{ min-width:0; flex:1; }
 .plan__cname{ margin:0; font:600 14px/18px var(--f); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-top:4px; }

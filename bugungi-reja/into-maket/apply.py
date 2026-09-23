@@ -11,7 +11,7 @@ def datauri(p):
     mime = "image/png" if p.suffix == ".png" else "image/jpeg"
     return "data:%s;base64,%s" % (mime, base64.b64encode(p.read_bytes()).decode())
 
-need = ["r1","r2","r3","roboflag"] + ["c%d" % i for i in range(1, 12)]
+need = ["roboflag"]   # dars va kurs rasmlari ikonkaga almashtirildi
 imgs = {}
 for k in need:
     hit = [p for p in ASSETS.iterdir() if p.stem == k]
