@@ -58,13 +58,16 @@
 .plan__coin .ic-coin{ width:15px; height:15px; flex:none; }
 .plan__coin .ic-lock{ width:13px; height:13px; flex:none; color:var(--c-text-3); }
 
-/* ---------- Bugungi darslar ---------- */
+/* ---------- Bugungi darslar ----------
+   Tuzilish: [raqam] [ikonka] [matn ustuni].
+   Matnning hammasi BITTA chap chetdan boshlanadi — ilgari nom rasmdan
+   keyin, mavzu esa boshqa joydan boshlanib, qatorlar tekislanmagan edi.
+   ------------------------------------------------------------------ */
 .plan__list{ padding:10px; display:flex; flex-direction:column; gap:8px; }
-/* Kurs qatorlaridagi kabi: fon oq kartadan deyarli farq qilmaydi,
-   shuning uchun chekkani soya va ingichka chegara ajratib turadi. */
+
 .plan__item{
-  position:relative; border-radius:var(--r-inner);
-  background:var(--c-row); padding:11px 12px;
+  position:relative; display:flex; align-items:flex-start; gap:10px;
+  border-radius:var(--r-inner); background:var(--c-row); padding:12px;
   box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
 }
 .plan__item--now{
@@ -72,41 +75,50 @@
   box-shadow:0 2px 8px rgba(254,91,26,.10), inset 0 0 0 1px rgba(255,79,40,.12);
 }
 .plan__item--now::before{
-  content:""; position:absolute; left:0; top:11px; bottom:11px; width:3px;
+  content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px;
   border-radius:0 3px 3px 0; background:var(--c-brand);
 }
-.plan__row{ display:flex; align-items:center; gap:10px; }
-/* «1-chi → 2-chi → 3-chi» belgilarini ulaydigan vertikal chiziq.
-   Belgi markazi item chetidan 27 px (12 padding + 15).
-   Chiziq ataylab belgilarning tagiga kirib turadi: belgi z-index:1
-   bilan ustidan chizilgani uchun uch tomoni doim toza ko'rinadi va
-   qatorlar balandligi o'zgarsa ham uzilib qolmaydi. */
+
+/* «1 → 2 → 3» ni ulaydigan vertikal chiziq. Raqam markazi karta
+   chetidan 27 px (12 padding + 15); chiziq raqam tagiga kirib turadi. */
 .plan__item:not(:last-child)::after{
   content:""; position:absolute; left:26px; top:40px; bottom:-30px;
   width:2px; border-radius:1px; background:rgba(154,163,178,.28);
 }
-.plan__step{ position:relative; z-index:1; }
+
 .plan__step{
-  display:grid; place-items:center; width:30px; height:30px; flex:none;
-  border-radius:10px; font:600 15px/18px var(--f);   /* yolg'iz raqam */
+  position:relative; z-index:1; flex:none;
+  display:grid; place-items:center; width:30px; height:30px;
+  border-radius:10px; font:600 15px/18px var(--f);
   background:#fff; color:var(--c-slate);
 }
 .plan__item--now .plan__step{ background:var(--c-brand); color:#fff; }
-.plan__thumb{ width:62px; height:40px; flex:none; border-radius:9px; object-fit:cover; }
-.plan__info{ min-width:0; flex:1; }
-.plan__name{ margin:0; font:var(--t-title); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-/* Pastki qatorlar belgi ustunidan keyin boshlanadi (30 belgi + 10 oraliq),
-   shunda ulovchi chiziq matn ustidan o'tmaydi — veb'dagi kabi hamma
-   kontent belgi ustunining o'ng tomonida turadi. */
-.plan__meta{ margin:8px 0 0; padding-left:40px; display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
-.plan__topic{ font:var(--t-body); color:var(--c-slate); }
-/* Ajratuvchi chiziqsiz — ierarxiya faqat o'lcham va rang bilan beriladi. */
-.plan__foot{
-  margin-top:12px; padding-left:40px;
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
+
+/* ikonka — muqova rasmi o'rniga */
+.plan__icon{
+  flex:none; display:grid; place-items:center;
+  width:44px; height:44px; border-radius:13px;
+  box-shadow:inset 0 -2px 6px rgba(0,0,0,.12);
 }
-/* Mukofot — 3-daraja: jim kulrang, tanga ikonkasi bilan.
-   Kartadagi yagona kuchli rang «Boshlash» tugmasida qoladi. */
+.plan__icon b{ font:800 15px/17px var(--f); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+.plan__icon--web{  background:linear-gradient(160deg,#6FC6FF 0%,#1CB0F6 100%); }
+.plan__icon--math{ background:linear-gradient(160deg,#8FE05C 0%,#58CC02 100%); }
+.plan__icon--eng{  background:linear-gradient(160deg,#BCA6FF 0%,#8F6FF0 100%); }
+.plan__icon--web b{ font-size:14px; }
+.plan__icon--math b{ font-size:13px; letter-spacing:-.02em; }
+
+/* matn ustuni — hamma qator shu chetdan boshlanadi */
+.plan__body{ min-width:0; flex:1; }
+.plan__name{
+  margin:0; font:var(--t-title); color:var(--c-navy);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.plan__topic{ margin:4px 0 0; font:var(--t-body); color:var(--c-slate); }
+.plan__foot{
+  margin-top:12px; display:flex; align-items:center;
+  justify-content:space-between; gap:10px;
+}
+/* Mukofot — 3-daraja: jim kulrang. Kartadagi yagona kuchli rang tugmada. */
 .plan__reward{
   display:inline-flex; align-items:center; gap:5px;
   font:600 12px/15px var(--f); color:var(--c-text-2);
