@@ -95,11 +95,6 @@
 .plan__thumb{ width:62px; height:40px; flex:none; border-radius:9px; object-fit:cover; }
 .plan__info{ min-width:0; flex:1; }
 .plan__name{ margin:0; font:var(--t-title); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.plan__now{
-  display:inline-block; margin-top:5px; padding:2px 8px; border-radius:var(--r-pill);
-  background:var(--c-brand); color:#fff; font:600 9px/13px var(--f);
-  letter-spacing:.05em; text-transform:uppercase;
-}
 /* Pastki qatorlar belgi ustunidan keyin boshlanadi (30 belgi + 10 oraliq),
    shunda ulovchi chiziq matn ustidan o'tmaydi — veb'dagi kabi hamma
    kontent belgi ustunining o'ng tomonida turadi. */
