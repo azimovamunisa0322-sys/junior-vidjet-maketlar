@@ -839,7 +839,13 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .plan__allbtn[aria-expanded="true"] .plan__caret svg{ transform:rotate(180deg); }
 .plan__courses{ display:none; margin-top:8px; flex-direction:column; gap:5px; }
 .plan__courses.is-open{ display:flex; }
-.plan__course{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:12px; background:var(--c-row); }
+/* Qator foni (#F8F8FC) oq kartadan atigi 3% farq qiladi — aralashib
+   ketadi. Yumshoq soya va ingichka chegara chekkani ajratib turadi. */
+.plan__course{
+  display:flex; align-items:center; gap:10px; padding:9px 10px;
+  border-radius:12px; background:var(--c-row);
+  box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
+}
 .plan__cthumb{ width:54px; height:35px; flex:none; border-radius:8px; object-fit:cover; }
 .plan__cbody{ min-width:0; flex:1; }
 .plan__cname{ margin:0; font:600 14px/18px var(--f); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -947,6 +953,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
             <!-- TOPBAR:END -->
 
             <!-- BANNER:REMOVED — eski «Salom!» banneri olib tashlandi -->
+
 
 
 
