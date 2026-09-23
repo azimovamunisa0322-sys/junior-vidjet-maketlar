@@ -6,24 +6,30 @@
    ============================================================ */
 .plan{ padding:4px 0 4px; }   /* sarlavhasiz */
 .plan__card{
-  margin:0 16px; background:var(--c-card);
+  margin:0 16px;   /* hero alohida kartaga chiqarildi */ background:var(--c-card);
   border-radius:20px; box-shadow:var(--shadow-card); overflow:hidden;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero — alohida karta ----------
+   Ilgari u kurslar kartasining ichida turgani uchun faqat tepa burchagi
+   yumaloq, pasti esa to'g'ri chiziq edi. Endi o'zi karta: to'rtala
+   burchagi yumaloq va soyasi bor.
+   overflow:hidden YO'Q — «+300 coin» tultipi chetidan chiqib turishi kerak;
+   bezak halqasi va maskot o'z qobiqlarida kesiladi. */
 .plan__hero{
-  /* overflow:hidden YO'Q — tultip hero chetidan chiqib turishi kerak.
-     Bezak halqasini o'z qobig'i (.plan__decowrap) kesadi. */
-  position:relative; padding:16px 14px 16px;
+  position:relative;
+  margin:0 16px 12px;
+  padding:16px 14px;
+  border-radius:20px;
   background:linear-gradient(135deg,var(--c-brand-soft) 0%,#FFF6F2 60%,#FFFBF9 100%);
-  border-bottom:5px solid var(--c-bg);
+  box-shadow:0 6px 18px rgba(28,39,76,.08), inset 0 0 0 1px rgba(255,79,40,.07);
 }
-.plan__decowrap{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.plan__decowrap{ position:absolute; inset:0; overflow:hidden; border-radius:inherit; pointer-events:none; }
 /* Maskot — veb'dagi robo-flag. O'z qobig'i ichida kesiladi, shuning uchun
    hero'ning overflow'iga tegmaydi va tultip baribir tashqariga chiqa oladi. */
 .plan__robowrap{
   position:absolute; right:6px; bottom:0; width:118px; height:80px;
-  overflow:hidden; pointer-events:none;
+  overflow:hidden; border-bottom-right-radius:20px; pointer-events:none;
 }
 .plan__robo{
   position:absolute; right:0; bottom:-7px; height:92px; width:auto;
