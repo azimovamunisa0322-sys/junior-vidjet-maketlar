@@ -43,7 +43,6 @@
             '</svg>' +
             '<span class="plan__cpct">' + k.p + '%</span>' +
           '</span>' +
-          '<span class="plan__cdars">' + k.d + '<i>DARS</i></span>' +
         '</div>' +
       '</div>';
     }).join("");
