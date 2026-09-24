@@ -1,72 +1,94 @@
 
 /* ============================================================
    BUGUNGI REJA — veb bosh sahifasidan ko'chirilgan bo'lim.
-   Maketning o'z dizayn tizimida: SFpro, --c-brand, --r-card.
-   Vidjetlarga tegmaydi, ular faqat pastroqqa suriladi.
+   Maketning o'z dizayn tizimida: SFpro, --c-* ranglari,
+   --t-* shrift shkalasi, --r-* radiuslari, 4 px bo'shliq to'ri.
+
+   Qo'shimcha matn ranglari (WCAG AA, har qanday fonda 4.9+):
+     --c-muted      kichik va ikkilamchi matn
+     --c-brand-text och fonda apelsin matn (fon uchun emas)
+   Brend ranglarining o'zi (--c-brand) faqat to'ldirish uchun
+   qoladi — kichik matnda u 3.1 ga tushadi, ya'ni AA dan o'tmaydi.
    ============================================================ */
-.plan{ padding:4px 0 4px; }   /* sarlavhasiz */
-.plan__card{
-  margin:0 16px;   /* hero alohida kartaga chiqarildi */ background:var(--c-card);
-  border-radius:20px; box-shadow:var(--shadow-card); overflow:hidden;
+:root{
+  --c-muted:#5C6678;
+  --c-brand-text:#C2340D;
+  --tap:44px;              /* eng kichik tegish maydoni (Apple HIG) */
 }
 
-/* ---------- Hero — alohida karta ----------
-   Ilgari u kurslar kartasining ichida turgani uchun faqat tepa burchagi
-   yumaloq, pasti esa to'g'ri chiziq edi. Endi o'zi karta: to'rtala
-   burchagi yumaloq va soyasi bor.
-   overflow:hidden YO'Q — «+300 coin» tultipi chetidan chiqib turishi kerak;
-   bezak halqasi va maskot o'z qobiqlarida kesiladi. */
+/* ---------- Bo'lim ---------- */
+.plan{ padding:4px 0; }
+
+/* ---------- Hero — alohida karta ---------- */
 .plan__hero{
   position:relative;
   margin:0 16px 12px;
-  padding:16px 14px;
-  border-radius:20px;
+  padding:16px;
+  border-radius:var(--r-card);
   background:linear-gradient(135deg,var(--c-brand-soft) 0%,#FFF6F2 60%,#FFFBF9 100%);
   box-shadow:0 6px 18px rgba(28,39,76,.08), inset 0 0 0 1px rgba(255,79,40,.07);
 }
 .plan__decowrap{ position:absolute; inset:0; overflow:hidden; border-radius:inherit; pointer-events:none; }
-/* Maskot — veb'dagi robo-flag. O'z qobig'i ichida kesiladi, shuning uchun
-   hero'ning overflow'iga tegmaydi va tultip baribir tashqariga chiqa oladi. */
-.plan__robowrap{
-  position:absolute; right:6px; bottom:0; width:118px; height:80px;
-  overflow:hidden; border-bottom-right-radius:20px; pointer-events:none;
-}
-.plan__robo{
-  position:absolute; right:0; bottom:-7px; height:92px; width:auto;
-  animation:3.2s ease-in-out infinite plan-float;
-}
 .plan__deco{
   position:absolute; right:-64px; top:-78px; width:196px; height:196px;
   border-radius:var(--r-pill); border:10px solid rgba(255,79,40,.16);
 }
+.plan__robowrap{
+  position:absolute; right:8px; bottom:0; width:116px; height:80px;
+  overflow:hidden; border-bottom-right-radius:var(--r-card); pointer-events:none;
+}
+.plan__robo{
+  position:absolute; right:0; bottom:-8px; height:92px; width:auto;
+  animation:3.2s ease-in-out infinite plan-float;
+}
+
 .plan__herotop{ position:relative; display:flex; align-items:center; gap:12px; }
-.plan__hero--robo .plan__sub{ padding-right:96px; }
-.plan__ring{ position:relative; width:70px; height:70px; flex:none; }
+.plan__ring{ position:relative; width:72px; height:72px; flex:none; }
 .plan__ring svg{ transform:rotate(-90deg); display:block; }
 .plan__ringtxt{ position:absolute; inset:0; display:grid; place-content:center; text-align:center; line-height:1; }
-.plan__ringtxt b{ font:var(--t-title); font-size:16px; color:var(--c-navy); }
-.plan__ringtxt b i{ font-style:normal; color:var(--c-text-3); }
-.plan__ringtxt span{ display:block; margin-top:3px; font:var(--t-tiny); font-size:9px; letter-spacing:.06em; text-transform:uppercase; color:var(--c-text-3); }
-.plan__hi{ margin:0; font:600 21px/25px var(--f); color:var(--c-navy); letter-spacing:-.01em; }
-.plan__sub{ margin:5px 0 0; font:var(--t-small); color:var(--c-slate); }
-.plan__sub b{ color:var(--c-brand); font-weight:600; }
-.plan__coin{
-  position:relative; margin-top:12px; display:inline-flex; align-items:center; gap:6px;
-  padding:8px 13px; border-radius:var(--r-pill); background:#fff; border:1px solid var(--c-line);
-  font:var(--t-btn); color:var(--c-slate-2);
+.plan__ringtxt b{ font:var(--t-h1); color:var(--c-navy); }
+.plan__ringtxt b i{ font-style:normal; color:var(--c-muted); }
+.plan__ringtxt span{
+  display:block; margin-top:4px; font:var(--t-tiny); font-size:10px;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--c-muted);
 }
-.plan__coin .ic-coin{ width:15px; height:15px; flex:none; }
-.plan__coin .ic-lock{ width:13px; height:13px; flex:none; color:var(--c-text-3); }
+.plan__hi{ margin:0; font:var(--t-h1); color:var(--c-navy); letter-spacing:-.01em; }
+.plan__sub{ margin:4px 0 0; padding-right:96px; font:var(--t-small); color:var(--c-muted); }
+.plan__sub b{ color:var(--c-brand-text); font-weight:600; }
 
-/* ---------- Bugungi darslar ----------
-   Tuzilish: [raqam] [ikonka] [matn ustuni].
-   Matnning hammasi BITTA chap chetdan boshlanadi — ilgari nom rasmdan
-   keyin, mavzu esa boshqa joydan boshlanib, qatorlar tekislanmagan edi.
-   ------------------------------------------------------------------ */
-.plan__list{ padding:10px; display:flex; flex-direction:column; gap:8px; }
+.plan__coinwrap{ position:relative; display:inline-block; margin-top:12px; }
+.plan__coin{
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:var(--tap); padding:0 16px;
+  border-radius:var(--r-pill); background:#fff; border:1px solid var(--c-line);
+  font:var(--t-btn); color:var(--c-muted); cursor:pointer;
+}
+.plan__coin .ic-coin{ width:16px; height:16px; flex:none; }
+.plan__coin .ic-lock{ width:14px; height:14px; flex:none; color:var(--c-muted); }
+.plan__tip{
+  position:absolute; left:0; top:100%; z-index:20; margin-top:8px;
+  width:max-content; max-width:232px;
+  padding:8px 12px; border-radius:var(--r-inner);
+  background:var(--c-navy); color:#fff;
+  font:var(--t-tiny); text-align:left;
+  box-shadow:0 10px 24px rgba(28,39,76,.28);
+  animation:.5s ease-out both plan-rise;
+}
+.plan__tip[hidden]{ display:none; }
+
+/* ============================================================
+   Bugungi darslar
+   Tuzilish: [raqam] [ikonka] [matn ustuni] — ustundagi hamma
+   qator bitta chap chetdan boshlanadi.
+   ============================================================ */
+.plan__card{
+  margin:0 16px; background:var(--c-card);
+  border-radius:var(--r-card); box-shadow:var(--shadow-card); overflow:hidden;
+}
+.plan__list{ padding:12px; display:flex; flex-direction:column; gap:8px; }
 
 .plan__item{
-  position:relative; display:flex; align-items:flex-start; gap:10px;
+  position:relative; display:flex; align-items:flex-start; gap:12px;
   border-radius:var(--r-inner); background:var(--c-row); padding:12px;
   box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
 }
@@ -75,132 +97,142 @@
   box-shadow:0 2px 8px rgba(254,91,26,.10), inset 0 0 0 1px rgba(255,79,40,.12);
 }
 .plan__item--now::before{
-  content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px;
-  border-radius:0 3px 3px 0; background:var(--c-brand);
+  content:""; position:absolute; left:0; top:12px; bottom:12px; width:4px;
+  border-radius:0 4px 4px 0; background:var(--c-brand);
 }
-
-/* «1 → 2 → 3» ni ulaydigan vertikal chiziq. Raqam markazi karta
-   chetidan 27 px (12 padding + 15); chiziq raqam tagiga kirib turadi. */
+/* «1 → 2 → 3» ni ulaydigan chiziq; raqam markazi chetdan 28 px */
 .plan__item:not(:last-child)::after{
-  content:""; position:absolute; left:26px; top:40px; bottom:-30px;
-  width:2px; border-radius:1px; background:rgba(154,163,178,.28);
+  content:""; position:absolute; left:27px; top:40px; bottom:-28px;
+  width:2px; border-radius:1px; background:rgba(92,102,120,.30);
 }
 
 .plan__step{
   position:relative; z-index:1; flex:none;
-  display:grid; place-items:center; width:30px; height:30px;
-  border-radius:10px; font:600 15px/18px var(--f);
-  background:#fff; color:var(--c-slate);
+  display:grid; place-items:center; width:32px; height:32px;
+  border-radius:var(--r-inner); font:var(--t-title);
+  background:#fff; color:var(--c-muted);
 }
 .plan__item--now .plan__step{ background:var(--c-brand); color:#fff; }
 
-/* ikonka — muqova rasmi o'rniga */
 .plan__icon{
   flex:none; display:grid; place-items:center;
-  width:44px; height:44px; border-radius:13px;
+  width:44px; height:44px; border-radius:var(--r-inner);
   box-shadow:inset 0 -2px 6px rgba(0,0,0,.12);
 }
-.plan__icon b{ font:800 14px/16px var(--f); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.25); }
-.plan__icon--web{  background:linear-gradient(160deg,#6FC6FF 0%,#1CB0F6 100%); }
-.plan__icon--math{ background:linear-gradient(160deg,#8FE05C 0%,#58CC02 100%); }
-.plan__icon--eng{  background:linear-gradient(160deg,#BCA6FF 0%,#8F6FF0 100%); }
-/* uchala ikonkada ham harf o'lchami bir xil — 14 px */
+.plan__icon b{ font:var(--t-btn); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.3); }
+.plan__icon--web{  background:linear-gradient(160deg,#4FB8F2 0%,#0E86C4 100%); }
+.plan__icon--math{ background:linear-gradient(160deg,#6FC93C 0%,#3E9A00 100%); }
+.plan__icon--eng{  background:linear-gradient(160deg,#A58CF5 0%,#6C4CD8 100%); }
 .plan__icon--math b{ letter-spacing:-.02em; }
 
-/* matn ustuni — hamma qator shu chetdan boshlanadi */
 .plan__body{ min-width:0; flex:1; }
 .plan__name{
   margin:0; font:var(--t-title); color:var(--c-navy);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.plan__topic{ margin:4px 0 0; font:var(--t-body); color:var(--c-slate); }
+.plan__topic{ margin:4px 0 0; font:var(--t-body); color:var(--c-muted); }
 .plan__foot{
   margin-top:12px; display:flex; align-items:center;
-  justify-content:space-between; gap:10px;
+  justify-content:space-between; gap:8px;
 }
-/* Mukofot — 3-daraja: jim kulrang. Kartadagi yagona kuchli rang tugmada. */
 .plan__reward{
-  display:inline-flex; align-items:center; gap:5px;
-  font:600 12px/15px var(--f); color:var(--c-text-2);
+  display:inline-flex; align-items:center; gap:5px; flex:none;
+  white-space:nowrap;                      /* «+100 / coin» bo'lib sinmasin */
+  font:var(--t-small); font-weight:600; color:var(--c-muted);
 }
 .plan__reward svg{ width:14px; height:14px; flex:none; }
 .plan__go{
-  display:inline-flex; align-items:center; gap:5px; padding:9px 16px;
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  min-height:var(--tap); padding:0 14px; flex:none; white-space:nowrap;
   border:1px solid var(--c-brand); border-radius:var(--r-pill);
-  background:#fff; color:var(--c-brand); font:var(--t-btn); cursor:pointer;
+  background:#fff; color:var(--c-brand-text); font:var(--t-btn); cursor:pointer;
 }
-.plan__go--fill{ background:var(--c-brand); color:#fff; }
+.plan__go--fill{ background:var(--c-brand); color:#fff; border-color:var(--c-brand); }
 .plan__go svg{ width:12px; height:12px; }
 
-/* ---------- Barcha kurslarim ---------- */
-.plan__all{ border-top:5px solid var(--c-bg); padding:12px; }
+/* ============================================================
+   Barcha kurslarim
+   ============================================================ */
+.plan__all{ border-top:4px solid var(--c-bg); padding:12px; }
 .plan__allbtn{
-  display:flex; width:100%; align-items:center; gap:10px; padding:10px 11px;
+  display:flex; width:100%; align-items:center; gap:12px;
+  min-height:var(--tap); padding:12px;
   border:1px solid rgba(255,79,40,.35); border-radius:var(--r-inner);
   background:var(--c-brand-soft); text-align:left; cursor:pointer;
 }
-.plan__allic{ display:grid; place-items:center; width:34px; height:34px; flex:none; border-radius:11px; background:var(--c-brand); color:#fff; }
-.plan__allic svg{ width:17px; height:17px; }
-.plan__alltxt{ min-width:0; flex:1; }
-.plan__alltxt b{ display:block; font:var(--t-title); font-size:15px; color:var(--c-navy); }
-.plan__alltxt span{ display:block; margin-top:2px; font:var(--t-tiny); color:var(--c-brand); font-weight:600; }
-.plan__caret{ display:grid; place-items:center; width:26px; height:26px; flex:none; border-radius:var(--r-pill); background:#fff; color:var(--c-brand); }
-.plan__caret svg{ width:14px; height:14px; transition:transform .2s ease; }
-.plan__allbtn[aria-expanded="true"] .plan__caret svg{ transform:rotate(180deg); }
-.plan__courses{ display:none; margin-top:8px; flex-direction:column; gap:5px; }
-.plan__courses.is-open{ display:flex; }
-/* Qator foni (#F8F8FC) oq kartadan atigi 3% farq qiladi — aralashib
-   ketadi. Yumshoq soya va ingichka chegara chekkani ajratib turadi. */
-.plan__course{
-  display:flex; align-items:center; gap:10px; padding:9px 10px;
-  border-radius:12px; background:var(--c-row);
-  box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
+.plan__allic{
+  display:grid; place-items:center; width:40px; height:40px; flex:none;
+  border-radius:var(--r-inner); background:var(--c-brand); color:#fff;
+  box-shadow:var(--shadow-card);
 }
-/* Muqova rasmi o'rniga oddiy ikonka: kurs nomining bosh harfi.
-   Ranglar maketning o'z palitrasidan, indeks bo'yicha aylanadi. */
+.plan__allic svg{ width:20px; height:20px; }
+.plan__alltxt{ min-width:0; flex:1; }
+.plan__alltxt b{ display:block; font:var(--t-title); color:var(--c-navy); }
+.plan__alltxt span{ display:block; margin-top:4px; font:var(--t-tiny); font-weight:600; color:var(--c-brand-text); }
+.plan__caret{
+  display:grid; place-items:center; width:28px; height:28px; flex:none;
+  border-radius:var(--r-pill); background:#fff; color:var(--c-brand-text);
+}
+.plan__caret svg{ width:16px; height:16px; transition:transform .2s ease; }
+.plan__allbtn[aria-expanded="true"] .plan__caret svg{ transform:rotate(180deg); }
+
+.plan__courses{ display:none; margin-top:8px; flex-direction:column; gap:8px; }
+.plan__courses.is-open{ display:flex; }
+.plan__course{
+  display:flex; width:100%; align-items:center; gap:12px;
+  min-height:var(--tap); padding:12px;
+  border:0; border-radius:var(--r-inner); background:var(--c-row);
+  box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
+  text-align:left; cursor:pointer;
+}
 .plan__cicon{
   flex:none; display:grid; place-items:center;
-  width:38px; height:38px; border-radius:11px;
-  font:800 16px/18px var(--f); color:#fff;
-  text-shadow:0 1px 2px rgba(0,0,0,.22);
+  width:40px; height:40px; border-radius:var(--r-inner);
+  font:var(--t-title); color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
   box-shadow:inset 0 -2px 5px rgba(0,0,0,.12);
 }
-.plan__cicon--0{ background:linear-gradient(160deg,#6FC6FF 0%,#1CB0F6 100%); }
-.plan__cicon--1{ background:linear-gradient(160deg,#8FE05C 0%,#58CC02 100%); }
-.plan__cicon--2{ background:linear-gradient(160deg,#BCA6FF 0%,#8F6FF0 100%); }
-.plan__cicon--3{ background:linear-gradient(160deg,#FFB784 0%,#FF7A3D 100%); }
-.plan__cicon--4{ background:linear-gradient(160deg,#FFD968 0%,#F3AD16 100%); }
-.plan__cicon--5{ background:linear-gradient(160deg,#FFA8BC 0%,#FF6E8E 100%); }
+.plan__cicon--0{ background:linear-gradient(160deg,#4FB8F2 0%,#0E86C4 100%); }
+.plan__cicon--1{ background:linear-gradient(160deg,#6FC93C 0%,#3E9A00 100%); }
+.plan__cicon--2{ background:linear-gradient(160deg,#A58CF5 0%,#6C4CD8 100%); }
+.plan__cicon--3{ background:linear-gradient(160deg,#FF9A5E 0%,#E85D1F 100%); }
+.plan__cicon--4{ background:linear-gradient(160deg,#F2C33C 0%,#C28A06 100%); }
+.plan__cicon--5{ background:linear-gradient(160deg,#F98BA4 0%,#DE3F63 100%); }
 .plan__cbody{ min-width:0; flex:1; }
-.plan__cname{ margin:0; font:600 14px/18px var(--f); color:var(--c-navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-top:4px; }
-.plan__cstate{ padding:2px 7px; border-radius:var(--r-pill); font:600 10px/13px var(--f); white-space:nowrap; }
-.plan__cstate--go{ background:var(--c-green-soft); color:#3E9A00; }
-.plan__cstate--stop{ background:var(--c-red-soft); color:var(--c-red); }
-.plan__cstate--idle{ background:#EFF1F6; color:var(--c-slate); }
-.plan__ccat{ font:600 8.5px/11px var(--f); letter-spacing:.06em; text-transform:uppercase; color:var(--c-text-3); }
-.plan__cright{ display:flex; align-items:center; gap:6px; flex:none; }
-.plan__cring{ position:relative; width:36px; height:36px; }
+.plan__cname{
+  margin:0; font:var(--t-body); font-weight:600; color:var(--c-navy);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:4px; }
+.plan__cstate{ padding:4px 8px; border-radius:var(--r-pill); font:var(--t-tiny); font-weight:600; white-space:nowrap; }
+.plan__cstate--go{   background:var(--c-green-soft); color:#2F7A00; }
+.plan__cstate--stop{ background:var(--c-red-soft);   color:#B10000; }
+.plan__cstate--idle{ background:#EFF1F6;             color:var(--c-muted); }
+.plan__ccat{ font:var(--t-tiny); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--c-muted); }
+.plan__cring{ position:relative; width:40px; height:40px; flex:none; }
 .plan__cring svg{ transform:rotate(-90deg); display:block; }
-.plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:600 9px/11px var(--f); color:var(--c-navy); }
+.plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:var(--t-tiny); font-weight:600; color:var(--c-navy); }
 
 /* ---------- Nega aynan shuncha dars? ---------- */
-.plan__why{ border-top:5px solid var(--c-bg); padding:11px 14px 14px; }
-.plan__whybtn{ display:inline-flex; align-items:center; gap:6px; font:var(--t-tiny); color:var(--c-slate); background:none; border:0; padding:0; cursor:pointer; }
-.plan__whybtn svg{ width:13px; height:13px; }
+.plan__why{ border-top:4px solid var(--c-bg); padding:8px 16px 16px; }
+.plan__whybtn{
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:var(--tap); padding:0;
+  font:var(--t-small); color:var(--c-muted);
+  background:none; border:0; cursor:pointer;
+}
+.plan__whybtn svg{ width:16px; height:16px; }
 .plan__whybtn .car{ transition:transform .2s ease; }
 .plan__whybtn[aria-expanded="true"] .car{ transform:rotate(180deg); }
-.plan__whybody{ display:none; margin-top:9px; font:var(--t-tiny); line-height:17px; color:var(--c-slate); }
+.plan__whybody{ display:none; padding-bottom:4px; font:var(--t-small); color:var(--c-muted); }
 .plan__whybody.is-open{ display:block; }
 .plan__whybody p{ margin:0; }
-.plan__whybody p+p{ margin-top:7px; }
+.plan__whybody p+p{ margin-top:8px; }
 .plan__whybody b{ color:var(--c-navy); }
-.plan__whybody u{ text-decoration:none; color:var(--c-brand); font-weight:600; }
+.plan__whybody u{ text-decoration:none; color:var(--c-brand-text); font-weight:600; }
 
 /* ============================================================
    ANIMATSIYALAR — veb versiyadagi vaqtlar bilan aynan bir xil
-   (jr-spin 26s, jr-pop .45s, jr-rise .5s, jr-nudge 1.1s,
-    jr-shake .4s x3, halqa to'lishi 1s)
    ============================================================ */
 @keyframes plan-spin { to { transform:rotate(360deg); } }
 @keyframes plan-pop  { 0%{ opacity:0; transform:scale(.85); } 60%{ transform:scale(1.06); } to{ opacity:1; transform:scale(1); } }
@@ -214,29 +246,12 @@
 .plan__item{ animation:.5s ease-out both plan-rise; }
 .plan__item:nth-child(2){ animation-delay:90ms; }
 .plan__item:nth-child(3){ animation-delay:180ms; }
-.plan__go .car{ animation:1.1s ease-in-out infinite plan-nudge; }
 .plan__coin.is-shake{ animation:.4s ease-in-out 3 plan-shake; }
 .plan__course{ animation:.5s ease-out both plan-rise; }
-
-/* halqalar ochilganda to'ladi */
 .plan__cring circle:last-child{ transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.3,1); }
 
-/* ---------- «+300 coin» tultipi ---------- */
-.plan__coinwrap{ position:relative; display:inline-block; margin-top:12px; }
-.plan__coinwrap .plan__coin{ margin-top:0; }
-.plan__tip{
-  position:absolute; left:0; top:100%; z-index:20; margin-top:8px;
-  width:max-content; max-width:230px;
-  padding:8px 12px; border-radius:12px;
-  background:var(--c-navy); color:#fff;
-  font:600 11.5px/15px var(--f); text-align:left;
-  box-shadow:0 10px 24px rgba(28,39,76,.28);
-  animation:.5s ease-out both plan-rise;
-}
-.plan__tip[hidden]{ display:none; }
-
 @media (prefers-reduced-motion:reduce){
-  .plan__deco, .plan__hi, .plan__item, .plan__go .car,
+  .plan__deco, .plan__hi, .plan__item,
   .plan__coin.is-shake, .plan__course, .plan__tip, .plan__robo{ animation:none !important; }
   .plan__cring circle:last-child{ transition:none !important; }
 }

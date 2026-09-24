@@ -17,14 +17,14 @@
     {n:"2 Test Course",          s:"idle", c:"Hali boshlanmagan", p:0,   d:"0/10",  cat:"TEST",    img:"c10"},
     {n:"Junior Kurs",            s:"go",   c:"Tugatilgan",        p:100, d:"14/14", cat:"YAKUN",   img:"c11"}
   ];
-  var STROKE = { go:"#58CC02", stop:"#ED0000", idle:"#B4B4B4" };
+  var STROKE = { go:"#3E9A00", stop:"#C2340D", idle:"#93A2C0" };
 
   var box = document.getElementById("planCourses");
   if (box) {
-    var R = 16, C = 2 * Math.PI * R;
+    var R = 18, C = 2 * Math.PI * R;   /* halqa 40x40, chiziq 4 px */
     box.innerHTML = COURSES.map(function (k, i) {
       var off = C - C * k.p / 100;   // yakuniy holat; boshida C (bo'sh) turadi
-      return '<div class="plan__course">' +
+      return '<button type="button" class="plan__course" data-toast="' + k.n + ' — kurs sahifasi">' +
         '<span class="plan__cicon plan__cicon--' + (i % 6) + '">' + k.n.charAt(0) + '</span>' +
         '<div class="plan__cbody">' +
           '<p class="plan__cname">' + k.n + '</p>' +
@@ -33,17 +33,15 @@
             '<span class="plan__ccat">' + k.cat + '</span>' +
           '</span>' +
         '</div>' +
-        '<div class="plan__cright">' +
-          '<span class="plan__cring">' +
-            '<svg width="36" height="36">' +
-              '<circle cx="18" cy="18" r="' + R + '" fill="none" stroke="#F0F0F0" stroke-width="4"/>' +
-              '<circle cx="18" cy="18" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
-                      'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + C.toFixed(2) + '" data-off="' + off.toFixed(2) + '"/>' +
-            '</svg>' +
-            '<span class="plan__cpct">' + k.p + '%</span>' +
-          '</span>' +
-        '</div>' +
-      '</div>';
+        '<span class="plan__cring">' +
+          '<svg width="40" height="40">' +
+            '<circle cx="20" cy="20" r="' + R + '" fill="none" stroke="#EDEFF4" stroke-width="4"/>' +
+            '<circle cx="20" cy="20" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
+                    'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + C.toFixed(2) + '" data-off="' + off.toFixed(2) + '"/>' +
+          '</svg>' +
+          '<span class="plan__cpct">' + k.p + '%</span>' +
+        '</span>' +
+      '</button>';
     }).join("");
   }
 
