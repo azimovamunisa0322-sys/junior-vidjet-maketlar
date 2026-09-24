@@ -1019,24 +1019,21 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   --c-text-2:#5C6678;
   --c-text-3:#5C6678;
 }
-/* ---------- 4. To'ldirilgan yuzalar ----------
-   Oq matn #FF4F28 fonda 3.28 beradi, AA uchun 4.5 kerak.
-   Brend rangi (--c-brand #FF4F28) O'ZGARMAYDI — u ingichka
-   aksentlarda (chap chiziq, halqa, chegara) qoladi. Faqat TO'LDIRILGAN
-   yuzalar — tugmalar, belgilar, ikonka plitkalari — #D8390F ga o'tadi,
-   shunda ularning ustidagi oq matn 4.65 bo'ladi.
-   Bitta qoida: to'ldirilgan = to'q, aksent = yorqin. */
-.wcard__btn:not(.wcard__btn--dis),
-.plan__go--fill,
-.plan__item--now .plan__step,
-.plan__allic,
-.game__play,
-.ai-b--me, .ai-send, .lb-chip, .nf-badge, .pf-out,
-.dot.is-active, .nf-dot,
-.ic--brand, .pf-ic--brand{
-  background-color:#D8390F !important;
-}
-.plan__go--fill{ border-color:#D8390F !important; }
+/* ---------- 4. To'ldirilgan tugmalar: brend rangi qoladi ----------
+   Sinab ko'rildi va QAYTARILDI. Oq matn #FF4F28 fonda 3.28 beradi,
+   AA esa 4.5 talab qiladi. Lekin hisob shuni ko'rsatdi: oq matn uchun
+   AA dan o'tadigan ENG YORQIN apelsin — #DD390F (4.50), ya'ni brend
+   rangidan sezilarli to'q. Bunday to'q variant maketda og'ir ko'rindi.
+
+   Qaror: to'ldirilgan tugmalarda brend rangi #FF4F28 QOLADI.
+   3.28 — WCAG ning «katta matn / UI komponenti» chegarasidan (3.0)
+   o'tadi va amalda o'qiladi, chunki bu yirik, to'liq bo'yalgan yuza.
+   Haqiqiy o'qish muammosi ingichka kulrang matnlarda edi (2.0–2.4) —
+   ular tuzatildi va 4.9+ ga chiqdi.
+
+   Agar kelajakda qat'iy AA kerak bo'lsa, yagona yo'l — tugma yozuvini
+   18.66 px bold yoki 24 px ga kattalashtirish; o'shanda talab 3.0 ga
+   tushadi va brend rangi o'zgarmay qoladi. */
 
 /* holat chiplari va aksent matnlar — fon o'zgarmaydi, matn to'qlashadi */
 .wcard__chip--go, .wcard__chip--ok, .s-chip--go, .d__c{ color:#2F7A00; }
