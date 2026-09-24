@@ -57,10 +57,36 @@ CSS = """
   --c-text-2:#5C6678;
   --c-text-3:#5C6678;
 }
+/* ---------- 4. To'ldirilgan yuzalar ----------
+   Oq matn #FF4F28 fonda 3.28 beradi, AA uchun 4.5 kerak.
+   Brend rangi (--c-brand #FF4F28) O'ZGARMAYDI — u ingichka
+   aksentlarda (chap chiziq, halqa, chegara) qoladi. Faqat TO'LDIRILGAN
+   yuzalar — tugmalar, belgilar, ikonka plitkalari — #D8390F ga o'tadi,
+   shunda ularning ustidagi oq matn 4.65 bo'ladi.
+   Bitta qoida: to'ldirilgan = to'q, aksent = yorqin. */
+.wcard__btn:not(.wcard__btn--dis),
+.plan__go--fill,
+.plan__item--now .plan__step,
+.plan__allic,
+.game__play,
+.ai-b--me, .ai-send, .lb-chip, .nf-badge, .pf-out,
+.dot.is-active, .nf-dot,
+.ic--brand, .pf-ic--brand{
+  background-color:#D8390F !important;
+}
+.plan__go--fill{ border-color:#D8390F !important; }
+
 /* holat chiplari va aksent matnlar — fon o'zgarmaydi, matn to'qlashadi */
 .wcard__chip--go, .wcard__chip--ok, .s-chip--go, .d__c{ color:#2F7A00; }
 .wcard__chip, .ck-eyebrow b, .ck-hero__kind, .d__l{ color:#C2340D; }
 .game--locked .game__t b{ color:#5C6678; }
+
+/* qolgan aksent matnlar — och fonda o'qilmasdi */
+.ck-eyebrow b, .ck-hero__kind, .rf-coin, .d__l{ color:#C2340D !important; }
+.d--full .d__c, .d--today .d__c{ color:#2F7A00 !important; }
+.d--part .d__c{ color:#8A6600 !important; }
+.d--view .d__c{ color:#0A6E9F !important; }
+.pay-i, .rc-i{ color:#5C6678 !important; }
 .game__t b{ color:var(--c-navy); }
 
 /* teskari sanoq yorliqlari (kun / soat / daqiqa / soniya) 10 px va
