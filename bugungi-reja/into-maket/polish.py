@@ -28,7 +28,10 @@ CSS = """
    Apple HIG 44x44 pt talab qiladi. Kartalar 192 px ga qat'iy
    sozlangani uchun tugmalarning KO'RINISHI o'zgarmaydi — faqat
    ko'rinmas tegish maydoni kengaytiriladi. */
-.wcard__btn, .wcard__ibtn, .game, .more, .tabbar button{ position:relative; }
+/* DIQQAT: .tabbar button emas — markazdagi .fab absolute joylashgan,
+   unga position:relative berilsa o'ng chetga emas, chap chetga tushib
+   qoladi. Faqat oddiy tab tugmalari olinadi. */
+.wcard__btn, .wcard__ibtn, .game, .more, .tabbar .tab{ position:relative; }
 .wcard__btn::after, .wcard__ibtn::after{
   content:""; position:absolute; left:0; right:0;
   top:50%; transform:translateY(-50%); height:44px;
