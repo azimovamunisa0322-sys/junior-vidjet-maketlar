@@ -116,9 +116,26 @@
 }
 .mk__row--now .mk__card{ box-shadow:var(--shadow-card), inset 0 0 0 2px var(--c-brand); }
 
-.mk__thumb{
-  flex:none; width:80px; height:54px; border-radius:var(--r-inner);
-  object-fit:cover; background:var(--c-row);
+/* Muqova — hamma kursga BITTA shablon, faqat nomi o'zgaradi.
+   Rasm emas, chizilgan: apelsin gradient + maskot + nom yorlig'i.
+   Shuning uchun yangi kurs qo'shilsa rasm tayyorlash shart emas. */
+.mk__cover{
+  position:relative; flex:none; overflow:hidden;
+  width:92px; height:62px; border-radius:var(--r-inner);
+  background:linear-gradient(135deg,#FFA271 0%,#FF6F3D 52%,#EF4B18 100%);
+}
+.mk__cover-bot{
+  position:absolute; right:-7px; bottom:-3px;
+  height:54px; width:auto;
+}
+.mk__cover-tag{
+  position:absolute; left:5px; bottom:5px; max-width:60px;
+  padding:3px 5px; border-radius:4px;
+  background:rgba(17,22,35,.88); color:#fff;
+  font:800 7px/8.5px var(--f); letter-spacing:.01em;
+  text-transform:uppercase; text-align:left;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden;
 }
 .mk__body{ min-width:0; flex:1; display:block; }
 .mk__name{

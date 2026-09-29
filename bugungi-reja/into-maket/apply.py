@@ -11,7 +11,7 @@ def datauri(p):
     mime = "image/png" if p.suffix == ".png" else "image/jpeg"
     return "data:%s;base64,%s" % (mime, base64.b64encode(p.read_bytes()).decode())
 
-need = ["roboflag", "r1", "r2", "r3"]   # r* — kunlik reja muqovalari
+need = ["roboflag"]   # muqovalar CSS bilan chiziladi, rasm kerak emas
 imgs = {}
 for k in need:
     hit = [p for p in ASSETS.iterdir() if p.stem == k]
