@@ -19,8 +19,8 @@ for k in need:
         sys.exit("rasm topilmadi: " + k)
     imgs[k] = datauri(hit[0])
 
-html = open(HERE / "plan.html", encoding="utf-8").read()
-css  = open(HERE / "plan.css",  encoding="utf-8").read()
+html = open(HERE / "plan.html", encoding="utf-8").read() + open(HERE / "streak.html", encoding="utf-8").read()
+css  = open(HERE / "plan.css",  encoding="utf-8").read() + open(HERE / "streak.css", encoding="utf-8").read()
 js   = open(HERE / "plan.js",   encoding="utf-8").read()
 
 html = re.sub(r"\{\{IMG:([a-z0-9]+)\}\}", lambda m: imgs[m.group(1)], html)

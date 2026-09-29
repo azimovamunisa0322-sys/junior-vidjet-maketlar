@@ -1,0 +1,89 @@
+
+/* ============================================================
+   STREAK — veb versiyadagi yangi dizayn (p6) mobil uchun.
+   Yetti barg SVG halqada, markazda kun soni, pastida oylik
+   challenge va mukofot tugmasi.
+   ============================================================ */
+.st{ padding:4px 0; }
+.st__card{
+  margin:0 16px; padding:16px;
+  background:var(--c-card); border-radius:var(--r-card);
+  box-shadow:var(--shadow-card);
+}
+
+/* muzlatish zaxirasi */
+.st__top{ display:flex; justify-content:flex-end; }
+.st__freeze{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 11px; border-radius:var(--r-pill);
+  background:#EAF4FD; box-shadow:inset 0 0 0 1px #BFE0F7;
+}
+.st__ice{ font-size:17px; line-height:1; animation:3.2s ease-in-out infinite plan-float; }
+.st__freeze b{ font:var(--t-body); font-weight:600; color:#1B6FBF; }
+
+/* halqa */
+.st__ring{
+  position:relative; width:100%; max-width:280px;
+  aspect-ratio:1/1; margin:4px auto 0;
+}
+.st__ring>svg{ position:absolute; inset:0; width:100%; height:100%; }
+.st__ring>svg path{ animation:.45s cubic-bezier(.2,.9,.3,1.3) both plan-pop; transform-origin:150px 150px; }
+.st__ring>svg path:nth-child(2){ animation-delay:70ms; }
+.st__ring>svg path:nth-child(3){ animation-delay:140ms; }
+.st__ring>svg path:nth-child(4){ animation-delay:210ms; }
+.st__ring>svg path:nth-child(5){ animation-delay:280ms; }
+.st__ring>svg path:nth-child(6){ animation-delay:350ms; }
+.st__ring>svg path:nth-child(7){ animation-delay:420ms; }
+
+.st__day{
+  position:absolute; transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.st__ico{ display:block; font-size:24px; line-height:1; }
+.st__ico--ice{ animation:3.2s ease-in-out infinite plan-float; }
+.st__ico--off{ opacity:.5; filter:grayscale(1); }
+.st__day b{ display:block; margin-top:3px; font:var(--t-small); font-weight:600; }
+
+/* markaz */
+.st__mid{
+  position:absolute; inset:0; display:grid; place-content:center;
+  background:none; border:0; text-align:center; cursor:pointer;
+}
+.st__midrow{ display:flex; align-items:center; justify-content:center; gap:8px; }
+.st__fire{ font-size:34px; line-height:1; }
+.st__num{
+  font:800 42px/1 var(--f); letter-spacing:-.02em; color:var(--c-navy);
+  font-variant-numeric:tabular-nums;
+}
+.st__cap{ display:block; margin-top:4px; font:var(--t-body); color:var(--c-muted); }
+
+/* oylik challenge */
+.st__ch{ margin-top:4px; }
+.st__chhead{ display:flex; align-items:center; gap:12px; }
+.st__target{ flex:none; font-size:34px; line-height:1; }
+.st__chname{ margin:0; font:var(--t-title); color:var(--c-navy); }
+.st__chsub{ margin:2px 0 0; font:var(--t-small); color:var(--c-muted); }
+.st__chnums{
+  margin-top:16px; display:flex; align-items:baseline; justify-content:space-between;
+  font:var(--t-body); font-weight:600; color:var(--c-navy);
+}
+.st__chnums b{ font:600 19px/1.1 var(--f); }
+.st__chnums i{ font-style:normal; color:var(--c-muted); }
+.st__pct{ font:600 17px/1.1 var(--f); }
+.st__bar{
+  margin-top:6px; height:10px; border-radius:var(--r-pill);
+  background:rgba(123,97,255,.15); overflow:hidden;
+}
+.st__bar i{ display:block; height:100%; border-radius:var(--r-pill); background:var(--c-xp,#7B61FF); }
+.st__claim{
+  display:flex; width:100%; align-items:center; justify-content:center; gap:8px;
+  margin-top:16px; min-height:var(--tap); padding:0 16px;
+  border:0; border-radius:var(--r-inner);
+  background:#FFFBE8; box-shadow:inset 0 0 0 2px #F5C518;
+  font:var(--t-btn); color:#8A6600; cursor:pointer;
+}
+.st__claim svg{ width:22px; height:22px; flex:none; }
+
+@media (prefers-reduced-motion:reduce){
+  .st__ring>svg path, .st__ice, .st__ico--ice{ animation:none !important; }
+}

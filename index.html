@@ -967,6 +967,95 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .plan__coin.is-shake, .plan__course, .plan__tip, .plan__robo{ animation:none !important; }
   .plan__cring circle:last-child{ transition:none !important; }
 }
+
+/* ============================================================
+   STREAK — veb versiyadagi yangi dizayn (p6) mobil uchun.
+   Yetti barg SVG halqada, markazda kun soni, pastida oylik
+   challenge va mukofot tugmasi.
+   ============================================================ */
+.st{ padding:4px 0; }
+.st__card{
+  margin:0 16px; padding:16px;
+  background:var(--c-card); border-radius:var(--r-card);
+  box-shadow:var(--shadow-card);
+}
+
+/* muzlatish zaxirasi */
+.st__top{ display:flex; justify-content:flex-end; }
+.st__freeze{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 11px; border-radius:var(--r-pill);
+  background:#EAF4FD; box-shadow:inset 0 0 0 1px #BFE0F7;
+}
+.st__ice{ font-size:17px; line-height:1; animation:3.2s ease-in-out infinite plan-float; }
+.st__freeze b{ font:var(--t-body); font-weight:600; color:#1B6FBF; }
+
+/* halqa */
+.st__ring{
+  position:relative; width:100%; max-width:280px;
+  aspect-ratio:1/1; margin:4px auto 0;
+}
+.st__ring>svg{ position:absolute; inset:0; width:100%; height:100%; }
+.st__ring>svg path{ animation:.45s cubic-bezier(.2,.9,.3,1.3) both plan-pop; transform-origin:150px 150px; }
+.st__ring>svg path:nth-child(2){ animation-delay:70ms; }
+.st__ring>svg path:nth-child(3){ animation-delay:140ms; }
+.st__ring>svg path:nth-child(4){ animation-delay:210ms; }
+.st__ring>svg path:nth-child(5){ animation-delay:280ms; }
+.st__ring>svg path:nth-child(6){ animation-delay:350ms; }
+.st__ring>svg path:nth-child(7){ animation-delay:420ms; }
+
+.st__day{
+  position:absolute; transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.st__ico{ display:block; font-size:24px; line-height:1; }
+.st__ico--ice{ animation:3.2s ease-in-out infinite plan-float; }
+.st__ico--off{ opacity:.5; filter:grayscale(1); }
+.st__day b{ display:block; margin-top:3px; font:var(--t-small); font-weight:600; }
+
+/* markaz */
+.st__mid{
+  position:absolute; inset:0; display:grid; place-content:center;
+  background:none; border:0; text-align:center; cursor:pointer;
+}
+.st__midrow{ display:flex; align-items:center; justify-content:center; gap:8px; }
+.st__fire{ font-size:34px; line-height:1; }
+.st__num{
+  font:800 42px/1 var(--f); letter-spacing:-.02em; color:var(--c-navy);
+  font-variant-numeric:tabular-nums;
+}
+.st__cap{ display:block; margin-top:4px; font:var(--t-body); color:var(--c-muted); }
+
+/* oylik challenge */
+.st__ch{ margin-top:4px; }
+.st__chhead{ display:flex; align-items:center; gap:12px; }
+.st__target{ flex:none; font-size:34px; line-height:1; }
+.st__chname{ margin:0; font:var(--t-title); color:var(--c-navy); }
+.st__chsub{ margin:2px 0 0; font:var(--t-small); color:var(--c-muted); }
+.st__chnums{
+  margin-top:16px; display:flex; align-items:baseline; justify-content:space-between;
+  font:var(--t-body); font-weight:600; color:var(--c-navy);
+}
+.st__chnums b{ font:600 19px/1.1 var(--f); }
+.st__chnums i{ font-style:normal; color:var(--c-muted); }
+.st__pct{ font:600 17px/1.1 var(--f); }
+.st__bar{
+  margin-top:6px; height:10px; border-radius:var(--r-pill);
+  background:rgba(123,97,255,.15); overflow:hidden;
+}
+.st__bar i{ display:block; height:100%; border-radius:var(--r-pill); background:var(--c-xp,#7B61FF); }
+.st__claim{
+  display:flex; width:100%; align-items:center; justify-content:center; gap:8px;
+  margin-top:16px; min-height:var(--tap); padding:0 16px;
+  border:0; border-radius:var(--r-inner);
+  background:#FFFBE8; box-shadow:inset 0 0 0 2px #F5C518;
+  font:var(--t-btn); color:#8A6600; cursor:pointer;
+}
+.st__claim svg{ width:22px; height:22px; flex:none; }
+
+@media (prefers-reduced-motion:reduce){
+  .st__ring>svg path, .st__ice, .st__ico--ice{ animation:none !important; }
+}
 /* PLAN:CSS:END */</style>
 <style>/* POLISH:START */
 /* ============================================================
@@ -1120,6 +1209,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 
 
+
             <!-- PLAN:START -->
             <section class="plan">
               <!-- hero -->
@@ -1206,6 +1296,69 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                     </span>
                   </button>
                   <div class="plan__courses" id="planCourses"></div>
+                </div>
+
+              </div>
+            </section>
+
+            <section class="st">
+              <div class="st__card">
+
+                <div class="st__top">
+                  <span class="st__freeze"><span class="st__ice">🧊</span><b>2</b></span>
+                </div>
+
+                <div class="st__ring">
+                  <svg viewBox="0 0 300 300" aria-hidden="true">
+                    <path d="M 173.56 9.97 A 142 142 0 0 1 244.79 44.27 A 15 15 0 0 1 244.27 64.90 L 222.00 85.00 A 15 15 0 0 1 199.86 84.90 A 82 82 0 0 0 169.81 70.43 A 15 15 0 0 1 155.92 53.18 L 157.75 23.24 A 15 15 0 0 1 173.56 9.97 Z" fill="#FFE3BD" stroke="#F7B869" stroke-width="2"/>
+                    <path d="M 274.17 81.12 A 142 142 0 0 1 291.76 158.19 A 15 15 0 0 1 275.31 170.65 L 245.71 165.77 A 15 15 0 0 1 231.98 148.39 A 82 82 0 0 0 224.56 115.88 A 15 15 0 0 1 229.39 94.26 L 253.94 77.03 A 15 15 0 0 1 274.17 81.12 Z" fill="#FFE3BD" stroke="#F7B869" stroke-width="2"/>
+                    <path d="M 281.28 204.13 A 142 142 0 0 1 231.99 265.94 A 15 15 0 0 1 211.99 260.85 L 197.34 234.66 A 15 15 0 0 1 202.37 213.10 A 82 82 0 0 0 223.17 187.02 A 15 15 0 0 1 243.07 177.32 L 271.86 185.77 A 15 15 0 0 1 281.28 204.13 Z" fill="#D9EDFB" stroke="#8AC7F0" stroke-width="2"/>
+                    <path d="M 189.53 286.39 A 142 142 0 0 1 110.47 286.39 A 15 15 0 0 1 101.98 267.57 L 113.33 239.80 A 15 15 0 0 1 133.32 230.29 A 82 82 0 0 0 166.68 230.29 A 15 15 0 0 1 186.67 239.80 L 198.02 267.57 A 15 15 0 0 1 189.53 286.39 Z" fill="#D9EDFB" stroke="#8AC7F0" stroke-width="2"/>
+                    <path d="M 68.01 265.94 A 142 142 0 0 1 18.72 204.13 A 15 15 0 0 1 28.14 185.77 L 56.93 177.32 A 15 15 0 0 1 76.83 187.02 A 82 82 0 0 0 97.63 213.10 A 15 15 0 0 1 102.66 234.66 L 88.01 260.85 A 15 15 0 0 1 68.01 265.94 Z" fill="#FFF5DC" stroke="#F6B9A0" stroke-width="2"/>
+                    <path d="M 8.24 158.19 A 142 142 0 0 1 25.83 81.12 A 15 15 0 0 1 46.06 77.03 L 70.61 94.26 A 15 15 0 0 1 75.44 115.88 A 82 82 0 0 0 68.02 148.39 A 15 15 0 0 1 54.29 165.77 L 24.69 170.65 A 15 15 0 0 1 8.24 158.19 Z" fill="#ECECF0" stroke="#DFE1E6" stroke-width="2"/>
+                    <path d="M 55.21 44.27 A 142 142 0 0 1 126.44 9.97 A 15 15 0 0 1 142.25 23.24 L 144.08 53.18 A 15 15 0 0 1 130.19 70.43 A 82 82 0 0 0 100.14 84.90 A 15 15 0 0 1 78.00 85.00 L 55.73 64.90 A 15 15 0 0 1 55.21 44.27 Z" fill="#ECECF0" stroke="#DFE1E6" stroke-width="2"/>
+                  </svg>
+
+                  <span class="st__day" style="left:66.20%;top:16.36%"><span class="st__ico anim-flame">🔥</span><b style="color:#C2340D">Du</b></span>
+                  <span class="st__day" style="left:86.40%;top:41.69%"><span class="st__ico anim-flame">🔥</span><b style="color:#C2340D">Se</b></span>
+                  <span class="st__day" style="left:79.19%;top:73.28%"><span class="st__ico st__ico--ice">🧊</span><b style="color:#1B6FBF">Ch</b></span>
+                  <span class="st__day" style="left:50%;top:87.33%"><span class="st__ico st__ico--ice">🧊</span><b style="color:#1B6FBF">Pa</b></span>
+                  <span class="st__day" style="left:20.81%;top:73.28%"><span class="st__ico anim-flame">🔥</span><b style="color:#C2340D">Ju</b></span>
+                  <span class="st__day" style="left:13.60%;top:41.69%"><span class="st__ico st__ico--off">🔥</span><b style="color:#5C6678">Sh</b></span>
+                  <span class="st__day" style="left:33.80%;top:16.36%"><span class="st__ico st__ico--off">🔥</span><b style="color:#5C6678">Ya</b></span>
+
+                  <button class="st__mid" type="button" data-toast="Streak — batafsil">
+                    <span class="st__midrow">
+                      <span class="st__fire anim-flame">🔥</span>
+                      <span class="st__num">23</span>
+                    </span>
+                    <span class="st__cap">Kun ketma-ket</span>
+                  </button>
+                </div>
+
+                <div class="st__ch">
+                  <div class="st__chhead">
+                    <span class="st__target">🎯</span>
+                    <div>
+                      <p class="st__chname">Oylik challenge</p>
+                      <p class="st__chsub">Har kuni kamida bitta 1 ta dars yakunlang</p>
+                    </div>
+                  </div>
+                  <div class="st__chnums">
+                    <span><b>12</b><i>/31 kun</i></span>
+                    <span class="st__pct">56%</span>
+                  </div>
+                  <div class="st__bar"><i style="width:56%"></i></div>
+                  <button class="st__claim" type="button" data-toast="+500 coin hisobingizga qo'shildi">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="11" fill="#F2B705"/>
+                      <circle cx="12" cy="12" r="8.6" fill="#FFD45E" stroke="#E0A306" stroke-width="1.1"/>
+                      <circle cx="9.3" cy="10.4" r="1.15" fill="#8A6A00"/>
+                      <circle cx="14.7" cy="10.4" r="1.15" fill="#8A6A00"/>
+                      <path d="M8.7 13.8c1.7 1.7 4.9 1.7 6.6 0" stroke="#8A6A00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    +500 Coin Olish
+                  </button>
                 </div>
 
               </div>
