@@ -77,78 +77,73 @@
 .plan__tip[hidden]{ display:none; }
 
 /* ============================================================
-   Bugungi darslar
-   Tuzilish: [raqam] [ikonka] [matn ustuni] — ustundagi hamma
-   qator bitta chap chetdan boshlanadi.
+   MENING KURSLARIM — kunlik reja qatorlari
+
+   Tuzilish: raqam kartaning TASHQARISIDA, chap yo'lakda; raqamlar
+   uzuq chiziq bilan bog'langan. Karta oq, ichida kurs muqovasi,
+   nom, mavzu, amber tanga pilyulyasi va o'ngda strelka.
+   Faol qator to'ldirilmaydi — faqat apelsin chegara oladi.
    ============================================================ */
-.plan__card{
-  margin:0 16px; background:var(--c-card);
-  border-radius:var(--r-card); box-shadow:var(--shadow-card); overflow:hidden;
+.mk__title{
+  margin:0 0 12px; padding:0 16px;
+  font:var(--t-h1); color:var(--c-navy);
 }
-.plan__list{ padding:12px; display:flex; flex-direction:column; gap:8px; }
+.mk__list{ display:flex; flex-direction:column; gap:12px; padding:0 16px; }
 
-.plan__item{
-  position:relative; display:flex; align-items:flex-start; gap:12px;
-  border-radius:var(--r-inner); background:var(--c-row); padding:12px;
-  box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
-}
-.plan__item--now{
-  background:var(--c-brand-soft);
-  box-shadow:0 2px 8px rgba(254,91,26,.10), inset 0 0 0 1px rgba(255,79,40,.12);
-}
-.plan__item--now::before{
-  content:""; position:absolute; left:0; top:12px; bottom:12px; width:4px;
-  border-radius:0 4px 4px 0; background:var(--c-brand);
-}
-/* «1 → 2 → 3» ni ulaydigan chiziq; raqam markazi chetdan 28 px */
-.plan__item:not(:last-child)::after{
-  content:""; position:absolute; left:27px; top:40px; bottom:-28px;
-  width:2px; border-radius:1px; background:rgba(92,102,120,.30);
+.mk__row{ position:relative; display:flex; align-items:flex-start; gap:10px; }
+/* raqamlarni bog'laydigan uzuq chiziq */
+.mk__row:not(:last-child)::after{
+  content:""; position:absolute; left:15px; top:36px; bottom:-16px;
+  border-left:2px dashed #C6CBD8;
 }
 
-.plan__step{
+.mk__num{
   position:relative; z-index:1; flex:none;
   display:grid; place-items:center; width:32px; height:32px;
-  border-radius:var(--r-inner); font:var(--t-title);
-  background:#fff; color:var(--c-muted);
+  border-radius:var(--r-pill);
+  background:#fff; box-shadow:inset 0 0 0 2px #E3E6EE;
+  font:var(--t-body); font-weight:600; color:var(--c-muted);
 }
-.plan__item--now .plan__step{ background:var(--c-brand); color:#fff; }
-
-.plan__icon{
-  flex:none; display:grid; place-items:center;
-  width:44px; height:44px; border-radius:var(--r-inner);
-  box-shadow:inset 0 -2px 6px rgba(0,0,0,.12);
+.mk__row--now .mk__num{
+  background:var(--c-brand); box-shadow:none; color:#fff;
 }
-.plan__icon b{ font:var(--t-btn); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.3); }
-.plan__icon--web{  background:linear-gradient(160deg,#4FB8F2 0%,#0E86C4 100%); }
-.plan__icon--math{ background:linear-gradient(160deg,#6FC93C 0%,#3E9A00 100%); }
-.plan__icon--eng{  background:linear-gradient(160deg,#A58CF5 0%,#6C4CD8 100%); }
-.plan__icon--math b{ letter-spacing:-.02em; }
 
-.plan__body{ min-width:0; flex:1; }
-.plan__name{
-  margin:0; font:var(--t-title); color:var(--c-navy);
+.mk__card{
+  flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px;
+  padding:10px; border:0; border-radius:var(--r-card);
+  background:var(--c-card); box-shadow:var(--shadow-card);
+  text-align:left; cursor:pointer;
+}
+.mk__row--now .mk__card{ box-shadow:var(--shadow-card), inset 0 0 0 2px var(--c-brand); }
+
+.mk__thumb{
+  flex:none; width:80px; height:54px; border-radius:var(--r-inner);
+  object-fit:cover; background:var(--c-row);
+}
+.mk__body{ min-width:0; flex:1; display:block; }
+.mk__name{
+  display:block; font:var(--t-title); color:var(--c-navy);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.plan__topic{ margin:4px 0 0; font:var(--t-body); color:var(--c-muted); }
-.plan__foot{
-  margin-top:12px; display:flex; align-items:center;
-  justify-content:space-between; gap:8px;
+.mk__topic{ display:block; margin-top:4px; font:var(--t-body); color:var(--c-muted); }
+
+/* tanga — amber pilyulya. Matn #8A6600: #FEF9E7 fonda 5.0 */
+.mk__coin{
+  display:inline-flex; align-items:center; gap:6px; margin-top:8px;
+  min-height:30px; padding:0 10px; border-radius:var(--r-pill);
+  background:#FEF9E7; box-shadow:inset 0 0 0 1.5px #F0B93F;
+  font:var(--t-small); font-weight:600; color:#8A6600;
 }
-.plan__reward{
-  display:inline-flex; align-items:center; gap:5px; flex:none;
-  white-space:nowrap;                      /* «+100 / coin» bo'lib sinmasin */
-  font:var(--t-small); font-weight:600; color:var(--c-muted);
+.mk__coin svg{ width:18px; height:18px; flex:none; }
+
+.mk__chev{
+  flex:none; align-self:center; display:grid; place-items:center;
+  width:18px; height:18px; color:#9AA2B4;
 }
-.plan__reward svg{ width:14px; height:14px; flex:none; }
-.plan__go{
-  display:inline-flex; align-items:center; justify-content:center; gap:6px;
-  min-height:var(--tap); padding:0 14px; flex:none; white-space:nowrap;
-  border:1px solid var(--c-brand); border-radius:var(--r-pill);
-  background:#fff; color:var(--c-brand-text); font:var(--t-btn); cursor:pointer;
-}
-.plan__go--fill{ background:var(--c-brand); color:#fff; border-color:var(--c-brand); }
-.plan__go svg{ width:12px; height:12px; }
+.mk__chev svg{ width:16px; height:16px; }
+
+/* tegish maydoni 44 px (karta balandligi baribir undan katta) */
+.mk__card{ min-height:var(--tap); }
 
 /* ============================================================
    Barcha kurslarim
@@ -243,9 +238,9 @@
 
 .plan__deco{ animation:26s linear infinite plan-spin; }
 .plan__hi{ animation:.45s cubic-bezier(.2,.9,.3,1.3) both plan-pop; }
-.plan__item{ animation:.5s ease-out both plan-rise; }
-.plan__item:nth-child(2){ animation-delay:90ms; }
-.plan__item:nth-child(3){ animation-delay:180ms; }
+.mk__row{ animation:.5s ease-out both plan-rise; }
+.mk__row:nth-child(2){ animation-delay:90ms; }
+.mk__row:nth-child(3){ animation-delay:180ms; }
 .plan__coin.is-shake{ animation:.4s ease-in-out 3 plan-shake; }
 .plan__course{ animation:.5s ease-out both plan-rise; }
 .plan__cring circle:last-child{ transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.3,1); }
