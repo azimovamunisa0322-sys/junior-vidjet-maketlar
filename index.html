@@ -920,24 +920,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .plan__cring svg{ transform:rotate(-90deg); display:block; }
 .plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:var(--t-tiny); font-weight:600; color:var(--c-navy); }
 
-/* ---------- Nega aynan shuncha dars? ---------- */
-.plan__why{ border-top:4px solid var(--c-bg); padding:8px 16px 16px; }
-.plan__whybtn{
-  display:inline-flex; align-items:center; gap:8px;
-  min-height:var(--tap); padding:0;
-  font:var(--t-small); color:var(--c-muted);
-  background:none; border:0; cursor:pointer;
-}
-.plan__whybtn svg{ width:16px; height:16px; }
-.plan__whybtn .car{ transition:transform .2s ease; }
-.plan__whybtn[aria-expanded="true"] .car{ transform:rotate(180deg); }
-.plan__whybody{ display:none; padding-bottom:4px; font:var(--t-small); color:var(--c-muted); }
-.plan__whybody.is-open{ display:block; }
-.plan__whybody p{ margin:0; }
-.plan__whybody p+p{ margin-top:8px; }
-.plan__whybody b{ color:var(--c-navy); }
-.plan__whybody u{ text-decoration:none; color:var(--c-brand-text); font-weight:600; }
-
 /* ============================================================
    ANIMATSIYALAR — veb versiyadagi vaqtlar bilan aynan bir xil
    ============================================================ */
@@ -1112,6 +1094,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 
 
+
             <!-- PLAN:START -->
             <section class="plan">
               <!-- hero -->
@@ -1198,20 +1181,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                     </span>
                   </button>
                   <div class="plan__courses" id="planCourses"></div>
-                </div>
-
-                <!-- nega aynan shuncha dars? -->
-                <div class="plan__why">
-                  <button class="plan__whybtn" type="button" id="planWhyBtn" aria-expanded="false" aria-controls="planWhyBody">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>
-                    Nega aynan shuncha dars?
-                    
-                  </button>
-                  <div class="plan__whybody" id="planWhyBody">
-                    <p><b>Hisob:</b> modulda qolgan darslar ÷ modul yopilishiga qolgan kun. Masalan CSS: 18 dars ÷ 12 kun = kuniga 2 ta.</p>
-                    <p><b>Nima olasiz:</b> har dars uchun <u>+50 point</u> (leaderboardda ko‘tarilasiz), kursning kunlik rejasi tugasa <u>+100 coin</u>, kunlik reja to‘liq tugasa <u>+1 kun streak</u>.</p>
-                    <p><b>Bugun qilmasangiz:</b> darslar qolgan kunlarga siqiladi — ertaga kuniga bittaga ko‘p bo‘ladi.</p>
-                  </div>
                 </div>
 
               </div>
@@ -2020,7 +1989,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     });
   }
   toggle("planAllBtn", "planCourses", fillRings);
-  toggle("planWhyBtn", "planWhyBody");
 
   /* ---------- «+300 coin»: qulflangan, bosilganda izoh chiqadi ---------- */
   (function () {

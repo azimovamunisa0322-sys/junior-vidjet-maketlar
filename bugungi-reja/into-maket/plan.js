@@ -64,7 +64,6 @@
     });
   }
   toggle("planAllBtn", "planCourses", fillRings);
-  toggle("planWhyBtn", "planWhyBody");
 
   /* ---------- «+300 coin»: qulflangan, bosilganda izoh chiqadi ---------- */
   (function () {

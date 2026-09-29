@@ -208,24 +208,6 @@
 .plan__cring svg{ transform:rotate(-90deg); display:block; }
 .plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:var(--t-tiny); font-weight:600; color:var(--c-navy); }
 
-/* ---------- Nega aynan shuncha dars? ---------- */
-.plan__why{ border-top:4px solid var(--c-bg); padding:8px 16px 16px; }
-.plan__whybtn{
-  display:inline-flex; align-items:center; gap:8px;
-  min-height:var(--tap); padding:0;
-  font:var(--t-small); color:var(--c-muted);
-  background:none; border:0; cursor:pointer;
-}
-.plan__whybtn svg{ width:16px; height:16px; }
-.plan__whybtn .car{ transition:transform .2s ease; }
-.plan__whybtn[aria-expanded="true"] .car{ transform:rotate(180deg); }
-.plan__whybody{ display:none; padding-bottom:4px; font:var(--t-small); color:var(--c-muted); }
-.plan__whybody.is-open{ display:block; }
-.plan__whybody p{ margin:0; }
-.plan__whybody p+p{ margin-top:8px; }
-.plan__whybody b{ color:var(--c-navy); }
-.plan__whybody u{ text-decoration:none; color:var(--c-brand-text); font-weight:600; }
-
 /* ============================================================
    ANIMATSIYALAR — veb versiyadagi vaqtlar bilan aynan bir xil
    ============================================================ */
