@@ -672,34 +672,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .toast .ic { width: 16px; height: 16px; background-color: #fff; flex: none; }
 
 </style>
-<style>/* GAMES:CSS:START */
-/* ============================================================
-   O'YINLAR — mobil ro'yxat: uchta o'yin, kategoriya chipi,
-   qulflangan holat. Maketning o'z tokenlari bilan.
-   ============================================================ */
-.game__t{ gap:4px; }
-.game__cat{
-  align-self:flex-start; margin-top:1px;
-  padding:3px 9px; border-radius:var(--r-pill);
-  background:#EFF1F6; color:var(--c-slate);
-  font:600 10px/13px var(--f); letter-spacing:.06em; text-transform:uppercase;
-}
-.game__art--abc{ background:linear-gradient(160deg,#BCA6FF 0%,#8F6FF0 100%); }
-.game__art--art{ background:linear-gradient(160deg,#FFC79A 0%,#FF8C4B 100%); }
-.game__art--word{ display:grid; place-items:center; grid-template-columns:none; }
-.game__art--word b{ font:800 21px/23px var(--f); letter-spacing:.01em; }
-.game__art--emoji{ display:grid; place-items:center; grid-template-columns:none; font-size:31px; line-height:1; }
-
-.game--locked .game__art{ filter:saturate(.5); }
-.game--locked .game__t b{ color:var(--c-slate); }
-.game--locked .game__t span{ color:var(--c-text-3); }
-.game__lock{
-  flex:0 0 auto; width:40px; height:40px; border-radius:50%;
-  background:#C7CDDA; display:flex; align-items:center; justify-content:center;
-  box-shadow:0 4px 12px rgba(28,39,76,.12);
-}
-.game__lock svg{ width:18px; height:18px; color:#fff; }
-/* GAMES:CSS:END */</style>
 <style>/* POLISH:START */
 /* ============================================================
    SAYQAL QATLAMI — maketning o'z uslublari ustidan yoziladi.
@@ -1265,6 +1237,8 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 
 
+
+
             <!-- PLAN:START -->
             <section class="plan">
               <!-- hero -->
@@ -1296,16 +1270,16 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
               </div>
 
               <nav class="plan__shortcuts" aria-label="Tezkor bo'limlar">
-                <button class="plan__shortcut" type="button" data-toast="Coin tarixi ochilmoqda…">
-                  <span class="plan__shortcut-ic" aria-hidden="true">🪙</span><span>Coin tarixi</span>
+                <button class="plan__shortcut" type="button" data-go="coinshop">
+                  <span class="plan__shortcut-ic" aria-hidden="true">🛍️</span><span>CoinShop</span>
                 </button>
-                <button class="plan__shortcut" type="button" data-toast="Kurslar ochilmoqda…">
-                  <span class="plan__shortcut-ic" aria-hidden="true">📚</span><span>Kurslar</span>
+                <button class="plan__shortcut" type="button" data-go="certificates">
+                  <span class="plan__shortcut-ic" aria-hidden="true">📜</span><span>Sertifikatlar</span>
                 </button>
-                <button class="plan__shortcut" type="button" data-toast="O'yinlar ochilmoqda…">
+                <button class="plan__shortcut" type="button" data-game="oyin/sanoq.html" data-game-name="Sanoqni o'rganamiz">
                   <span class="plan__shortcut-ic" aria-hidden="true">🎮</span><span>O'yinlar</span>
                 </button>
-                <button class="plan__shortcut" type="button" data-toast="Leaderboard ochilmoqda…">
+                <button class="plan__shortcut" type="button" data-go="leaders">
                   <span class="plan__shortcut-ic" aria-hidden="true">🏆</span><span>Leaderboard</span>
                 </button>
               </nav>
@@ -1376,43 +1350,6 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
               <div class="track" id="track"></div>
             </section>
             <div class="dots" id="dots"></div>
-
-            <section class="games">
-              <div class="games__head">
-                <h2 class="games__title">O'yinlar</h2>
-                <a class="more" href="#">Ko'proq <i class="ic" style="--src:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMCAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHBhdGggZD0iTTcuNSAxNS44Njc0TDEyLjUgMTAuODY3NEw3LjUgNS44Njc0MyIgc3Ryb2tlPSIjQjdDMUQ1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPiA8L3N2Zz4g)"></i></a>
-              </div>
-              <button class="game" type="button" data-game="oyin/sanoq.html" data-game-name="Sanoqni o'rganamiz">
-                <span class="game__art"><b>1</b><b>2</b><b>3</b><b>4</b></span>
-                <span class="game__t">
-                  <b>Sanoqni o'rganamiz</b>
-                  <span>4+ yosh · 12 daraja · 5 daqiqa</span>
-                  <span class="game__cat">Matematika</span>
-                </span>
-                <span class="game__play"><i class="ic ic--white" style="--src:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMCAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHBhdGggZD0iTTcuNSAxNS44Njc0TDEyLjUgMTAuODY3NEw3LjUgNS44Njc0MyIgc3Ryb2tlPSIjQjdDMUQ1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPiA8L3N2Zz4g)"></i></span>
-              </button>
-
-              <!-- GAMES:START -->
-              <button class="game game--locked" type="button" data-toast="Bu o‘yin hali ochilmagan">
-                <span class="game__art game__art--abc game__art--word"><b>abc</b></span>
-                <span class="game__t">
-                  <b>So‘zlarni top</b>
-                  <span>6+ yosh · 20 daraja · 4 daqiqa</span>
-                  <span class="game__cat">English</span>
-                </span>
-                <span class="game__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span>
-              </button>
-              <button class="game game--locked" type="button" data-toast="Bu o‘yin hali ochilmagan">
-                <span class="game__art game__art--art game__art--emoji">🎨</span>
-                <span class="game__t">
-                  <b>Ranglarni aralashtir</b>
-                  <span>7+ yosh · 15 daraja · 6 daqiqa</span>
-                  <span class="game__cat">Grafik dizayn</span>
-                </span>
-                <span class="game__lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span>
-              </button>
-              <!-- GAMES:END -->
-            </section>
             <!-- COURSES:REMOVED — eski «Kurslar» bo'limi olib tashlandi -->
             </section>
             <div id="screens"></div>
