@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Junior · виджет карточкалари</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
@@ -525,19 +525,25 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 /* ---------- Kichik ekran: telefon ramkasi ekranga moslashadi ---------- */
 @media (max-width: 900px) {
-  .page { flex-direction: column; gap: 14px; padding: 10px 8px 20px; }
-  .stage { flex: 1 1 auto; width: 100%; padding: 4px 0 8px; overflow: visible; }
-  .phone-wrap { margin: 0 auto; }
-  .panel { position: static; width: 100%; flex: 1 1 auto; padding: 14px; }
-  /* Masshtab tugmalari kichik ekranda ishlamaydi — o'lcham avtomatik */
-  .ctl__row--zoom { display: none; }
-  .gallery { align-items: center; }
-  .ggrid { justify-content: center; }
+  html, body { min-height: 100%; background: var(--c-bg); }
+  body { min-height: 100svh; }
+  .page { display: block; min-height: 100svh; padding: 0; }
+  .stage { width: 100%; padding: 0; overflow: hidden; }
+  .phone-wrap {
+    width: calc(390px * var(--zoom, 1));
+    height: calc(844px * var(--zoom, 1));
+    margin: 0 auto;
+  }
+  .phone {
+    width: 390px; height: 844px; padding: 0; border-radius: 0;
+    background: transparent; box-shadow: none;
+  }
+  .screen { border-radius: 0; }
+  /* Бошқарув панели макетни текшириш учун; мобил илова экранида кўринмайди. */
+  .panel { display: none; }
 }
 @media (max-width: 420px) {
-  .page { padding: 6px 4px 16px; }
-  .panel { border-radius: 14px; padding: 12px; }
-  .panel__title { font-size: 16px; }
+  .page { padding: 0; }
 }
 
 /* ---------- O'yinlar bo'limi (banner tagida, vidjetlardan yuqorida) ---------- */
@@ -2058,11 +2064,13 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     [...b.parentNode.children].forEach(x => x.classList.toggle('is-on', x === b));
     fitPhone();
   });
-  // Telefon ramkasi 402 px keng. Ekran tor bo'lsa — kichraytirib sig'diramiz.
+  // Desktopda telefon ramkasi 402 px. Mobil rejimda esa 390 px ilova ekrani
+  // bevosita viewportga tushadi; torroq ekranlarda butun maket bir xil nisbatda kichrayadi.
   function fitPhone() {
     const narrow = window.innerWidth <= 900;
-    const avail = (stage.clientWidth || window.innerWidth) - (narrow ? 8 : 24);
-    const z = narrow ? Math.min(1, Math.max(0.4, avail / 402)) : (manualZoom || 1);
+    const avail = (stage.clientWidth || window.innerWidth) - (narrow ? 0 : 24);
+    const baseWidth = narrow ? 390 : 402;
+    const z = narrow ? Math.min(1, Math.max(0.4, avail / baseWidth)) : (manualZoom || 1);
     stage.style.setProperty('--zoom', z);
   }
   window.addEventListener('resize', fitPhone);
