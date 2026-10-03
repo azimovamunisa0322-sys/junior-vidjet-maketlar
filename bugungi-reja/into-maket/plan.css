@@ -17,54 +17,50 @@
 }
 
 /* ---------- Bo'lim ---------- */
-.plan{ padding:4px 0; }
+.plan{ padding:4px 0 12px; }
 
 /* ---------- Hero — alohida karta ---------- */
 .plan__hero{
   position:relative;
-  margin:0 16px 12px;
-  padding:16px;
+  min-height:184px; margin:0 16px 16px;
+  padding:22px 18px;
   border-radius:var(--r-card);
-  background:linear-gradient(135deg,var(--c-brand-soft) 0%,#FFF6F2 60%,#FFFBF9 100%);
-  box-shadow:0 6px 18px rgba(28,39,76,.08), inset 0 0 0 1px rgba(255,79,40,.07);
+  background:linear-gradient(135deg,#F3F5F8 0%,#F8F9FB 100%);
+  box-shadow:none;
 }
 .plan__decowrap{ position:absolute; inset:0; overflow:hidden; border-radius:inherit; pointer-events:none; }
 .plan__deco{
-  position:absolute; right:-64px; top:-78px; width:196px; height:196px;
-  border-radius:var(--r-pill); border:10px solid rgba(255,79,40,.16);
+  position:absolute; right:-54px; top:-72px; width:172px; height:172px;
+  border-radius:var(--r-pill); border:9px solid rgba(177,190,209,.24);
 }
 .plan__robowrap{
-  position:absolute; right:8px; bottom:0; width:116px; height:80px;
+  position:absolute; right:2px; bottom:0; width:154px; height:116px;
   overflow:hidden; border-bottom-right-radius:var(--r-card); pointer-events:none;
 }
 .plan__robo{
-  position:absolute; right:0; bottom:-8px; height:92px; width:auto;
+  position:absolute; right:-4px; bottom:-15px; height:132px; width:auto;
   animation:3.2s ease-in-out infinite plan-float;
 }
 
-.plan__herotop{ position:relative; display:flex; align-items:center; gap:12px; }
-.plan__ring{ position:relative; width:72px; height:72px; flex:none; }
+.plan__herotop{ position:relative; width:62%; display:block; }
+.plan__ring{ position:absolute; z-index:2; right:16px; top:16px; width:54px; height:54px; }
 .plan__ring svg{ transform:rotate(-90deg); display:block; }
 .plan__ringtxt{ position:absolute; inset:0; display:grid; place-content:center; text-align:center; line-height:1; }
-.plan__ringtxt b{ font:var(--t-h1); color:var(--c-navy); }
+.plan__ringtxt b{ font:600 16px/20px var(--f); color:var(--c-navy); }
 .plan__ringtxt b i{ font-style:normal; color:var(--c-muted); }
-.plan__ringtxt span{
-  display:block; margin-top:4px; font:var(--t-tiny); font-size:10px;
-  letter-spacing:.06em; text-transform:uppercase; color:var(--c-muted);
-}
-.plan__hi{ margin:0; font:var(--t-h1); color:var(--c-navy); letter-spacing:-.01em; }
-.plan__sub{ margin:4px 0 0; padding-right:96px; font:var(--t-small); color:var(--c-muted); }
-.plan__sub b{ color:var(--c-brand-text); font-weight:600; }
+.plan__hi{ margin:0; font:600 20px/23px var(--f); color:var(--c-text); letter-spacing:-.01em; }
+.plan__sub{ margin:7px 0 0; padding:0; font:500 13px/17px var(--f); color:var(--c-muted); }
+.plan__sub b{ color:var(--c-text); font-weight:600; }
 
-.plan__coinwrap{ position:relative; display:inline-block; margin-top:12px; }
+.plan__coinwrap{ position:absolute; z-index:3; left:18px; bottom:18px; display:inline-block; }
 .plan__coin{
   display:inline-flex; align-items:center; gap:8px;
-  min-height:var(--tap); padding:0 16px;
-  border-radius:var(--r-pill); background:#fff; border:1px solid var(--c-line);
-  font:var(--t-btn); color:var(--c-muted); cursor:pointer;
+  min-height:34px; padding:0 14px;
+  border-radius:var(--r-pill); background:#FFFBE9; border:1.5px solid #F2B800;
+  font:600 13px/16px var(--f); color:#D89E00; cursor:pointer;
 }
 .plan__coin .ic-coin{ width:16px; height:16px; flex:none; }
-.plan__coin .ic-lock{ width:14px; height:14px; flex:none; color:var(--c-muted); }
+.plan__coin .ic-lock{ display:none; }
 .plan__tip{
   position:absolute; left:0; top:100%; z-index:20; margin-top:8px;
   width:max-content; max-width:232px;
@@ -76,6 +72,24 @@
 }
 .plan__tip[hidden]{ display:none; }
 
+/* ---------- Hero ostidagi tezkor bo'limlar ---------- */
+.plan__shortcuts{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px;
+  margin:0 12px 24px;
+}
+.plan__shortcut{
+  min-width:0; padding:0; border:0; background:transparent;
+  display:flex; flex-direction:column; align-items:center; gap:7px;
+  font:600 12px/15px var(--f); color:var(--c-text); cursor:pointer;
+}
+.plan__shortcut-ic{
+  display:grid; place-items:center; width:58px; height:58px;
+  border-radius:50%; border:2px solid #D9E1EB; background:#F8FAFC;
+  box-shadow:inset 0 0 0 4px #fff, 0 3px 9px rgba(28,39,76,.05);
+  font-size:28px; line-height:1;
+}
+.plan__shortcut:active .plan__shortcut-ic{ transform:scale(.96); }
+
 /* ============================================================
    MENING KURSLARIM — kunlik reja qatorlari
 
@@ -85,36 +99,36 @@
    Faol qator to'ldirilmaydi — faqat apelsin chegara oladi.
    ============================================================ */
 .mk__title{
-  margin:0 0 12px; padding:0 16px;
-  font:var(--t-h1); color:var(--c-navy);
+  margin:0 0 14px; padding:0 16px;
+  font:600 21px/26px var(--f); color:var(--c-text);
 }
-.mk__list{ display:flex; flex-direction:column; gap:12px; padding:0 16px; }
+.mk__list{ display:flex; flex-direction:column; gap:14px; padding:0 12px 0 16px; }
 
-.mk__row{ position:relative; display:flex; align-items:flex-start; gap:10px; }
+.mk__row{ position:relative; display:flex; align-items:center; gap:10px; }
 /* raqamlarni bog'laydigan uzuq chiziq */
 .mk__row:not(:last-child)::after{
-  content:""; position:absolute; left:15px; top:36px; bottom:-16px;
-  border-left:2px dashed #C6CBD8;
+  content:""; position:absolute; left:13px; top:40px; bottom:-19px;
+  border-left:1.5px dashed #C8D3E2;
 }
 
 .mk__num{
   position:relative; z-index:1; flex:none;
-  display:grid; place-items:center; width:32px; height:32px;
+  display:grid; place-items:center; width:28px; height:28px;
   border-radius:var(--r-pill);
-  background:#fff; box-shadow:inset 0 0 0 2px #E3E6EE;
-  font:var(--t-body); font-weight:600; color:var(--c-muted);
+  background:#B7C5DC; box-shadow:0 3px 10px rgba(28,39,76,.08), inset 0 0 0 2px #fff;
+  font:600 13px/16px var(--f); color:#fff;
 }
 .mk__row--now .mk__num{
   background:var(--c-brand); box-shadow:none; color:#fff;
 }
 
 .mk__card{
-  flex:1; min-width:0; display:flex; align-items:flex-start; gap:10px;
-  padding:10px; border:0; border-radius:var(--r-card);
-  background:var(--c-card); box-shadow:var(--shadow-card);
+  flex:1; min-width:0; display:flex; align-items:center; gap:12px;
+  min-height:104px; padding:12px 11px; border:1px solid transparent; border-radius:13px;
+  background:var(--c-card); box-shadow:0 5px 16px rgba(28,39,76,.035);
   text-align:left; cursor:pointer;
 }
-.mk__row--now .mk__card{ box-shadow:var(--shadow-card), inset 0 0 0 2px var(--c-brand); }
+.mk__row--now .mk__card{ border-color:#C8D7E8; box-shadow:0 5px 16px rgba(28,39,76,.035); }
 
 /* Muqova — hamma kursga BITTA rasm, faqat nomi o'zgaradi.
    Rasmda kurs nomi chizib qo'yilgan (pastki chap burchakda), shuning
@@ -123,39 +137,35 @@
    qisqa o'tish bor, shunda kesilgandek ko'rinmaydi. */
 .mk__cover{
   position:relative; flex:none; overflow:hidden;
-  width:92px; height:62px; border-radius:var(--r-inner);
-  background:#EF5A28;
+  width:128px; height:66px; border-radius:9px;
+  background:linear-gradient(135deg,#D5C8FF 0%,#BCA8FF 100%);
 }
 .mk__cover-img{
-  position:absolute; inset:0; width:100%; height:100%;
-  object-fit:cover; object-position:center top;
+  position:absolute; left:-10px; bottom:0; width:147px; height:66px;
+  object-fit:cover; object-position:left bottom;
 }
+.mk__hello{ position:absolute; right:8px; top:11px; color:#7FF4EA; font:italic 700 14px/18px var(--f); transform:rotate(-4deg); }
 .mk__cover-tag{
-  position:absolute; left:0; right:0; bottom:0;
-  padding:9px 6px 5px;
-  background:linear-gradient(180deg,
-              rgba(17,22,35,0) 0%,
-              rgba(17,22,35,.97) 30%,
-              #111623 55%);
-  color:#fff; font:800 7px/8.5px var(--f); letter-spacing:.01em;
-  text-transform:uppercase; text-align:left;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  overflow:hidden;
+  position:absolute; left:7px; bottom:7px; z-index:2;
+  padding:3px 7px; border-radius:4px;
+  background:rgba(91,77,145,.7);
+  color:#fff; font:800 12px/14px var(--f); letter-spacing:.02em;
+  text-transform:uppercase; text-align:left; white-space:nowrap;
 }
 
 .mk__body{ min-width:0; flex:1; display:block; }
 .mk__name{
-  display:block; font:var(--t-title); color:var(--c-navy);
+  display:block; font:600 16px/19px var(--f); color:var(--c-text);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.mk__topic{ display:block; margin-top:4px; font:var(--t-body); color:var(--c-muted); }
+.mk__topic{ display:block; margin-top:4px; font:500 13px/16px var(--f); color:#777; }
 
 /* tanga — amber pilyulya. Matn #8A6600: #FEF9E7 fonda 5.0 */
 .mk__coin{
   display:inline-flex; align-items:center; gap:5px; margin-top:8px;
-  min-height:26px; padding:0 9px; border-radius:var(--r-pill);
-  background:#FEF9E7; box-shadow:inset 0 0 0 1.25px #F0B93F;
-  font:var(--t-tiny); font-weight:600; color:#8A6600;
+  min-height:25px; padding:0 9px; border-radius:var(--r-pill);
+  background:#FFFBE9; box-shadow:inset 0 0 0 1.25px #F2B800;
+  font:600 12px/15px var(--f); color:#D69D00;
 }
 .mk__coin svg{ width:15px; height:15px; flex:none; }
 
@@ -171,45 +181,43 @@
 /* ============================================================
    Barcha kurslarim
    ============================================================ */
-.plan__all{ border-top:4px solid var(--c-bg); padding:12px; }
+.plan__card{ margin-top:18px; }
+.plan__all{ border-top:0; padding:0 12px; }
 .plan__allbtn{
   display:flex; width:100%; align-items:center; gap:12px;
-  min-height:var(--tap); padding:12px;
-  border:1px solid rgba(255,79,40,.35); border-radius:var(--r-inner);
-  background:var(--c-brand-soft); text-align:left; cursor:pointer;
+  min-height:76px; padding:10px 14px;
+  border:0; border-radius:13px;
+  background:#fff; box-shadow:0 5px 16px rgba(28,39,76,.035); text-align:left; cursor:pointer;
 }
 .plan__allic{
-  display:grid; place-items:center; width:40px; height:40px; flex:none;
-  border-radius:var(--r-inner); background:var(--c-brand); color:#fff;
-  box-shadow:var(--shadow-card);
+  display:grid; place-items:center; width:54px; height:54px; flex:none;
+  border-radius:12px; background:#F8FAFC; color:var(--c-text);
+  font-size:30px;
 }
 .plan__allic svg{ width:20px; height:20px; }
 .plan__alltxt{ min-width:0; flex:1; }
-.plan__alltxt b{ display:block; font:var(--t-title); color:var(--c-navy); }
-.plan__alltxt span{ display:block; margin-top:4px; font:var(--t-tiny); font-weight:600; color:var(--c-brand-text); }
+.plan__alltxt b{ display:block; font:600 16px/20px var(--f); color:var(--c-text); }
+.plan__alltxt span{ display:block; margin-top:4px; font:500 12px/15px var(--f); color:#777; }
 .plan__caret{
   display:grid; place-items:center; width:28px; height:28px; flex:none;
-  border-radius:var(--r-pill); background:#fff; color:var(--c-brand-text);
+  border-radius:var(--r-pill); background:transparent; color:#C6D1DF;
 }
 .plan__caret svg{ width:16px; height:16px; transition:transform .2s ease; }
 .plan__allbtn[aria-expanded="true"] .plan__caret svg{ transform:rotate(180deg); }
 
-.plan__courses{ display:none; margin-top:8px; flex-direction:column; gap:8px; }
+.plan__courses{ display:none; margin-top:14px; flex-direction:column; gap:12px; }
 .plan__courses.is-open{ display:flex; }
 .plan__course{
   display:flex; width:100%; align-items:center; gap:12px;
-  min-height:var(--tap); padding:12px;
-  border:0; border-radius:var(--r-inner); background:var(--c-row);
-  box-shadow:0 2px 8px rgba(28,39,76,.07), inset 0 0 0 1px rgba(28,39,76,.045);
+  min-height:100px; padding:12px 14px;
+  border:0; border-radius:13px; background:#fff;
+  box-shadow:0 5px 16px rgba(28,39,76,.035);
   text-align:left; cursor:pointer;
 }
-.plan__cicon{
-  flex:none; display:grid; place-items:center;
-  width:40px; height:40px; border-radius:var(--r-inner);
-  font:var(--t-title); color:#fff;
-  text-shadow:0 1px 2px rgba(0,0,0,.25);
-  box-shadow:inset 0 -2px 5px rgba(0,0,0,.12);
-}
+.plan__cthumb{ position:relative; flex:none; overflow:hidden; width:126px; height:68px; border-radius:9px; background:linear-gradient(135deg,#D5C8FF,#BCA8FF); }
+.plan__cthumb img{ position:absolute; left:-10px; bottom:0; width:147px; height:68px; object-fit:cover; object-position:left bottom; }
+.plan__cthumb i{ position:absolute; right:8px; top:10px; color:#7FF4EA; font:italic 700 14px/18px var(--f); transform:rotate(-4deg); }
+.plan__cthumb b{ position:absolute; left:7px; bottom:7px; z-index:2; padding:3px 7px; border-radius:4px; background:rgba(91,77,145,.7); color:#fff; font:800 12px/14px var(--f); letter-spacing:.02em; }
 .plan__cicon--0{ background:linear-gradient(160deg,#4FB8F2 0%,#0E86C4 100%); }
 .plan__cicon--1{ background:linear-gradient(160deg,#6FC93C 0%,#3E9A00 100%); }
 .plan__cicon--2{ background:linear-gradient(160deg,#A58CF5 0%,#6C4CD8 100%); }
@@ -218,18 +226,19 @@
 .plan__cicon--5{ background:linear-gradient(160deg,#F98BA4 0%,#DE3F63 100%); }
 .plan__cbody{ min-width:0; flex:1; }
 .plan__cname{
-  margin:0; font:var(--t-body); font-weight:600; color:var(--c-navy);
+  margin:0; font:600 15px/18px var(--f); color:var(--c-text);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:4px; }
-.plan__cstate{ padding:4px 8px; border-radius:var(--r-pill); font:var(--t-tiny); font-weight:600; white-space:nowrap; }
-.plan__cstate--go{   background:var(--c-green-soft); color:#2F7A00; }
-.plan__cstate--stop{ background:var(--c-red-soft);   color:#B10000; }
-.plan__cstate--idle{ background:#EFF1F6;             color:var(--c-muted); }
-.plan__ccat{ font:var(--t-tiny); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--c-muted); }
-.plan__cring{ position:relative; width:40px; height:40px; flex:none; }
+.plan__ctopic{ display:block; margin-top:4px; font:500 12px/15px var(--f); color:#777; }
+.plan__cmeta{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:7px; }
+.plan__cstate{ padding:4px 10px; border-radius:var(--r-pill); font:500 11px/14px var(--f); white-space:nowrap; background:#fff; }
+.plan__cstate--go{ color:#00A777; box-shadow:inset 0 0 0 1px #00C995; }
+.plan__cstate--stop{ color:#E00000; box-shadow:inset 0 0 0 1px #FF1E1E; }
+.plan__cstate--idle{ color:#D49A00; box-shadow:inset 0 0 0 1px #F2B800; }
+.plan__ccat{ display:none; }
+.plan__cring{ position:relative; width:44px; height:44px; flex:none; }
 .plan__cring svg{ transform:rotate(-90deg); display:block; }
-.plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:var(--t-tiny); font-weight:600; color:var(--c-navy); }
+.plan__cpct{ position:absolute; inset:0; display:grid; place-content:center; font:600 12px/15px var(--f); color:var(--c-text); }
 
 /* ============================================================
    ANIMATSIYALAR — veb versiyadagi vaqtlar bilan aynan bir xil

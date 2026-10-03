@@ -4,18 +4,18 @@
                 <span class="plan__decowrap"><span class="plan__deco"></span></span>
                 <span class="plan__robowrap"><img class="plan__robo" src="{{IMG:roboflag}}" alt=""></span>
                 <div class="plan__herotop">
-                  <div class="plan__ring">
-                    <svg width="72" height="72">
-                      <circle cx="36" cy="36" r="31" fill="none" stroke="#FFFFFF" stroke-width="8"/>
-                      <circle cx="36" cy="36" r="31" fill="none" stroke="#FF4F28" stroke-width="8"
-                              stroke-linecap="round" stroke-dasharray="194.78" stroke-dashoffset="194.78"/>
-                    </svg>
-                    <span class="plan__ringtxt"><b>0<i>/4</i></b><span>dars</span></span>
-                  </div>
                   <div style="min-width:0;flex:1">
                     <h3 class="plan__hi">Bugun sizni uzoq kutdim!</h3>
                     <p class="plan__sub">IT dars qilamizmi? <b>4 ta dars</b> tayyor turibdi</p>
                   </div>
+                </div>
+                <div class="plan__ring">
+                  <svg width="54" height="54">
+                    <circle cx="27" cy="27" r="23" fill="none" stroke="#E5EAF2" stroke-width="5"/>
+                    <circle cx="27" cy="27" r="23" fill="none" stroke="#1C274C" stroke-width="5"
+                            stroke-linecap="round" stroke-dasharray="144.51" stroke-dashoffset="144.51"/>
+                  </svg>
+                  <span class="plan__ringtxt"><b>0<i>/4</i></b></span>
                 </div>
                 <span class="plan__coinwrap">
                   <button class="plan__coin" type="button" id="planCoinBtn" aria-describedby="planTip">
@@ -27,15 +27,30 @@
                 </span>
               </div>
 
+              <nav class="plan__shortcuts" aria-label="Tezkor bo'limlar">
+                <button class="plan__shortcut" type="button" data-toast="Coin tarixi ochilmoqda…">
+                  <span class="plan__shortcut-ic" aria-hidden="true">🪙</span><span>Coin tarixi</span>
+                </button>
+                <button class="plan__shortcut" type="button" data-toast="Kurslar ochilmoqda…">
+                  <span class="plan__shortcut-ic" aria-hidden="true">📚</span><span>Kurslar</span>
+                </button>
+                <button class="plan__shortcut" type="button" data-toast="O'yinlar ochilmoqda…">
+                  <span class="plan__shortcut-ic" aria-hidden="true">🎮</span><span>O'yinlar</span>
+                </button>
+                <button class="plan__shortcut" type="button" data-toast="Leaderboard ochilmoqda…">
+                  <span class="plan__shortcut-ic" aria-hidden="true">🏆</span><span>Leaderboard</span>
+                </button>
+              </nav>
+
                 <h2 class="mk__title">Mening kurslarim</h2>
                 <ul class="mk__list">
                   <li class="mk__row mk__row--now">
                     <span class="mk__num">1</span>
-                    <button class="mk__card" type="button" data-toast="Веб программирование — dars ochilmoqda…">
-                      <span class="mk__cover"><img class="mk__cover-img" src="{{IMG:r1}}" alt=""><span class="mk__cover-tag">Веб программирование</span></span>
+                    <button class="mk__card" type="button" data-toast="Matematika — dars ochilmoqda…">
+                      <span class="mk__cover"><span class="mk__hello">HELLO</span><img class="mk__cover-img" src="{{IMG:robomentor}}" alt=""><span class="mk__cover-tag">ENGLISH</span></span>
                       <span class="mk__body">
-                        <span class="mk__name">Веб программирование</span>
-                        <span class="mk__topic">CSS Flexbox asoslari</span>
+                        <span class="mk__name">Matematika</span>
+                        <span class="mk__topic">Matematika asoslari</span>
                         <span class="mk__coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F3AD16"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.6"/><path d="M12 8.6v6.8M10.1 10.3h3a1.55 1.55 0 0 1 0 3.1h-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>+100 coin</span>
                       </span>
                       <span class="mk__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
@@ -43,11 +58,11 @@
                   </li>
                   <li class="mk__row">
                     <span class="mk__num">2</span>
-                    <button class="mk__card" type="button" data-toast="Matematika — dars ochilmoqda…">
-                      <span class="mk__cover"><img class="mk__cover-img" src="{{IMG:r1}}" alt=""><span class="mk__cover-tag">Matematika</span></span>
+                    <button class="mk__card" type="button" data-toast="Ingliz tili — dars ochilmoqda…">
+                      <span class="mk__cover"><span class="mk__hello">HELLO</span><img class="mk__cover-img" src="{{IMG:robomentor}}" alt=""><span class="mk__cover-tag">ENGLISH</span></span>
                       <span class="mk__body">
-                        <span class="mk__name">Matematika</span>
-                        <span class="mk__topic">Kasrlar bilan amallar</span>
+                        <span class="mk__name">Ingliz tili</span>
+                        <span class="mk__topic">Present simple</span>
                         <span class="mk__coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F3AD16"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.6"/><path d="M12 8.6v6.8M10.1 10.3h3a1.55 1.55 0 0 1 0 3.1h-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>+100 coin</span>
                       </span>
                       <span class="mk__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
@@ -55,11 +70,11 @@
                   </li>
                   <li class="mk__row">
                     <span class="mk__num">3</span>
-                    <button class="mk__card" type="button" data-toast="English — dars ochilmoqda…">
-                      <span class="mk__cover"><img class="mk__cover-img" src="{{IMG:r1}}" alt=""><span class="mk__cover-tag">English</span></span>
+                    <button class="mk__card" type="button" data-toast="Web dasturlash — dars ochilmoqda…">
+                      <span class="mk__cover"><span class="mk__hello">HELLO</span><img class="mk__cover-img" src="{{IMG:robomentor}}" alt=""><span class="mk__cover-tag">ENGLISH</span></span>
                       <span class="mk__body">
-                        <span class="mk__name">English</span>
-                        <span class="mk__topic">Present Simple</span>
+                        <span class="mk__name">Web dasturlash</span>
+                        <span class="mk__topic">CSS asoslari</span>
                         <span class="mk__coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F3AD16"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.6"/><path d="M12 8.6v6.8M10.1 10.3h3a1.55 1.55 0 0 1 0 3.1h-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>+100 coin</span>
                       </span>
                       <span class="mk__chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
@@ -70,9 +85,9 @@
               <div class="plan__card">
                 <!-- barcha kurslarim -->
                 <div class="plan__all">
-                  <button class="plan__allbtn" type="button" id="planAllBtn" aria-expanded="false" aria-controls="planCourses">
+                  <button class="plan__allbtn" type="button" id="planAllBtn" aria-expanded="true" aria-controls="planCourses">
                     <span class="plan__allic">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5"/><path d="m3 13 9 5 9-5"/></svg>
+                      <span aria-hidden="true">📚</span>
                     </span>
                     <span class="plan__alltxt">
                       <b>Barcha kurslarim</b>
@@ -82,9 +97,8 @@
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </span>
                   </button>
-                  <div class="plan__courses" id="planCourses"></div>
+                  <div class="plan__courses is-open" id="planCourses"></div>
                 </div>
 
               </div>
             </section>
-

@@ -7,8 +7,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 TARGET = ROOT / "index.html"
 s = open(TARGET, encoding="utf-8").read()
 
-# avvalgi urinishni olib tashlaymiz (idempotent)
-s = re.sub(r"\n *<!-- TOPBAR:START -->.*?<!-- TOPBAR:END -->", "", s, flags=re.S)
+# avvalgi urinish joyini eslab qolamiz (idempotent)
+topbar_re = re.compile(r"\n *<!-- TOPBAR:START -->.*?<!-- TOPBAR:END -->", re.S)
+had_topbar = bool(topbar_re.search(s))
 s = re.sub(r"<style>/\* TOPBAR:CSS:START \*/.*?/\* TOPBAR:CSS:END \*/</style>\n", "", s, flags=re.S)
 
 CSS = """
@@ -17,16 +18,16 @@ CSS = """
    Ilgari ular «Salom!» banneri ichida edi; banner olingach
    ko'rinmay qolgan edi. Veb versiyada ham header'da turadi.
    ============================================================ */
-.topbar{ display:flex; align-items:center; gap:10px; padding:4px 16px 14px; }
-.topbar .logo{ height:30px; width:auto; margin:0; flex:none; }
+.topbar{ display:flex; align-items:center; gap:10px; padding:8px 16px 18px; }
+.topbar .logo{ height:30px; max-width:108px; width:auto; margin:0; flex:none; object-fit:contain; }
 .topbar__pills{ margin-left:auto; display:flex; align-items:center; gap:8px; }
 .tb-pill{
   display:inline-flex; align-items:center; gap:6px;
-  height:32px; padding:0 11px; border-radius:var(--r-pill);
-  background:#fff; box-shadow:0 2px 6px rgba(28,39,76,.07);
-  font:600 15px/18px var(--f); color:var(--c-navy);
+  height:36px; padding:0 12px; border-radius:var(--r-pill);
+  background:#F8F9FB; box-shadow:none;
+  font:600 15px/18px var(--f); color:var(--c-text);
 }
-.tb-pill img{ width:18px; height:18px; flex:none; }
+.tb-pill img{ width:17px; height:17px; flex:none; }
 """
 
 BAR = """            <!-- TOPBAR:START -->
@@ -44,15 +45,16 @@ i = s.find("</head>")
 assert i > 0 and s.count("</head>") == 1, "</head> aniqlanmadi"
 s = s[:i] + "<style>/* TOPBAR:CSS:START */" + CSS + "/* TOPBAR:CSS:END */</style>\n" + s[i:]
 
-# 2) logo qatorini almashtiramiz.
-#    E'TIBOR: asl faylda logodan keyin juftsiz </span> turadi (5b200bf da ham bor),
-#    u ham shu yerda olib tashlanadi.
-old = '            <img class="logo" data-a="a28" alt="Junior academy">\n            </span>'
-if old not in s:
-    old = '            <img class="logo" data-a="a28" alt="Junior academy">'
-    assert old in s, "logo qatori topilmadi"
-assert s.count(old) == 1
-s = s.replace(old, BAR, 1)
+# 2) mavjud topbar bo'lsa joyida yangilaymiz, bo'lmasa logo qatorini almashtiramiz.
+if had_topbar:
+    s = topbar_re.sub("\n" + BAR, s, count=1)
+else:
+    old = '            <img class="logo" data-a="a28" alt="Junior academy">\n            </span>'
+    if old not in s:
+        old = '            <img class="logo" data-a="a28" alt="Junior academy">'
+        assert old in s, "logo qatori topilmadi"
+    assert s.count(old) == 1
+    s = s.replace(old, BAR, 1)
 
 open(TARGET, "w", encoding="utf-8").write(s)
 print("tepa qator qo'yildi")

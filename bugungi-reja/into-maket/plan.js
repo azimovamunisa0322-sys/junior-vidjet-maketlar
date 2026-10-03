@@ -5,9 +5,9 @@
    ============================================================ */
 (function () {
   var COURSES = [
-    {n:"WebStart",               s:"stop", c:"Muddati tugagan",   p:30,  d:"6/20",  cat:"HTML",    img:"c1"},
-    {n:"Dasturlash kursi",       s:"go",   c:"Vaqtida ketyapti",  p:20,  d:"4/63",  cat:"PYTHON",  img:"c2"},
-    {n:"Grafik dizayn",          s:"go",   c:"Vaqtida ketyapti",  p:44,  d:"8/36",  cat:"FIGMA",   img:"c3"},
+    {n:"Web dasturlash",         s:"go",   c:"Vaqtida ketyapti",  p:56,  d:"6/20",  cat:"CSS",     img:"c1"},
+    {n:"Web dasturlash",         s:"stop", c:"Muddati tugagan",   p:23,  d:"4/63",  cat:"CSS",     img:"c2"},
+    {n:"Web dasturlash",         s:"idle", c:"Normal",            p:56,  d:"8/36",  cat:"CSS",     img:"c3"},
     {n:"Kompyuter Savodxonligi", s:"go",   c:"Vaqtida ketyapti",  p:64,  d:"9/14",  cat:"OFIS",    img:"c4"},
     {n:"Blockly Dasturlash",     s:"go",   c:"Vaqtida ketyapti",  p:33,  d:"4/24",  cat:"ASOSLAR", img:"c5"},
     {n:"Suniy Intellekt",        s:"go",   c:"Vaqtida ketyapti",  p:22,  d:"2/18",  cat:"KIRISH",  img:"c6"},
@@ -17,26 +17,27 @@
     {n:"2 Test Course",          s:"idle", c:"Hali boshlanmagan", p:0,   d:"0/10",  cat:"TEST",    img:"c10"},
     {n:"Junior Kurs",            s:"go",   c:"Tugatilgan",        p:100, d:"14/14", cat:"YAKUN",   img:"c11"}
   ];
-  var STROKE = { go:"#3E9A00", stop:"#C2340D", idle:"#93A2C0" };
+  var STROKE = { go:"#00B884", stop:"#ED0000", idle:"#F2B800" };
 
   var box = document.getElementById("planCourses");
   if (box) {
-    var R = 18, C = 2 * Math.PI * R;   /* halqa 40x40, chiziq 4 px */
+    var R = 19.5, C = 2 * Math.PI * R;
     box.innerHTML = COURSES.map(function (k, i) {
       var off = C - C * k.p / 100;   // yakuniy holat; boshida C (bo'sh) turadi
       return '<button type="button" class="plan__course" data-toast="' + k.n + ' — kurs sahifasi">' +
-        '<span class="plan__cicon plan__cicon--' + (i % 6) + '">' + k.n.charAt(0) + '</span>' +
+        '<span class="plan__cthumb"><i>HELLO</i><img src="' + window.__PLANIMG__.robomentor + '" alt=""><b>ENGLISH</b></span>' +
         '<div class="plan__cbody">' +
           '<p class="plan__cname">' + k.n + '</p>' +
+          '<span class="plan__ctopic">CSS asoslari</span>' +
           '<span class="plan__cmeta">' +
             '<span class="plan__cstate plan__cstate--' + k.s + '">' + k.c + '</span>' +
             '<span class="plan__ccat">' + k.cat + '</span>' +
           '</span>' +
         '</div>' +
         '<span class="plan__cring">' +
-          '<svg width="40" height="40">' +
-            '<circle cx="20" cy="20" r="' + R + '" fill="none" stroke="#EDEFF4" stroke-width="4"/>' +
-            '<circle cx="20" cy="20" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
+          '<svg width="44" height="44">' +
+            '<circle cx="22" cy="22" r="' + R + '" fill="none" stroke="#F2F4F7" stroke-width="4"/>' +
+            '<circle cx="22" cy="22" r="' + R + '" fill="none" stroke="' + STROKE[k.s] + '" stroke-width="4" ' +
                     'stroke-linecap="round" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + C.toFixed(2) + '" data-off="' + off.toFixed(2) + '"/>' +
           '</svg>' +
           '<span class="plan__cpct">' + k.p + '%</span>' +
@@ -82,4 +83,5 @@
       t = setTimeout(function () { tip.hidden = true; btn.classList.remove("is-shake"); }, 2000);
     });
   })();
+  fillRings();
 })();
