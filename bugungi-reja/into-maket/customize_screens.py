@@ -45,7 +45,15 @@ if 'data-go="help"' not in screens["profile"]:
     screens["profile"] = screens["profile"].replace(out_anchor, help_row + out_anchor, 1)
 
 screens["help"] = open(HERE / "help-screen.html", encoding="utf-8").read()
-screens["courses"] = open(HERE / "courses-screen.html", encoding="utf-8").read()
+courses = open(HERE / "courses-screen.html", encoding="utf-8").read()
+plan_images_prefix = "window.__PLANIMG__="
+plan_images_start = s.find(plan_images_prefix)
+if plan_images_start < 0:
+    raise SystemExit("window.__PLANIMG__ topilmadi")
+plan_images_start += len(plan_images_prefix)
+plan_images, _ = json.JSONDecoder().raw_decode(s[plan_images_start:])
+courses = courses.replace("{{IMG:robomentor}}", plan_images["robomentor"])
+screens["courses"] = courses
 
 encoded = json.dumps(screens, ensure_ascii=False, separators=(",", ":"))
 s = s[:start] + encoded + s[end:]
