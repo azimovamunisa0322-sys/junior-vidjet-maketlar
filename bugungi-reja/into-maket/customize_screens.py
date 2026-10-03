@@ -45,6 +45,7 @@ if 'data-go="help"' not in screens["profile"]:
     screens["profile"] = screens["profile"].replace(out_anchor, help_row + out_anchor, 1)
 
 screens["help"] = open(HERE / "help-screen.html", encoding="utf-8").read()
+screens["courses"] = open(HERE / "courses-screen.html", encoding="utf-8").read()
 
 encoded = json.dumps(screens, ensure_ascii=False, separators=(",", ":"))
 s = s[:start] + encoded + s[end:]
@@ -63,8 +64,14 @@ if "['help', 'Ёрдам']" not in s:
     if games_anchor not in s:
         raise SystemExit("O'yinlar ekrani SCREENS ro'yxatida topilmadi")
     s = s.replace(games_anchor, games_anchor + " ['help', 'Ёрдам'],", 1)
+if "['courses', 'Курсларим']" not in s:
+    help_anchor = "['help', 'Ёрдам'],"
+    if help_anchor not in s:
+        raise SystemExit("Yordam ekrani SCREENS ro'yxatida topilmadi")
+    s = s.replace(help_anchor, help_anchor + " ['courses', 'Курсларим'],", 1)
 
 open(TARGET, "w", encoding="utf-8").write(s)
 print("profil qatorlari olib tashlandi:", removed)
 print("o'yinlar ekrani qo'shildi: 4 ta")
 print("yordam ekrani qo'shildi")
+print("kurslarim ekrani qo'shildi: 11 ta")

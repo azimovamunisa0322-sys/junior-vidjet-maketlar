@@ -1,0 +1,67 @@
+<style>
+[data-screen="courses"] .myc-body{
+  padding:8px 14px 110px; gap:12px;
+}
+[data-screen="courses"] .myc-summary{
+  margin:0 2px 2px; display:flex; align-items:center; justify-content:space-between;
+  font:500 13px/18px var(--f); color:var(--c-text-2);
+}
+[data-screen="courses"] .myc-summary b{ color:var(--c-brand); font-weight:700; }
+[data-screen="courses"] .myc-card{
+  width:100%; min-height:94px; padding:12px; border:0; border-radius:22px;
+  display:flex; align-items:center; gap:12px; text-align:left;
+  background:#fff; color:var(--c-text); cursor:pointer;
+  box-shadow:0 7px 22px rgba(28,39,76,.065);
+}
+[data-screen="courses"] .myc-card:active{ transform:scale(.987); }
+[data-screen="courses"] .myc-art{
+  flex:0 0 76px; width:76px; height:66px; border-radius:17px;
+  display:grid; place-items:center; color:#fff; font-size:31px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);
+}
+[data-screen="courses"] .myc-art--math{ background:linear-gradient(145deg,#7459E9,#BFAAFF); }
+[data-screen="courses"] .myc-art--eng{ background:linear-gradient(145deg,#35A7E8,#79D5FF); }
+[data-screen="courses"] .myc-art--web{ background:linear-gradient(145deg,#FF6B45,#FFAA69); }
+[data-screen="courses"] .myc-art--pc{ background:linear-gradient(145deg,#4D7FEA,#91B6FF); }
+[data-screen="courses"] .myc-art--design{ background:linear-gradient(145deg,#E45FA3,#FFAFD2); }
+[data-screen="courses"] .myc-art--python{ background:linear-gradient(145deg,#2474B7,#F1C83D); }
+[data-screen="courses"] .myc-art--blockly{ background:linear-gradient(145deg,#20A985,#83E2C7); }
+[data-screen="courses"] .myc-art--ai{ background:linear-gradient(145deg,#623BB9,#AE8BFA); }
+[data-screen="courses"] .myc-art--bot{ background:linear-gradient(145deg,#208DCE,#6CC7F5); }
+[data-screen="courses"] .myc-art--startup{ background:linear-gradient(145deg,#F08B23,#FFD071); }
+[data-screen="courses"] .myc-art--junior{ background:linear-gradient(145deg,#FF4F2D,#FF8B70); }
+[data-screen="courses"] .myc-main{ min-width:0; flex:1; display:flex; flex-direction:column; gap:5px; }
+[data-screen="courses"] .myc-name{
+  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+  font:700 15px/20px var(--f); color:var(--c-text);
+}
+[data-screen="courses"] .myc-meta{ font:500 12px/16px var(--f); color:var(--c-text-2); }
+[data-screen="courses"] .myc-progress{
+  height:5px; border-radius:999px; overflow:hidden; background:#EEF1F5;
+}
+[data-screen="courses"] .myc-progress i{
+  display:block; width:var(--p); height:100%; border-radius:inherit; background:var(--c-brand);
+}
+[data-screen="courses"] .myc-pct{ flex:0 0 38px; text-align:right; font:700 12px/16px var(--f); color:var(--c-text-2); }
+</style>
+
+<div class="scr__head">
+  <h1 class="scr__h1">Kurslarim</h1>
+  <div class="scr__sub">Sizga biriktirilgan barcha kurslar</div>
+</div>
+
+<div class="scr__body myc-body">
+  <p class="myc-summary"><span>Jami kurslar</span><b>11 ta</b></p>
+
+  <button class="myc-card" type="button" data-toast="Matematika kursi ochilmoqda…"><span class="myc-art myc-art--math">➗</span><span class="myc-main"><span class="myc-name">Matematika</span><span class="myc-meta">Matematika asoslari</span><span class="myc-progress"><i style="--p:56%"></i></span></span><span class="myc-pct">56%</span></button>
+  <button class="myc-card" type="button" data-toast="Ingliz tili kursi ochilmoqda…"><span class="myc-art myc-art--eng">ABC</span><span class="myc-main"><span class="myc-name">Ingliz tili</span><span class="myc-meta">Present Simple</span><span class="myc-progress"><i style="--p:42%"></i></span></span><span class="myc-pct">42%</span></button>
+  <button class="myc-card" type="button" data-toast="Web dasturlash kursi ochilmoqda…"><span class="myc-art myc-art--web">💻</span><span class="myc-main"><span class="myc-name">Web dasturlash</span><span class="myc-meta">CSS asoslari</span><span class="myc-progress"><i style="--p:23%"></i></span></span><span class="myc-pct">23%</span></button>
+  <button class="myc-card" type="button" data-toast="Kompyuter savodxonligi ochilmoqda…"><span class="myc-art myc-art--pc">🖥️</span><span class="myc-main"><span class="myc-name">Kompyuter savodxonligi</span><span class="myc-meta">Ofis dasturlari</span><span class="myc-progress"><i style="--p:64%"></i></span></span><span class="myc-pct">64%</span></button>
+  <button class="myc-card" type="button" data-toast="Grafik dizayn kursi ochilmoqda…"><span class="myc-art myc-art--design">🎨</span><span class="myc-main"><span class="myc-name">Grafik dizayn</span><span class="myc-meta">Figma asoslari</span><span class="myc-progress"><i style="--p:44%"></i></span></span><span class="myc-pct">44%</span></button>
+  <button class="myc-card" type="button" data-toast="Python kursi ochilmoqda…"><span class="myc-art myc-art--python">🐍</span><span class="myc-main"><span class="myc-name">Python dasturlash</span><span class="myc-meta">Boshlang'ich daraja</span><span class="myc-progress"><i style="--p:20%"></i></span></span><span class="myc-pct">20%</span></button>
+  <button class="myc-card" type="button" data-toast="Blockly kursi ochilmoqda…"><span class="myc-art myc-art--blockly">🧩</span><span class="myc-main"><span class="myc-name">Blockly dasturlash</span><span class="myc-meta">Algoritm asoslari</span><span class="myc-progress"><i style="--p:33%"></i></span></span><span class="myc-pct">33%</span></button>
+  <button class="myc-card" type="button" data-toast="Sun'iy intellekt kursi ochilmoqda…"><span class="myc-art myc-art--ai">🤖</span><span class="myc-main"><span class="myc-name">Sun'iy intellekt</span><span class="myc-meta">AI bilan tanishuv</span><span class="myc-progress"><i style="--p:22%"></i></span></span><span class="myc-pct">22%</span></button>
+  <button class="myc-card" type="button" data-toast="Telegram bot kursi ochilmoqda…"><span class="myc-art myc-art--bot">✈️</span><span class="myc-main"><span class="myc-name">Telegram bot</span><span class="myc-meta">Bot yaratish asoslari</span><span class="myc-progress"><i style="--p:0%"></i></span></span><span class="myc-pct">0%</span></button>
+  <button class="myc-card" type="button" data-toast="Startup maktabi ochilmoqda…"><span class="myc-art myc-art--startup">🚀</span><span class="myc-main"><span class="myc-name">Startup maktabi</span><span class="myc-meta">G'oyadan loyihagacha</span><span class="myc-progress"><i style="--p:0%"></i></span></span><span class="myc-pct">0%</span></button>
+  <button class="myc-card" type="button" data-toast="Junior kursi ochilmoqda…"><span class="myc-art myc-art--junior">🏆</span><span class="myc-main"><span class="myc-name">Junior kurs</span><span class="myc-meta">Yakunlangan</span><span class="myc-progress"><i style="--p:100%"></i></span></span><span class="myc-pct">100%</span></button>
+</div>
