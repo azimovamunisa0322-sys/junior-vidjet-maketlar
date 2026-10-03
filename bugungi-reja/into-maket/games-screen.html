@@ -1,0 +1,112 @@
+<style>
+[data-screen="games"] .gm-body{
+  display:flex; flex-direction:column; gap:14px;
+  padding:4px 14px 110px;
+}
+[data-screen="games"] .gm-count{
+  margin:0 2px 2px; color:var(--c-text-2);
+  font:500 13px/18px var(--f);
+}
+[data-screen="games"] .gm-card{
+  width:100%; min-height:112px; padding:14px; border:0; border-radius:26px;
+  display:flex; align-items:center; gap:14px; text-align:left;
+  background:#fff; box-shadow:0 8px 24px rgba(28,39,76,.07);
+  color:var(--c-text); cursor:pointer;
+}
+[data-screen="games"] .gm-art{
+  flex:0 0 76px; width:76px; height:76px; border-radius:22px;
+  display:grid; place-items:center; overflow:hidden;
+  color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);
+}
+[data-screen="games"] .gm-art--numbers{
+  grid-template-columns:repeat(2,1fr); padding:10px;
+  background:linear-gradient(145deg,#6DC8FF,#3596E8);
+  font:800 21px/1 var(--f); text-shadow:0 2px 3px rgba(16,74,130,.28);
+}
+[data-screen="games"] .gm-art--word{
+  background:linear-gradient(145deg,#B5A3E8,#8064C5);
+  font:800 26px/1 var(--f);
+}
+[data-screen="games"] .gm-art--color{
+  background:linear-gradient(145deg,#F3D1B9,#D99A75);
+  font-size:36px;
+}
+[data-screen="games"] .gm-art--memory{
+  background:linear-gradient(145deg,#77D9B7,#28A981);
+  font-size:35px;
+}
+[data-screen="games"] .gm-main{ min-width:0; flex:1; display:flex; flex-direction:column; gap:4px; }
+[data-screen="games"] .gm-name{
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  font:700 17px/22px var(--f); color:var(--c-text);
+}
+[data-screen="games"] .gm-meta{
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  font:500 12px/17px var(--f); color:var(--c-text-2);
+}
+[data-screen="games"] .gm-cat{
+  align-self:flex-start; margin-top:2px; padding:4px 10px; border-radius:999px;
+  background:#EFF1F6; color:#647087;
+  font:600 10px/13px var(--f); letter-spacing:.08em; text-transform:uppercase;
+}
+[data-screen="games"] .gm-action{
+  flex:0 0 46px; width:46px; height:46px; border-radius:50%;
+  display:grid; place-items:center; background:#FF4F2D; color:#fff;
+  box-shadow:0 7px 16px rgba(255,79,45,.25); font-size:24px;
+}
+[data-screen="games"] .gm-lock{
+  background:#CBD2DF; box-shadow:none; font-size:20px;
+}
+[data-screen="games"] .gm-card--locked .gm-art{ filter:saturate(.55); }
+[data-screen="games"] .gm-card--locked .gm-name{ color:#697489; }
+[data-screen="games"] .gm-card:active{ transform:scale(.985); }
+</style>
+
+<div class="scr__head">
+  <h1 class="scr__h1">O'yinlar</h1>
+  <div class="scr__sub">O'yinni tanlang va bilimlaringizni sinang</div>
+</div>
+
+<div class="scr__body gm-body">
+  <p class="gm-count">4 ta o'yin</p>
+
+  <button class="gm-card" type="button" data-game="oyin/sanoq.html" data-game-name="Sanoqni o'rganamiz">
+    <span class="gm-art gm-art--numbers" aria-hidden="true"><b>1</b><b>2</b><b>3</b><b>4</b></span>
+    <span class="gm-main">
+      <span class="gm-name">Sanoqni o'rganamiz</span>
+      <span class="gm-meta">4+ yosh · 12 daraja · 5 daqiqa</span>
+      <span class="gm-cat">Matematika</span>
+    </span>
+    <span class="gm-action" aria-hidden="true">›</span>
+  </button>
+
+  <button class="gm-card gm-card--locked" type="button" data-toast="Bu o'yin tez kunda ochiladi">
+    <span class="gm-art gm-art--word" aria-hidden="true">abc</span>
+    <span class="gm-main">
+      <span class="gm-name">So'zlarni top</span>
+      <span class="gm-meta">6+ yosh · 20 daraja · 4 daqiqa</span>
+      <span class="gm-cat">English</span>
+    </span>
+    <span class="gm-action gm-lock" aria-hidden="true">🔒</span>
+  </button>
+
+  <button class="gm-card gm-card--locked" type="button" data-toast="Bu o'yin tez kunda ochiladi">
+    <span class="gm-art gm-art--color" aria-hidden="true">🎨</span>
+    <span class="gm-main">
+      <span class="gm-name">Ranglarni aralashtir</span>
+      <span class="gm-meta">7+ yosh · 15 daraja · 6 daqiqa</span>
+      <span class="gm-cat">Grafik dizayn</span>
+    </span>
+    <span class="gm-action gm-lock" aria-hidden="true">🔒</span>
+  </button>
+
+  <button class="gm-card gm-card--locked" type="button" data-toast="Bu o'yin tez kunda ochiladi">
+    <span class="gm-art gm-art--memory" aria-hidden="true">🧠</span>
+    <span class="gm-main">
+      <span class="gm-name">Xotira kartalari</span>
+      <span class="gm-meta">5+ yosh · 10 daraja · 3 daqiqa</span>
+      <span class="gm-cat">Mantiq</span>
+    </span>
+    <span class="gm-action gm-lock" aria-hidden="true">🔒</span>
+  </button>
+</div>
