@@ -1,0 +1,46 @@
+<style>
+[data-screen="help"] .help-body{
+  padding:10px 16px 110px; gap:14px;
+}
+[data-screen="help"] .help-card{
+  padding:18px; border-radius:22px; background:#fff;
+  box-shadow:0 8px 24px rgba(28,39,76,.07);
+}
+[data-screen="help"] .help-card b{
+  display:block; margin-bottom:6px;
+  font:700 16px/21px var(--f); color:var(--c-text);
+}
+[data-screen="help"] .help-card p{
+  margin:0; font:500 13px/19px var(--f); color:var(--c-text-2);
+}
+[data-screen="help"] .help-contact{
+  width:100%; min-height:58px; padding:0 18px; border:0; border-radius:18px;
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  background:var(--c-brand); color:#fff; cursor:pointer;
+  font:600 15px/20px var(--f); box-shadow:0 8px 20px rgba(255,79,45,.2);
+}
+[data-screen="help"] .help-contact:active{ transform:scale(.985); }
+</style>
+
+<div class="scr__head">
+  <h1 class="scr__h1">Yordam</h1>
+  <div class="scr__sub">Savollaringizga tezkor javoblar</div>
+</div>
+
+<div class="scr__body help-body">
+  <article class="help-card">
+    <b>Darsni qanday boshlayman?</b>
+    <p>Asosiy sahifadagi “Mening kurslarim” bo'limidan kerakli darsni tanlang.</p>
+  </article>
+  <article class="help-card">
+    <b>Coinlarni qanday yig'aman?</b>
+    <p>Darslarni, testlarni va kunlik vazifalarni bajarganingizda coin beriladi.</p>
+  </article>
+  <article class="help-card">
+    <b>O'yinlar nega qulflangan?</b>
+    <p>Yangi o'yinlar bosqichma-bosqich ochiladi. Ochiq o'yinni hozirning o'zida boshlashingiz mumkin.</p>
+  </article>
+  <button class="help-contact" type="button" data-toast="Yordam so'rovingiz qabul qilindi">
+    <span aria-hidden="true">💬</span> Administrator bilan bog'lanish
+  </button>
+</div>

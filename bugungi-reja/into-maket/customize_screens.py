@@ -31,6 +31,21 @@ for pattern in remove_patterns:
 screens["profile"] = profile
 screens["games"] = open(HERE / "games-screen.html", encoding="utf-8").read()
 
+if 'data-go="help"' not in screens["profile"]:
+    help_row = (
+        '<button class="pf-row" type="button" data-go="help">'
+        '<span class="pf-row__ic pf-ic--blue"><b style="font:800 20px/1 var(--f);color:#fff">?</b></span>'
+        '<span class="pf-row__t">Yordam</span>'
+        '<span aria-hidden="true" style="font:600 24px/1 var(--f);color:#9AA8C4">›</span>'
+        '</button>\n  '
+    )
+    out_anchor = '<button class="pf-out"'
+    if out_anchor not in screens["profile"]:
+        raise SystemExit("Profilning Chiqish tugmasi topilmadi")
+    screens["profile"] = screens["profile"].replace(out_anchor, help_row + out_anchor, 1)
+
+screens["help"] = open(HERE / "help-screen.html", encoding="utf-8").read()
+
 encoded = json.dumps(screens, ensure_ascii=False, separators=(",", ":"))
 s = s[:start] + encoded + s[end:]
 
@@ -43,7 +58,13 @@ if "['games', 'Ўйинлар']" not in s:
         "const SCREENS = [['profile', 'Профил'], ['games', 'Ўйинлар'],",
         1,
     )
+if "['help', 'Ёрдам']" not in s:
+    games_anchor = "['games', 'Ўйинлар'],"
+    if games_anchor not in s:
+        raise SystemExit("O'yinlar ekrani SCREENS ro'yxatida topilmadi")
+    s = s.replace(games_anchor, games_anchor + " ['help', 'Ёрдам'],", 1)
 
 open(TARGET, "w", encoding="utf-8").write(s)
 print("profil qatorlari olib tashlandi:", removed)
 print("o'yinlar ekrani qo'shildi: 4 ta")
+print("yordam ekrani qo'shildi")
