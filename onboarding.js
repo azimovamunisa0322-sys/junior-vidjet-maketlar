@@ -143,14 +143,20 @@
     injectTeamCard();
   }
 
+  async function goScreen(key) {
+    closeSheet();
+    click(`[data-go="${key}"]`);
+    click(`.tab[data-tab="${key}"]`);
+    await delay(80);
+  }
+
   async function prepareWidget(key) {
     await goHome();
-    const track = document.querySelector('#track');
-    const target = track?.querySelector(`article[data-widget="${key}"]`);
-    if (track && target) {
-      track.scrollTo({ left: target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2, behavior: 'auto' });
-      await delay(30);
-    }
+  }
+
+  async function prepareCoinShop() {
+    closeSheet();
+    await delay(80);
   }
 
   function injectTeamCard() {
@@ -158,9 +164,9 @@
     if (!ai || ai.querySelector('.j-team')) return;
     const team = document.createElement('section');
     team.className = 'j-team';
-    team.setAttribute('aria-label', 'Sizning jamoangiz');
+    team.setAttribute('aria-label', 'Sizga biriktirilgan ustozlar');
     team.innerHTML = `
-      <div class="j-team__head"><span><b>Sizning jamoangiz</b><small>O‘qish davomida yordam beradi</small></span><i>2 mutaxassis</i></div>
+      <div class="j-team__head"><span><b>Sizga biriktirilgan ustozlar</b><small>O‘qish davomida yordam beradi</small></span><i>2 ustoz</i></div>
       <div class="j-team__person">
         <span class="j-team__avatar j-team__avatar--curator">🧭</span>
         <span><b>Shaxsiy kurator</b><small>Jadval, progress va tashkiliy masalalar</small></span>
@@ -168,8 +174,8 @@
       </div>
       <div class="j-team__person">
         <span class="j-team__avatar j-team__avatar--mentor">🎙️</span>
-        <span><b>Vebinar mentori</b><small>Jonli darslar va mavzuga oid savollar</small></span>
-        <button type="button" data-j-team="mentor" aria-label="Vebinar mentoriga Telegram orqali yozish">Telegram</button>
+        <span><b>Mentor</b><small>Jonli darslar va mavzuga oid savollar</small></span>
+        <button type="button" data-j-team="mentor" aria-label="Mentorga Telegram orqali yozish">Telegram</button>
       </div>`;
     const feed = ai.querySelector('.ai-feed');
     if (feed) feed.before(team);
@@ -223,18 +229,47 @@
       prepare: () => prepareWidget('mentor')
     },
     {
-      target: '.sheeth__panel',
+      target: '.sheeth__panel .sheet__body',
       title: 'Savolni kerakli mentorga yuboring',
-      text: 'Yo‘nalishni tanlang va savolingizni yozing. Murojaatingiz shu fan bo‘yicha mentorga yetib boradi.',
-      button: 'Mening jamoamni ko‘rish',
+      text: 'Yo‘nalishingizdagi mentorni tanlang. Savolingiz shu mutaxassisga yuboriladi.',
+      button: 'Ustozlarimni ko‘rish',
+      cardPosition: 'top',
+      compact: true,
       onNext: goChat
     },
     {
       target: '.j-team',
-      title: 'Sizga yordam beradigan jamoa',
-      text: 'Kurator o‘quv jarayoningizni kuzatadi, vebinar mentori esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishingiz mumkin.',
-      button: 'CoinShopga o‘tish',
+      title: 'Sizga biriktirilgan ustozlar',
+      text: 'Kurator o‘quv jarayoningizni kuzatadi, mentor esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishingiz mumkin.',
+      button: 'O‘yinlarni ko‘rish',
       prepare: goChat,
+      onNext: () => goScreen('games')
+    },
+    {
+      target: '.scr[data-screen="games"] .gm-body',
+      fallback: '.scr[data-screen="games"] .gm-card',
+      title: 'Bilimingizni o‘yin orqali mustahkamlang 🎮',
+      text: 'O‘yinlar darslarda o‘rganganlaringizni qiziqarli tarzda takrorlashga yordam beradi. Ochiq o‘yinni tanlab, natijangizni yaxshilang.',
+      button: 'Liderlar jadvalini ko‘rish',
+      prepare: () => goScreen('games'),
+      onNext: () => goScreen('leaders')
+    },
+    {
+      target: '.scr[data-screen="leaders"] .lb',
+      fallback: '.scr[data-screen="leaders"] .scr__body',
+      title: 'Natijangizni liderlar bilan solishtiring 🏆',
+      text: 'Bu yerda akademiyadagi o‘rningiz va to‘plagan ballaringiz ko‘rinadi. Faol o‘qing, ball yig‘ing va yuqori o‘ringa ko‘tariling.',
+      button: 'Xabarlarni ko‘rish',
+      prepare: () => goScreen('leaders'),
+      onNext: () => goScreen('notifications')
+    },
+    {
+      target: '.scr[data-screen="notifications"] .scr__body',
+      fallback: '.scr[data-screen="notifications"] .nf-g',
+      title: 'Muhim xabarlarni o‘tkazib yubormang 🔔',
+      text: 'Push-xabarlar orqali yangi dars, vebinar, vazifa va muddatlar haqida eslatma olasiz. Yangi xabarlar shu bo‘limda saqlanadi.',
+      button: 'CoinShopga o‘tish',
+      prepare: () => goScreen('notifications'),
       onNext: goHome
     },
     {
@@ -252,6 +287,7 @@
       title: 'Coinlarni sovg‘aga almashtiring',
       text: 'Joriy balansingiz yuqorida ko‘rinadi. Yetarli coin yig‘sangiz, shu yerdan o‘zingiz xohlagan sovg‘ani tanlaysiz.',
       button: 'Sertifikatlarni ko‘rish',
+      prepare: prepareCoinShop,
       onNext: goHome
     },
     {
@@ -264,10 +300,12 @@
       prepare: goHome
     },
     {
-      target: '.sheeth__panel',
+      target: '.sheeth__panel .sheet__body',
       title: 'Muddatni o‘tkazib yubormang ⏱️',
       text: 'Taymer deadline’gacha qancha vaqt qolganini ko‘rsatadi. Sertifikat olish uchun qolgan darslarni vaqtida tugating.',
       button: 'Birinchi darsga o‘tish',
+      cardPosition: 'top',
+      compact: true,
       onNext: goHome
     },
     {
@@ -292,20 +330,47 @@
     return null;
   }
 
-  async function revealTarget(target) {
+  function applyCardPlacement(step) {
+    const atTop = step.cardPosition === 'top';
+    const screenRect = screen.getBoundingClientRect();
+    const visibleTop = Math.max(6, -screenRect.top + 6);
+    card.classList.toggle('is-compact', !!step.compact);
+    card.style.top = atTop ? `${visibleTop}px` : 'auto';
+    card.style.bottom = atTop ? 'auto' : '12px';
+    card.style.left = '14px';
+  }
+
+  async function revealTarget(target, step) {
+    let moved = false;
     const track = target.closest('#track');
     if (track) {
       const cardTarget = target.closest('article') || target;
-      track.scrollTo({ left: cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2, behavior: 'auto' });
+      const nextLeft = cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2;
+      if (Math.abs(track.scrollLeft - nextLeft) > 3) {
+        track.scrollTo({ left: nextLeft, behavior: 'smooth' });
+        moved = true;
+      }
     }
     if (content.contains(target)) {
       const contentRect = content.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
+      const screenRect = screen.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      const gap = 16;
+      const availableTop = step.cardPosition === 'top' ? cardRect.bottom + gap : screenRect.top + 8;
+      const availableBottom = step.cardPosition === 'top' ? screenRect.bottom - 8 : cardRect.top - gap;
+      const availableHeight = Math.max(44, availableBottom - availableTop);
+      const desiredViewportTop = targetRect.height > availableHeight
+        ? availableBottom - targetRect.height
+        : availableTop + (availableHeight - targetRect.height) / 2;
       const targetTop = content.scrollTop + targetRect.top - contentRect.top;
-      const centeredTop = targetTop - Math.max(10, (content.clientHeight - targetRect.height) / 2);
-      content.scrollTo({ top: Math.max(0, centeredTop), behavior: 'auto' });
+      const nextTop = Math.max(0, targetTop - (desiredViewportTop - contentRect.top));
+      if (Math.abs(content.scrollTop - nextTop) > 3) {
+        content.scrollTo({ top: nextTop, behavior: 'smooth' });
+        moved = true;
+      }
     }
-    await delay(30);
+    await delay(moved ? 420 : 30);
   }
 
   function setShadeLayout(x, y, width, height, screenWidth, screenHeight) {
@@ -319,14 +384,30 @@
     cancelAnimationFrame(positioningFrame);
     positioningFrame = requestAnimationFrame(() => {
       if (root.hidden || !activeTarget || card.hidden) return;
+      const step = steps[stepIndex];
+      applyCardPlacement(step);
       const sr = screen.getBoundingClientRect();
       const tr = activeTarget.getBoundingClientRect();
       const pad = activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       const x = Math.max(5, tr.left - sr.left - pad);
-      const y = Math.max(5, tr.top - sr.top - pad);
+      let y = Math.max(5, tr.top - sr.top - pad);
       const width = Math.min(sr.width - x - 5, tr.width + pad * 2);
-      const height = Math.min(sr.height - y - 5, tr.height + pad * 2);
+      let height = Math.min(sr.height - y - 5, tr.height + pad * 2);
       const targetRadius = parseFloat(getComputedStyle(activeTarget).borderTopLeftRadius) || 12;
+      const cardRect = card.getBoundingClientRect();
+      const gap = 16;
+
+      if (step.cardPosition === 'top') {
+        const minY = cardRect.bottom - sr.top + gap;
+        const currentBottom = y + height;
+        if (y < minY) {
+          y = minY;
+          height = Math.max(8, currentBottom - y);
+        }
+      } else {
+        const maxBottom = cardRect.top - sr.top - gap;
+        height = Math.max(8, Math.min(height, maxBottom - y));
+      }
 
       setShadeLayout(x, y, width, height, sr.width, sr.height);
       Object.assign(focus.style, {
@@ -336,10 +417,6 @@
         height: `${height}px`,
         borderRadius: `${targetRadius + pad}px`
       });
-
-      card.style.top = 'auto';
-      card.style.bottom = '12px';
-      card.style.left = '14px';
     });
   }
 
@@ -410,19 +487,6 @@
     focus.hidden = false;
     Object.values(shades).forEach(node => { node.hidden = false; });
 
-    if (step.prepare) await step.prepare();
-    if (token !== runToken) return;
-    const target = await waitForTarget(step, token);
-    if (!target || token !== runToken) {
-      showToast('Bu qadamdagi element hali yuklanmadi. Qayta urinib ko‘ring.');
-      return;
-    }
-
-    activeTarget = target;
-    activeTarget.classList.add('j-tour__target');
-    await revealTarget(target);
-    if (token !== runToken) return;
-
     count.textContent = `${stepIndex + 1}/${steps.length}`;
     bar.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
     title.textContent = step.title;
@@ -433,7 +497,21 @@
     next.textContent = step.actionButton || step.button || 'Keyingisi';
     next.classList.toggle('j-tour__next--action', !!step.requireClick && !!step.actionButton);
     card.classList.toggle('is-action-required', !!step.requireClick);
+    applyCardPlacement(step);
     updateAssets();
+
+    if (step.prepare) await step.prepare();
+    if (token !== runToken) return;
+    const target = await waitForTarget(step, token);
+    if (!target || token !== runToken) {
+      showToast('Bu qadamdagi element hali yuklanmadi. Qayta urinib ko‘ring.');
+      return;
+    }
+
+    activeTarget = target;
+    activeTarget.classList.add('j-tour__target');
+    await revealTarget(target, step);
+    if (token !== runToken) return;
     positionTour();
     if (step.effect === 'streak-fire') {
       requestAnimationFrame(() => requestAnimationFrame(() => animateStreakFire(target, token)));
