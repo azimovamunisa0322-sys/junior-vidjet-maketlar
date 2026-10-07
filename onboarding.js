@@ -71,18 +71,53 @@
           <small>3-qadam · natija</small>
           <h2>Birinchi dars tayyor!</h2>
           <p>Siz videoni ko‘rdingiz va mashqni to‘g‘ri bajardingiz.</p>
-          <div class="j-lesson__reward"><span>🔥 <b>+1 streak</b></span><span>🪙 <b>+20 coin</b></span></div>
+          <div class="j-lesson__reward"><span>🔥 <b>Streak tayyor</b></span><span>🎁 <b>Mukofot tayyor</b></span></div>
         </section>
       </div>
       <footer class="j-lesson__foot"><span data-lesson-hint>Videodan boshlang</span><button type="button" class="j-lesson__finish" disabled>Natijani olish</button></footer>
     </section>
-    <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi natija">
-      <img class="j-tour__success-mascot" data-a="a2" alt="Junior maskoti">
-      <span class="j-tour__success-kicker">Birinchi natijangiz</span>
-      <h2>Ajoyib! Birinchi darsni yakunladingiz 🎉</h2>
-      <p>1 kunlik streak boshlandi va balansingizga 20 coin qo‘shildi.</p>
-      <div class="j-tour__rewards"><b>🔥 +1 streak</b><b>🪙 +20 coin</b></div>
-      <button type="button" class="j-tour__finish">Keyingi darsga o‘tish</button>
+    <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
+      <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
+        <span class="j-reward__kicker">Birinchi streak</span>
+        <div class="j-reward__flame-wrap" aria-hidden="true">
+          <i class="j-reward__spark j-reward__spark--one"></i>
+          <i class="j-reward__spark j-reward__spark--two"></i>
+          <i class="j-reward__spark j-reward__spark--three"></i>
+          <div class="j-reward__flame"><i></i></div>
+        </div>
+        <h2>O‘qish olovini yoqing</h2>
+        <p>Olovni yuqoriga suring yoki pastdagi tugmani bosing.</p>
+        <button type="button" class="j-reward__ignite" data-reward-ignite><span>↑</span> Olovni yoqish</button>
+      </section>
+      <section class="j-reward__panel j-reward__panel--streak" data-reward-panel="streak" hidden>
+        <div class="j-reward__speech">Shu tarzda streak boshlanadi. Har kuni kamida bitta darsni tugating — o‘qish odatga aylanadi.</div>
+        <div class="j-reward__hero">
+          <div class="j-reward__flame j-reward__flame--lit" aria-hidden="true"><i></i></div>
+          <img data-a="a2" alt="Junior maskoti">
+        </div>
+        <strong class="j-reward__number">1</strong>
+        <h2>kunlik streak boshlandi!</h2>
+        <div class="j-reward__week" aria-label="7 kunlik streak maqsadi">
+          <span class="is-done"><b>1</b><i>✓</i></span>
+          <span><b>2</b><i></i></span><span><b>3</b><i></i></span><span><b>4</b><i></i></span>
+          <span><b>5</b><i></i></span><span><b>6</b><i></i></span><span><b>7</b><i></i></span>
+        </div>
+        <button type="button" class="j-reward__primary" data-reward-next>Coin mukofotini olish</button>
+      </section>
+      <section class="j-reward__panel j-reward__panel--coin" data-reward-panel="coin" hidden>
+        <span class="j-reward__kicker">Birinchi dars mukofoti</span>
+        <h2 data-coin-title>Sandiq tayyor!</h2>
+        <p data-coin-text>Mukofotingizni olish uchun sandiqni bosing.</p>
+        <button type="button" class="j-reward__chest" data-reward-chest aria-label="Mukofot sandig‘ini ochish">
+          <span class="j-reward__chest-glow"></span>
+          <span class="j-reward__chest-lid"></span>
+          <span class="j-reward__chest-body"></span>
+          <span class="j-reward__chest-lock">J</span>
+          <span class="j-reward__coin">+20</span>
+        </button>
+        <div class="j-reward__coin-result" aria-live="polite"><b>+20 coin</b><span>Balansingizga qo‘shildi</span></div>
+        <button type="button" class="j-tour__finish" hidden>Keyingi darsga o‘tish</button>
+      </section>
     </section>
     <div class="j-tour__toast" role="status"></div>`;
   screen.appendChild(root);
@@ -111,6 +146,10 @@
   const lessonStages = [...root.querySelectorAll('[data-lesson-stage]')];
   const success = root.querySelector('.j-tour__success');
   const finish = root.querySelector('.j-tour__finish');
+  const rewardPanels = [...root.querySelectorAll('[data-reward-panel]')];
+  const rewardIgnite = root.querySelector('[data-reward-ignite]');
+  const rewardNext = root.querySelector('[data-reward-next]');
+  const rewardChest = root.querySelector('[data-reward-chest]');
   const toast = root.querySelector('.j-tour__toast');
 
   let stepIndex = 0;
@@ -122,6 +161,8 @@
   let streakFireTarget = null;
   let streakFireTimer = 0;
   let lessonStageIndex = 0;
+  let rewardLocked = false;
+  let rewardSwipeStart = null;
 
   function safeGet() {
     try { return localStorage.getItem(storageKey); } catch (_) { return null; }
@@ -684,9 +725,67 @@
     }
   }
 
+  function showRewardStage(name) {
+    success.dataset.rewardStage = name;
+    rewardPanels.forEach(panel => {
+      const active = panel.dataset.rewardPanel === name;
+      panel.hidden = !active;
+      panel.classList.remove('is-entering');
+      if (active) {
+        void panel.offsetWidth;
+        panel.classList.add('is-entering');
+      }
+    });
+  }
+
+  function fireCoinBurst() {
+    const panel = success.querySelector('[data-reward-panel="coin"]');
+    if (!panel) return;
+    for (let i = 0; i < 18; i += 1) {
+      const coin = document.createElement('i');
+      coin.className = 'j-reward__coin-particle';
+      coin.textContent = 'J';
+      coin.style.setProperty('--coin-x', `${(Math.random() - .5) * 230}px`);
+      coin.style.setProperty('--coin-y', `${-70 - Math.random() * 150}px`);
+      coin.style.setProperty('--coin-r', `${(Math.random() * 520) - 260}deg`);
+      coin.style.animationDelay = `${Math.random() * .16}s`;
+      panel.appendChild(coin);
+      setTimeout(() => coin.remove(), 1500);
+    }
+  }
+
+  function igniteRewardStreak() {
+    if (rewardLocked || success.dataset.rewardStage !== 'ignite') return;
+    rewardLocked = true;
+    const panel = success.querySelector('[data-reward-panel="ignite"]');
+    panel?.classList.add('is-igniting');
+    setTimeout(() => {
+      panel?.classList.remove('is-igniting');
+      showRewardStage('streak');
+      fireConfetti();
+      rewardLocked = false;
+      rewardNext?.focus({ preventScroll: true });
+    }, 900);
+  }
+
+  function openRewardChest() {
+    const panel = success.querySelector('[data-reward-panel="coin"]');
+    if (!panel || panel.classList.contains('is-opened')) return;
+    panel.classList.add('is-opened');
+    updateDashboardReward();
+    fireCoinBurst();
+    setTimeout(() => {
+      const coinTitle = panel.querySelector('[data-coin-title]');
+      const coinText = panel.querySelector('[data-coin-text]');
+      if (coinTitle) coinTitle.textContent = '20 coin sizniki!';
+      if (coinText) coinText.textContent = 'Mukofot balansingizga muvaffaqiyatli qo‘shildi.';
+      finish.hidden = false;
+      finish.focus({ preventScroll: true });
+    }, 780);
+  }
+
   async function completeLesson() {
     safeSet();
-    updateDashboardReward();
     await goHome();
     content.scrollTo({ top: 0, behavior: 'smooth' });
     lesson.hidden = true;
@@ -698,9 +797,18 @@
     shades.top.style.height = `${screen.clientHeight}px`;
     shades.top.style.background = 'rgba(14, 20, 35, .66)';
     ['left', 'right', 'bottom'].forEach(key => { shades[key].style.width = '0px'; shades[key].style.height = '0px'; });
+    rewardLocked = false;
+    rewardSwipeStart = null;
+    finish.hidden = true;
+    success.querySelector('[data-reward-panel="ignite"]')?.classList.remove('is-igniting');
+    success.querySelector('[data-reward-panel="coin"]')?.classList.remove('is-opened');
+    const coinTitle = success.querySelector('[data-coin-title]');
+    const coinText = success.querySelector('[data-coin-text]');
+    if (coinTitle) coinTitle.textContent = 'Sandiq tayyor!';
+    if (coinText) coinText.textContent = 'Mukofotingizni olish uchun sandiqni bosing.';
+    showRewardStage('ignite');
     updateAssets();
-    fireConfetti();
-    finish.focus({ preventScroll: true });
+    rewardIgnite?.focus({ preventScroll: true });
   }
 
   next.addEventListener('click', () => {
@@ -736,6 +844,19 @@
     });
   });
   lessonFinish.addEventListener('click', completeLesson);
+  rewardIgnite?.addEventListener('click', igniteRewardStreak);
+  success.querySelector('[data-reward-panel="ignite"]')?.addEventListener('pointerdown', event => {
+    rewardSwipeStart = event.clientY;
+  });
+  success.querySelector('[data-reward-panel="ignite"]')?.addEventListener('pointerup', event => {
+    if (rewardSwipeStart !== null && rewardSwipeStart - event.clientY > 34) igniteRewardStreak();
+    rewardSwipeStart = null;
+  });
+  rewardNext?.addEventListener('click', () => {
+    showRewardStage('coin');
+    rewardChest?.focus({ preventScroll: true });
+  });
+  rewardChest?.addEventListener('click', openRewardChest);
   finish.addEventListener('click', () => {
     closeTour(true);
     const firstCourse = document.querySelector('.mk__row--now .mk__card');
