@@ -662,5 +662,6 @@
 
   window.JuniorOnboarding = { open: startTour, close: closeTour, storageKey };
   updateAssets();
-  if (!safeGet()) startTour();
+  const forcePreview = new URLSearchParams(window.location.search).get('onboarding') === '1';
+  if (forcePreview || !safeGet()) startTour();
 })();
