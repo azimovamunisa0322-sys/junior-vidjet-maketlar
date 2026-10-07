@@ -407,18 +407,8 @@
       target: '.j-team',
       title: 'Sizga biriktirilgan ustozlar',
       text: 'Kurator o‘quv jarayoningizni kuzatadi, mentor esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishingiz mumkin.',
-      button: 'O‘yinlarni ko‘rish',
-      prepare: goChat,
-      onNext: () => goScreen('games')
-    },
-    {
-      target: '.scr[data-screen="games"] .gm-card',
-      targetGroup: '.scr[data-screen="games"] .gm-card',
-      targetGroupLimit: 2,
-      title: 'Bilimingizni o‘yin orqali mustahkamlang 🎮',
-      text: 'O‘yinlar darslarda o‘rganganlaringizni qiziqarli tarzda takrorlashga yordam beradi. Ochiq o‘yinni tanlab, natijangizni yaxshilang.',
       button: 'Liderlar jadvalini ko‘rish',
-      prepare: () => goScreen('games'),
+      prepare: goChat,
       onNext: () => goScreen('leaders')
     },
     {
