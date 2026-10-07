@@ -163,6 +163,90 @@
   let lessonStageIndex = 0;
   let rewardLocked = false;
   let rewardSwipeStart = null;
+  let audioContext = null;
+
+  function ensureAudio() {
+    if (!audioContext) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return null;
+      audioContext = new AudioContext();
+    }
+    return audioContext;
+  }
+
+  function soundNote(frequency, start = 0, duration = .1, type = 'sine', volume = .025, endFrequency = null) {
+    const ctx = audioContext;
+    if (!ctx || ctx.state !== 'running') return;
+    const at = ctx.currentTime + start;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, at);
+    if (endFrequency) oscillator.frequency.exponentialRampToValueAtTime(endFrequency, at + duration);
+    gain.gain.setValueAtTime(.0001, at);
+    gain.gain.exponentialRampToValueAtTime(volume, at + Math.min(.018, duration / 3));
+    gain.gain.exponentialRampToValueAtTime(.0001, at + duration);
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    oscillator.start(at);
+    oscillator.stop(at + duration + .025);
+  }
+
+  function playSound(name) {
+    if (!audioContext || audioContext.state !== 'running') return;
+    if (name === 'tap') soundNote(520, 0, .055, 'triangle', .018, 410);
+    if (name === 'bubble') {
+      soundNote(360, 0, .085, 'sine', .014, 520);
+      soundNote(610, .045, .08, 'triangle', .012, 760);
+    }
+    if (name === 'video') {
+      soundNote(330, 0, .08, 'triangle', .02, 470);
+      soundNote(590, .07, .1, 'sine', .018, 690);
+    }
+    if (name === 'correct') {
+      soundNote(523, 0, .12, 'sine', .028);
+      soundNote(659, .085, .13, 'sine', .03);
+      soundNote(784, .17, .17, 'sine', .032);
+    }
+    if (name === 'wrong') {
+      soundNote(210, 0, .12, 'square', .018, 175);
+      soundNote(160, .11, .15, 'square', .014, 138);
+    }
+    if (name === 'whoosh') {
+      soundNote(150, 0, .48, 'sawtooth', .015, 820);
+      soundNote(330, .16, .32, 'triangle', .016, 1060);
+    }
+    if (name === 'streak') {
+      soundNote(392, 0, .16, 'sine', .026);
+      soundNote(523, .1, .18, 'sine', .028);
+      soundNote(659, .21, .22, 'triangle', .028);
+      soundNote(784, .34, .24, 'sine', .025);
+    }
+    if (name === 'chest') {
+      soundNote(105, 0, .2, 'sine', .04, 82);
+      soundNote(330, .12, .18, 'triangle', .022, 470);
+      soundNote(620, .25, .18, 'sine', .02, 920);
+    }
+    if (name === 'coin') {
+      [880, 1100, 1320, 1560].forEach((frequency, index) => soundNote(frequency, index * .055, .12, 'sine', .021));
+    }
+    if (name === 'complete') {
+      soundNote(440, 0, .14, 'triangle', .025);
+      soundNote(554, .1, .16, 'triangle', .026);
+      soundNote(659, .21, .2, 'sine', .029);
+    }
+    if (name === 'finish') {
+      soundNote(659, 0, .12, 'sine', .024);
+      soundNote(988, .1, .2, 'sine', .026);
+    }
+  }
+
+  function unlockAudioAndPlay(name = 'tap') {
+    const ctx = ensureAudio();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') ctx.resume().then(() => playSound(name)).catch(() => {});
+    else playSound(name);
+  }
 
   function safeGet() {
     try { return localStorage.getItem(storageKey); } catch (_) { return null; }
@@ -471,6 +555,7 @@
     card.classList.remove('is-preparing', 'is-bubbling');
     void card.offsetWidth;
     card.classList.add('is-bubbling');
+    playSound('bubble');
   }
 
   function activeTargetRect() {
@@ -575,6 +660,7 @@
     streakFire.hidden = false;
     void streakFire.offsetWidth;
     streakFire.classList.add('is-flying');
+    playSound('whoosh');
   }
 
   streakFire.addEventListener('animationend', () => {
@@ -680,6 +766,7 @@
     lesson.querySelectorAll('[data-lesson-answer]').forEach(button => button.classList.remove('is-correct', 'is-wrong'));
     const feedback = lesson.querySelector('[data-lesson-feedback]');
     if (feedback) feedback.textContent = 'Bir variantni tanlang.';
+    if (lessonStageIndex > 0) playSound('bubble');
   }
 
   function openLesson() {
@@ -757,12 +844,14 @@
   function igniteRewardStreak() {
     if (rewardLocked || success.dataset.rewardStage !== 'ignite') return;
     rewardLocked = true;
+    playSound('whoosh');
     const panel = success.querySelector('[data-reward-panel="ignite"]');
     panel?.classList.add('is-igniting');
     setTimeout(() => {
       panel?.classList.remove('is-igniting');
       showRewardStage('streak');
       fireConfetti();
+      playSound('streak');
       rewardLocked = false;
       rewardNext?.focus({ preventScroll: true });
     }, 900);
@@ -772,8 +861,10 @@
     const panel = success.querySelector('[data-reward-panel="coin"]');
     if (!panel || panel.classList.contains('is-opened')) return;
     panel.classList.add('is-opened');
+    playSound('chest');
     updateDashboardReward();
     fireCoinBurst();
+    setTimeout(() => playSound('coin'), 230);
     setTimeout(() => {
       const coinTitle = panel.querySelector('[data-coin-title]');
       const coinText = panel.querySelector('[data-coin-text]');
@@ -786,6 +877,7 @@
 
   async function completeLesson() {
     safeSet();
+    playSound('complete');
     await goHome();
     content.scrollTo({ top: 0, behavior: 'smooth' });
     lesson.hidden = true;
@@ -819,9 +911,14 @@
     }
     advance();
   });
+  screen.addEventListener('pointerdown', event => {
+    if (!event.target.closest('button, a, input, select, [role="button"], .wcard')) return;
+    unlockAudioAndPlay('tap');
+  }, true);
   lesson.querySelectorAll('[data-lesson-video]').forEach(button => {
     button.addEventListener('click', () => {
       if (lessonStageIndex !== 0) return;
+      playSound('video');
       lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.add('is-played'));
       lessonHint.textContent = 'Video ko‘rildi ✓';
       setTimeout(() => showLessonStage(1), 260);
@@ -833,11 +930,13 @@
       const feedback = lesson.querySelector('[data-lesson-feedback]');
       lesson.querySelectorAll('[data-lesson-answer]').forEach(node => node.classList.remove('is-correct', 'is-wrong'));
       if (button.dataset.lessonAnswer === 'correct') {
+        playSound('correct');
         button.classList.add('is-correct');
         if (feedback) feedback.textContent = 'To‘g‘ri! Keyingi qadamga o‘tamiz.';
         lessonHint.textContent = 'Javobingiz to‘g‘ri ✓';
         setTimeout(() => showLessonStage(2), 360);
       } else {
+        playSound('wrong');
         button.classList.add('is-wrong');
         if (feedback) feedback.textContent = 'Yana bir bor o‘ylab ko‘ring.';
       }
@@ -854,10 +953,12 @@
   });
   rewardNext?.addEventListener('click', () => {
     showRewardStage('coin');
+    playSound('bubble');
     rewardChest?.focus({ preventScroll: true });
   });
   rewardChest?.addEventListener('click', openRewardChest);
   finish.addEventListener('click', () => {
+    playSound('finish');
     closeTour(true);
     const firstCourse = document.querySelector('.mk__row--now .mk__card');
     if (firstCourse) {
