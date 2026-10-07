@@ -24,6 +24,7 @@
     <div class="j-tour__shade j-tour__shade--right"></div>
     <div class="j-tour__shade j-tour__shade--bottom"></div>
     <div class="j-tour__focus" aria-hidden="true"><i></i></div>
+    <div class="j-tour__streak-fire" hidden aria-hidden="true">🔥</div>
     <aside class="j-tour__card" role="dialog" aria-live="polite">
       <div class="j-tour__meta"><span class="j-tour__count"></span><span class="j-tour__label">Junior sayohati</span></div>
       <div class="j-tour__bar" aria-hidden="true"><i></i></div>
@@ -77,6 +78,7 @@
     bottom: root.querySelector('.j-tour__shade--bottom')
   };
   const focus = root.querySelector('.j-tour__focus');
+  const streakFire = root.querySelector('.j-tour__streak-fire');
   const card = root.querySelector('.j-tour__card');
   const count = root.querySelector('.j-tour__count');
   const bar = root.querySelector('.j-tour__bar i');
@@ -96,6 +98,8 @@
   let positioningFrame = 0;
   let toastTimer = 0;
   let runToken = 0;
+  let streakFireTarget = null;
+  let streakFireTimer = 0;
 
   function safeGet() {
     try { return localStorage.getItem(storageKey); } catch (_) { return null; }
@@ -206,6 +210,7 @@
       title: 'Streak — o‘qish odatingiz 🔥',
       text: 'Har kuni kamida bitta darsni yakunlang. Shunda streak uzilmaydi va ketma-ket o‘qigan kunlaringiz hisoblanadi.',
       button: 'Mentor yordamini ko‘rish',
+      effect: 'streak-fire',
       prepare: () => prepareWidget('streak')
     },
     {
@@ -213,6 +218,7 @@
       title: 'Savolingiz bo‘lsa, yolg‘iz qolmaysiz',
       text: 'Mentorlar 24/7 yordam beradi. Darsdagi tushunarsiz joyni shu tugma orqali yuboring.',
       instruction: '“Savolim bor” tugmasini bosing',
+      actionButton: 'Savolim bor',
       requireClick: true,
       prepare: () => prepareWidget('mentor')
     },
@@ -236,6 +242,7 @@
       title: 'Dars qiling, coin yig‘ing 🪙',
       text: 'Har bir yakunlangan dars va vazifa uchun coin olasiz. Yig‘ilgan coinlarni CoinShop’da ishlatishingiz mumkin.',
       instruction: 'CoinShop tugmasini bosing',
+      actionButton: 'CoinShopni ochish',
       requireClick: true,
       prepare: goHome
     },
@@ -252,6 +259,7 @@
       title: 'Sertifikatgacha yo‘lingizni kuzating',
       text: 'Bu bo‘limda sertifikat talablari, bajargan darslaringiz va qolgan muddatni ko‘rasiz.',
       instruction: 'Sertifikatlar tugmasini bosing',
+      actionButton: 'Sertifikatlarni ochish',
       requireClick: true,
       prepare: goHome
     },
@@ -267,6 +275,7 @@
       title: 'Birinchi darsni boshlash vaqti',
       text: 'Endi birinchi darsingizni oching. Uni tugatsangiz, dastlabki streak va 20 coin olasiz.',
       instruction: 'Birinchi kurs vidjetini bosing',
+      actionButton: 'Birinchi darsni boshlash',
       requireClick: true,
       action: 'lesson',
       prepare: goHome
@@ -339,11 +348,60 @@
     activeTarget = null;
   }
 
+  function clearStreakFire() {
+    clearTimeout(streakFireTimer);
+    streakFire.classList.remove('is-flying');
+    streakFire.hidden = true;
+    if (streakFireTarget) {
+      streakFireTarget.classList.remove('j-tour__fire-destination', 'j-tour__fire-landed');
+      streakFireTarget = null;
+    }
+  }
+
+  function animateStreakFire(target, token) {
+    const destination = target.querySelector('.stc__fire') || target.querySelector('.stc__ico--fire');
+    if (!destination || token !== runToken) return;
+    streakFireTarget = destination;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      destination.classList.add('j-tour__fire-landed');
+      streakFireTimer = setTimeout(() => destination.classList.remove('j-tour__fire-landed'), 900);
+      return;
+    }
+
+    const screenRect = screen.getBoundingClientRect();
+    const destinationRect = destination.getBoundingClientRect();
+    const startX = screenRect.width * .5;
+    const startY = screenRect.height * .35;
+    const endX = destinationRect.left - screenRect.left + destinationRect.width / 2;
+    const endY = destinationRect.top - screenRect.top + destinationRect.height / 2;
+    const endScale = Math.max(.22, Math.min(.38, destinationRect.height / 72));
+
+    streakFire.style.setProperty('--fire-dx', `${endX - startX}px`);
+    streakFire.style.setProperty('--fire-dy', `${endY - startY}px`);
+    streakFire.style.setProperty('--fire-end-scale', String(endScale));
+    destination.classList.add('j-tour__fire-destination');
+    streakFire.hidden = false;
+    void streakFire.offsetWidth;
+    streakFire.classList.add('is-flying');
+  }
+
+  streakFire.addEventListener('animationend', () => {
+    streakFire.classList.remove('is-flying');
+    streakFire.hidden = true;
+    if (!streakFireTarget) return;
+    streakFireTarget.classList.remove('j-tour__fire-destination');
+    streakFireTarget.classList.add('j-tour__fire-landed');
+    const landedTarget = streakFireTarget;
+    streakFireTimer = setTimeout(() => landedTarget.classList.remove('j-tour__fire-landed'), 1100);
+  });
+
   async function activateStep(nextIndex) {
     const token = ++runToken;
     stepIndex = Math.max(0, Math.min(steps.length - 1, nextIndex));
     const step = steps[stepIndex];
     clearTarget();
+    clearStreakFire();
     root.hidden = false;
     root.classList.add('is-running');
     lesson.hidden = true;
@@ -371,13 +429,17 @@
     text.textContent = step.text;
     instruction.hidden = !step.requireClick;
     instructionText.textContent = step.instruction || '';
-    next.hidden = !!step.requireClick;
-    next.textContent = step.button || 'Keyingisi';
+    next.hidden = !!step.requireClick && !step.actionButton;
+    next.textContent = step.actionButton || step.button || 'Keyingisi';
+    next.classList.toggle('j-tour__next--action', !!step.requireClick && !!step.actionButton);
     card.classList.toggle('is-action-required', !!step.requireClick);
     updateAssets();
     positionTour();
+    if (step.effect === 'streak-fire') {
+      requestAnimationFrame(() => requestAnimationFrame(() => animateStreakFire(target, token)));
+    }
 
-    if (step.requireClick) target.focus({ preventScroll: true });
+    if (step.requireClick && !step.actionButton) target.focus({ preventScroll: true });
     else next.focus({ preventScroll: true });
   }
 
@@ -396,6 +458,7 @@
     runToken += 1;
     if (markComplete) safeSet();
     clearTarget();
+    clearStreakFire();
     root.classList.remove('is-running');
     root.hidden = true;
   }
@@ -459,7 +522,14 @@
     finish.focus({ preventScroll: true });
   }
 
-  next.addEventListener('click', advance);
+  next.addEventListener('click', () => {
+    const step = steps[stepIndex];
+    if (step?.requireClick && step.actionButton && activeTarget) {
+      activeTarget.click();
+      return;
+    }
+    advance();
+  });
   lessonFinish.addEventListener('click', completeLesson);
   finish.addEventListener('click', () => {
     closeTour(true);

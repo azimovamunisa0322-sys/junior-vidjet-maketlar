@@ -43,6 +43,30 @@
   display: none;
 }
 
+.j-tour__streak-fire {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 35%;
+  width: 82px;
+  height: 82px;
+  color: #ff4f28;
+  font-size: 72px;
+  line-height: 1;
+  text-align: center;
+  filter: drop-shadow(0 14px 18px rgba(255, 79, 40, .42));
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.2);
+  will-change: transform, opacity, filter;
+}
+
+.j-tour__streak-fire.is-flying {
+  animation: j-tour-fire-flight 1.25s cubic-bezier(.2,.82,.24,1) both;
+}
+
+.stc__fire.j-tour__fire-destination { opacity: 0; }
+.stc__fire.j-tour__fire-landed { animation: j-tour-fire-landed .9s cubic-bezier(.2,.9,.2,1) both; }
+
 .j-tour__card {
   position: absolute;
   bottom: 12px;
@@ -100,6 +124,9 @@
 }
 
 .j-tour__next { flex: 1; }
+.j-tour__next--action {
+  animation: j-tour-action-pulse 1.35s ease-in-out infinite;
+}
 .j-tour__next:active,
 .j-tour__finish:active,
 .j-lesson__finish:active { transform: translateY(1px); }
@@ -237,6 +264,24 @@
 @keyframes j-tour-point { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @keyframes j-tour-coin-pop { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.24); color: #f0a900; } }
 @keyframes j-tour-confetti { 0% { opacity: 1; transform: translate3d(0,0,0) rotate(0deg); } 100% { opacity: 0; transform: translate3d(var(--x), 810px, 0) rotate(var(--r)); } }
+@keyframes j-tour-fire-flight {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.15) rotate(-12deg); filter: drop-shadow(0 0 0 rgba(255,79,40,0)); }
+  13% { opacity: 1; transform: translate(-50%, -50%) scale(1.38) rotate(8deg); filter: drop-shadow(0 14px 22px rgba(255,79,40,.52)); }
+  28% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(-5deg); }
+  43% { opacity: 1; transform: translate(-50%, -50%) scale(1.22) rotate(4deg); }
+  62% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(0deg); }
+  100% { opacity: 1; transform: translate(calc(-50% + var(--fire-dx)), calc(-50% + var(--fire-dy))) scale(var(--fire-end-scale)) rotate(0deg); filter: drop-shadow(0 3px 5px rgba(255,79,40,.24)); }
+}
+@keyframes j-tour-fire-landed {
+  0% { opacity: 1; transform: scale(.72); filter: drop-shadow(0 0 0 rgba(255,79,40,0)); }
+  40% { transform: scale(1.62); filter: drop-shadow(0 0 10px rgba(255,79,40,.68)); }
+  72% { transform: scale(.9); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+@keyframes j-tour-action-pulse {
+  0%, 100% { box-shadow: 0 9px 20px rgba(255,79,40,.24); }
+  50% { box-shadow: 0 9px 22px rgba(255,79,40,.38), 0 0 0 5px rgba(255,79,40,.1); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .j-tour__shade,
@@ -246,6 +291,9 @@
   .j-tour__focus i,
   .j-tour__instruction span,
   .j-tour__coin-pop,
+  .j-tour__streak-fire,
+  .j-tour__fire-landed,
+  .j-tour__next--action,
   .j-tour__confetti,
   .j-tour__card,
   .j-tour__lesson,
