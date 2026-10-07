@@ -44,16 +44,16 @@
       <div class="j-lesson__body">
         <span class="j-lesson__eyebrow">Birinchi dars</span>
         <h2>Platformada o‘qishni boshlaymiz</h2>
-        <p>Videoni ko‘r, amaliy vazifani bajar va mini-testdan o‘t. Shu uch qadam darsni yakunlash uchun yetarli.</p>
+        <p>Videoni ko‘ring, amaliy vazifani bajaring va mini-testdan o‘ting. Shu uch qadam darsni yakunlash uchun yetarli.</p>
         <button class="j-lesson__video" type="button" aria-label="Videoni ko‘rish">
           <span class="j-lesson__play">▶</span>
           <span><b>Junior bilan tanishuv</b><small>01:24 · ko‘rib chiqildi</small></span>
           <span class="j-lesson__done">✓</span>
         </button>
         <div class="j-lesson__checks">
-          <span><i>✓</i><b>Qisqa videoni ko‘rding</b></span>
-          <span><i>✓</i><b>Birinchi amaliyotni bajarding</b></span>
-          <span><i>✓</i><b>Mini-testdan o‘tding</b></span>
+          <span><i>✓</i><b>Qisqa videoni ko‘rdingiz</b></span>
+          <span><i>✓</i><b>Birinchi amaliyotni bajardingiz</b></span>
+          <span><i>✓</i><b>Mini-testdan o‘tdingiz</b></span>
         </div>
         <div class="j-lesson__reward"><span>🔥 +1 streak</span><span>🪙 +20 coin</span></div>
       </div>
@@ -61,9 +61,9 @@
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi natija">
       <img class="j-tour__success-mascot" data-a="a2" alt="Junior maskoti">
-      <span class="j-tour__success-kicker">Birinchi natijang</span>
-      <h2>Ajoyib! Birinchi darsni yakunlading 🎉</h2>
-      <p>1 kunlik streak boshlandi va balansingga 20 coin qo‘shildi.</p>
+      <span class="j-tour__success-kicker">Birinchi natijangiz</span>
+      <h2>Ajoyib! Birinchi darsni yakunladingiz 🎉</h2>
+      <p>1 kunlik streak boshlandi va balansingizga 20 coin qo‘shildi.</p>
       <div class="j-tour__rewards"><b>🔥 +1 streak</b><b>🪙 +20 coin</b></div>
       <button type="button" class="j-tour__finish">Keyingi darsga o‘tish</button>
     </section>
@@ -154,9 +154,9 @@
     if (!ai || ai.querySelector('.j-team')) return;
     const team = document.createElement('section');
     team.className = 'j-team';
-    team.setAttribute('aria-label', 'Sening jamoang');
+    team.setAttribute('aria-label', 'Sizning jamoangiz');
     team.innerHTML = `
-      <div class="j-team__head"><span><b>Sening jamoang</b><small>O‘qish davomida yordam beradi</small></span><i>2 mutaxassis</i></div>
+      <div class="j-team__head"><span><b>Sizning jamoangiz</b><small>O‘qish davomida yordam beradi</small></span><i>2 mutaxassis</i></div>
       <div class="j-team__person">
         <span class="j-team__avatar j-team__avatar--curator">🧭</span>
         <span><b>Shaxsiy kurator</b><small>Jadval, progress va tashkiliy masalalar</small></span>
@@ -176,97 +176,97 @@
     {
       target: '.plan__hero',
       title: 'Xush kelibsiz! Boshlaymizmi? 👋',
-      text: 'Junior’dagi asosiy imkoniyatlarni birgalikda ko‘rib chiqamiz. Men yo‘l ko‘rsataman — sen ko‘rsatmalarga amal qil.',
+      text: 'Junior’dagi asosiy imkoniyatlarni birgalikda ko‘rib chiqamiz. Men yo‘l ko‘rsataman — siz ko‘rsatmalarga amal qiling.',
       button: 'Boshlash',
       prepare: goHome
     },
     {
       target: '.plan__hero',
-      title: 'Bugungi o‘quv rejang',
-      text: 'Bu yerda bugun bajaradigan 2 ta darsing, kunlik natijang va yig‘adigan coinlaring ko‘rinadi.',
+      title: 'Bugungi o‘quv rejangiz',
+      text: 'Bu yerda bugun bajaradigan 2 ta darsingiz, kunlik natijangiz va yig‘adigan coinlaringiz ko‘rinadi.',
       button: 'Kurslarimni ko‘rish',
       prepare: goHome
     },
     {
       target: '.mk__list',
-      title: 'O‘qishni shu yerdan boshlaysan',
-      text: 'Kurslaring tavsiya etilgan tartibda joylashgan. Eng yuqoridagi kursni ochib, navbatdagi darsni davom ettir.',
+      title: 'O‘qishni shu yerdan boshlaysiz',
+      text: 'Kurslaringiz tavsiya etilgan tartibda joylashgan. Eng yuqoridagi kursni ochib, navbatdagi darsni davom ettiring.',
       button: 'Muhim bo‘limlarni ko‘rish',
       prepare: goHome
     },
     {
       target: 'article[data-widget="webinar"]',
       title: 'Muhim ma’lumotlar bir joyda',
-      text: 'Vebinar, vazifa va boshqa eslatmalar shu kartochkalarda chiqadi. Kerakli ma’lumotni bosh sahifadan tez topasan.',
+      text: 'Vebinar, vazifa va boshqa eslatmalar shu vidjetlarda chiqadi. Kerakli ma’lumotni bosh sahifadan tez topasiz.',
       button: 'Streakni ko‘rish',
       prepare: () => prepareWidget('webinar')
     },
     {
       target: 'article[data-widget="streak"]',
-      title: 'Streak — o‘qish odating 🔥',
-      text: 'Har kuni kamida bitta darsni yakunla. Shunda streak uzilmaydi va ketma-ket o‘qigan kunlaring hisoblanadi.',
+      title: 'Streak — o‘qish odatingiz 🔥',
+      text: 'Har kuni kamida bitta darsni yakunlang. Shunda streak uzilmaydi va ketma-ket o‘qigan kunlaringiz hisoblanadi.',
       button: 'Mentor yordamini ko‘rish',
       prepare: () => prepareWidget('streak')
     },
     {
       target: 'article[data-widget="mentor"] button',
-      title: 'Savoling bo‘lsa, yolg‘iz qolmaysan',
-      text: 'Mentorlar 24/7 yordam beradi. Darsdagi tushunarsiz joyni shu tugma orqali yubor.',
-      instruction: '“Savolim bor” tugmasini bos',
+      title: 'Savolingiz bo‘lsa, yolg‘iz qolmaysiz',
+      text: 'Mentorlar 24/7 yordam beradi. Darsdagi tushunarsiz joyni shu tugma orqali yuboring.',
+      instruction: '“Savolim bor” tugmasini bosing',
       requireClick: true,
       prepare: () => prepareWidget('mentor')
     },
     {
       target: '.sheeth__panel',
-      title: 'Savolni kerakli mentorga yubor',
-      text: 'Yo‘nalishni tanla va savolingni yoz. Murojaating shu fan bo‘yicha mentorga yetib boradi.',
+      title: 'Savolni kerakli mentorga yuboring',
+      text: 'Yo‘nalishni tanlang va savolingizni yozing. Murojaatingiz shu fan bo‘yicha mentorga yetib boradi.',
       button: 'Mening jamoamni ko‘rish',
       onNext: goChat
     },
     {
       target: '.j-team',
-      title: 'Senga yordam beradigan jamoa',
-      text: 'Kurator o‘quv jarayoningni kuzatadi, vebinar mentori esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishing mumkin.',
+      title: 'Sizga yordam beradigan jamoa',
+      text: 'Kurator o‘quv jarayoningizni kuzatadi, vebinar mentori esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishingiz mumkin.',
       button: 'CoinShopga o‘tish',
       prepare: goChat,
       onNext: goHome
     },
     {
       target: 'button[data-go="coinshop"]',
-      title: 'Dars qil, coin yig‘ 🪙',
-      text: 'Har bir yakunlangan dars va vazifa uchun coin olasan. Yig‘ilgan coinlarni CoinShop’da ishlatishing mumkin.',
-      instruction: 'CoinShop tugmasini bos',
+      title: 'Dars qiling, coin yig‘ing 🪙',
+      text: 'Har bir yakunlangan dars va vazifa uchun coin olasiz. Yig‘ilgan coinlarni CoinShop’da ishlatishingiz mumkin.',
+      instruction: 'CoinShop tugmasini bosing',
       requireClick: true,
       prepare: goHome
     },
     {
       target: '.scr[data-screen="coinshop"] .cs-banner',
       fallback: '.scr[data-screen="coinshop"] .cs-bal',
-      title: 'Coinlarni sovg‘aga almashtir',
-      text: 'Joriy balansing yuqorida ko‘rinadi. Yetarli coin yig‘sang, shu yerdan o‘zing xohlagan sovg‘ani tanlaysan.',
+      title: 'Coinlarni sovg‘aga almashtiring',
+      text: 'Joriy balansingiz yuqorida ko‘rinadi. Yetarli coin yig‘sangiz, shu yerdan o‘zingiz xohlagan sovg‘ani tanlaysiz.',
       button: 'Sertifikatlarni ko‘rish',
       onNext: goHome
     },
     {
       target: 'button[data-go="certificates"]',
-      title: 'Sertifikatgacha yo‘lingni kuzat',
-      text: 'Bu bo‘limda sertifikat talablari, bajargan darslaring va qolgan muddatni ko‘rasan.',
-      instruction: 'Sertifikatlar tugmasini bos',
+      title: 'Sertifikatgacha yo‘lingizni kuzating',
+      text: 'Bu bo‘limda sertifikat talablari, bajargan darslaringiz va qolgan muddatni ko‘rasiz.',
+      instruction: 'Sertifikatlar tugmasini bosing',
       requireClick: true,
       prepare: goHome
     },
     {
       target: '.sheeth__panel',
-      title: 'Muddatni o‘tkazib yuborma ⏱️',
-      text: 'Taymer deadline’gacha qancha vaqt qolganini ko‘rsatadi. Sertifikat olish uchun qolgan darslarni vaqtida tugat.',
+      title: 'Muddatni o‘tkazib yubormang ⏱️',
+      text: 'Taymer deadline’gacha qancha vaqt qolganini ko‘rsatadi. Sertifikat olish uchun qolgan darslarni vaqtida tugating.',
       button: 'Birinchi darsga o‘tish',
       onNext: goHome
     },
     {
       target: '.mk__row--now .mk__card',
       title: 'Birinchi darsni boshlash vaqti',
-      text: 'Endi birinchi darsingni och. Uni tugatsang, dastlabki streak va 20 coin olasan.',
-      instruction: 'Birinchi kurs kartasini bos',
+      text: 'Endi birinchi darsingizni oching. Uni tugatsangiz, dastlabki streak va 20 coin olasiz.',
+      instruction: 'Birinchi kurs vidjetini bosing',
       requireClick: true,
       action: 'lesson',
       prepare: goHome
