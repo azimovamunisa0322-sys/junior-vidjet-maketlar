@@ -39,26 +39,42 @@
     <section class="j-tour__lesson" hidden aria-label="Birinchi dars">
       <header class="j-lesson__head">
         <span class="j-lesson__brand"><i>J</i> Junior</span>
-        <span class="j-lesson__step">1-dars · 5 daqiqa</span>
+        <span class="j-lesson__step"><b data-lesson-step>1</b>/3 qadam</span>
       </header>
       <div class="j-lesson__progress"><i></i></div>
       <div class="j-lesson__body">
-        <span class="j-lesson__eyebrow">Birinchi dars</span>
-        <h2>Platformada o‘qishni boshlaymiz</h2>
-        <p>Videoni ko‘ring, amaliy vazifani bajaring va mini-testdan o‘ting. Shu uch qadam darsni yakunlash uchun yetarli.</p>
-        <button class="j-lesson__video" type="button" aria-label="Videoni ko‘rish">
-          <span class="j-lesson__play">▶</span>
-          <span><b>Junior bilan tanishuv</b><small>01:24 · ko‘rib chiqildi</small></span>
-          <span class="j-lesson__done">✓</span>
-        </button>
-        <div class="j-lesson__checks">
-          <span><i>✓</i><b>Qisqa videoni ko‘rdingiz</b></span>
-          <span><i>✓</i><b>Birinchi amaliyotni bajardingiz</b></span>
-          <span><i>✓</i><b>Mini-testdan o‘tdingiz</b></span>
+        <div class="j-lesson__intro">
+          <img data-a="a2" alt="Junior maskoti">
+          <span><small>Birinchi missiya</small><b>3 ta qisqa qadam — ilk natijangiz tayyor</b></span>
         </div>
-        <div class="j-lesson__reward"><span>🔥 +1 streak</span><span>🪙 +20 coin</span></div>
+        <section class="j-lesson__stage" data-lesson-stage="video">
+          <div class="j-lesson__stage-head"><i>1</i><span><b>Junior bilan tanishuv</b><small>1 daqiqalik qisqa video</small></span></div>
+          <button class="j-lesson__preview" type="button" data-lesson-video>
+            <span class="j-lesson__preview-play">▶</span>
+            <span><b>Platformada dars qanday o‘tiladi?</b><small>01:04</small></span>
+          </button>
+          <p>Avval videoni ko‘ring. Keyin bitta kichik mashqni bajarasiz.</p>
+          <button class="j-lesson__stage-action" type="button" data-lesson-video>Videoni boshlash</button>
+        </section>
+        <section class="j-lesson__stage" data-lesson-stage="practice" hidden>
+          <div class="j-lesson__stage-head"><i>2</i><span><b>Kichik mashq</b><small>To‘g‘ri javobni tanlang</small></span></div>
+          <h2>Sahifaning asosiy sarlavhasi qaysi teg bilan yoziladi?</h2>
+          <div class="j-lesson__answers">
+            <button type="button" data-lesson-answer="wrong">&lt;p&gt;</button>
+            <button type="button" data-lesson-answer="correct">&lt;h1&gt;</button>
+            <button type="button" data-lesson-answer="wrong">&lt;img&gt;</button>
+          </div>
+          <p data-lesson-feedback>Bir variantni tanlang.</p>
+        </section>
+        <section class="j-lesson__stage j-lesson__stage--reward" data-lesson-stage="reward" hidden>
+          <span class="j-lesson__reward-pop">🎉</span>
+          <small>3-qadam · natija</small>
+          <h2>Birinchi dars tayyor!</h2>
+          <p>Siz videoni ko‘rdingiz va mashqni to‘g‘ri bajardingiz.</p>
+          <div class="j-lesson__reward"><span>🔥 <b>+1 streak</b></span><span>🪙 <b>+20 coin</b></span></div>
+        </section>
       </div>
-      <footer class="j-lesson__foot"><button type="button" class="j-lesson__finish">Darsni tugatish</button></footer>
+      <footer class="j-lesson__foot"><span data-lesson-hint>Videodan boshlang</span><button type="button" class="j-lesson__finish" disabled>Natijani olish</button></footer>
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi natija">
       <img class="j-tour__success-mascot" data-a="a2" alt="Junior maskoti">
@@ -89,17 +105,23 @@
   const next = root.querySelector('.j-tour__next');
   const lesson = root.querySelector('.j-tour__lesson');
   const lessonFinish = root.querySelector('.j-lesson__finish');
+  const lessonProgress = root.querySelector('.j-lesson__progress i');
+  const lessonStep = root.querySelector('[data-lesson-step]');
+  const lessonHint = root.querySelector('[data-lesson-hint]');
+  const lessonStages = [...root.querySelectorAll('[data-lesson-stage]')];
   const success = root.querySelector('.j-tour__success');
   const finish = root.querySelector('.j-tour__finish');
   const toast = root.querySelector('.j-tour__toast');
 
   let stepIndex = 0;
   let activeTarget = null;
+  let activeTargets = [];
   let positioningFrame = 0;
   let toastTimer = 0;
   let runToken = 0;
   let streakFireTarget = null;
   let streakFireTimer = 0;
+  let lessonStageIndex = 0;
 
   function safeGet() {
     try { return localStorage.getItem(storageKey); } catch (_) { return null; }
@@ -133,13 +155,13 @@
   async function goHome() {
     closeSheet();
     click('.tab[data-tab="home"]');
-    await delay(20);
+    await delay(12);
   }
 
   async function goChat() {
     closeSheet();
     click('[data-tab="ai"]');
-    await delay(50);
+    await delay(24);
     injectTeamCard();
   }
 
@@ -147,7 +169,7 @@
     closeSheet();
     click(`[data-go="${key}"]`);
     click(`.tab[data-tab="${key}"]`);
-    await delay(80);
+    await delay(28);
   }
 
   async function prepareWidget(key) {
@@ -156,7 +178,9 @@
 
   async function prepareCoinShop() {
     closeSheet();
-    await delay(80);
+    await delay(32);
+    closeSheet();
+    await delay(24);
   }
 
   function injectTeamCard() {
@@ -209,6 +233,7 @@
       title: 'Muhim ma’lumotlar bir joyda',
       text: 'Vebinar, vazifa va boshqa eslatmalar shu vidjetlarda chiqadi. Kerakli ma’lumotni bosh sahifadan tez topasiz.',
       button: 'Streakni ko‘rish',
+      compact: true,
       prepare: () => prepareWidget('webinar')
     },
     {
@@ -217,6 +242,8 @@
       text: 'Har kuni kamida bitta darsni yakunlang. Shunda streak uzilmaydi va ketma-ket o‘qigan kunlaringiz hisoblanadi.',
       button: 'Mentor yordamini ko‘rish',
       effect: 'streak-fire',
+      cardPosition: 'top',
+      compact: true,
       prepare: () => prepareWidget('streak')
     },
     {
@@ -229,7 +256,8 @@
       prepare: () => prepareWidget('mentor')
     },
     {
-      target: '.sheeth__panel .sheet__body',
+      target: '#sheetHost:not([hidden]) .sheeth__panel .m-pick--sel',
+      fallback: '#sheetHost:not([hidden]) .sheeth__panel .m-pick',
       title: 'Savolni kerakli mentorga yuboring',
       text: 'Yo‘nalishingizdagi mentorni tanlang. Savolingiz shu mutaxassisga yuboriladi.',
       button: 'Ustozlarimni ko‘rish',
@@ -246,8 +274,9 @@
       onNext: () => goScreen('games')
     },
     {
-      target: '.scr[data-screen="games"] .gm-body',
-      fallback: '.scr[data-screen="games"] .gm-card',
+      target: '.scr[data-screen="games"] .gm-card',
+      targetGroup: '.scr[data-screen="games"] .gm-card',
+      targetGroupLimit: 2,
       title: 'Bilimingizni o‘yin orqali mustahkamlang 🎮',
       text: 'O‘yinlar darslarda o‘rganganlaringizni qiziqarli tarzda takrorlashga yordam beradi. Ochiq o‘yinni tanlab, natijangizni yaxshilang.',
       button: 'Liderlar jadvalini ko‘rish',
@@ -264,8 +293,9 @@
       onNext: () => goScreen('notifications')
     },
     {
-      target: '.scr[data-screen="notifications"] .scr__body',
-      fallback: '.scr[data-screen="notifications"] .nf-g',
+      target: '.scr[data-screen="notifications"] .nf-row',
+      targetGroup: '.scr[data-screen="notifications"] .nf-row',
+      targetGroupLimit: 4,
       title: 'Muhim xabarlarni o‘tkazib yubormang 🔔',
       text: 'Push-xabarlar orqali yangi dars, vebinar, vazifa va muddatlar haqida eslatma olasiz. Yangi xabarlar shu bo‘limda saqlanadi.',
       button: 'CoinShopga o‘tish',
@@ -300,11 +330,11 @@
       prepare: goHome
     },
     {
-      target: '.sheeth__panel .sheet__body',
+      target: '#sheetHost:not([hidden]) .sheeth__panel .cd-cd',
+      fallback: '#sheetHost:not([hidden]) .sheeth__panel .s-hint',
       title: 'Muddatni o‘tkazib yubormang ⏱️',
       text: 'Taymer deadline’gacha qancha vaqt qolganini ko‘rsatadi. Sertifikat olish uchun qolgan darslarni vaqtida tugating.',
       button: 'Birinchi darsga o‘tish',
-      cardPosition: 'top',
       compact: true,
       onNext: goHome
     },
@@ -325,19 +355,19 @@
       if (token !== runToken) return null;
       const found = document.querySelector(step.target) || (step.fallback && document.querySelector(step.fallback));
       if (found && found.getClientRects().length) return found;
-      await delay(80);
+      await delay(32);
     }
     return null;
   }
 
   function applyCardPlacement(step) {
     const atTop = step.cardPosition === 'top';
-    const screenRect = screen.getBoundingClientRect();
-    const visibleTop = Math.max(6, -screenRect.top + 6);
     card.classList.toggle('is-compact', !!step.compact);
-    card.style.top = atTop ? `${visibleTop}px` : 'auto';
-    card.style.bottom = atTop ? 'auto' : '12px';
+    card.style.top = atTop ? '6px' : 'auto';
+    card.style.bottom = atTop ? 'auto' : '6px';
     card.style.left = '14px';
+    card.style.setProperty('--bubble-x', atTop ? '12%' : '88%');
+    card.style.setProperty('--bubble-y', atTop ? '12%' : '88%');
   }
 
   async function revealTarget(target, step) {
@@ -347,16 +377,16 @@
       const cardTarget = target.closest('article') || target;
       const nextLeft = cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2;
       if (Math.abs(track.scrollLeft - nextLeft) > 3) {
-        track.scrollTo({ left: nextLeft, behavior: 'smooth' });
+        track.scrollTo({ left: nextLeft, behavior: 'auto' });
         moved = true;
       }
     }
     if (content.contains(target)) {
       const contentRect = content.getBoundingClientRect();
-      const targetRect = target.getBoundingClientRect();
-      const screenRect = screen.getBoundingClientRect();
+      const targetRect = activeTargetRect() || target.getBoundingClientRect();
+      const screenRect = root.getBoundingClientRect();
       const cardRect = card.getBoundingClientRect();
-      const gap = 16;
+      const gap = 18;
       const availableTop = step.cardPosition === 'top' ? cardRect.bottom + gap : screenRect.top + 8;
       const availableBottom = step.cardPosition === 'top' ? screenRect.bottom - 8 : cardRect.top - gap;
       const availableHeight = Math.max(44, availableBottom - availableTop);
@@ -366,11 +396,29 @@
       const targetTop = content.scrollTop + targetRect.top - contentRect.top;
       const nextTop = Math.max(0, targetTop - (desiredViewportTop - contentRect.top));
       if (Math.abs(content.scrollTop - nextTop) > 3) {
-        content.scrollTo({ top: nextTop, behavior: 'smooth' });
+        content.scrollTo({ top: nextTop, behavior: 'auto' });
         moved = true;
       }
     }
-    await delay(moved ? 420 : 30);
+    await delay(moved ? 28 : 16);
+  }
+
+  function playCardBubble() {
+    card.classList.remove('is-preparing', 'is-bubbling');
+    void card.offsetWidth;
+    card.classList.add('is-bubbling');
+  }
+
+  function activeTargetRect() {
+    const rects = activeTargets
+      .filter(node => node?.getClientRects().length)
+      .map(node => node.getBoundingClientRect());
+    if (!rects.length) return activeTarget?.getBoundingClientRect() || null;
+    const left = Math.min(...rects.map(rect => rect.left));
+    const top = Math.min(...rects.map(rect => rect.top));
+    const right = Math.max(...rects.map(rect => rect.right));
+    const bottom = Math.max(...rects.map(rect => rect.bottom));
+    return { left, top, right, bottom, width: right - left, height: bottom - top };
   }
 
   function setShadeLayout(x, y, width, height, screenWidth, screenHeight) {
@@ -386,8 +434,9 @@
       if (root.hidden || !activeTarget || card.hidden) return;
       const step = steps[stepIndex];
       applyCardPlacement(step);
-      const sr = screen.getBoundingClientRect();
-      const tr = activeTarget.getBoundingClientRect();
+      const sr = root.getBoundingClientRect();
+      const tr = activeTargetRect();
+      if (!tr) return;
       const pad = activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       const x = Math.max(5, tr.left - sr.left - pad);
       let y = Math.max(5, tr.top - sr.top - pad);
@@ -395,7 +444,7 @@
       let height = Math.min(sr.height - y - 5, tr.height + pad * 2);
       const targetRadius = parseFloat(getComputedStyle(activeTarget).borderTopLeftRadius) || 12;
       const cardRect = card.getBoundingClientRect();
-      const gap = 16;
+      const gap = 18;
 
       if (step.cardPosition === 'top') {
         const minY = cardRect.bottom - sr.top + gap;
@@ -421,7 +470,8 @@
   }
 
   function clearTarget() {
-    if (activeTarget) activeTarget.classList.remove('j-tour__target');
+    activeTargets.forEach(node => node.classList.remove('j-tour__target'));
+    activeTargets = [];
     activeTarget = null;
   }
 
@@ -446,7 +496,7 @@
       return;
     }
 
-    const screenRect = screen.getBoundingClientRect();
+    const screenRect = root.getBoundingClientRect();
     const destinationRect = destination.getBoundingClientRect();
     const startX = screenRect.width * .5;
     const startY = screenRect.height * .35;
@@ -481,9 +531,12 @@
     clearStreakFire();
     root.hidden = false;
     root.classList.add('is-running');
+    screen.classList.add('j-tour-scroll-locked');
     lesson.hidden = true;
     success.hidden = true;
     card.hidden = false;
+    card.classList.remove('is-bubbling');
+    card.classList.add('is-preparing');
     focus.hidden = false;
     Object.values(shades).forEach(node => { node.hidden = false; });
 
@@ -508,11 +561,21 @@
       return;
     }
 
-    activeTarget = target;
-    activeTarget.classList.add('j-tour__target');
+    const groupedTargets = step.targetGroup
+      ? [...document.querySelectorAll(step.targetGroup)]
+        .filter(node => node.getClientRects().length)
+        .slice(0, step.targetGroupLimit || 99)
+      : [];
+    activeTargets = groupedTargets.length ? groupedTargets : [target];
+    activeTarget = activeTargets[0];
+    activeTargets.forEach(node => node.classList.add('j-tour__target'));
     await revealTarget(target, step);
     if (token !== runToken) return;
     positionTour();
+    [120, 280].forEach(wait => setTimeout(() => {
+      if (token === runToken && !root.hidden && activeTarget) positionTour();
+    }, wait));
+    requestAnimationFrame(() => requestAnimationFrame(playCardBubble));
     if (step.effect === 'streak-fire') {
       requestAnimationFrame(() => requestAnimationFrame(() => animateStreakFire(target, token)));
     }
@@ -538,19 +601,36 @@
     clearTarget();
     clearStreakFire();
     root.classList.remove('is-running');
+    screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
+  }
+
+  function showLessonStage(index) {
+    lessonStageIndex = Math.max(0, Math.min(2, index));
+    const names = ['video', 'practice', 'reward'];
+    lessonStages.forEach(stage => { stage.hidden = stage.dataset.lessonStage !== names[lessonStageIndex]; });
+    lessonStep.textContent = String(lessonStageIndex + 1);
+    lessonProgress.style.width = `${((lessonStageIndex + 1) / 3) * 100}%`;
+    lessonHint.textContent = ['Videodan boshlang', 'To‘g‘ri javobni tanlang', 'Mukofotingiz tayyor'][lessonStageIndex];
+    lessonFinish.disabled = lessonStageIndex !== 2;
+    lesson.querySelectorAll('[data-lesson-answer]').forEach(button => button.classList.remove('is-correct', 'is-wrong'));
+    const feedback = lesson.querySelector('[data-lesson-feedback]');
+    if (feedback) feedback.textContent = 'Bir variantni tanlang.';
   }
 
   function openLesson() {
     runToken += 1;
+    screen.classList.remove('j-tour-scroll-locked');
     clearTarget();
     card.hidden = true;
     focus.hidden = true;
     Object.values(shades).forEach(node => { node.hidden = true; });
     lesson.hidden = false;
     success.hidden = true;
+    lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.remove('is-played'));
+    showLessonStage(0);
     updateAssets();
-    lessonFinish.focus({ preventScroll: true });
+    lesson.querySelector('[data-lesson-video]')?.focus({ preventScroll: true });
   }
 
   function updateDashboardReward() {
@@ -608,6 +688,30 @@
     }
     advance();
   });
+  lesson.querySelectorAll('[data-lesson-video]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (lessonStageIndex !== 0) return;
+      lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.add('is-played'));
+      lessonHint.textContent = 'Video ko‘rildi ✓';
+      setTimeout(() => showLessonStage(1), 260);
+    });
+  });
+  lesson.querySelectorAll('[data-lesson-answer]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (lessonStageIndex !== 1) return;
+      const feedback = lesson.querySelector('[data-lesson-feedback]');
+      lesson.querySelectorAll('[data-lesson-answer]').forEach(node => node.classList.remove('is-correct', 'is-wrong'));
+      if (button.dataset.lessonAnswer === 'correct') {
+        button.classList.add('is-correct');
+        if (feedback) feedback.textContent = 'To‘g‘ri! Keyingi qadamga o‘tamiz.';
+        lessonHint.textContent = 'Javobingiz to‘g‘ri ✓';
+        setTimeout(() => showLessonStage(2), 360);
+      } else {
+        button.classList.add('is-wrong');
+        if (feedback) feedback.textContent = 'Yana bir bor o‘ylab ko‘ring.';
+      }
+    });
+  });
   lessonFinish.addEventListener('click', completeLesson);
   finish.addEventListener('click', () => {
     closeTour(true);
@@ -636,7 +740,14 @@
 
     if (root.hidden || lesson.hidden === false || success.hidden === false) return;
     const step = steps[stepIndex];
-    if (!step?.requireClick || !activeTarget || !activeTarget.contains(event.target)) return;
+    const clickedTarget = activeTargets.some(node => node.contains(event.target));
+    if (!clickedTarget) return;
+    if (!step?.requireClick) {
+      event.preventDefault();
+      event.stopPropagation();
+      showToast('Sayohatni davom ettirish uchun pastdagi tugmani bosing.');
+      return;
+    }
     if (step.action === 'lesson') setTimeout(openLesson, 120);
     else setTimeout(() => activateStep(stepIndex + 1), 240);
   }, true);
@@ -648,6 +759,11 @@
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });
   window.addEventListener('resize', positionTour, { passive: true });
+  const stopManualTourScroll = event => {
+    if (!root.hidden && lesson.hidden && success.hidden) event.preventDefault();
+  };
+  screen.addEventListener('wheel', stopManualTourScroll, { passive: false });
+  screen.addEventListener('touchmove', stopManualTourScroll, { passive: false });
 
   const controlRow = document.querySelector('.ctl__row--btns');
   if (controlRow && !controlRow.querySelector('[data-replay-tour]')) {

@@ -26,7 +26,7 @@
   z-index: 1;
   background: transparent;
   pointer-events: auto;
-  transition: none;
+  transition: left .16s ease-out, top .16s ease-out, width .16s ease-out, height .16s ease-out;
 }
 
 .j-tour__focus {
@@ -36,7 +36,8 @@
   border-radius: 22px;
   box-shadow: 0 0 0 9999px rgba(12, 18, 34, .68), 0 14px 36px rgba(10, 17, 34, .24);
   pointer-events: none;
-  transition: none;
+  will-change: left, top, width, height, border-radius;
+  transition: left .16s ease-out, top .16s ease-out, width .16s ease-out, height .16s ease-out, border-radius .16s ease-out;
 }
 
 .j-tour__focus i {
@@ -61,13 +62,43 @@
 }
 
 .j-tour__streak-fire.is-flying {
-  animation: j-tour-fire-flight 1.25s cubic-bezier(.2,.82,.24,1) both;
+  animation: j-tour-fire-flight 1.02s cubic-bezier(.16,.82,.24,1) both;
+}
+
+.j-tour__streak-fire.is-flying::before,
+.j-tour__streak-fire.is-flying::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
+
+.j-tour__streak-fire.is-flying::before {
+  width: 7px;
+  height: 7px;
+  margin: -3px;
+  border-radius: 50%;
+  background: #ffd54a;
+  box-shadow: -38px -8px #ff4f28, 34px -18px #ff9a32, -25px 30px #ffd54a, 30px 27px #ff4f28, 2px -42px #fff0a8, -45px 18px #ff8b2d;
+  animation: j-tour-fire-sparks .5s .08s ease-out both;
+}
+
+.j-tour__streak-fire.is-flying::after {
+  width: 30px;
+  height: 30px;
+  margin: -18px;
+  border: 3px solid rgba(255, 187, 45, .82);
+  border-radius: 50%;
+  animation: j-tour-fire-ring .46s .04s ease-out both;
 }
 
 .stc__fire.j-tour__fire-destination { opacity: 0; }
 .stc__fire.j-tour__fire-landed { animation: j-tour-fire-landed .9s cubic-bezier(.2,.9,.2,1) both; }
 
 .j-tour__card {
+  --bubble-x: 88%;
+  --bubble-y: 88%;
   position: absolute;
   bottom: 12px;
   left: 14px;
@@ -80,21 +111,40 @@
   background: rgba(255, 255, 255, .98);
   box-shadow: 0 18px 44px rgba(10, 18, 38, .28);
   pointer-events: auto;
-  animation: j-tour-card-in .28s cubic-bezier(.2,.8,.2,1) both;
+  will-change: clip-path, opacity, filter;
+}
+
+.j-tour__card.is-preparing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.j-tour__card.is-bubbling {
+  animation: j-tour-card-bubble .26s cubic-bezier(.18,.88,.28,1) both;
+}
+
+.j-tour__card.is-bubbling .j-tour__meta,
+.j-tour__card.is-bubbling .j-tour__bar,
+.j-tour__card.is-bubbling .j-tour__title,
+.j-tour__card.is-bubbling .j-tour__text,
+.j-tour__card.is-bubbling .j-tour__instruction,
+.j-tour__card.is-bubbling .j-tour__actions {
+  animation: j-tour-content-rise .2s .055s ease-out both;
 }
 
 .j-tour__card.is-compact {
-  padding: 10px 12px;
+  padding: 8px 11px;
   border-radius: 18px;
 }
 
-.j-tour__card.is-compact .j-tour__label { font-size: 9px; }
-.j-tour__card.is-compact .j-tour__bar { margin: 6px 0 8px; }
-.j-tour__card.is-compact .j-tour__title { font-size: 17px; line-height: 1.12; }
-.j-tour__card.is-compact .j-tour__text { margin-top: 4px; font-size: 10.5px; line-height: 1.3; }
-.j-tour__card.is-compact .j-tour__actions { margin-top: 8px; }
+.j-tour__card.is-compact .j-tour__count { padding: 4px 7px; font-size: 9px; }
+.j-tour__card.is-compact .j-tour__label { font-size: 8px; }
+.j-tour__card.is-compact .j-tour__bar { margin: 5px 0 6px; }
+.j-tour__card.is-compact .j-tour__title { font-size: 16px; line-height: 1.08; }
+.j-tour__card.is-compact .j-tour__text { margin-top: 3px; font-size: 9.5px; line-height: 1.22; }
+.j-tour__card.is-compact .j-tour__actions { margin-top: 6px; }
 .j-tour__card.is-compact .j-tour__mascot { display: none; }
-.j-tour__card.is-compact .j-tour__next { min-height: 40px; }
+.j-tour__card.is-compact .j-tour__next { min-height: 36px; }
 
 .j-tour__meta { display: flex; align-items: center; gap: 8px; }
 .j-tour__count { padding: 5px 8px; border-radius: 999px; color: #fff; background: var(--tour-brand); font-size: 10px; font-weight: 900; }
@@ -146,6 +196,22 @@
 .j-tour__card.is-action-required .j-tour__actions { justify-content: center; margin-top: 8px; }
 .j-tour__card.is-action-required .j-tour__mascot { width: 58px; height: 58px; }
 .j-tour__target { scroll-margin: 86px 0 220px; }
+.screen.j-tour-scroll-locked { overflow: hidden !important; }
+.screen.j-tour-scroll-locked .content,
+.screen.j-tour-scroll-locked #track,
+.screen.j-tour-scroll-locked .sheeth__panel,
+.screen.j-tour-scroll-locked .sheet__body,
+.screen.j-tour-scroll-locked .ai-feed {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+.screen.j-tour-scroll-locked .tabbar {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105%);
+  transition: opacity .16s ease-out, transform .16s ease-out;
+}
 
 /* Chat ekranidagi haqiqiy jamoa bloki */
 .j-team {
@@ -185,29 +251,49 @@
   animation: j-tour-page-in .34s cubic-bezier(.22,.75,.24,1) both;
 }
 
-.j-lesson__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 28px 18px 12px; }
+.j-lesson__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: max(22px, env(safe-area-inset-top)) 18px 12px; }
 .j-lesson__brand { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 900; }
 .j-lesson__brand i { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 9px; color: #fff; background: var(--tour-brand); font-style: normal; }
 .j-lesson__step { color: #8b93a5; font-size: 10px; font-weight: 800; }
 .j-lesson__progress { height: 5px; margin: 0 18px; overflow: hidden; border-radius: 99px; background: #edf0f4; }
-.j-lesson__progress i { display: block; width: 100%; height: 100%; background: #00b884; animation: j-tour-progress 1s ease both; }
-.j-lesson__body { flex: 1; min-height: 0; overflow-y: auto; padding: 19px 18px 14px; }
-.j-lesson__eyebrow { display: inline-block; padding: 5px 8px; border-radius: 999px; color: #d94321; background: #fff0ea; font-size: 9px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
-.j-lesson__body h2 { margin: 9px 0 7px; font-size: 24px; line-height: 1.08; letter-spacing: -.6px; }
-.j-lesson__body > p { margin: 0; color: #727c91; font-size: 12px; line-height: 1.45; font-weight: 700; }
-.j-lesson__video { display: grid; grid-template-columns: 52px 1fr 28px; align-items: center; gap: 10px; width: 100%; margin-top: 18px; padding: 12px; border: 0; border-radius: 18px; text-align: left; color: #fff; background: linear-gradient(145deg, #263254, #17213d); font-family: inherit; cursor: pointer; }
-.j-lesson__play { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; color: #ff4f28; background: #fff; font-size: 17px; }
-.j-lesson__video b { display: block; font-size: 12px; }
-.j-lesson__video small { display: block; margin-top: 4px; color: #bac2d4; font-size: 9px; font-weight: 700; }
-.j-lesson__done { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; color: #fff; background: #00b884; font-weight: 900; }
-.j-lesson__checks { display: grid; gap: 8px; margin-top: 14px; }
-.j-lesson__checks span { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border: 1px solid #e8edf2; border-radius: 14px; color: #505b73; background: #fff; font-size: 10px; }
-.j-lesson__checks i { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 8px; color: #fff; background: #00b884; font-style: normal; }
-.j-lesson__checks b { font-weight: 800; }
-.j-lesson__reward { display: flex; gap: 8px; margin-top: 14px; }
-.j-lesson__reward span { flex: 1; padding: 9px; border-radius: 13px; text-align: center; color: #a35b00; background: #fff5d8; font-size: 10px; font-weight: 900; }
-.j-lesson__foot { padding: 12px 18px 27px; background: linear-gradient(180deg, rgba(255,255,255,0), #fff 22%); }
-.j-lesson__finish { width: 100%; }
+.j-lesson__progress i { display: block; width: 33.333%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--tour-brand), #ff8b53); transition: width .24s ease-out; }
+.j-lesson__body { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 18px 12px; background: linear-gradient(180deg, #fff 0, #fff8f5 100%); }
+.j-lesson__intro { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 10px; margin-bottom: 12px; padding: 9px 11px; border: 1px solid #ffe0d7; border-radius: 18px; background: #fff; box-shadow: 0 8px 20px rgba(37, 43, 67, .05); }
+.j-lesson__intro img { width: 48px; height: 48px; object-fit: contain; }
+.j-lesson__intro small { display: block; color: #e34b28; font-size: 8px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.j-lesson__intro b { display: block; margin-top: 3px; font-size: 11px; line-height: 1.3; }
+.j-lesson__stage { padding: 15px; border: 1px solid #edf0f5; border-radius: 22px; background: #fff; box-shadow: 0 13px 34px rgba(28, 36, 65, .08); animation: j-lesson-stage-in .25s cubic-bezier(.18,.85,.3,1) both; }
+.j-lesson__stage-head { display: flex; align-items: center; gap: 9px; }
+.j-lesson__stage-head > i { display: grid; place-items: center; flex: none; width: 31px; height: 31px; border-radius: 11px; color: #fff; background: var(--tour-brand); font-size: 12px; font-style: normal; font-weight: 900; box-shadow: 0 6px 14px rgba(255,79,40,.22); }
+.j-lesson__stage-head b { display: block; font-size: 13px; line-height: 1.15; }
+.j-lesson__stage-head small { display: block; margin-top: 3px; color: #8991a4; font-size: 9px; font-weight: 700; }
+.j-lesson__preview { display: grid; grid-template-columns: 46px 1fr; align-items: center; gap: 10px; width: 100%; margin-top: 14px; padding: 12px; border: 0; border-radius: 17px; text-align: left; color: #fff; background: linear-gradient(145deg, #283659, #17213d); font-family: inherit; box-shadow: 0 10px 22px rgba(23,33,61,.18); cursor: pointer; }
+.j-lesson__preview-play { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 15px; color: var(--tour-brand); background: #fff; font-size: 17px; transition: transform .18s ease; }
+.j-lesson__preview b { display: block; font-size: 11px; }
+.j-lesson__preview small { display: block; margin-top: 4px; color: #bec6d8; font-size: 9px; font-weight: 700; }
+.j-lesson__preview.is-played .j-lesson__preview-play { color: #fff; background: #08b889; transform: scale(.92); }
+.j-lesson__preview.is-played .j-lesson__preview-play::before { content: "✓"; }
+.j-lesson__preview.is-played .j-lesson__preview-play { font-size: 0; }
+.j-lesson__preview.is-played .j-lesson__preview-play::before { font-size: 18px; }
+.j-lesson__stage > p { margin: 12px 1px 0; color: #717b91; font-size: 10.5px; line-height: 1.42; font-weight: 700; }
+.j-lesson__stage-action { width: 100%; min-height: 42px; margin-top: 13px; border: 0; border-radius: 13px; color: #fff; background: linear-gradient(135deg, #ff6847, #f5421a); box-shadow: 0 8px 18px rgba(255,79,40,.2); font: 900 11px/1 var(--f, "Nunito", sans-serif); cursor: pointer; }
+.j-lesson__stage-action.is-played { opacity: .72; }
+.j-lesson__stage h2 { margin: 17px 0 12px; font-size: 19px; line-height: 1.22; letter-spacing: -.3px; }
+.j-lesson__answers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.j-lesson__answers button { min-height: 53px; border: 1px solid #e4e8f0; border-radius: 14px; color: #263452; background: #f7f9fc; font: 900 14px/1 var(--f, "Nunito", sans-serif); cursor: pointer; transition: transform .14s ease, border-color .14s ease, background .14s ease; }
+.j-lesson__answers button.is-correct { border-color: #05a978; color: #087453; background: #e5faf3; transform: scale(1.03); }
+.j-lesson__answers button.is-wrong { border-color: #ff6544; color: #bd371b; background: #fff0eb; animation: j-lesson-shake .25s ease; }
+.j-lesson__stage--reward { padding: 24px 16px 18px; text-align: center; background: radial-gradient(circle at 50% 12%, #fff0bf 0, #fff 48%); }
+.j-lesson__reward-pop { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 8px; border-radius: 50%; background: #fff6d9; font-size: 38px; animation: j-lesson-reward-pop .4s cubic-bezier(.18,.9,.28,1.25) both; }
+.j-lesson__stage--reward > small { color: #d67900; font-size: 9px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.j-lesson__stage--reward h2 { margin: 8px 0 5px; font-size: 22px; }
+.j-lesson__stage--reward > p { margin: 0 auto; max-width: 270px; }
+.j-lesson__reward { display: flex; gap: 8px; margin-top: 15px; }
+.j-lesson__reward span { flex: 1; padding: 10px 7px; border-radius: 13px; text-align: center; color: #995700; background: #fff2c9; font-size: 10px; font-weight: 900; }
+.j-lesson__foot { display: grid; grid-template-columns: 1fr 1.35fr; align-items: center; gap: 10px; padding: 10px 18px max(22px, env(safe-area-inset-bottom)); border-top: 1px solid #f0f1f5; background: #fff; }
+.j-lesson__foot > span { color: #81899b; font-size: 9px; line-height: 1.25; font-weight: 800; }
+.j-lesson__finish { width: 100%; transition: opacity .18s ease, transform .18s ease; }
+.j-lesson__finish:disabled { opacity: .36; box-shadow: none; cursor: default; }
 
 .j-tour__success {
   position: absolute;
@@ -269,7 +355,15 @@
   animation: j-tour-confetti var(--dur, 1.8s) cubic-bezier(.15,.78,.35,1) forwards;
 }
 
-@keyframes j-tour-card-in { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes j-tour-card-bubble {
+  0% { opacity: 0; clip-path: circle(0% at var(--bubble-x) var(--bubble-y)); border-radius: 42px; filter: blur(1px); }
+  68% { opacity: 1; clip-path: circle(118% at var(--bubble-x) var(--bubble-y)); border-radius: 25px; filter: blur(0); }
+  100% { opacity: 1; clip-path: circle(160% at var(--bubble-x) var(--bubble-y)); filter: none; }
+}
+@keyframes j-tour-content-rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@keyframes j-lesson-stage-in { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes j-lesson-shake { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-4px); } 65% { transform: translateX(4px); } }
+@keyframes j-lesson-reward-pop { from { opacity: 0; transform: scale(.4) rotate(-14deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
 @keyframes j-tour-page-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 @keyframes j-tour-success { from { opacity: 0; transform: translateY(-44%) scale(.92); } to { opacity: 1; transform: translateY(-50%) scale(1); } }
 @keyframes j-tour-progress { from { width: 0; } to { width: 100%; } }
@@ -278,12 +372,22 @@
 @keyframes j-tour-coin-pop { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.24); color: #f0a900; } }
 @keyframes j-tour-confetti { 0% { opacity: 1; transform: translate3d(0,0,0) rotate(0deg); } 100% { opacity: 0; transform: translate3d(var(--x), 810px, 0) rotate(var(--r)); } }
 @keyframes j-tour-fire-flight {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(.15) rotate(-12deg); filter: drop-shadow(0 0 0 rgba(255,79,40,0)); }
-  13% { opacity: 1; transform: translate(-50%, -50%) scale(1.38) rotate(8deg); filter: drop-shadow(0 14px 22px rgba(255,79,40,.52)); }
-  28% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(-5deg); }
-  43% { opacity: 1; transform: translate(-50%, -50%) scale(1.22) rotate(4deg); }
-  62% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(0deg); }
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.08) rotate(-20deg); filter: drop-shadow(0 0 0 rgba(255,79,40,0)); }
+  14% { opacity: 1; transform: translate(-50%, -50%) scale(1.62) rotate(12deg); filter: drop-shadow(0 18px 26px rgba(255,79,40,.58)); }
+  25% { opacity: 1; transform: translate(-50%, -50%) scale(.92) rotate(-9deg); }
+  36% { opacity: 1; transform: translate(-50%, -50%) scale(1.34) rotate(7deg); }
+  48% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(-4deg); }
+  58% { opacity: 1; transform: translate(-50%, -50%) scale(1.18) rotate(0deg); }
   100% { opacity: 1; transform: translate(calc(-50% + var(--fire-dx)), calc(-50% + var(--fire-dy))) scale(var(--fire-end-scale)) rotate(0deg); filter: drop-shadow(0 3px 5px rgba(255,79,40,.24)); }
+}
+@keyframes j-tour-fire-sparks {
+  0% { opacity: 0; transform: scale(.2) rotate(0deg); }
+  24% { opacity: 1; transform: scale(1) rotate(12deg); }
+  100% { opacity: 0; transform: scale(1.7) rotate(34deg); }
+}
+@keyframes j-tour-fire-ring {
+  0% { opacity: .9; transform: scale(.2); }
+  100% { opacity: 0; transform: scale(3.2); }
 }
 @keyframes j-tour-fire-landed {
   0% { opacity: 1; transform: scale(.72); filter: drop-shadow(0 0 0 rgba(255,79,40,0)); }
@@ -311,5 +415,8 @@
   .j-tour__card,
   .j-tour__lesson,
   .j-tour__success,
+  .j-lesson__stage,
+  .j-lesson__reward-pop,
+  .j-lesson__answers button,
   .j-lesson__progress i { animation: none !important; }
 }
