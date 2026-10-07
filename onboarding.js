@@ -155,13 +155,13 @@
   async function goHome() {
     closeSheet();
     click('.tab[data-tab="home"]');
-    await delay(12);
+    await delay(28);
   }
 
   async function goChat() {
     closeSheet();
     click('[data-tab="ai"]');
-    await delay(24);
+    await delay(42);
     injectTeamCard();
   }
 
@@ -169,7 +169,7 @@
     closeSheet();
     click(`[data-go="${key}"]`);
     click(`.tab[data-tab="${key}"]`);
-    await delay(28);
+    await delay(48);
   }
 
   async function prepareWidget(key) {
@@ -260,10 +260,21 @@
       fallback: '#sheetHost:not([hidden]) .sheeth__panel .m-pick',
       title: 'Savolni kerakli mentorga yuboring',
       text: 'Yo‘nalishingizdagi mentorni tanlang. Savolingiz shu mutaxassisga yuboriladi.',
+      instruction: 'Yozmoqchi bo‘lgan mentoringizni bosing',
+      actionButton: 'Mentorga yozish',
+      requireClick: true,
+      cardPosition: 'top',
+      compact: true
+    },
+    {
+      target: '.scr[data-screen="ai"] .ai-bar',
+      fallback: '.scr[data-screen="ai"] .ai-feed[data-aiview="chat"]',
+      title: 'Mentor bilan chat ochildi',
+      text: 'Savolingizni pastdagi maydonga yozing va yuborish tugmasini bosing. Mentor javobi shu chatda ko‘rinadi.',
       button: 'Ustozlarimni ko‘rish',
       cardPosition: 'top',
       compact: true,
-      onNext: goChat
+      prepare: goChat
     },
     {
       target: '.j-team',
@@ -314,10 +325,22 @@
     {
       target: '.scr[data-screen="coinshop"] .cs-banner',
       fallback: '.scr[data-screen="coinshop"] .cs-bal',
-      title: 'Coinlarni sovg‘aga almashtiring',
-      text: 'Joriy balansingiz yuqorida ko‘rinadi. Yetarli coin yig‘sangiz, shu yerdan o‘zingiz xohlagan sovg‘ani tanlaysiz.',
+      title: 'Coin qanday yig‘ilishini bilib oling',
+      text: 'Coin ishlash usullarini ko‘rish uchun yuqoridagi yo‘riqnoma bannerini oching.',
+      instruction: '“Coinlarni qanday yig‘ish mumkin?” bannerini bosing',
+      actionButton: 'Yo‘riqnomani ochish',
+      requireClick: true,
+      prepare: prepareCoinShop
+    },
+    {
+      target: '#sheetHost:not([hidden]) .sheet[data-widget="coinshop"][data-sheet="earn"] .cs-rule',
+      targetGroup: '#sheetHost:not([hidden]) .sheet[data-widget="coinshop"][data-sheet="earn"] .cs-rule',
+      targetGroupLimit: 2,
+      fallback: '#sheetHost:not([hidden]) .sheet[data-widget="coinshop"][data-sheet="earn"] .sheet__body',
+      title: 'Coin yig‘ishning 3 ta yo‘li',
+      text: 'Testni birinchi urinishda to‘liq bajarsangiz 30 coin, amaliy vazifa uchun 70 coin, do‘stingizni taklif qilsangiz 1000 coin olasiz.',
       button: 'Sertifikatlarni ko‘rish',
-      prepare: prepareCoinShop,
+      compact: true,
       onNext: goHome
     },
     {
@@ -400,7 +423,7 @@
         moved = true;
       }
     }
-    await delay(moved ? 28 : 16);
+    await delay(moved ? 105 : 38);
   }
 
   function playCardBubble() {
@@ -749,7 +772,7 @@
       return;
     }
     if (step.action === 'lesson') setTimeout(openLesson, 120);
-    else setTimeout(() => activateStep(stepIndex + 1), 240);
+    else setTimeout(() => activateStep(stepIndex + 1), 440);
   }, true);
 
   const targetObserver = new MutationObserver(() => injectTeamCard());
