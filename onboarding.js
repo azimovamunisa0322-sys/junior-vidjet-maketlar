@@ -105,17 +105,19 @@
         <button type="button" class="j-reward__primary" data-reward-next>Coin mukofotini olish</button>
       </section>
       <section class="j-reward__panel j-reward__panel--coin" data-reward-panel="coin" hidden>
-        <span class="j-reward__kicker">Birinchi dars mukofoti</span>
-        <h2 data-coin-title>Sandiq tayyor!</h2>
-        <p data-coin-text>Mukofotingizni olish uchun sandiqni bosing.</p>
-        <button type="button" class="j-reward__chest" data-reward-chest aria-label="Mukofot sandig‘ini ochish">
-          <span class="j-reward__chest-glow"></span>
-          <span class="j-reward__chest-lid"></span>
-          <span class="j-reward__chest-body"></span>
-          <span class="j-reward__chest-lock">J</span>
-          <span class="j-reward__coin">+20</span>
-        </button>
-        <div class="j-reward__coin-result" aria-live="polite"><b>+20 coin</b><span>Balansingizga qo‘shildi</span></div>
+        <div class="j-reward__coin-content">
+          <span class="j-reward__kicker">Birinchi dars mukofoti</span>
+          <h2 data-coin-title>Sandiq tayyor!</h2>
+          <p data-coin-text>Mukofotingizni olish uchun sandiqni bosing.</p>
+          <button type="button" class="j-reward__chest" data-reward-chest aria-label="Mukofot sandig‘ini ochish">
+            <span class="j-reward__chest-glow"></span>
+            <span class="j-reward__chest-lid"></span>
+            <span class="j-reward__chest-body"></span>
+            <span class="j-reward__chest-lock">J</span>
+            <span class="j-reward__coin">+20</span>
+          </button>
+          <div class="j-reward__coin-result" aria-live="polite"><b>+20 coin</b><span>Balansingizga qo‘shildi</span></div>
+        </div>
         <button type="button" class="j-tour__finish" hidden>Keyingi darsga o‘tish</button>
       </section>
     </section>
