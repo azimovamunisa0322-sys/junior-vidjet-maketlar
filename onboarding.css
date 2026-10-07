@@ -4,8 +4,8 @@
 .j-team * { box-sizing: border-box; }
 
 .j-tour {
-  --tour-brand: #34466f;
-  --tour-accent: #00a878;
+  --tour-brand: #ff4f28;
+  --tour-accent: #ff6948;
   --tour-ink: #17213d;
   --tour-muted: #687289;
   position: absolute;
@@ -32,7 +32,7 @@
 .j-tour__focus {
   position: absolute;
   z-index: 2;
-  border: 3px solid var(--tour-accent);
+  border: 3px solid var(--tour-brand);
   border-radius: 22px;
   box-shadow: 0 0 0 9999px rgba(12, 18, 34, .68), 0 14px 36px rgba(10, 17, 34, .24);
   pointer-events: none;
@@ -93,8 +93,8 @@
   min-height: 44px;
   border-radius: 14px;
   color: #fff;
-  background: linear-gradient(135deg, #435681, #263653);
-  box-shadow: 0 9px 20px rgba(38, 54, 83, .22);
+  background: linear-gradient(135deg, #ff6847, #f5421a);
+  box-shadow: 0 9px 20px rgba(255, 79, 40, .24);
   font: 900 13px/1 var(--f, "Nunito", sans-serif);
   cursor: pointer;
 }

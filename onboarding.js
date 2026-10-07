@@ -175,8 +175,8 @@
   const steps = [
     {
       target: '.plan__hero',
-      title: 'Salom! Men Juniorman 👋',
-      text: 'Platforma bilan tez tanishib olamiz. Men muhim bo‘limlarni navbat bilan ko‘rsataman — sen ko‘rsatmalarga amal qil.',
+      title: 'Xush kelibsiz! Boshlaymizmi? 👋',
+      text: 'Junior’dagi asosiy imkoniyatlarni birgalikda ko‘rib chiqamiz. Men yo‘l ko‘rsataman — sen ko‘rsatmalarga amal qil.',
       button: 'Boshlash',
       prepare: goHome
     },
