@@ -42,9 +42,9 @@
       </header>
       <div class="j-lesson__progress"><i></i></div>
       <div class="j-lesson__body">
-        <span class="j-lesson__eyebrow">Birinchi qadam</span>
-        <h2>Platformada qanday o‘qiyman?</h2>
-        <p>Har bir dars qisqa tushuntirish, amaliy vazifa va mini-testdan iborat.</p>
+        <span class="j-lesson__eyebrow">Birinchi dars</span>
+        <h2>Platformada o‘qishni boshlaymiz</h2>
+        <p>Videoni ko‘r, amaliy vazifani bajar va mini-testdan o‘t. Shu uch qadam darsni yakunlash uchun yetarli.</p>
         <button class="j-lesson__video" type="button" aria-label="Videoni ko‘rish">
           <span class="j-lesson__play">▶</span>
           <span><b>Junior bilan tanishuv</b><small>01:24 · ko‘rib chiqildi</small></span>
@@ -61,11 +61,11 @@
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi natija">
       <img class="j-tour__success-mascot" data-a="a2" alt="Junior maskoti">
-      <span class="j-tour__success-kicker">Birinchi g‘alaba</span>
-      <h2>Vaaau! Darsni tugatding! 🎉</h2>
-      <p>Sen birinchi streakingni yoqding va mehnating uchun coin olding.</p>
+      <span class="j-tour__success-kicker">Birinchi natijang</span>
+      <h2>Ajoyib! Birinchi darsni yakunlading 🎉</h2>
+      <p>1 kunlik streak boshlandi va balansingga 20 coin qo‘shildi.</p>
       <div class="j-tour__rewards"><b>🔥 +1 streak</b><b>🪙 +20 coin</b></div>
-      <button type="button" class="j-tour__finish">Yana dars qilish</button>
+      <button type="button" class="j-tour__finish">Keyingi darsga o‘tish</button>
     </section>
     <div class="j-tour__toast" role="status"></div>`;
   screen.appendChild(root);
@@ -129,13 +129,13 @@
   async function goHome() {
     closeSheet();
     click('.tab[data-tab="home"]');
-    await delay(180);
+    await delay(20);
   }
 
   async function goChat() {
     closeSheet();
     click('[data-tab="ai"]');
-    await delay(220);
+    await delay(50);
     injectTeamCard();
   }
 
@@ -144,8 +144,8 @@
     const track = document.querySelector('#track');
     const target = track?.querySelector(`article[data-widget="${key}"]`);
     if (track && target) {
-      track.scrollTo({ left: target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2, behavior: 'smooth' });
-      await delay(280);
+      track.scrollTo({ left: target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2, behavior: 'auto' });
+      await delay(30);
     }
   }
 
@@ -156,15 +156,15 @@
     team.className = 'j-team';
     team.setAttribute('aria-label', 'Sening jamoang');
     team.innerHTML = `
-      <div class="j-team__head"><span><b>Sening jamoang</b><small>O‘qishda doim yoningda</small></span><i>2 yordamchi</i></div>
+      <div class="j-team__head"><span><b>Sening jamoang</b><small>O‘qish davomida yordam beradi</small></span><i>2 mutaxassis</i></div>
       <div class="j-team__person">
         <span class="j-team__avatar j-team__avatar--curator">🧭</span>
-        <span><b>Shaxsiy kurator</b><small>Jadval, progress va tashkiliy savollar</small></span>
+        <span><b>Shaxsiy kurator</b><small>Jadval, progress va tashkiliy masalalar</small></span>
         <button type="button" data-j-team="curator" aria-label="Kuratorga Telegram orqali yozish">Telegram</button>
       </div>
       <div class="j-team__person">
         <span class="j-team__avatar j-team__avatar--mentor">🎙️</span>
-        <span><b>Vebinar mentori</b><small>Jonli dars va mavzu bo‘yicha savollar</small></span>
+        <span><b>Vebinar mentori</b><small>Jonli darslar va mavzuga oid savollar</small></span>
         <button type="button" data-j-team="mentor" aria-label="Vebinar mentoriga Telegram orqali yozish">Telegram</button>
       </div>`;
     const feed = ai.querySelector('.ai-feed');
@@ -176,97 +176,97 @@
     {
       target: '.plan__hero',
       title: 'Salom! Men Juniorman 👋',
-      text: 'Senga platformani slaydda emas, shu ekranning o‘zida ko‘rsataman. Har qadamda yoritilgan joyga e’tibor ber.',
-      button: 'Sayohatni boshlash',
+      text: 'Platforma bilan tez tanishib olamiz. Men muhim bo‘limlarni navbat bilan ko‘rsataman — sen ko‘rsatmalarga amal qil.',
+      button: 'Boshlash',
       prepare: goHome
     },
     {
       target: '.plan__hero',
-      title: 'Bu — bugungi rejang',
-      text: 'Bu vidjet bugun nechta dars tayyor turganini, progressingni va oladigan coin’ingni ko‘rsatadi.',
+      title: 'Bugungi o‘quv rejang',
+      text: 'Bu yerda bugun bajaradigan 2 ta darsing, kunlik natijang va yig‘adigan coinlaring ko‘rinadi.',
       button: 'Kurslarimni ko‘rish',
       prepare: goHome
     },
     {
       target: '.mk__list',
-      title: 'Kurslaring shu yerda',
-      text: 'Senga biriktirilgan kurslar tartib bilan chiqadi. Birinchi turgan kurs — hozir boshlashing kerak bo‘lgan kurs.',
-      button: 'Vidjetlarga o‘tish',
+      title: 'O‘qishni shu yerdan boshlaysan',
+      text: 'Kurslaring tavsiya etilgan tartibda joylashgan. Eng yuqoridagi kursni ochib, navbatdagi darsni davom ettir.',
+      button: 'Muhim bo‘limlarni ko‘rish',
       prepare: goHome
     },
     {
       target: 'article[data-widget="webinar"]',
-      title: 'Vidjetlar — tezkor yordamchilar',
-      text: 'Vebinar, to‘lov, vazifa va boshqa muhim ma’lumotlar shu kartochkalarda kerakli paytda chiqadi.',
+      title: 'Muhim ma’lumotlar bir joyda',
+      text: 'Vebinar, vazifa va boshqa eslatmalar shu kartochkalarda chiqadi. Kerakli ma’lumotni bosh sahifadan tez topasan.',
       button: 'Streakni ko‘rish',
       prepare: () => prepareWidget('webinar')
     },
     {
       target: 'article[data-widget="streak"]',
-      title: 'Har kuni dars qil — streakni saqla 🔥',
-      text: 'Kamida bitta darsni tugatsang streak davom etadi. Ketma-ket kunlar sening yangi rekording bo‘ladi.',
+      title: 'Streak — o‘qish odating 🔥',
+      text: 'Har kuni kamida bitta darsni yakunla. Shunda streak uzilmaydi va ketma-ket o‘qigan kunlaring hisoblanadi.',
       button: 'Mentor yordamini ko‘rish',
       prepare: () => prepareWidget('streak')
     },
     {
       target: 'article[data-widget="mentor"] button',
-      title: 'Mentor yordami 24/7',
-      text: 'Darsda tushunmagan joying bo‘lsa, shu vidjetdan to‘g‘ridan-to‘g‘ri yordam so‘raysan.',
-      instruction: 'Yoritilgan “Savolim bor” tugmasini bosing',
+      title: 'Savoling bo‘lsa, yolg‘iz qolmaysan',
+      text: 'Mentorlar 24/7 yordam beradi. Darsdagi tushunarsiz joyni shu tugma orqali yubor.',
+      instruction: '“Savolim bor” tugmasini bos',
       requireClick: true,
       prepare: () => prepareWidget('mentor')
     },
     {
       target: '.sheeth__panel',
-      title: 'Kerakli mentorni tanlaysan',
-      text: 'Fan bo‘yicha mentorni tanlab, savolingni chat orqali davom ettirasan.',
+      title: 'Savolni kerakli mentorga yubor',
+      text: 'Yo‘nalishni tanla va savolingni yoz. Murojaating shu fan bo‘yicha mentorga yetib boradi.',
       button: 'Mening jamoamni ko‘rish',
       onNext: goChat
     },
     {
       target: '.j-team',
-      title: 'Kurator va vebinar mentori',
-      text: 'Kurator o‘qish jarayonida yo‘l ko‘rsatadi, vebinar mentori jonli darslarni olib boradi. Telegram tugmasi bilan bir bosishda yozasan.',
+      title: 'Senga yordam beradigan jamoa',
+      text: 'Kurator o‘quv jarayoningni kuzatadi, vebinar mentori esa jonli darslarni olib boradi. Telegram orqali ularga to‘g‘ridan-to‘g‘ri yozishing mumkin.',
       button: 'CoinShopga o‘tish',
       prepare: goChat,
       onNext: goHome
     },
     {
       target: 'button[data-go="coinshop"]',
-      title: 'Biliming coin’ga aylanadi 🪙',
-      text: 'Dars va vazifalardan coin yig‘asan. Endi CoinShop’ni o‘zing ochib ko‘r.',
-      instruction: 'Yoritilgan CoinShop tugmasini bosing',
+      title: 'Dars qil, coin yig‘ 🪙',
+      text: 'Har bir yakunlangan dars va vazifa uchun coin olasan. Yig‘ilgan coinlarni CoinShop’da ishlatishing mumkin.',
+      instruction: 'CoinShop tugmasini bos',
       requireClick: true,
       prepare: goHome
     },
     {
       target: '.scr[data-screen="coinshop"] .cs-banner',
       fallback: '.scr[data-screen="coinshop"] .cs-bal',
-      title: 'Coin’larni sovg‘aga almashtirasan',
-      text: 'Balansing yuqorida, olish mumkin bo‘lgan sovg‘alar esa pastda ko‘rinadi.',
+      title: 'Coinlarni sovg‘aga almashtir',
+      text: 'Joriy balansing yuqorida ko‘rinadi. Yetarli coin yig‘sang, shu yerdan o‘zing xohlagan sovg‘ani tanlaysan.',
       button: 'Sertifikatlarni ko‘rish',
       onNext: goHome
     },
     {
       target: 'button[data-go="certificates"]',
-      title: 'Sertifikat va deadline’lar',
-      text: 'Talablar, progress va qolgan vaqtni ko‘rish uchun sertifikat bo‘limini och.',
-      instruction: 'Yoritilgan Sertifikatlar tugmasini bosing',
+      title: 'Sertifikatgacha yo‘lingni kuzat',
+      text: 'Bu bo‘limda sertifikat talablari, bajargan darslaring va qolgan muddatni ko‘rasan.',
+      instruction: 'Sertifikatlar tugmasini bos',
       requireClick: true,
       prepare: goHome
     },
     {
       target: '.sheeth__panel',
-      title: 'Taymer muddatni eslatadi ⏱️',
-      text: 'Sertifikatni olish uchun nechta dars qolganini va deadline’gacha bo‘lgan vaqtni shu yerda ko‘rasan.',
+      title: 'Muddatni o‘tkazib yuborma ⏱️',
+      text: 'Taymer deadline’gacha qancha vaqt qolganini ko‘rsatadi. Sertifikat olish uchun qolgan darslarni vaqtida tugat.',
       button: 'Birinchi darsga o‘tish',
       onNext: goHome
     },
     {
       target: '.mk__row--now .mk__card',
-      title: 'Birinchi darsing tayyor!',
-      text: 'Onboardingning oxirgi qadami — birinchi darsni tugatish. Mukofoting ham tayyor.',
-      instruction: 'Yoritilgan birinchi kurs kartasini bosing',
+      title: 'Birinchi darsni boshlash vaqti',
+      text: 'Endi birinchi darsingni och. Uni tugatsang, dastlabki streak va 20 coin olasan.',
+      instruction: 'Birinchi kurs kartasini bos',
       requireClick: true,
       action: 'lesson',
       prepare: goHome
@@ -287,10 +287,16 @@
     const track = target.closest('#track');
     if (track) {
       const cardTarget = target.closest('article') || target;
-      track.scrollTo({ left: cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2, behavior: 'smooth' });
+      track.scrollTo({ left: cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2, behavior: 'auto' });
     }
-    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-    await delay(330);
+    if (content.contains(target)) {
+      const contentRect = content.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const targetTop = content.scrollTop + targetRect.top - contentRect.top;
+      const centeredTop = targetTop - Math.max(10, (content.clientHeight - targetRect.height) / 2);
+      content.scrollTo({ top: Math.max(0, centeredTop), behavior: 'auto' });
+    }
+    await delay(30);
   }
 
   function setShadeLayout(x, y, width, height, screenWidth, screenHeight) {
@@ -311,19 +317,19 @@
       const y = Math.max(5, tr.top - sr.top - pad);
       const width = Math.min(sr.width - x - 5, tr.width + pad * 2);
       const height = Math.min(sr.height - y - 5, tr.height + pad * 2);
+      const targetRadius = parseFloat(getComputedStyle(activeTarget).borderTopLeftRadius) || 12;
 
       setShadeLayout(x, y, width, height, sr.width, sr.height);
-      Object.assign(focus.style, { left: `${x}px`, top: `${y}px`, width: `${width}px`, height: `${height}px` });
+      Object.assign(focus.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+        borderRadius: `${targetRadius + pad}px`
+      });
 
-      const cardHeight = card.offsetHeight;
-      const gap = 12;
-      const below = sr.height - (y + height);
-      const above = y;
-      let cardTop;
-      if (below >= cardHeight + gap + 10) cardTop = y + height + gap;
-      else if (above >= cardHeight + gap + 10) cardTop = y - cardHeight - gap;
-      else cardTop = Math.max(12, sr.height - cardHeight - 78);
-      card.style.top = `${Math.min(sr.height - cardHeight - 10, Math.max(10, cardTop))}px`;
+      card.style.top = 'auto';
+      card.style.bottom = '12px';
       card.style.left = '14px';
     });
   }
@@ -370,7 +376,6 @@
     card.classList.toggle('is-action-required', !!step.requireClick);
     updateAssets();
     positionTour();
-    setTimeout(positionTour, 80);
 
     if (step.requireClick) target.focus({ preventScroll: true });
     else next.focus({ preventScroll: true });
@@ -416,7 +421,7 @@
       coin.closest('.tb-pill')?.classList.add('j-tour__coin-pop');
     }
     const ring = document.querySelector('.plan__ringtxt b');
-    if (ring) ring.innerHTML = '1<i>/4</i>';
+    if (ring) ring.innerHTML = '1<i>/2</i>';
   }
 
   function fireConfetti() {
@@ -459,7 +464,12 @@
   finish.addEventListener('click', () => {
     closeTour(true);
     const firstCourse = document.querySelector('.mk__row--now .mk__card');
-    firstCourse?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (firstCourse) {
+      const contentRect = content.getBoundingClientRect();
+      const courseRect = firstCourse.getBoundingClientRect();
+      const courseTop = content.scrollTop + courseRect.top - contentRect.top;
+      content.scrollTo({ top: Math.max(0, courseTop - (content.clientHeight - courseRect.height) / 2), behavior: 'auto' });
+    }
     firstCourse?.focus({ preventScroll: true });
   });
 
@@ -504,5 +514,5 @@
 
   window.JuniorOnboarding = { open: startTour, close: closeTour, storageKey };
   updateAssets();
-  if (!safeGet()) setTimeout(startTour, 850);
+  if (!safeGet()) startTour();
 })();

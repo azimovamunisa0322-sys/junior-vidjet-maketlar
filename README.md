@@ -35,8 +35,8 @@ Junior IT Academy иловасининг бош экрани учун видже
 
 `Salom!` баннери билан `O'yinlar` орасида **«Bugungi reja»** бўлими бор —
 веб бош саҳифасидан (`junior-academy.vercel.app`, «2. Bugungi reja») кўчирилган:
-`0/4 dars` ҳалқаси, «Bugun sizni uzoq kutdim!», `+300 coin` (қулфланган),
-бугунги 3 та дарс, йиғиладиган «Barcha kurslarim» (11 та курс) ва
+`0/2 dars` ҳалқаси, «Bugun sizni uzoq kutdim!», `+300 coin` (қулфланган),
+бугунги 2 та дарс, йиғиладиган «Barcha kurslarim» (11 та курс) ва
 «Nega aynan shuncha dars?» изоҳи.
 
 Макетнинг ўз дизайн тизимида чизилган — SFpro, `--c-brand`, `--r-card`,
