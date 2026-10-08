@@ -9,9 +9,14 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v8-progressive-smooth-motion';
+  const VERSION = 'v9-progressive-three-day';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
-  const storageKey = `junior:onboarding:${userId}:${VERSION}`;
+  const params = new URLSearchParams(window.location.search);
+  const qaDays = params.get('qa') === 'days' || params.has('day');
+  const forcePushPrompt = params.get('push') === '1';
+  let selectedDay = Math.max(1, Math.min(3, Number(params.get('day')) || 1));
+  let storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
+  const pushStorageKey = `junior:push-permission:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => resolve()));
 
@@ -26,6 +31,20 @@
     <div class="j-tour__shade j-tour__shade--bottom"></div>
     <div class="j-tour__focus" aria-hidden="true"><i></i></div>
     <div class="j-tour__streak-fire" hidden aria-hidden="true">🔥</div>
+    <aside class="j-push-preview" hidden role="status">
+      <span class="j-push-preview__icon">🔔</span>
+      <span><b></b><small></small></span>
+    </aside>
+    <section class="j-push-permission" hidden role="dialog" aria-modal="true" aria-label="Push xabarlarga ruxsat">
+      <div class="j-push-permission__card">
+        <span class="j-push-permission__bell">🔔</span>
+        <small>JUNIOR XABARLARI</small>
+        <h2>Muhim xabarlarni o‘tkazib yubormang</h2>
+        <p>Dars, mentor javobi va jonli dars vaqti haqida push xabar yuborishimizga ruxsat berasizmi?</p>
+        <button type="button" data-push-allow>Ruxsat berish</button>
+        <button type="button" data-push-later>Hozir emas</button>
+      </div>
+    </section>
     <aside class="j-tour__card" role="dialog" aria-live="polite">
       <div class="j-tour__meta"><span class="j-tour__count"></span><span class="j-tour__label">Junior sayohati</span></div>
       <div class="j-tour__bar" aria-hidden="true"><i></i></div>
@@ -166,6 +185,18 @@
     <div class="j-tour__toast" role="status"></div>`;
   screen.appendChild(root);
 
+  const dayPicker = document.createElement('nav');
+  dayPicker.className = 'j-day-picker';
+  dayPicker.hidden = !qaDays;
+  dayPicker.setAttribute('aria-label', 'Onboarding test kuni');
+  dayPicker.innerHTML = `
+    <span>TEST</span>
+    <button type="button" data-tour-day="1">1-kun</button>
+    <button type="button" data-tour-day="2">2-kun</button>
+    <button type="button" data-tour-day="3">3-kun</button>
+    <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
+  screen.appendChild(dayPicker);
+
   const shades = {
     top: root.querySelector('.j-tour__shade--top'),
     left: root.querySelector('.j-tour__shade--left'),
@@ -174,8 +205,13 @@
   };
   const focus = root.querySelector('.j-tour__focus');
   const streakFire = root.querySelector('.j-tour__streak-fire');
+  const pushPreview = root.querySelector('.j-push-preview');
+  const pushPreviewTitle = pushPreview.querySelector('b');
+  const pushPreviewText = pushPreview.querySelector('small');
+  const pushPermission = root.querySelector('.j-push-permission');
   const card = root.querySelector('.j-tour__card');
   const count = root.querySelector('.j-tour__count');
+  const tourLabel = root.querySelector('.j-tour__label');
   const bar = root.querySelector('.j-tour__bar i');
   const title = root.querySelector('.j-tour__title');
   const text = root.querySelector('.j-tour__text');
@@ -213,6 +249,7 @@
   let audioContext = null;
   let actionPending = false;
   let cardAnimationTimer = 0;
+  let pushPreviewTimer = 0;
 
   function ensureAudio() {
     if (!audioContext) {
@@ -247,6 +284,14 @@
     if (name === 'bubble') {
       soundNote(360, 0, .085, 'sine', .014, 520);
       soundNote(610, .045, .08, 'triangle', .012, 760);
+    }
+    if (name === 'transition') {
+      soundNote(310, 0, .12, 'sine', .012, 390);
+      soundNote(470, .08, .14, 'triangle', .01, 560);
+    }
+    if (name === 'push') {
+      soundNote(740, 0, .1, 'sine', .02);
+      soundNote(988, .09, .16, 'sine', .018);
     }
     if (name === 'video') {
       soundNote(330, 0, .08, 'triangle', .02, 470);
@@ -303,6 +348,14 @@
 
   function safeSet() {
     try { localStorage.setItem(storageKey, 'completed'); } catch (_) {}
+  }
+
+  function getPushPreference() {
+    try { return localStorage.getItem(pushStorageKey); } catch (_) { return null; }
+  }
+
+  function setPushPreference(value) {
+    try { localStorage.setItem(pushStorageKey, value); } catch (_) {}
   }
 
   function updateAssets() {
@@ -542,109 +595,210 @@
     }
   ];
 
-  const steps = [
-    {
-      target: '.plan__hero',
-      title: 'Xush kelibsiz! 👋',
-      text: 'Men Junior yordamchisiman. Kerakli imkoniyatlarni aynan vaqti kelganda ko‘rsatib boraman.',
-      button: 'Bugungi rejani ko‘rish',
-      prepare: goHome
-    },
-    {
-      target: '.plan__hero',
-      title: 'Bugun birinchi natijangizni olasiz',
-      text: 'Avval video darsni ko‘rasiz, qisqa test yechasiz va birinchi coiningizni olasiz.',
-      button: 'Birinchi darsni topish',
-      prepare: goHome
-    },
-    {
-      target: '.mk__row--now .mk__card',
-      title: 'Birinchi darsingiz tayyor',
-      text: 'Faol kursni oching. Dars jarayonini platformaning o‘zida bajarasiz.',
-      actionButton: 'Darsni boshlash',
-      requireClick: true,
-      action: 'lesson',
-      prepare: goHome
-    },
-    {
-      target: 'article[data-widget="mentor"] button',
-      title: 'Xatoni mentor bilan tuzating',
-      text: 'Amaliy vazifada xato chiqdi. Savolingizni bir marta yuboring — mentor to‘g‘ri yo‘nalish beradi.',
-      actionButton: 'Savolim bor',
-      requireClick: true,
-      prepare: () => prepareWidget('mentor')
-    },
-    {
-      target: '.scr[data-screen="ai"] .ai-bar',
-      fallback: '.scr[data-screen="ai"] .ai-feed[data-aiview="chat"]',
-      title: 'Mentor yo‘nalish berdi',
-      text: 'Bitta savolga aniq yo‘nalish oldingiz. Endi xatoni tuzatib, vazifani topshiring.',
-      button: 'Tavsiyani qo‘llash',
-      flow: 'streak',
-      cardPosition: 'top',
-      compact: true,
-      lowerCard: true,
-      prepare: goChat
-    },
-    {
-      target: 'button[data-go="coinshop"]',
-      title: 'Coinlarni ishlatishni o‘rganamiz 🪙',
-      text: 'Dars va amaliy vazifadan olgan coinlaringizni CoinShopdagi sovg‘alarga almashtirishingiz mumkin.',
-      actionButton: 'CoinShopni ochish',
-      requireClick: true,
-      prepare: goHome
-    },
-    {
-      target: '.scr[data-screen="coinshop"] .cs-banner',
-      fallback: '.scr[data-screen="coinshop"] .cs-bal',
-      title: 'CoinShop doim shu yerda',
-      text: 'Balansingiz yuqorida ko‘rinadi. Coin yetarli bo‘lsa, kerakli sovg‘ani tanlaysiz.',
-      actionButton: 'Yo‘riqnomani ochish',
-      requireClick: true,
-      prepare: prepareCoinShop
-    },
-    {
-      target: 'article[data-widget="webinar"]',
-      title: 'Bugun jonli darsga qatnashasizmi?',
-      text: 'Vebinar vidjetida jonli dars vaqti, mavzusi va unga qancha vaqt qolgani ko‘rinadi.',
-      button: 'Ustozlarimni bilish',
-      compact: true,
-      prepare: () => prepareWidget('webinar')
-    },
-    {
-      target: '.j-team',
-      title: 'Sizga biriktirilgan ustozlar',
-      text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
-      button: 'Keyingi bosqichga o‘tish',
-      prepare: goChat
-    },
-    {
-      target: 'button[data-go="certificates"]',
-      title: 'Modul yakunlangach',
-      text: 'Birinchi modulning oxirgi darsini tugatsangiz, sertifikatlar bo‘limi ochiladi.',
-      actionButton: 'Sertifikatlar bo‘limini ko‘rish',
-      requireClick: true,
-      prepare: goHome
-    },
-    {
-      target: '.scr[data-screen="certificates"] .ct-c[data-ctstate="done"]',
-      fallback: '.scr[data-screen="certificates"] .ct-c',
-      title: 'Sertifikatingiz shu yerda saqlanadi',
-      text: 'Modulni yakunlaganingizdan keyin sertifikat shu bo‘limda ko‘rinadi. Uni istalgan payt ochib ko‘rishingiz mumkin.',
-      button: 'Kun natijasini ko‘rish',
-      compact: true,
-      prepare: prepareCertificates,
-      onNext: () => goScreen('leaders')
-    },
-    {
-      target: '.scr[data-screen="leaders"] .lb',
-      fallback: '.scr[data-screen="leaders"] .scr__body',
-      title: 'Kun oxirida natijangizni solishtiring 🏆',
-      text: 'Liderbordda o‘rningiz va to‘plagan ballaringiz ko‘rinadi. Har bir yakunlangan dars sizni yuqoriga olib chiqadi.',
-      button: 'Tanishuvni yakunlash',
-      prepare: () => goScreen('leaders')
+  const daySteps = {
+    1: [
+      {
+        id: 'welcome',
+        target: '.plan__hero',
+        title: 'Xush kelibsiz! Bugungi vazifa tayyor 👋',
+        text: 'Bugun bitta dars qilasiz: video ko‘rasiz, qisqa test yechasiz va amaliy vazifani bajarasiz.',
+        button: 'Birinchi darsni topish',
+        prepare: goHome
+      },
+      {
+        id: 'lesson-entry',
+        target: '.mk__row--now .mk__card',
+        title: 'Birinchi darsingiz tayyor',
+        text: 'Faol kursni oching. Birinchi natijangizni dars jarayonining o‘zida olasiz.',
+        actionButton: 'Darsni boshlash',
+        requireClick: true,
+        action: 'lesson',
+        prepare: goHome
+      },
+      {
+        id: 'mentor-error',
+        target: 'article[data-widget="mentor"] button',
+        title: 'Xatoni mentor bilan tuzating',
+        text: 'Amaliy vazifada xato chiqdi. Savolingizni bir marta yuboring — mentor to‘g‘ri yo‘nalish beradi.',
+        actionButton: 'Savolim bor',
+        requireClick: true,
+        prepare: () => prepareWidget('mentor')
+      },
+      {
+        id: 'mentor-reply',
+        target: '.scr[data-screen="ai"] .ai-bar',
+        fallback: '.scr[data-screen="ai"] .ai-feed[data-aiview="chat"]',
+        title: 'Mentor yo‘nalish berdi',
+        text: 'Tavsiyani qo‘llab, vazifani tugatdingiz. Endi birinchi streakingizni his qilasiz.',
+        button: 'Natijani ko‘rish',
+        flow: 'streak',
+        cardPosition: 'top',
+        compact: true,
+        lowerCard: true,
+        prepare: goChat
+      }
+    ],
+    2: [
+      {
+        id: 'coinshop-entry',
+        target: 'button[data-go="coinshop"]',
+        title: 'Kecha olgan coinlaringizni ishlating 🪙',
+        text: 'Dars va vazifalardan yig‘ilgan coinlarni CoinShopdagi sovg‘alarga almashtirish mumkin.',
+        actionButton: 'CoinShopni ochish',
+        requireClick: true,
+        prepare: goHome
+      },
+      {
+        id: 'coinshop-info',
+        target: '.scr[data-screen="coinshop"] .cs-banner',
+        fallback: '.scr[data-screen="coinshop"] .cs-bal',
+        title: 'CoinShop doim shu yerda',
+        text: 'Balansingiz yuqorida ko‘rinadi. Coin yetarli bo‘lsa, kerakli sovg‘ani tanlaysiz.',
+        actionButton: 'Yo‘riqnomani ochish',
+        requireClick: true,
+        prepare: prepareCoinShop
+      },
+      {
+        id: 'webinar',
+        target: 'article[data-widget="webinar"]',
+        title: 'Jonli darsni o‘tkazib yubormang',
+        text: 'Vebinar vidjetida dars vaqti, mavzusi va boshlanishigacha qolgan vaqt ko‘rinadi.',
+        button: '2-kunni yakunlash',
+        compact: true,
+        prepare: () => prepareWidget('webinar')
+      }
+    ],
+    3: [
+      {
+        id: 'team',
+        target: '.j-team',
+        title: 'Sizga biriktirilgan ustozlar',
+        text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
+        button: 'Sertifikat yo‘lini ko‘rish',
+        prepare: goChat
+      },
+      {
+        id: 'certificate-entry',
+        target: 'button[data-go="certificates"]',
+        title: 'Modul yakunlangach',
+        text: 'Birinchi modulning oxirgi darsini tugatsangiz, sertifikatlar bo‘limi ochiladi.',
+        actionButton: 'Sertifikatlar bo‘limini ko‘rish',
+        requireClick: true,
+        prepare: goHome
+      },
+      {
+        id: 'certificate-info',
+        target: '.scr[data-screen="certificates"] .ct-c[data-ctstate="done"]',
+        fallback: '.scr[data-screen="certificates"] .ct-c',
+        title: 'Sertifikatingiz shu yerda saqlanadi',
+        text: 'Modulni yakunlaganingizdan keyin sertifikat shu bo‘limda ko‘rinadi.',
+        button: 'Kun natijasini ko‘rish',
+        compact: true,
+        prepare: prepareCertificates,
+        onNext: () => goScreen('leaders')
+      },
+      {
+        id: 'leaderboard',
+        target: '.scr[data-screen="leaders"] .lb',
+        fallback: '.scr[data-screen="leaders"] .scr__body',
+        title: 'Natijangizni solishtiring 🏆',
+        text: 'Liderbordda o‘rningiz va to‘plagan ballaringiz ko‘rinadi. Har bir dars sizni yuqoriga olib chiqadi.',
+        button: 'Tanishuvni yakunlash',
+        prepare: () => goScreen('leaders')
+      }
+    ]
+  };
+
+  let steps = daySteps[selectedDay];
+
+  function updateDayPicker() {
+    dayPicker.querySelectorAll('[data-tour-day]').forEach(button => {
+      const active = Number(button.dataset.tourDay) === selectedDay;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  function showDayPush() {
+    const messages = {
+      1: ['Birinchi darsingiz tayyor', 'Bugun video, qisqa test va amaliy vazifa sizni kutmoqda.'],
+      2: ['Bugungi imkoniyatlar', 'CoinShop va jonli dars vaqti bilan tanishish vaqti keldi.'],
+      3: ['Natijalaringiz bir joyda', 'Ustozlar, sertifikat yo‘li va liderbordni ko‘rib chiqing.']
+    };
+    const message = messages[selectedDay];
+    clearTimeout(pushPreviewTimer);
+    pushPreviewTitle.textContent = message[0];
+    pushPreviewText.textContent = message[1];
+    pushPreview.classList.toggle('has-day-picker', qaDays);
+    pushPreview.hidden = false;
+    requestAnimationFrame(() => pushPreview.classList.add('is-visible'));
+    playSound('push');
+    pushPreviewTimer = setTimeout(() => {
+      pushPreview.classList.remove('is-visible');
+      setTimeout(() => { pushPreview.hidden = true; }, 360);
+    }, 4300);
+  }
+
+  function showPushPermission() {
+    runToken += 1;
+    clearTarget();
+    clearStreakFire();
+    closeSheet();
+    root.hidden = false;
+    root.classList.add('is-running');
+    screen.classList.add('j-tour-scroll-locked');
+    pushPreview.hidden = true;
+    pushPermission.hidden = false;
+    card.hidden = true;
+    focus.hidden = true;
+    lesson.hidden = true;
+    success.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    updateDayPicker();
+    pushPermission.querySelector('[data-push-allow]')?.focus({ preventScroll: true });
+  }
+
+  function startSelectedDay() {
+    pushPermission.hidden = true;
+    steps = daySteps[selectedDay];
+    storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
+    updateDayPicker();
+    startTour();
+    setTimeout(showDayPush, 520);
+  }
+
+  async function choosePushPermission(allow) {
+    unlockAudioAndPlay(allow ? 'correct' : 'tap');
+    let result = allow ? 'requested' : 'later';
+    if (allow && 'Notification' in window) {
+      try { result = await Notification.requestPermission(); } catch (_) { result = 'unavailable'; }
     }
-  ];
+    setPushPreference(result);
+    startSelectedDay();
+  }
+
+  function selectDay(day) {
+    selectedDay = Math.max(1, Math.min(3, Number(day) || 1));
+    const url = new URL(window.location.href);
+    url.searchParams.set('qa', 'days');
+    url.searchParams.set('day', String(selectedDay));
+    history.replaceState(null, '', url);
+    playSound('transition');
+    startSelectedDay();
+  }
+
+  function findStepIndex(id) {
+    const index = steps.findIndex(step => step.id === id);
+    return index < 0 ? 0 : index;
+  }
+
+  async function transitionCurrentStep() {
+    if (card.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    card.classList.add('is-leaving');
+    focus.classList.add('is-leaving');
+    playSound('transition');
+    await delay(280);
+  }
 
   async function waitForTarget(step, token) {
     for (let i = 0; i < 30; i += 1) {
@@ -704,7 +858,7 @@
     card.classList.add('is-bubbling');
     next.disabled = false;
     playSound('bubble');
-    cardAnimationTimer = setTimeout(() => card.classList.remove('is-bubbling'), 380);
+    cardAnimationTimer = setTimeout(() => card.classList.remove('is-bubbling'), 500);
   }
 
   function activeTargetRect() {
@@ -836,17 +990,20 @@
     screen.scrollTop = 0;
     lesson.hidden = true;
     success.hidden = true;
+    pushPermission.hidden = true;
     card.hidden = false;
-    card.classList.remove('is-bubbling');
+    card.classList.remove('is-bubbling', 'is-leaving');
     card.classList.add('is-preparing');
     next.disabled = true;
+    focus.classList.remove('is-leaving');
     focus.hidden = true;
     Object.values(shades).forEach(node => {
       node.hidden = false;
-      node.style.background = 'transparent';
+      node.style.background = 'rgba(12, 18, 34, .68)';
     });
 
     count.textContent = `${stepIndex + 1}/${steps.length}`;
+    tourLabel.textContent = `${selectedDay}-kun sayohati`;
     bar.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
     title.textContent = step.title;
     text.textContent = step.text;
@@ -905,6 +1062,7 @@
 
   async function advance() {
     const step = steps[stepIndex];
+    await transitionCurrentStep();
     if (step.flow === 'streak') {
       await startStreakReward();
       return;
@@ -919,6 +1077,7 @@
   }
 
   function startTour() {
+    steps = daySteps[selectedDay];
     stepIndex = 0;
     activateStep(0);
   }
@@ -929,6 +1088,10 @@
     clearTarget();
     clearStreakFire();
     clearTimeout(cardAnimationTimer);
+    clearTimeout(pushPreviewTimer);
+    pushPreview.classList.remove('is-visible');
+    pushPreview.hidden = true;
+    pushPermission.hidden = true;
     root.classList.remove('is-running');
     screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
@@ -1177,7 +1340,7 @@
       return;
     }
     lesson.hidden = true;
-    activateStep(2);
+    activateStep(findStepIndex('lesson-entry'));
   });
   lesson.querySelectorAll('[data-lesson-answer]').forEach(button => {
     button.addEventListener('click', () => {
@@ -1210,7 +1373,7 @@
     if (lessonStageIndex === 3) {
       playSound('bubble');
       lesson.hidden = true;
-      activateStep(3);
+      activateStep(findStepIndex('mentor-error'));
     }
   });
   rewardIgnite?.addEventListener('click', igniteRewardStreak);
@@ -1223,9 +1386,9 @@
   });
   rewardNext?.addEventListener('click', () => {
     if (rewardMode === 'streak') {
-      playSound('bubble');
+      playSound('finish');
       success.hidden = true;
-      activateStep(5);
+      closeTour(true);
       return;
     }
     showRewardStage('coin');
@@ -1274,9 +1437,19 @@
       return;
     }
     actionPending = true;
-    if (step.action === 'lesson') requestAnimationFrame(openLesson);
-    else requestAnimationFrame(() => activateStep(stepIndex + 1));
+    (async () => {
+      await transitionCurrentStep();
+      if (step.action === 'lesson') requestAnimationFrame(openLesson);
+      else requestAnimationFrame(() => activateStep(stepIndex + 1));
+    })();
   }, true);
+
+  pushPermission.querySelector('[data-push-allow]')?.addEventListener('click', () => choosePushPermission(true));
+  pushPermission.querySelector('[data-push-later]')?.addEventListener('click', () => choosePushPermission(false));
+  dayPicker.querySelectorAll('[data-tour-day]').forEach(button => {
+    button.addEventListener('click', () => selectDay(button.dataset.tourDay));
+  });
+  dayPicker.querySelector('[data-tour-push]')?.addEventListener('click', showPushPermission);
 
   const targetObserver = new MutationObserver(() => injectTeamCard());
   targetObserver.observe(document.querySelector('#screens') || content, { childList: true, subtree: true });
@@ -1306,8 +1479,19 @@
     controlRow.appendChild(replay);
   }
 
-  window.JuniorOnboarding = { open: startTour, close: closeTour, storageKey };
+  window.JuniorOnboarding = {
+    open: startTour,
+    close: closeTour,
+    selectDay,
+    showPushPermission,
+    get day() { return selectedDay; },
+    get storageKey() { return storageKey; }
+  };
   updateAssets();
-  const forcePreview = new URLSearchParams(window.location.search).get('onboarding') === '1';
-  if (forcePreview || !safeGet()) startTour();
+  updateDayPicker();
+  const forcePreview = params.get('onboarding') === '1';
+  if (forcePreview || !safeGet()) {
+    if (forcePushPrompt || !getPushPreference()) showPushPermission();
+    else startSelectedDay();
+  }
 })();

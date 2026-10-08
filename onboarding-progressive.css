@@ -1,5 +1,122 @@
 /* Faqat bosqichma-bosqich onboarding uchun tuzatishlar. */
 
+/* QA: kunlarni bir havolaning o‘zida erkin tekshirish. */
+.j-day-picker {
+  position: absolute;
+  z-index: 12050;
+  top: max(40px, calc(env(safe-area-inset-top, 0px) + 6px));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.88);
+  border-radius: 999px;
+  background: rgba(23,33,61,.9);
+  box-shadow: 0 8px 24px rgba(12,18,34,.2);
+  backdrop-filter: blur(10px);
+  transform: translateX(-50%) translateZ(0);
+}
+
+.j-day-picker[hidden] { display: none !important; }
+.j-day-picker > span { padding: 0 4px 0 6px; color: #cbd1df; font: 900 7px/1 var(--f, "Nunito", sans-serif); letter-spacing: .08em; }
+.j-day-picker button {
+  min-width: 42px;
+  height: 27px;
+  padding: 0 7px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: transparent;
+  font: 900 9px/1 var(--f, "Nunito", sans-serif);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.j-day-picker button.is-active { color: #fff; background: #ff5430; box-shadow: 0 5px 12px rgba(255,79,40,.32); }
+.j-day-picker [data-tour-push] { min-width: 29px; padding: 0; }
+
+/* Ilovaga kirishdan oldingi push ruxsat oynasi. */
+.j-push-permission {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(12,18,34,.7);
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+  animation: j-progressive-permission-in .46s cubic-bezier(.2,.78,.25,1) both;
+}
+
+.j-push-permission__card {
+  width: 100%;
+  max-width: 330px;
+  padding: 25px 20px 16px;
+  border: 1px solid #ffe0d7;
+  border-radius: 25px;
+  text-align: center;
+  color: #17213d;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(8,15,32,.34);
+}
+
+.j-push-permission__bell {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 15px;
+  border-radius: 24px;
+  background: #fff0ea;
+  font-size: 35px;
+  animation: j-progressive-bell 1.8s ease-in-out infinite;
+}
+
+.j-push-permission__card small { color: #e64b28; font-size: 8px; font-weight: 900; letter-spacing: .1em; }
+.j-push-permission__card h2 { margin: 9px 0 8px; font-size: 22px; line-height: 1.14; }
+.j-push-permission__card p { margin: 0 auto 19px; color: #707a8f; font-size: 12px; line-height: 1.42; font-weight: 700; }
+.j-push-permission__card button {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 15px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6847, #f5421a);
+  font: 900 13px/1 var(--f, "Nunito", sans-serif);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.j-push-permission__card [data-push-later] { margin-top: 7px; color: #7b8496; background: #f2f4f8; }
+
+.j-push-preview {
+  position: absolute;
+  z-index: 19;
+  top: max(13px, env(safe-area-inset-top, 0px));
+  left: 14px;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 10px;
+  width: calc(100% - 28px);
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: 18px;
+  color: #17213d;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 15px 36px rgba(10,18,38,.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0,-14px,0) scale(.985);
+  transition: opacity .38s ease, transform .38s cubic-bezier(.2,.78,.25,1);
+}
+.j-push-preview.has-day-picker { top: max(76px, calc(env(safe-area-inset-top, 0px) + 42px)); }
+.j-push-preview.is-visible { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+.j-push-preview__icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: #fff0ea; font-size: 21px; }
+.j-push-preview b, .j-push-preview small { display: block; }
+.j-push-preview b { font-size: 12px; line-height: 1.2; }
+.j-push-preview small { margin-top: 3px; color: #737d91; font-size: 9px; line-height: 1.3; font-weight: 700; }
+
 /* Qadam almashishi: elementlar sakramaydi, karta esa sokin kirib keladi. */
 .j-tour__shade {
   transition: none;
@@ -8,7 +125,8 @@
 .j-tour__focus {
   will-change: opacity, transform;
   transition: none;
-  animation: j-progressive-focus-in .3s cubic-bezier(.2,.78,.25,1) both;
+  box-shadow: 0 14px 32px rgba(10,17,34,.2);
+  animation: j-progressive-focus-in .38s cubic-bezier(.2,.78,.25,1) both;
   transform: translateZ(0);
 }
 
@@ -26,7 +144,16 @@
 }
 
 .j-tour__card.is-bubbling {
-  animation: j-progressive-card-in .34s cubic-bezier(.2,.78,.25,1) both;
+  animation: j-progressive-card-in .46s cubic-bezier(.2,.78,.25,1) both;
+}
+
+.j-tour__card.is-leaving {
+  pointer-events: none;
+  animation: j-progressive-card-out .28s ease-in both;
+}
+
+.j-tour__focus.is-leaving {
+  animation: j-progressive-focus-out .28s ease-in both;
 }
 
 .j-tour__card.is-bubbling .j-tour__meta,
@@ -39,21 +166,29 @@
 }
 
 @keyframes j-progressive-card-in {
-  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(.992); }
+  from { opacity: 0; transform: translate3d(0, 13px, 0) scale(.988); }
   to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes j-progressive-focus-in {
-  from { opacity: 0; transform: translateZ(0) scale(.985); }
-  to { opacity: 1; transform: translateZ(0) scale(1); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
+
+@keyframes j-progressive-card-out { from { opacity: 1; transform: translate3d(0,0,0); } to { opacity: 0; transform: translate3d(0,-7px,0) scale(.992); } }
+@keyframes j-progressive-focus-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes j-progressive-permission-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes j-progressive-bell { 0%, 100% { transform: rotate(0); } 12% { transform: rotate(-10deg); } 24% { transform: rotate(9deg); } 36% { transform: rotate(-5deg); } 48% { transform: rotate(0); } }
 
 .j-tour__card.is-top.is-lowered {
   top: max(54px, calc(env(safe-area-inset-top, 0px) + 38px)) !important;
 }
 
-.j-tour__bar i { transition-duration: .28s; }
+.j-tour__bar i { transition-duration: .38s; }
 .j-tour__next:disabled { cursor: wait; opacity: .78; }
+.j-tour__lesson { animation-duration: .44s; }
+.j-tour__success { animation-duration: .48s; }
+.j-reward__panel.is-entering { animation-duration: .48s; }
 
 /* Liderbord oxiri pastki menyuga yopishib qolmasin. */
 [data-screen="leaders"] .lb {
@@ -228,7 +363,7 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-course__path {
   min-height: 100%;
-  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
+  animation: j-lesson-stage-in .42s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-course__tabs {
@@ -418,7 +553,7 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-platform__task {
   padding-bottom: 10px;
-  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
+  animation: j-lesson-stage-in .42s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-platform__task-hero {
@@ -595,7 +730,7 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-platform__video,
 .j-platform__quiz {
   min-height: 100%;
-  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
+  animation: j-lesson-stage-in .42s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-platform__video h1 {
@@ -836,6 +971,11 @@ article[data-widget="webinar"] .wtimer__b span {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .j-tour__card,
+  .j-tour__focus,
+  .j-push-permission,
+  .j-push-permission__bell,
+  .j-push-preview,
   .j-lesson__praise-mascot::before,
   .j-lesson__praise-mascot img,
   .j-reward__panel--coin:not(.is-opened) .j-reward__chest,
