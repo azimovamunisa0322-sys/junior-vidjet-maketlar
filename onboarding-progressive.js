@@ -9,12 +9,13 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v9-progressive-three-day';
+  const VERSION = 'v10-progressive-four-day';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  let selectedDay = Math.max(1, Math.min(3, Number(params.get('day')) || 1));
+  let selectedDay = Math.max(1, Math.min(4, Number(params.get('day')) || 1));
+  const hasPurchasedCourse = window.JUNIOR_HAS_COURSE === true || params.get('paid') === '1';
   let storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
   const pushStorageKey = `junior:push-permission:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -51,10 +52,17 @@
       <h2 class="j-tour__title"></h2>
       <p class="j-tour__text"></p>
       <p class="j-tour__instruction" hidden><span>☝️</span><b></b></p>
+      <div class="j-tour__choices" hidden aria-label="Streak maqsadini tanlash">
+        <button type="button" data-streak-goal="5">5 kun</button>
+        <button type="button" data-streak-goal="6">6 kun</button>
+        <button type="button" data-streak-goal="7">7 kun</button>
+        <button type="button" data-streak-goal="12">12 kun</button>
+      </div>
       <div class="j-tour__actions">
         <img class="j-tour__mascot" data-a="a2" alt="Junior maskoti">
         <button class="j-tour__next" type="button"></button>
       </div>
+      <button class="j-tour__later" type="button" hidden>Keyinroq</button>
     </aside>
     <section class="j-tour__lesson" hidden aria-label="Bootstrap kursi">
       <header class="j-course__top">
@@ -137,6 +145,52 @@
       </div>
       <footer class="j-lesson__foot"><span data-lesson-hint>Videoni ko‘ring</span><button type="button" class="j-lesson__finish" disabled>Davom etish</button></footer>
     </section>
+    <section class="j-tour__auth" hidden aria-label="Parolni tiklash">
+      <header class="j-auth__brand"><b>J</b><span>Junior<small>academy</small></span></header>
+      <section class="j-auth__panel" data-auth-stage="login">
+        <small>4-KUN · XAVFSIZ KIRISH</small>
+        <h2>Akkauntdan chiqib qoldingizmi?</h2>
+        <p>Telefon raqamingiz orqali parolni tezda tiklab olasiz.</p>
+        <label>Telefon raqam<input type="tel" value="+998 90 123 45 67" readonly></label>
+        <label>Parol<input type="password" value="junior-demo" readonly></label>
+        <button type="button" data-auth-forgot>Parolni unutdingizmi?</button>
+      </section>
+      <section class="j-auth__panel" data-auth-stage="phone" hidden>
+        <small>1/3 QADAM</small>
+        <h2>Raqamingizni tasdiqlang</h2>
+        <p>4 xonali tasdiqlash kodini shu raqamga yuboramiz.</p>
+        <label>Telefon raqam<input type="tel" value="+998 90 123 45 67" data-auth-phone></label>
+        <button type="button" data-auth-send>Kodni yuborish</button>
+      </section>
+      <section class="j-auth__panel" data-auth-stage="code" hidden>
+        <small>2/3 QADAM</small>
+        <h2>Tasdiqlash kodini kiriting</h2>
+        <p>+998 90 ••• •• 67 raqamiga yuborilgan 4 xonali kodni yozing.</p>
+        <div class="j-auth__code" aria-label="4 xonali tasdiqlash kodi">
+          <input inputmode="numeric" maxlength="1" aria-label="Kodning 1-raqami">
+          <input inputmode="numeric" maxlength="1" aria-label="Kodning 2-raqami">
+          <input inputmode="numeric" maxlength="1" aria-label="Kodning 3-raqami">
+          <input inputmode="numeric" maxlength="1" aria-label="Kodning 4-raqami">
+        </div>
+        <span class="j-auth__demo">Demo kod: <b>2486</b></span>
+        <button type="button" data-auth-verify disabled>Kodni tasdiqlash</button>
+      </section>
+      <section class="j-auth__panel" data-auth-stage="password" hidden>
+        <small>3/3 QADAM</small>
+        <h2>Yangi parol yarating</h2>
+        <p>Esda qoladigan, kamida 6 belgili yangi parol kiriting.</p>
+        <label>Yangi parol<input type="password" placeholder="Kamida 6 ta belgi" data-auth-password></label>
+        <label>Parolni takrorlang<input type="password" placeholder="Parolni qayta kiriting" data-auth-confirm></label>
+        <button type="button" data-auth-save disabled>Parolni saqlash</button>
+      </section>
+      <section class="j-auth__panel j-auth__panel--success" data-auth-stage="success" hidden>
+        <span class="j-auth__check">✓</span>
+        <small>PAROL TIKLANDI</small>
+        <h2>Akkauntingiz yana siz bilan!</h2>
+        <p>Yangi parol bilan Junior platformasiga qayta kirishingiz mumkin.</p>
+        <button type="button" data-auth-finish>Akkauntga kirish</button>
+      </section>
+    </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
         <span class="j-reward__kicker">Birinchi streak</span>
@@ -177,7 +231,7 @@
             <span class="j-reward__chest-lock">J</span>
             <span class="j-reward__coin">+20</span>
           </button>
-          <div class="j-reward__coin-result" aria-live="polite"><b>+20 coin</b><span>Balansingizga qo‘shildi</span></div>
+          <div class="j-reward__coin-result" aria-live="polite"><b>+50 Coin</b><span>+100 Point ham qo‘shildi</span></div>
         </div>
         <button type="button" class="j-tour__finish" hidden>Keyingi darsga o‘tish</button>
       </section>
@@ -194,6 +248,7 @@
     <button type="button" data-tour-day="1">1-kun</button>
     <button type="button" data-tour-day="2">2-kun</button>
     <button type="button" data-tour-day="3">3-kun</button>
+    <button type="button" data-tour-day="4">4-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   screen.appendChild(dayPicker);
 
@@ -217,7 +272,9 @@
   const text = root.querySelector('.j-tour__text');
   const instruction = root.querySelector('.j-tour__instruction');
   const instructionText = instruction.querySelector('b');
+  const choices = root.querySelector('.j-tour__choices');
   const next = root.querySelector('.j-tour__next');
+  const later = root.querySelector('.j-tour__later');
   const lesson = root.querySelector('.j-tour__lesson');
   const lessonBack = root.querySelector('[data-lesson-back]');
   const lessonFinish = root.querySelector('.j-lesson__finish');
@@ -225,6 +282,8 @@
   const lessonStep = root.querySelector('[data-lesson-step]');
   const lessonHint = root.querySelector('[data-lesson-hint]');
   const lessonStages = [...root.querySelectorAll('[data-lesson-stage]')];
+  const auth = root.querySelector('.j-tour__auth');
+  const authStages = [...root.querySelectorAll('[data-auth-stage]')];
   const success = root.querySelector('.j-tour__success');
   const finish = root.querySelector('.j-tour__finish');
   const rewardPanels = [...root.querySelectorAll('[data-reward-panel]')];
@@ -245,7 +304,7 @@
   let videoCompleted = false;
   let rewardLocked = false;
   let rewardSwipeStart = null;
-  let rewardMode = 'first-coin';
+  let rewardMode = 'lesson-result';
   let audioContext = null;
   let actionPending = false;
   let cardAnimationTimer = 0;
@@ -444,6 +503,78 @@
     if (leadersEnd) leadersEnd.textContent = 'Sizdan oldinda yana 6 nafar o‘quvchi bor';
   }
 
+  const streakGoalKey = `junior:streak-goal:${userId}`;
+
+  function getStreakGoal() {
+    try { return Number(localStorage.getItem(streakGoalKey)) || 0; }
+    catch (_) { return 0; }
+  }
+
+  function injectProfileGoal() {
+    const body = document.querySelector('.scr[data-screen="profile"] .scr__body');
+    if (!body) return;
+    let row = body.querySelector('.j-profile-goal');
+    if (!row) {
+      row = document.createElement('div');
+      row.className = 'j-profile-goal';
+      row.innerHTML = '<span>🔥</span><span><b>Streak maqsadi</b><small></small></span>';
+      body.prepend(row);
+    }
+    const goal = getStreakGoal();
+    row.querySelector('small').textContent = goal ? `${goal} kun ketma-ket dars` : 'Hali tanlanmagan';
+  }
+
+  function saveStreakGoal(days) {
+    try { localStorage.setItem(streakGoalKey, String(days)); } catch (_) {}
+    injectProfileGoal();
+  }
+
+  async function prepareLeaderboardNearby() {
+    await goScreen('leaders');
+    const pane = document.querySelector('.scr[data-screen="leaders"] .lb-pane--a');
+    if (!pane) return;
+    pane.querySelector('.j-lb-nearby')?.remove();
+    pane.querySelectorAll('.lb-pod, .lb-list, .lb-end, .lb-mewrap').forEach(node => { node.hidden = true; });
+    const template = pane.querySelector('.lb-r');
+    const me = pane.querySelector('.lb-me');
+    if (!template || !me) return;
+    const nearby = document.createElement('div');
+    nearby.className = 'lb-list j-lb-nearby';
+    const students = [
+      [15, 'SH', 'Shohruh Qodirov', '6418'],
+      [16, 'KS', 'Kamola Sattorova', '6378'],
+      [17, 'IA', 'Ismoilov Abdulaziz', '6290'],
+      [18, 'MY', 'Malika Yusupova', '6215'],
+      [19, 'BN', 'Bekzod Nazarov', '6140']
+    ];
+    students.forEach(([rank, initials, name, points], index) => {
+      const row = (index === 2 ? me : template).cloneNode(true);
+      row.classList.toggle('j-lb-nearby__me', index === 2);
+      const rankNode = row.querySelector('.lb-r__n, .lb-me__n');
+      const avatar = row.querySelector('.lb-av');
+      const nameNode = row.querySelector('.lb-r__t, .lb-me__nm');
+      const pointsNode = row.querySelector('.lb-pts');
+      if (rankNode) rankNode.textContent = index === 2 ? `${rank} o‘rin` : String(rank);
+      if (avatar) avatar.textContent = initials;
+      if (nameNode) nameNode.textContent = name;
+      if (pointsNode) pointsNode.textContent = points;
+      nearby.appendChild(row);
+    });
+    pane.querySelector('.lb-hd')?.after(nearby);
+  }
+
+  async function preparePaymentQr() {
+    await goHome();
+    const paymentGroup = [...document.querySelectorAll('.sheets__g')]
+      .find(group => group.querySelector('code')?.textContent.trim() === 'payment');
+    const qrButton = [...(paymentGroup?.querySelectorAll('button') || [])]
+      .find(button => button.textContent.trim() === 'Бошқа қурилмадан');
+    qrButton?.click();
+    await delay(80);
+    const note = document.querySelector('#sheetHost .sheet[data-widget="payment"][data-sheet="qr"] .s-note');
+    if (note) note.textContent = 'To‘lovni amalga oshiring va Akademiya o‘quvchisiga aylaning.';
+  }
+
   const legacySteps = [
     {
       target: '.plan__hero',
@@ -600,41 +731,36 @@
       {
         id: 'welcome',
         target: '.plan__hero',
-        title: 'Xush kelibsiz! Bugungi vazifa tayyor 👋',
-        text: 'Bugun bitta dars qilasiz: video ko‘rasiz, qisqa test yechasiz va amaliy vazifani bajarasiz.',
-        button: 'Birinchi darsni topish',
+        title: 'Xush kelibsiz! 👋',
+        text: 'Men Junior yordamchisiman. Platformadagi kerakli imkoniyatlarni o‘z vaqtida ko‘rsatib boraman.',
+        button: 'Bugungi rejani ko‘rish',
+        prepare: goHome
+      },
+      {
+        id: 'today-plan',
+        target: '.mk',
+        fallback: '.mk__row--now .mk__card',
+        title: 'Bugungi reja',
+        text: 'Birinchi videodarsni ko‘rasiz, qisqa testni yechasiz va amaliy vazifani bajarasiz.',
+        button: 'Birinchi darsga o‘tish',
         prepare: goHome
       },
       {
         id: 'lesson-entry',
         target: '.mk__row--now .mk__card',
         title: 'Birinchi darsingiz tayyor',
-        text: 'Faol kursni oching. Birinchi natijangizni dars jarayonining o‘zida olasiz.',
+        text: 'Darsni muvaffaqiyatli yakunlab, birinchi Coin va Pointlaringizni olasiz.',
         actionButton: 'Darsni boshlash',
         requireClick: true,
         action: 'lesson',
         prepare: goHome
       },
       {
-        id: 'mentor-error',
-        target: 'article[data-widget="mentor"] button',
-        title: 'Xatoni mentor bilan tuzating',
-        text: 'Amaliy vazifada xato chiqdi. Savolingizni bir marta yuboring — mentor to‘g‘ri yo‘nalish beradi.',
-        actionButton: 'Savolim bor',
-        requireClick: true,
-        prepare: () => prepareWidget('mentor')
-      },
-      {
-        id: 'mentor-reply',
-        target: '.scr[data-screen="ai"] .ai-bar',
-        fallback: '.scr[data-screen="ai"] .ai-feed[data-aiview="chat"]',
-        title: 'Mentor yo‘nalish berdi',
-        text: 'Tavsiyani qo‘llab, vazifani tugatdingiz. Endi birinchi streakingizni his qilasiz.',
-        button: 'Natijani ko‘rish',
-        flow: 'streak',
-        cardPosition: 'top',
-        compact: true,
-        lowerCard: true,
+        id: 'teachers',
+        target: '.j-team',
+        title: 'Ustozlaringiz doim yoningizda',
+        text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
+        button: '1-kunni yakunlash',
         prepare: goChat
       }
     ],
@@ -642,74 +768,72 @@
       {
         id: 'coinshop-entry',
         target: 'button[data-go="coinshop"]',
-        title: 'Kecha olgan coinlaringizni ishlating 🪙',
-        text: 'Dars va vazifalardan yig‘ilgan coinlarni CoinShopdagi sovg‘alarga almashtirish mumkin.',
-        actionButton: 'CoinShopni ochish',
+        title: 'Coin Shop 🪙',
+        text: 'Yig‘gan Coin’laringizni nimalarga sarflashingiz mumkinligini ko‘ring.',
+        actionButton: 'Coin Shop’ni ochish',
         requireClick: true,
         prepare: goHome
       },
       {
-        id: 'coinshop-info',
-        target: '.scr[data-screen="coinshop"] .cs-banner',
-        fallback: '.scr[data-screen="coinshop"] .cs-bal',
-        title: 'CoinShop doim shu yerda',
-        text: 'Balansingiz yuqorida ko‘rinadi. Coin yetarli bo‘lsa, kerakli sovg‘ani tanlaysiz.',
-        actionButton: 'Yo‘riqnomani ochish',
-        requireClick: true,
-        prepare: prepareCoinShop
+        id: 'leaderboard',
+        target: '.scr[data-screen="leaders"] .j-lb-nearby',
+        fallback: '.scr[data-screen="leaders"] .lb-pane--a',
+        title: 'Guruhdagi o‘rningizni ko‘ring 🏆',
+        text: 'Pointlaringiz va sizga eng yaqin 5 ishtirokchi ko‘rinadi: 2 nafari yuqorida, siz va 2 nafari pastda.',
+        button: 'Streak maqsadini tanlash',
+        prepare: prepareLeaderboardNearby
       },
       {
-        id: 'webinar',
-        target: 'article[data-widget="webinar"]',
-        title: 'Jonli darsni o‘tkazib yubormang',
-        text: 'Vebinar vidjetida dars vaqti, mavzusi va boshlanishigacha qolgan vaqt ko‘rinadi.',
-        button: '2-kunni yakunlash',
-        compact: true,
-        prepare: () => prepareWidget('webinar')
+        id: 'streak-goal',
+        target: 'article[data-widget="streak"]',
+        title: 'Streakni necha kun saqlaysiz? 🔥',
+        text: 'O‘zingizga mos maqsadni tanlang. Tanlovingiz profilingizda saqlanadi.',
+        choices: true,
+        button: 'Maqsadni saqlash',
+        prepare: () => prepareWidget('streak')
       }
     ],
     3: [
       {
-        id: 'team',
-        target: '.j-team',
-        title: 'Sizga biriktirilgan ustozlar',
-        text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
-        button: 'Sertifikat yo‘lini ko‘rish',
-        prepare: goChat
-      },
-      {
-        id: 'certificate-entry',
-        target: 'button[data-go="certificates"]',
-        title: 'Modul yakunlangach',
-        text: 'Birinchi modulning oxirgi darsini tugatsangiz, sertifikatlar bo‘limi ochiladi.',
-        actionButton: 'Sertifikatlar bo‘limini ko‘rish',
+        id: 'day-three-lesson',
+        target: '.mk__row--now .mk__card',
+        title: 'Bugungi darsingiz tayyor',
+        text: 'Videodars, test va amaliy vazifani yakunlab, Coin hamda Point oling.',
+        actionButton: 'Darsni boshlash',
         requireClick: true,
+        action: 'lesson',
         prepare: goHome
       },
       {
-        id: 'certificate-info',
-        target: '.scr[data-screen="certificates"] .ct-c[data-ctstate="done"]',
-        fallback: '.scr[data-screen="certificates"] .ct-c',
-        title: 'Sertifikatingiz shu yerda saqlanadi',
-        text: 'Modulni yakunlaganingizdan keyin sertifikat shu bo‘limda ko‘rinadi.',
-        button: 'Kun natijasini ko‘rish',
-        compact: true,
-        prepare: prepareCertificates,
-        onNext: () => goScreen('leaders')
+        id: 'purchase-offer',
+        target: 'article[data-widget="payment"]',
+        fallback: '.plan__hero',
+        title: 'Biz bilan doimiy qolishga tayyormisiz?',
+        text: 'Yangi bilimlarni egallash va Junior’da o‘qishni davom ettirishga tayyormisiz?',
+        button: 'Ha, tayyorman',
+        later: 'Keyinroq',
+        prepare: goHome
       },
       {
-        id: 'leaderboard',
-        target: '.scr[data-screen="leaders"] .lb',
-        fallback: '.scr[data-screen="leaders"] .scr__body',
-        title: 'Natijangizni solishtiring 🏆',
-        text: 'Liderbordda o‘rningiz va to‘plagan ballaringiz ko‘rinadi. Har bir dars sizni yuqoriga olib chiqadi.',
-        button: 'Tanishuvni yakunlash',
-        prepare: () => goScreen('leaders')
+        id: 'payment-qr',
+        target: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .s-qr',
+        fallback: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
+        title: 'To‘lovni amalga oshiring',
+        text: 'QR-kodni skanerlang yoki to‘lov havolasidan foydalaning va Akademiya o‘quvchisiga aylaning.',
+        button: '3-kunni yakunlash',
+        compact: true,
+        prepare: preparePaymentQr
       }
-    ]
+    ],
+    4: []
   };
 
-  let steps = daySteps[selectedDay];
+  function selectedSteps() {
+    if (selectedDay === 3 && hasPurchasedCourse) return daySteps[3].slice(0, 1);
+    return daySteps[selectedDay] || [];
+  }
+
+  let steps = selectedSteps();
 
   function updateDayPicker() {
     dayPicker.querySelectorAll('[data-tour-day]').forEach(button => {
@@ -722,8 +846,9 @@
   function showDayPush() {
     const messages = {
       1: ['Birinchi darsingiz tayyor', 'Bugun video, qisqa test va amaliy vazifa sizni kutmoqda.'],
-      2: ['Bugungi imkoniyatlar', 'CoinShop va jonli dars vaqti bilan tanishish vaqti keldi.'],
-      3: ['Natijalaringiz bir joyda', 'Ustozlar, sertifikat yo‘li va liderbordni ko‘rib chiqing.']
+      2: ['Bugungi maqsad', 'Coin Shop, liderbord va streak maqsadingizni ko‘rib chiqing.'],
+      3: ['O‘qishni davom ettiring', 'Bugungi darsni yakunlab, Junior bilan doimiy qolish imkoniyatini ko‘ring.'],
+      4: ['Akkauntingiz himoyalangan', 'Parol esdan chiqsa, telefon raqamingiz orqali tezda tiklaysiz.']
     };
     const message = messages[selectedDay];
     clearTimeout(pushPreviewTimer);
@@ -752,6 +877,7 @@
     card.hidden = true;
     focus.hidden = true;
     lesson.hidden = true;
+    auth.hidden = true;
     success.hidden = true;
     Object.values(shades).forEach(node => { node.hidden = true; });
     updateDayPicker();
@@ -760,10 +886,11 @@
 
   function startSelectedDay() {
     pushPermission.hidden = true;
-    steps = daySteps[selectedDay];
+    steps = selectedSteps();
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
-    startTour();
+    if (selectedDay === 4) openPasswordRecovery();
+    else startTour();
     setTimeout(showDayPush, 520);
   }
 
@@ -778,7 +905,7 @@
   }
 
   function selectDay(day) {
-    selectedDay = Math.max(1, Math.min(3, Number(day) || 1));
+    selectedDay = Math.max(1, Math.min(4, Number(day) || 1));
     const url = new URL(window.location.href);
     url.searchParams.set('qa', 'days');
     url.searchParams.set('day', String(selectedDay));
@@ -989,6 +1116,7 @@
     screen.classList.add('j-tour-scroll-locked');
     screen.scrollTop = 0;
     lesson.hidden = true;
+    auth.hidden = true;
     success.hidden = true;
     pushPermission.hidden = true;
     card.hidden = false;
@@ -1009,8 +1137,14 @@
     text.textContent = step.text;
     instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
+    choices.hidden = !step.choices;
+    choices.querySelectorAll('[data-streak-goal]').forEach(button => {
+      button.classList.toggle('is-active', Number(button.dataset.streakGoal) === getStreakGoal());
+    });
     next.hidden = !!step.requireClick && !step.actionButton;
     next.textContent = step.actionButton || step.button || 'Keyingisi';
+    later.hidden = !step.later;
+    later.textContent = step.later || 'Keyinroq';
     next.classList.toggle('j-tour__next--action', !!step.requireClick && !!step.actionButton);
     card.classList.toggle('is-action-required', !!step.requireClick);
     applyCardPlacement(step);
@@ -1026,7 +1160,7 @@
     const target = await waitForTarget(step, token);
     if (!target || token !== runToken) {
       card.classList.remove('is-preparing');
-      next.disabled = false;
+      next.disabled = !!step.choices && !getStreakGoal();
       focus.hidden = true;
       showToast('Bu qadamdagi element hali yuklanmadi. Qayta urinib ko‘ring.');
       return;
@@ -1056,6 +1190,8 @@
       requestAnimationFrame(() => animateStreakFire(target, token));
     }
 
+    next.disabled = !!step.choices && !getStreakGoal();
+
     if (step.requireClick && !step.actionButton) target.focus({ preventScroll: true });
     else next.focus({ preventScroll: true });
   }
@@ -1077,7 +1213,11 @@
   }
 
   function startTour() {
-    steps = daySteps[selectedDay];
+    steps = selectedSteps();
+    if (selectedDay === 4) {
+      openPasswordRecovery();
+      return;
+    }
     stepIndex = 0;
     activateStep(0);
   }
@@ -1092,6 +1232,7 @@
     pushPreview.classList.remove('is-visible');
     pushPreview.hidden = true;
     pushPermission.hidden = true;
+    auth.hidden = true;
     root.classList.remove('is-running');
     screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
@@ -1107,8 +1248,8 @@
     const names = ['video', 'test', 'reward', 'practice'];
     const visibleSteps = [1, 2, 2, 3];
     const progress = [33.333, 66.666, 66.666, 100];
-    const hints = ['Videoni ko‘ring', 'To‘g‘ri javobni tanlang', 'Natijangiz bilan faxrlanamiz', 'Xato chiqsa, mentordan yordam oling'];
-    const buttons = ['Davom etish', 'Javobni tanlang', 'Mukofotni ochish', 'Mentordan yordam olish'];
+    const hints = ['Videoni ko‘ring', 'To‘g‘ri javobni tanlang', 'Natijangiz bilan faxrlanamiz', 'Amaliy vazifani bajaring'];
+    const buttons = ['Davom etish', 'Javobni tanlang', 'Mukofotni ochish', 'Vazifani topshirish'];
     lesson.dataset.stage = names[lessonStageIndex];
     lessonStages.forEach(stage => { stage.hidden = stage.dataset.lessonStage !== names[lessonStageIndex]; });
     lessonStep.textContent = String(visibleSteps[lessonStageIndex]);
@@ -1148,14 +1289,17 @@
     player?.focus({ preventScroll: true });
   }
 
-  function updateDashboardReward(amount = 20) {
-    const coin = document.querySelector('.topbar__pills .tb-pill:first-child b');
-    if (coin) {
-      const value = (parseInt(coin.textContent.replace(/\s/g, ''), 10) || 0) + amount;
-      coin.textContent = String(value);
-      coin.dataset.count = String(value);
-      coin.closest('.tb-pill')?.classList.add('j-tour__coin-pop');
-    }
+  function updateDashboardReward(coinAmount = 0, pointAmount = 0) {
+    const balances = [...document.querySelectorAll('.topbar__pills .tb-pill b')];
+    [[balances[0], coinAmount], [balances[1], pointAmount]].forEach(([balance, amount]) => {
+      if (!balance || !amount) return;
+      clearInterval(balance.__cnt);
+      const current = Number(balance.dataset.count) || parseInt(balance.textContent.replace(/\s/g, ''), 10) || 0;
+      const value = current + amount;
+      balance.textContent = String(value);
+      balance.dataset.count = String(value);
+      balance.closest('.tb-pill')?.classList.add('j-tour__coin-pop');
+    });
     const ring = document.querySelector('.plan__ringtxt b');
     if (ring) ring.innerHTML = '1<i>/2</i>';
   }
@@ -1221,29 +1365,43 @@
   function openRewardChest() {
     const panel = success.querySelector('[data-reward-panel="coin"]');
     if (!panel || panel.classList.contains('is-opened')) return;
+    const config = rewardMode === 'task-accepted'
+      ? {
+        coin: 70,
+        point: 0,
+        title: 'Vazifa qabul qilindi! 🎉',
+        text: 'Amaliy vazifani muvaffaqiyatli topshirdingiz. 70 Coin balansingizga qo‘shildi.'
+      }
+      : {
+        coin: 50,
+        point: 100,
+        title: 'Ajoyib! Birinchi natijangiz tayyor! 🎉',
+        text: 'Darsni muvaffaqiyatli yakunladingiz. 50 Coin va 100 Point balansingizga qo‘shildi.'
+      };
     panel.classList.add('is-opened');
     playSound('chest');
-    updateDashboardReward();
+    updateDashboardReward(config.coin, config.point);
     fireCoinBurst();
     setTimeout(fireConfetti, 120);
     setTimeout(() => playSound('coin'), 230);
     setTimeout(() => {
       const coinTitle = panel.querySelector('[data-coin-title]');
       const coinText = panel.querySelector('[data-coin-text]');
-      if (coinTitle) coinTitle.textContent = 'Ajoyib! 20 coin sizniki! 🎉';
-      if (coinText) coinText.textContent = 'Birinchi dars — birinchi g‘alaba! Coin balansingizga qo‘shildi.';
+      if (coinTitle) coinTitle.textContent = config.title;
+      if (coinText) coinText.textContent = config.text;
       finish.hidden = false;
       finish.focus({ preventScroll: true });
     }, 780);
   }
 
   async function completeLesson() {
-    rewardMode = 'first-coin';
+    rewardMode = 'lesson-result';
     playSound('complete');
     await goHome();
     content.scrollTo({ top: 0, behavior: 'auto' });
     resetViewportScroll();
     lesson.hidden = true;
+    auth.hidden = true;
     success.hidden = false;
     card.hidden = true;
     focus.hidden = true;
@@ -1259,13 +1417,54 @@
     success.querySelector('[data-reward-panel="coin"]')?.classList.remove('is-opened');
     const coinTitle = success.querySelector('[data-coin-title]');
     const coinText = success.querySelector('[data-coin-text]');
+    const coinKicker = success.querySelector('[data-reward-panel="coin"] .j-reward__kicker');
+    if (coinKicker) coinKicker.textContent = 'Birinchi dars mukofoti';
     if (coinTitle) coinTitle.textContent = 'Mukofot sandig‘ingiz tayyor!';
     if (coinText) coinText.textContent = 'Darsni muvaffaqiyatli tugatganingiz uchun sandiqni oching.';
     const coinBadge = success.querySelector('.j-reward__coin');
     const coinResult = success.querySelector('.j-reward__coin-result b');
-    if (coinBadge) coinBadge.textContent = '+20';
-    if (coinResult) coinResult.textContent = '+20 coin';
+    const coinResultText = success.querySelector('.j-reward__coin-result span');
+    if (coinBadge) coinBadge.textContent = '+50';
+    if (coinResult) coinResult.textContent = '+50 Coin';
+    if (coinResultText) coinResultText.textContent = '+100 Point ham qo‘shildi';
     finish.textContent = 'Amaliy vazifaga o‘tish';
+    showRewardStage('coin');
+    updateAssets();
+    rewardChest?.focus({ preventScroll: true });
+  }
+
+  async function showTaskAcceptedReward() {
+    rewardMode = 'task-accepted';
+    playSound('complete');
+    await goHome();
+    content.scrollTo({ top: 0, behavior: 'auto' });
+    resetViewportScroll();
+    lesson.hidden = true;
+    auth.hidden = true;
+    success.hidden = false;
+    card.hidden = true;
+    focus.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = false; });
+    setShadeLayout(0, 0, 0, 0, screen.clientWidth, screen.clientHeight);
+    shades.top.style.height = `${screen.clientHeight}px`;
+    shades.top.style.background = 'rgba(14, 20, 35, .66)';
+    ['left', 'right', 'bottom'].forEach(key => { shades[key].style.width = '0px'; shades[key].style.height = '0px'; });
+    finish.hidden = true;
+    const panel = success.querySelector('[data-reward-panel="coin"]');
+    panel?.classList.remove('is-opened');
+    const kicker = panel?.querySelector('.j-reward__kicker');
+    const coinTitle = panel?.querySelector('[data-coin-title]');
+    const coinText = panel?.querySelector('[data-coin-text]');
+    const coinBadge = panel?.querySelector('.j-reward__coin');
+    const coinResult = panel?.querySelector('.j-reward__coin-result b');
+    const coinResultText = panel?.querySelector('.j-reward__coin-result span');
+    if (kicker) kicker.textContent = 'Amaliy vazifa mukofoti';
+    if (coinTitle) coinTitle.textContent = '70 Coin mukofotingiz tayyor!';
+    if (coinText) coinText.textContent = 'Vazifangiz qabul qilindi. Sandiqni oching.';
+    if (coinBadge) coinBadge.textContent = '+70';
+    if (coinResult) coinResult.textContent = '+70 Coin';
+    if (coinResultText) coinResultText.textContent = 'Balansingizga qo‘shildi';
+    finish.textContent = selectedDay === 1 ? 'Davom etish' : 'Keyingi qadam';
     showRewardStage('coin');
     updateAssets();
     rewardChest?.focus({ preventScroll: true });
@@ -1274,7 +1473,6 @@
   async function startStreakReward() {
     rewardMode = 'streak';
     playSound('complete');
-    updateDashboardReward(70);
     await goHome();
     content.scrollTo({ top: 0, behavior: 'auto' });
     resetViewportScroll();
@@ -1290,14 +1488,122 @@
     rewardLocked = false;
     rewardSwipeStart = null;
     rewardNext.textContent = 'Davom etish';
-    showRewardStage('streak');
+    showRewardStage('ignite');
     updateAssets();
-    setTimeout(() => {
-      fireConfetti();
-      playSound('streak');
-    }, 140);
-    rewardNext?.focus({ preventScroll: true });
+    rewardIgnite?.focus({ preventScroll: true });
   }
+
+  function showAuthStage(name) {
+    auth.dataset.stage = name;
+    authStages.forEach(stage => {
+      stage.hidden = stage.dataset.authStage !== name;
+      stage.classList.remove('is-entering');
+      if (!stage.hidden) stage.classList.add('is-entering');
+    });
+    playSound(name === 'success' ? 'complete' : 'bubble');
+    const active = authStages.find(stage => stage.dataset.authStage === name);
+    requestAnimationFrame(() => active?.querySelector('button:not(:disabled), input:not([readonly])')?.focus({ preventScroll: true }));
+  }
+
+  function openPasswordRecovery() {
+    runToken += 1;
+    clearTarget();
+    clearStreakFire();
+    closeSheet();
+    resetViewportScroll();
+    root.hidden = false;
+    root.classList.add('is-running');
+    screen.classList.add('j-tour-scroll-locked');
+    pushPermission.hidden = true;
+    card.hidden = true;
+    focus.hidden = true;
+    lesson.hidden = true;
+    success.hidden = true;
+    auth.hidden = false;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    const codeInputs = [...auth.querySelectorAll('.j-auth__code input')];
+    codeInputs.forEach(input => { input.value = ''; input.removeAttribute('aria-invalid'); });
+    const password = auth.querySelector('[data-auth-password]');
+    const confirm = auth.querySelector('[data-auth-confirm]');
+    const verify = auth.querySelector('[data-auth-verify]');
+    const save = auth.querySelector('[data-auth-save]');
+    if (password) password.value = '';
+    if (confirm) confirm.value = '';
+    if (verify) verify.disabled = true;
+    if (save) save.disabled = true;
+    updateDayPicker();
+    showAuthStage('login');
+  }
+
+  const authForgot = auth.querySelector('[data-auth-forgot]');
+  const authPhone = auth.querySelector('[data-auth-phone]');
+  const authSend = auth.querySelector('[data-auth-send]');
+  const authVerify = auth.querySelector('[data-auth-verify]');
+  const authPassword = auth.querySelector('[data-auth-password]');
+  const authConfirm = auth.querySelector('[data-auth-confirm]');
+  const authSave = auth.querySelector('[data-auth-save]');
+  const authFinish = auth.querySelector('[data-auth-finish]');
+  const authCodeInputs = [...auth.querySelectorAll('.j-auth__code input')];
+
+  authForgot?.addEventListener('click', () => showAuthStage('phone'));
+  authSend?.addEventListener('click', () => {
+    if (!authPhone?.value.trim()) return;
+    playSound('push');
+    showAuthStage('code');
+  });
+  authCodeInputs.forEach((input, index) => {
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/g, '').slice(-1);
+      input.removeAttribute('aria-invalid');
+      if (input.value && authCodeInputs[index + 1]) authCodeInputs[index + 1].focus();
+      authVerify.disabled = authCodeInputs.some(node => !node.value);
+    });
+    input.addEventListener('keydown', event => {
+      if (event.key === 'Backspace' && !input.value && authCodeInputs[index - 1]) authCodeInputs[index - 1].focus();
+    });
+  });
+  authVerify?.addEventListener('click', () => {
+    const code = authCodeInputs.map(input => input.value).join('');
+    if (code !== '2486') {
+      playSound('wrong');
+      authCodeInputs.forEach(input => input.setAttribute('aria-invalid', 'true'));
+      showToast('Kod mos kelmadi. Demo kod: 2486');
+      return;
+    }
+    playSound('correct');
+    showAuthStage('password');
+  });
+
+  function validateNewPassword() {
+    const valid = authPassword.value.length >= 6 && authPassword.value === authConfirm.value;
+    authSave.disabled = !valid;
+    authConfirm.toggleAttribute('aria-invalid', !!authConfirm.value && authPassword.value !== authConfirm.value);
+  }
+  authPassword?.addEventListener('input', validateNewPassword);
+  authConfirm?.addEventListener('input', validateNewPassword);
+  authSave?.addEventListener('click', () => {
+    if (authSave.disabled) return;
+    showAuthStage('success');
+    fireConfetti();
+  });
+  authFinish?.addEventListener('click', () => {
+    playSound('finish');
+    closeTour(true);
+  });
+
+  choices.querySelectorAll('[data-streak-goal]').forEach(button => {
+    button.addEventListener('click', () => {
+      const days = Number(button.dataset.streakGoal);
+      saveStreakGoal(days);
+      choices.querySelectorAll('[data-streak-goal]').forEach(node => node.classList.toggle('is-active', node === button));
+      next.disabled = false;
+      playSound('correct');
+    });
+  });
+  later.addEventListener('click', () => {
+    playSound('finish');
+    closeTour(true);
+  });
 
   next.addEventListener('click', () => {
     if (next.disabled || actionPending) return;
@@ -1371,9 +1677,7 @@
       return;
     }
     if (lessonStageIndex === 3) {
-      playSound('bubble');
-      lesson.hidden = true;
-      activateStep(findStepIndex('mentor-error'));
+      showTaskAcceptedReward();
     }
   });
   rewardIgnite?.addEventListener('click', igniteRewardStreak);
@@ -1388,7 +1692,8 @@
     if (rewardMode === 'streak') {
       playSound('finish');
       success.hidden = true;
-      closeTour(true);
+      if (selectedDay === 1) activateStep(findStepIndex('teachers'));
+      else closeTour(true);
       return;
     }
     showRewardStage('coin');
@@ -1398,7 +1703,7 @@
   rewardChest?.addEventListener('click', openRewardChest);
   finish.addEventListener('click', () => {
     playSound('finish');
-    if (rewardMode === 'first-coin') {
+    if (rewardMode === 'lesson-result') {
       success.hidden = true;
       card.hidden = true;
       focus.hidden = true;
@@ -1408,6 +1713,17 @@
       updateAssets();
       lessonFinish.focus({ preventScroll: true });
       return;
+    }
+    if (rewardMode === 'task-accepted') {
+      success.hidden = true;
+      if (selectedDay === 1) {
+        startStreakReward();
+        return;
+      }
+      if (selectedDay === 3 && !hasPurchasedCourse) {
+        activateStep(findStepIndex('purchase-offer'));
+        return;
+      }
     }
     closeTour(true);
   });
