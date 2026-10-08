@@ -439,6 +439,198 @@
 .j-tour__lesson:not([data-stage="reward"]) .j-lesson__foot { display: none; }
 .j-tour__lesson .j-lesson__foot { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
 
+/* Birinchi dars: Junior platformasidagi video → test → coin → amaliyot oqimi. */
+.j-platform__video,
+.j-platform__quiz {
+  min-height: 100%;
+  animation: j-lesson-stage-in .24s ease-out both;
+}
+
+.j-platform__video h1 {
+  margin: 2px 0 14px;
+  color: #090b11;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -.45px;
+}
+
+.j-platform__player {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 214px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 63% 40%, rgba(23, 82, 73, .38), transparent 31%),
+    radial-gradient(circle at 38% 58%, rgba(124, 35, 30, .42), transparent 35%),
+    linear-gradient(145deg, #070913, #03040a 72%);
+  box-shadow: 0 12px 28px rgba(4, 6, 16, .22);
+  cursor: pointer;
+}
+
+.j-platform__video-brand {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  display: grid;
+  grid-template-columns: 36px auto;
+  grid-template-rows: 21px 10px;
+  align-items: center;
+  column-gap: 7px;
+  text-align: left;
+  transform: translate(-50%, -50%);
+}
+
+.j-platform__video-brand i {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px 12px 15px 15px;
+  color: #fff;
+  background: #ff522d;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 1000;
+}
+
+.j-platform__video-brand b { font-size: 20px; line-height: 1; letter-spacing: 1px; }
+.j-platform__video-brand small { color: #cbd0da; font-size: 7px; letter-spacing: 1px; }
+.j-platform__video-title { position: absolute; left: 50%; top: 63%; color: #e7e9ef; font-size: 11px; font-weight: 800; transform: translateX(-50%); }
+
+.j-platform__video-play {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 82, 45, .94);
+  box-shadow: 0 0 0 9px rgba(255,255,255,.09);
+  font-size: 17px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.72);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.j-platform__player:hover .j-platform__video-play,
+.j-platform__player:focus-visible .j-platform__video-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.j-platform__player.is-playing .j-platform__video-brand,
+.j-platform__player.is-complete .j-platform__video-brand { opacity: .24; }
+.j-platform__player.is-playing .j-platform__video-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.j-platform__player.is-playing .j-platform__video-play::before { content: "Ⅱ"; font-size: 19px; }
+.j-platform__player.is-playing .j-platform__video-play { font-size: 0; }
+.j-platform__player.is-complete .j-platform__video-play { opacity: 1; background: #10bd83; transform: translate(-50%, -50%) scale(1); }
+.j-platform__player.is-complete .j-platform__video-play::before { content: "✓"; font-size: 22px; }
+.j-platform__player.is-complete .j-platform__video-play { font-size: 0; }
+
+.j-platform__video-time,
+.j-platform__video-controls { position: absolute; bottom: 18px; z-index: 2; font-size: 9px; font-weight: 800; }
+.j-platform__video-time { left: 13px; }
+.j-platform__video-controls { right: 12px; }
+.j-platform__video-seek { position: absolute; left: 12px; right: 12px; bottom: 9px; height: 3px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.3); }
+.j-platform__video-seek i { display: block; width: 2%; height: 100%; border-radius: inherit; background: #fff; }
+.j-platform__player.is-playing .j-platform__video-seek i { animation: j-progressive-video 1.05s linear forwards; }
+.j-platform__player.is-complete .j-platform__video-seek i { width: 100%; }
+
+.j-platform__slide-preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  min-height: 180px;
+  margin: 16px 24px 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: linear-gradient(105deg, #f7f7f8 0 71%, #ff5736 71%);
+  box-shadow: 0 8px 18px rgba(19, 27, 45, .1);
+}
+
+.j-platform__slide-person {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 18px 7px 18px 16px;
+  overflow: hidden;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg, #ff9a4a, #323b62);
+}
+
+.j-platform__slide-person i { position: absolute; width: 66px; height: 66px; border: 10px solid rgba(255,255,255,.78); border-radius: 50%; }
+.j-platform__slide-person b { position: relative; z-index: 1; font-size: 25px; }
+.j-platform__slide-copy { align-self: center; padding: 18px 8px; }
+.j-platform__slide-copy small { display: block; color: #182039; font-size: 7px; font-weight: 900; }
+.j-platform__slide-copy b { display: block; margin-top: 17px; color: #ff5736; font-size: 18px; line-height: 1.18; letter-spacing: -.4px; }
+.j-platform__slide-dot { position: absolute; top: 18px; width: 6px; height: 6px; border-radius: 50%; background: #182039; }
+.j-platform__slide-dot--one { right: 34px; }
+.j-platform__slide-dot--two { right: 20px; }
+
+.j-platform__quiz { padding: 2px 0 16px; }
+.j-platform__quiz-head { display: flex; align-items: center; gap: 10px; }
+.j-platform__quiz-steps { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; flex: 1; }
+.j-platform__quiz-steps i { height: 5px; border: 1px solid #e6e7ea; border-radius: 99px; background: #fff; }
+.j-platform__quiz-steps i.is-active { border-color: #ff542b; background: #ff542b; }
+.j-platform__quiz time { flex: none; color: #ef3737; font-size: 11px; font-weight: 1000; }
+.j-platform__quiz h2 { margin: 35px 0 20px; color: #222a3c; font-size: 21px; line-height: 1.24; letter-spacing: -.3px; }
+.j-platform__quiz .j-lesson__answers { display: grid; grid-template-columns: 1fr; gap: 9px; }
+.j-platform__quiz .j-lesson__answers button { min-height: 54px; padding: 0 14px; border-radius: 10px; text-align: left; color: #2d3443; background: #fff; font-size: 15px; }
+.j-platform__quiz > p { margin: 12px 2px 0; color: #7a8394; font-size: 10px; font-weight: 800; }
+
+.j-platform__task { padding-top: 8px; }
+.j-platform__task-hero { min-height: 306px; }
+.j-platform__task-copy { width: 70%; padding: 24px 16px; }
+.j-platform__task-copy h2 { margin-top: 22px; font-size: 29px; }
+.j-platform__task-copy ol { font-size: 10px; line-height: 1.58; }
+.j-platform__task-hero > img { right: -14px; bottom: 5px; width: 142px; height: 142px; }
+.j-platform__code-card { margin-top: -79px; padding: 15px; }
+
+.j-platform__mentor-note {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid #ffe0d7;
+  border-radius: 15px;
+  background: #fff8f5;
+}
+.j-platform__mentor-note > span { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; background: #ff6b48; font-size: 20px; }
+.j-platform__mentor-note p { margin: 0; }
+.j-platform__mentor-note b { display: block; color: #202942; font-size: 11px; }
+.j-platform__mentor-note small { display: block; margin-top: 3px; color: #737d91; font-size: 8px; line-height: 1.35; font-weight: 700; }
+
+.j-tour__lesson[data-stage="video"] .j-lesson__foot,
+.j-tour__lesson[data-stage="reward"] .j-lesson__foot,
+.j-tour__lesson[data-stage="practice"] .j-lesson__foot {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  padding: 8px 18px max(16px, env(safe-area-inset-bottom));
+}
+.j-tour__lesson[data-stage="test"] .j-lesson__foot { display: none; }
+.j-tour__lesson .j-lesson__foot > span { text-align: center; }
+.j-tour__lesson .j-lesson__finish {
+  min-height: 48px;
+  color: #11151e;
+  background: #dfefff;
+  box-shadow: 0 4px 0 #aebfce;
+  font-size: 14px;
+}
+.j-tour__lesson .j-lesson__finish:disabled { color: #7d8795; background: #edf3f8; }
+
+@keyframes j-progressive-video {
+  from { width: 2%; }
+  to { width: 100%; }
+}
+
 @media (max-width: 350px) {
   .j-course__balances { gap: 4px; }
   .j-course__balances span { padding: 0 6px; }
@@ -447,4 +639,8 @@
   .j-platform__task-copy { width: 75%; padding-left: 12px; }
   .j-platform__task-copy h2 { font-size: 24px; }
   .j-platform__task-hero > img { right: -28px; width: 116px; height: 116px; }
+  .j-platform__player { height: 190px; }
+  .j-platform__slide-preview { min-height: 156px; margin-inline: 13px; }
+  .j-platform__slide-copy b { font-size: 15px; }
+  .j-platform__quiz h2 { margin-top: 28px; font-size: 19px; }
 }

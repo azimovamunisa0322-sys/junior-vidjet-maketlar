@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v5-progressive';
+  const VERSION = 'v6-progressive-lesson-flow';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const storageKey = `junior:onboarding:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -47,36 +47,46 @@
       </header>
       <div class="j-lesson__progress"><i></i></div>
       <div class="j-lesson__body">
-        <section class="j-course__path" data-lesson-stage="video">
-          <div class="j-course__tabs" aria-label="Kurslar">
-            <span><b>HTML</b><small>16 ta dars</small></span>
-            <span class="is-active"><b>Bootstrap</b><small>12 ta dars · 16 ta amaliyot</small></span>
-            <span><b>Tilda</b><small>14 ta dars</small></span>
+        <section class="j-platform__video" data-lesson-stage="video">
+          <h1>Bootstrapda matnlar bilan ishlash</h1>
+          <button type="button" class="j-platform__player" data-video-play aria-label="Video darsni ko‘rish">
+            <span class="j-platform__video-brand"><i>J</i><b>JUNIOR</b><small>academy</small></span>
+            <span class="j-platform__video-title">Web dasturlash</span>
+            <span class="j-platform__video-play">▶</span>
+            <span class="j-platform__video-time"><b data-video-time>0:00</b> / 13:52</span>
+            <span class="j-platform__video-controls">🔊 &nbsp; ⛶ &nbsp; ⋮</span>
+            <span class="j-platform__video-seek"><i></i></span>
+          </button>
+          <div class="j-platform__slide-preview" aria-label="Video taqdimoti">
+            <span class="j-platform__slide-person"><i></i><b>&lt;/&gt;</b></span>
+            <span class="j-platform__slide-copy"><small>● BOOTSTRAP</small><b>BOOTSTRAPDA<br>MATNLAR BILAN<br>ISHLASH</b></span>
+            <i class="j-platform__slide-dot j-platform__slide-dot--one"></i>
+            <i class="j-platform__slide-dot j-platform__slide-dot--two"></i>
           </div>
-          <div class="j-course__timeline">
-            <article class="j-course__lesson-card is-done">
-              <span class="j-course__node">✓</span>
-              <small>7 O‘rganish <i>▣</i></small>
-              <b>Bootstrapda matnlar bilan ishlash</b>
-            </article>
-            <article class="j-course__lesson-card is-current">
-              <span class="j-course__node">8</span>
-              <small>8 Amaliyot <i>⌕</i></small>
-              <b>Amaliy ish. Bootstrapda matnlar bilan ishlash</b>
-              <button type="button" data-lesson-video>Davom etish</button>
-            </article>
-            <article class="j-course__lesson-card is-locked">
-              <span class="j-course__node">🔒</span>
-              <small>9 Amaliyot</small>
-              <b>Mustahkamlash amaliy ishi — 1</b>
-              <em>🔥 Mustahkamlash</em>
-            </article>
-            <article class="j-course__lesson-card is-locked is-next">
-              <span class="j-course__node">🔒</span>
-              <small>10 O‘rganish <i>▣</i></small>
-              <b>Spinner bilan ishlash</b>
-            </article>
+        </section>
+
+        <section class="j-platform__quiz" data-lesson-stage="test" hidden>
+          <div class="j-platform__quiz-head">
+            <div class="j-platform__quiz-steps" aria-hidden="true">
+              <i class="is-active"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <time>17m : 52s</time>
           </div>
+          <h2>Matn pastki qatorga o‘tmasligi uchun qaysi class ishlatiladi?</h2>
+          <div class="j-lesson__answers">
+            <button type="button" data-lesson-answer="correct">text-nowrap</button>
+            <button type="button" data-lesson-answer="wrong">text-wrap</button>
+            <button type="button" data-lesson-answer="wrong">text-break</button>
+          </div>
+          <p data-lesson-feedback>To‘g‘ri javobni tanlang.</p>
+        </section>
+
+        <section class="j-lesson__stage j-lesson__stage--reward" data-lesson-stage="reward" hidden>
+          <span class="j-lesson__reward-pop">✓</span>
+          <small>Video va test yakunlandi</small>
+          <h2>Birinchi natijangiz tayyor!</h2>
+          <p>Video darsni ko‘rdingiz va testni to‘g‘ri yechdingiz. Birinchi coiningiz tayyor.</p>
+          <div class="j-lesson__reward"><span>🪙 <b>+20 coin</b></span><span>✓ <b>Test 1/1</b></span></div>
         </section>
 
         <section class="j-platform__task" data-lesson-stage="practice" hidden>
@@ -87,7 +97,8 @@
               <ol>
                 <li>Bootstrapni ulab oling</li>
                 <li>Har bir yozgan matningizga <b>rang</b> bering</li>
-                <li><b>fw</b>, <b>fs</b> yoki <b>fst</b> classini ishlating</li>
+                <li>Matnlarda <b>fw</b>, <b>fs</b> yoki <b>fst</b> classini ishlating</li>
+                <li>Natijani namunadagi ko‘rinishga keltiring</li>
               </ol>
             </div>
             <img data-a="a2" alt="Junior yordamchisi">
@@ -98,27 +109,13 @@
             <ul><li>Kitob 1</li><li>Kitob 2</li><li>Kitob 3</li></ul>
             <p>Men endi <b>Bootstrap</b>dan foydalanishni o‘rgandim</p>
           </div>
-          <div class="j-platform__question">
-            <small>Qisqa test</small>
-            <h2>Matnga rang berish uchun qaysi class ishlatiladi?</h2>
-            <div class="j-lesson__answers">
-              <button type="button" data-lesson-answer="wrong">fw-bold</button>
-              <button type="button" data-lesson-answer="correct">text-primary</button>
-              <button type="button" data-lesson-answer="wrong">img-fluid</button>
-            </div>
-            <p data-lesson-feedback>To‘g‘ri variantni tanlang.</p>
+          <div class="j-platform__mentor-note">
+            <span>🎙️</span>
+            <p><b>Yordam kerak bo‘lsa, mentor yoningizda</b><small>Amaliy vazifada xato chiqsa, savolingizni mentorga yuborasiz.</small></p>
           </div>
         </section>
-
-        <section class="j-lesson__stage j-lesson__stage--reward" data-lesson-stage="reward" hidden>
-          <span class="j-lesson__reward-pop">✓</span>
-          <small>Dars yakunlandi</small>
-          <h2>Birinchi natijangiz tayyor!</h2>
-          <p>Bootstrap amaliyoti va qisqa testni yakunladingiz. Birinchi 20 coiningiz tayyor.</p>
-          <div class="j-lesson__reward"><span>🪙 <b>+20 coin</b></span><span>⚡ <b>+100 point</b></span></div>
-        </section>
       </div>
-      <footer class="j-lesson__foot"><span data-lesson-hint>Kursdan boshlang</span><button type="button" class="j-lesson__finish" disabled>Natijani olish</button></footer>
+      <footer class="j-lesson__foot"><span data-lesson-hint>Videoni ko‘ring</span><button type="button" class="j-lesson__finish" disabled>Davom etish</button></footer>
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
@@ -208,6 +205,7 @@
   let streakFireTarget = null;
   let streakFireTimer = 0;
   let lessonStageIndex = 0;
+  let videoCompleted = false;
   let rewardLocked = false;
   let rewardSwipeStart = null;
   let rewardMode = 'first-coin';
@@ -435,7 +433,6 @@
       target: 'article[data-widget="mentor"] button',
       title: 'Savolingiz bo‘lsa, yolg‘iz qolmaysiz',
       text: 'Mentorlar 24/7 yordam beradi. Darsdagi tushunarsiz joyni shu tugma orqali yuboring.',
-      instruction: '“Savolim bor” tugmasini bosing',
       actionButton: 'Savolim bor',
       requireClick: true,
       prepare: () => prepareWidget('mentor')
@@ -445,7 +442,6 @@
       fallback: '#sheetHost:not([hidden]) .sheeth__panel .m-pick',
       title: 'Savolni kerakli mentorga yuboring',
       text: 'Yo‘nalishingizdagi mentorni tanlang. Savolingiz shu mutaxassisga yuboriladi.',
-      instruction: 'Yozmoqchi bo‘lgan mentoringizni bosing',
       actionButton: 'Mentorga yozish',
       requireClick: true,
       cardPosition: 'top',
@@ -492,7 +488,6 @@
       target: 'button[data-go="coinshop"]',
       title: 'Dars qiling, coin yig‘ing 🪙',
       text: 'Har bir yakunlangan dars va vazifa uchun coin olasiz. Yig‘ilgan coinlarni CoinShop’da ishlatishingiz mumkin.',
-      instruction: 'CoinShop tugmasini bosing',
       actionButton: 'CoinShopni ochish',
       requireClick: true,
       prepare: goHome
@@ -502,7 +497,6 @@
       fallback: '.scr[data-screen="coinshop"] .cs-bal',
       title: 'Coin qanday yig‘ilishini bilib oling',
       text: 'Coin ishlash usullarini ko‘rish uchun yuqoridagi yo‘riqnoma bannerini oching.',
-      instruction: '“Coinlarni qanday yig‘ish mumkin?” bannerini bosing',
       actionButton: 'Yo‘riqnomani ochish',
       requireClick: true,
       prepare: prepareCoinShop
@@ -522,7 +516,6 @@
       target: 'button[data-go="certificates"]',
       title: 'Sertifikatgacha yo‘lingizni kuzating',
       text: 'Bu bo‘limda sertifikat talablari, bajargan darslaringiz va qolgan muddatni ko‘rasiz.',
-      instruction: 'Sertifikatlar tugmasini bosing',
       actionButton: 'Sertifikatlarni ochish',
       requireClick: true,
       prepare: goHome
@@ -540,7 +533,6 @@
       target: '.mk__row--now .mk__card',
       title: 'Birinchi darsni boshlash vaqti',
       text: 'Endi birinchi darsingizni oching. Uni tugatsangiz, dastlabki streak va 20 coin olasiz.',
-      instruction: 'Birinchi kurs vidjetini bosing',
       actionButton: 'Birinchi darsni boshlash',
       requireClick: true,
       action: 'lesson',
@@ -567,7 +559,6 @@
       target: '.mk__row--now .mk__card',
       title: 'Birinchi darsingiz tayyor',
       text: 'Faol kursni oching. Dars jarayonini platformaning o‘zida bajarasiz.',
-      instruction: 'Birinchi kurs vidjetini bosing',
       actionButton: 'Darsni boshlash',
       requireClick: true,
       action: 'lesson',
@@ -584,7 +575,6 @@
       target: 'article[data-widget="mentor"] button',
       title: 'Savolingiz bo‘lsa, yolg‘iz qolmaysiz',
       text: 'Darsdagi xatoni mentor bilan birga tahlil qilish uchun “Savolim bor” tugmasini bosing.',
-      instruction: '“Savolim bor” tugmasini bosing',
       actionButton: 'Savolim bor',
       requireClick: true,
       prepare: () => prepareWidget('mentor')
@@ -594,7 +584,6 @@
       fallback: '#sheetHost:not([hidden]) .sheeth__panel .m-pick',
       title: 'Savolni kerakli mentorga yuboring',
       text: 'Yo‘nalishingizdagi mentorni tanlang. Savolingiz shu mutaxassisga yetib boradi.',
-      instruction: 'Yozmoqchi bo‘lgan mentoringizni bosing',
       actionButton: 'Mentorga yozish',
       requireClick: true,
       cardPosition: 'top',
@@ -623,7 +612,6 @@
       target: 'button[data-go="coinshop"]',
       title: 'Coinlarni ishlatishni o‘rganamiz 🪙',
       text: 'Dars va amaliy vazifadan olgan coinlaringizni CoinShopdagi sovg‘alarga almashtirishingiz mumkin.',
-      instruction: 'CoinShop tugmasini bosing',
       actionButton: 'CoinShopni ochish',
       requireClick: true,
       prepare: goHome
@@ -633,7 +621,6 @@
       fallback: '.scr[data-screen="coinshop"] .cs-bal',
       title: 'CoinShop doim shu yerda',
       text: 'Balansingiz yuqorida ko‘rinadi. Coin yetarli bo‘lsa, kerakli sovg‘ani tanlaysiz.',
-      instruction: 'Coin yo‘riqnomasi bannerini bosing',
       actionButton: 'Yo‘riqnomani ochish',
       requireClick: true,
       prepare: prepareCoinShop
@@ -657,7 +644,6 @@
       target: 'button[data-go="certificates"]',
       title: 'Birinchi modul yakunlandi',
       text: 'Oxirgi dars tugagach, sertifikatlar bo‘limi ochiladi.',
-      instruction: 'Sertifikatlar tugmasini bosing',
       actionButton: 'Sertifikatlarni ochish',
       requireClick: true,
       prepare: goHome
@@ -886,7 +872,7 @@
     bar.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
     title.textContent = step.title;
     text.textContent = step.text;
-    instruction.hidden = !step.requireClick;
+    instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
     next.hidden = !!step.requireClick && !step.actionButton;
     next.textContent = step.actionButton || step.button || 'Keyingisi';
@@ -966,17 +952,24 @@
   }
 
   function showLessonStage(index) {
-    lessonStageIndex = Math.max(0, Math.min(2, index));
-    const names = ['video', 'practice', 'reward'];
+    lessonStageIndex = Math.max(0, Math.min(3, index));
+    const names = ['video', 'test', 'reward', 'practice'];
+    const visibleSteps = [1, 2, 2, 3];
+    const progress = [33.333, 66.666, 66.666, 100];
+    const hints = ['Videoni ko‘ring', 'To‘g‘ri javobni tanlang', 'Birinchi coiningiz tayyor', 'Xato chiqsa, mentordan yordam oling'];
+    const buttons = ['Davom etish', 'Javobni tanlang', 'Coinlarni olish', 'Mentordan yordam olish'];
     lesson.dataset.stage = names[lessonStageIndex];
     lessonStages.forEach(stage => { stage.hidden = stage.dataset.lessonStage !== names[lessonStageIndex]; });
-    lessonStep.textContent = String(lessonStageIndex + 1);
-    lessonProgress.style.width = `${((lessonStageIndex + 1) / 3) * 100}%`;
-    lessonHint.textContent = ['8-amaliyotni davom ettiring', 'To‘g‘ri javobni tanlang', 'Mukofotingiz tayyor'][lessonStageIndex];
-    lessonFinish.disabled = lessonStageIndex !== 2;
-    lesson.querySelectorAll('[data-lesson-answer]').forEach(button => button.classList.remove('is-correct', 'is-wrong'));
-    const feedback = lesson.querySelector('[data-lesson-feedback]');
-    if (feedback) feedback.textContent = 'Bir variantni tanlang.';
+    lessonStep.textContent = String(visibleSteps[lessonStageIndex]);
+    lessonProgress.style.width = `${progress[lessonStageIndex]}%`;
+    lessonHint.textContent = hints[lessonStageIndex];
+    lessonFinish.textContent = buttons[lessonStageIndex];
+    lessonFinish.disabled = lessonStageIndex === 0 ? !videoCompleted : lessonStageIndex === 1;
+    if (lessonStageIndex === 1) {
+      lesson.querySelectorAll('[data-lesson-answer]').forEach(button => button.classList.remove('is-correct', 'is-wrong'));
+      const feedback = lesson.querySelector('[data-lesson-feedback]');
+      if (feedback) feedback.textContent = 'To‘g‘ri javobni tanlang.';
+    }
     if (lessonStageIndex > 0) playSound('bubble');
   }
 
@@ -989,10 +982,15 @@
     Object.values(shades).forEach(node => { node.hidden = true; });
     lesson.hidden = false;
     success.hidden = true;
-    lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.remove('is-played'));
+    videoCompleted = false;
+    const player = lesson.querySelector('[data-video-play]');
+    player?.classList.remove('is-playing', 'is-complete');
+    if (player) player.disabled = false;
+    const videoTime = lesson.querySelector('[data-video-time]');
+    if (videoTime) videoTime.textContent = '0:00';
     showLessonStage(0);
     updateAssets();
-    lesson.querySelector('[data-lesson-video]')?.focus({ preventScroll: true });
+    player?.focus({ preventScroll: true });
   }
 
   function updateDashboardReward(amount = 20) {
@@ -1157,14 +1155,25 @@
     if (!event.target.closest('button, a, input, select, [role="button"], .wcard')) return;
     unlockAudioAndPlay('tap');
   }, true);
-  lesson.querySelectorAll('[data-lesson-video]').forEach(button => {
-    button.addEventListener('click', () => {
-      if (lessonStageIndex !== 0) return;
-      playSound('video');
-      lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.add('is-played'));
-      lessonHint.textContent = 'Amaliy vazifa ochildi ✓';
-      setTimeout(() => showLessonStage(1), 260);
-    });
+  const videoPlayer = lesson.querySelector('[data-video-play]');
+  videoPlayer?.addEventListener('click', () => {
+    if (lessonStageIndex !== 0 || videoCompleted || videoPlayer.classList.contains('is-playing')) return;
+    playSound('video');
+    videoPlayer.classList.add('is-playing');
+    videoPlayer.disabled = true;
+    lessonHint.textContent = 'Video dars ko‘rilmoqda…';
+    const videoTime = lesson.querySelector('[data-video-time]');
+    setTimeout(() => {
+      videoPlayer.classList.remove('is-playing');
+      videoPlayer.classList.add('is-complete');
+      videoPlayer.disabled = false;
+      videoCompleted = true;
+      if (videoTime) videoTime.textContent = '13:52';
+      lessonHint.textContent = 'Video yakunlandi ✓';
+      lessonFinish.disabled = false;
+      playSound('correct');
+      lessonFinish.focus({ preventScroll: true });
+    }, 1100);
   });
   lessonBack?.addEventListener('click', () => {
     if (lessonStageIndex > 0) {
@@ -1192,7 +1201,22 @@
       }
     });
   });
-  lessonFinish.addEventListener('click', completeLesson);
+  lessonFinish.addEventListener('click', () => {
+    if (lessonFinish.disabled) return;
+    if (lessonStageIndex === 0 && videoCompleted) {
+      showLessonStage(1);
+      return;
+    }
+    if (lessonStageIndex === 2) {
+      completeLesson();
+      return;
+    }
+    if (lessonStageIndex === 3) {
+      playSound('bubble');
+      lesson.hidden = true;
+      activateStep(3);
+    }
+  });
   rewardIgnite?.addEventListener('click', igniteRewardStreak);
   success.querySelector('[data-reward-panel="ignite"]')?.addEventListener('pointerdown', event => {
     rewardSwipeStart = event.clientY;
@@ -1217,7 +1241,13 @@
     playSound('finish');
     if (rewardMode === 'first-coin') {
       success.hidden = true;
-      activateStep(3);
+      card.hidden = true;
+      focus.hidden = true;
+      Object.values(shades).forEach(node => { node.hidden = true; });
+      lesson.hidden = false;
+      showLessonStage(3);
+      updateAssets();
+      lessonFinish.focus({ preventScroll: true });
       return;
     }
     closeTour(true);
