@@ -1007,7 +1007,9 @@
       const sr = root.getBoundingClientRect();
       const tr = activeTargetRect();
       if (!tr) return;
-      const pad = activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
+      const pad = activeTarget.matches('.plan__hero')
+        ? 0
+        : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       const edgeInset = 12;
       const rawLeft = tr.left - sr.left - pad;
       const rawTop = tr.top - sr.top - pad;
