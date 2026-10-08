@@ -1,30 +1,32 @@
 /* Faqat bosqichma-bosqich onboarding uchun tuzatishlar. */
 
-/* Qadam almashayotganda eski ramka ekranda osilib qolmasin. */
+/* Qadam almashishi: elementlar sakramaydi, karta esa sokin kirib keladi. */
 .j-tour__shade {
-  transition: left .15s cubic-bezier(.22,.72,.24,1),
-              top .15s cubic-bezier(.22,.72,.24,1),
-              width .15s cubic-bezier(.22,.72,.24,1),
-              height .15s cubic-bezier(.22,.72,.24,1);
+  transition: none;
 }
 
 .j-tour__focus {
-  transition: left .15s cubic-bezier(.22,.72,.24,1),
-              top .15s cubic-bezier(.22,.72,.24,1),
-              width .15s cubic-bezier(.22,.72,.24,1),
-              height .15s cubic-bezier(.22,.72,.24,1),
-              border-radius .15s ease-out;
+  will-change: opacity, transform;
+  transition: none;
+  animation: j-progressive-focus-in .3s cubic-bezier(.2,.78,.25,1) both;
+  transform: translateZ(0);
+}
+
+.j-tour__card {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .j-tour__card.is-preparing {
-  opacity: .94;
-  filter: saturate(.9);
-  transform: scale(.992);
+  opacity: 0;
+  filter: none;
+  transform: translate3d(0, 10px, 0) scale(.992);
   pointer-events: none;
 }
 
 .j-tour__card.is-bubbling {
-  animation-duration: .28s;
+  animation: j-progressive-card-in .34s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-tour__card.is-bubbling .j-tour__meta,
@@ -33,15 +35,24 @@
 .j-tour__card.is-bubbling .j-tour__text,
 .j-tour__card.is-bubbling .j-tour__instruction,
 .j-tour__card.is-bubbling .j-tour__actions {
-  animation-duration: .2s;
-  animation-delay: .04s;
+  animation: none;
+}
+
+@keyframes j-progressive-card-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(.992); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes j-progressive-focus-in {
+  from { opacity: 0; transform: translateZ(0) scale(.985); }
+  to { opacity: 1; transform: translateZ(0) scale(1); }
 }
 
 .j-tour__card.is-top.is-lowered {
   top: max(54px, calc(env(safe-area-inset-top, 0px) + 38px)) !important;
 }
 
-.j-tour__bar i { transition-duration: .18s; }
+.j-tour__bar i { transition-duration: .28s; }
 .j-tour__next:disabled { cursor: wait; opacity: .78; }
 
 /* Liderbord oxiri pastki menyuga yopishib qolmasin. */
@@ -207,7 +218,7 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-tour__lesson .j-lesson__progress i {
   background: #ff532c;
-  transition: width .22s ease-out;
+  transition: width .3s ease-out;
 }
 
 .j-tour__lesson .j-lesson__body {
@@ -217,7 +228,7 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-course__path {
   min-height: 100%;
-  animation: j-lesson-stage-in .24s ease-out both;
+  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-course__tabs {
@@ -407,7 +418,7 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-platform__task {
   padding-bottom: 10px;
-  animation: j-lesson-stage-in .24s ease-out both;
+  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-platform__task-hero {
@@ -584,7 +595,7 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-platform__video,
 .j-platform__quiz {
   min-height: 100%;
-  animation: j-lesson-stage-in .24s ease-out both;
+  animation: j-lesson-stage-in .32s cubic-bezier(.2,.78,.25,1) both;
 }
 
 .j-platform__video h1 {

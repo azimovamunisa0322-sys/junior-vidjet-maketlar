@@ -9,10 +9,11 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v7-progressive-praise-reward';
+  const VERSION = 'v8-progressive-smooth-motion';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const storageKey = `junior:onboarding:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => resolve()));
 
   const root = document.createElement('section');
   root.className = 'j-tour';
@@ -211,6 +212,7 @@
   let rewardMode = 'first-coin';
   let audioContext = null;
   let actionPending = false;
+  let cardAnimationTimer = 0;
 
   function ensureAudio() {
     if (!audioContext) {
@@ -327,13 +329,13 @@
   async function goHome() {
     closeSheet();
     click('.tab[data-tab="home"]');
-    await delay(28);
+    await nextPaint();
   }
 
   async function goChat() {
     closeSheet();
     click('[data-tab="ai"]');
-    await delay(42);
+    await nextPaint();
     injectTeamCard();
   }
 
@@ -341,7 +343,7 @@
     closeSheet();
     click(`[data-go="${key}"]`);
     click(`.tab[data-tab="${key}"]`);
-    await delay(48);
+    await nextPaint();
   }
 
   async function prepareWidget(key) {
@@ -350,15 +352,15 @@
 
   async function prepareCoinShop() {
     closeSheet();
-    await delay(32);
+    await nextPaint();
     closeSheet();
-    await delay(24);
+    await nextPaint();
   }
 
   async function prepareCertificates() {
     await goScreen('certificates');
     closeSheet();
-    await delay(80);
+    await nextPaint();
   }
 
   function injectTeamCard() {
@@ -667,14 +669,12 @@
   }
 
   async function revealTarget(target, step) {
-    let moved = false;
     const track = target.closest('#track');
     if (track) {
       const cardTarget = target.closest('article') || target;
       const nextLeft = cardTarget.offsetLeft - (track.clientWidth - cardTarget.offsetWidth) / 2;
       if (Math.abs(track.scrollLeft - nextLeft) > 3) {
         track.scrollTo({ left: nextLeft, behavior: 'auto' });
-        moved = true;
       }
     }
     if (content.contains(target)) {
@@ -693,18 +693,18 @@
       const nextTop = Math.max(0, targetTop - (desiredViewportTop - contentRect.top));
       if (Math.abs(content.scrollTop - nextTop) > 3) {
         content.scrollTo({ top: nextTop, behavior: 'auto' });
-        moved = true;
       }
     }
-    await delay(moved ? 55 : 20);
+    await nextPaint();
   }
 
   function playCardBubble() {
-    card.classList.remove('is-preparing', 'is-bubbling');
-    void card.offsetWidth;
+    clearTimeout(cardAnimationTimer);
+    card.classList.remove('is-preparing');
     card.classList.add('is-bubbling');
     next.disabled = false;
     playSound('bubble');
+    cardAnimationTimer = setTimeout(() => card.classList.remove('is-bubbling'), 380);
   }
 
   function activeTargetRect() {
@@ -827,6 +827,7 @@
     stepIndex = Math.max(0, Math.min(steps.length - 1, nextIndex));
     const step = steps[stepIndex];
     actionPending = false;
+    clearTimeout(cardAnimationTimer);
     clearTarget();
     clearStreakFire();
     root.hidden = false;
@@ -839,7 +840,7 @@
     card.classList.remove('is-bubbling');
     card.classList.add('is-preparing');
     next.disabled = true;
-    focus.hidden = false;
+    focus.hidden = true;
     Object.values(shades).forEach(node => {
       node.hidden = false;
       node.style.background = 'transparent';
@@ -886,12 +887,16 @@
     screen.scrollTop = 0;
     if (token !== runToken) return;
     positionTour();
-    [120, 280].forEach(wait => setTimeout(() => {
+    requestAnimationFrame(() => {
+      if (token !== runToken) return;
+      focus.hidden = false;
+      playCardBubble();
+    });
+    setTimeout(() => {
       if (token === runToken && !root.hidden && activeTarget) positionTour();
-    }, wait));
-    requestAnimationFrame(() => requestAnimationFrame(playCardBubble));
+    }, 180);
     if (step.effect === 'streak-fire') {
-      requestAnimationFrame(() => requestAnimationFrame(() => animateStreakFire(target, token)));
+      requestAnimationFrame(() => animateStreakFire(target, token));
     }
 
     if (step.requireClick && !step.actionButton) target.focus({ preventScroll: true });
@@ -923,6 +928,7 @@
     if (markComplete) safeSet();
     clearTarget();
     clearStreakFire();
+    clearTimeout(cardAnimationTimer);
     root.classList.remove('is-running');
     screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
@@ -993,7 +999,7 @@
 
   function fireConfetti() {
     const colors = ['#ff4f28', '#ffbd2e', '#00b884', '#6c68e8', '#2ea8ff', '#ff70ad'];
-    for (let i = 0; i < 82; i += 1) {
+    for (let i = 0; i < 44; i += 1) {
       const bit = document.createElement('i');
       bit.className = 'j-tour__confetti';
       bit.style.left = `${Math.random() * 100}%`;
@@ -1013,17 +1019,14 @@
       const active = panel.dataset.rewardPanel === name;
       panel.hidden = !active;
       panel.classList.remove('is-entering');
-      if (active) {
-        void panel.offsetWidth;
-        panel.classList.add('is-entering');
-      }
+      if (active) panel.classList.add('is-entering');
     });
   }
 
   function fireCoinBurst() {
     const panel = success.querySelector('[data-reward-panel="coin"]');
     if (!panel) return;
-    for (let i = 0; i < 18; i += 1) {
+    for (let i = 0; i < 12; i += 1) {
       const coin = document.createElement('i');
       coin.className = 'j-reward__coin-particle';
       coin.textContent = 'J';
@@ -1271,8 +1274,8 @@
       return;
     }
     actionPending = true;
-    if (step.action === 'lesson') setTimeout(openLesson, 90);
-    else setTimeout(() => activateStep(stepIndex + 1), 170);
+    if (step.action === 'lesson') requestAnimationFrame(openLesson);
+    else requestAnimationFrame(() => activateStep(stepIndex + 1));
   }, true);
 
   const targetObserver = new MutationObserver(() => injectTeamCard());
