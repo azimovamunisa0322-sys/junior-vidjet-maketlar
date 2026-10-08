@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v3-progressive';
+  const VERSION = 'v4-progressive';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const storageKey = `junior:onboarding:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -167,6 +167,7 @@
   let rewardSwipeStart = null;
   let rewardMode = 'first-coin';
   let audioContext = null;
+  let actionPending = false;
 
   function ensureAudio() {
     if (!audioContext) {
@@ -338,6 +339,11 @@
     const feed = ai.querySelector('.ai-feed');
     if (feed) feed.before(team);
     else ai.appendChild(team);
+  }
+
+  function polishProgressiveScreens() {
+    const leadersEnd = document.querySelector('.scr[data-screen="leaders"] .lb-end');
+    if (leadersEnd) leadersEnd.textContent = 'Sizdan oldinda yana 6 nafar o‘quvchi bor';
   }
 
   const legacySteps = [
@@ -599,15 +605,8 @@
       target: '.j-team',
       title: 'Sizga biriktirilgan ustozlar',
       text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
-      button: 'Keyingi kunni ko‘rish',
+      button: 'Keyingi bosqichga o‘tish',
       prepare: goChat
-    },
-    {
-      target: '.plan__hero',
-      title: 'Ma’lumotlar vaqti kelganda ochiladi',
-      text: 'Ikkinchi kuni keyingi imkoniyatlar ko‘rsatiladi. Onboarding hamma ma’lumotni birdan bermaydi.',
-      button: 'Modul yakuniga o‘tish',
-      prepare: goHome
     },
     {
       target: 'button[data-go="certificates"]',
@@ -639,11 +638,11 @@
   ];
 
   async function waitForTarget(step, token) {
-    for (let i = 0; i < 45; i += 1) {
+    for (let i = 0; i < 30; i += 1) {
       if (token !== runToken) return null;
       const found = document.querySelector(step.target) || (step.fallback && document.querySelector(step.fallback));
       if (found && found.getClientRects().length) return found;
-      await delay(32);
+      await delay(20);
     }
     return null;
   }
@@ -688,13 +687,14 @@
         moved = true;
       }
     }
-    await delay(moved ? 105 : 38);
+    await delay(moved ? 55 : 20);
   }
 
   function playCardBubble() {
     card.classList.remove('is-preparing', 'is-bubbling');
     void card.offsetWidth;
     card.classList.add('is-bubbling');
+    next.disabled = false;
     playSound('bubble');
   }
 
@@ -817,6 +817,7 @@
     const token = ++runToken;
     stepIndex = Math.max(0, Math.min(steps.length - 1, nextIndex));
     const step = steps[stepIndex];
+    actionPending = false;
     clearTarget();
     clearStreakFire();
     root.hidden = false;
@@ -828,6 +829,7 @@
     card.hidden = false;
     card.classList.remove('is-bubbling');
     card.classList.add('is-preparing');
+    next.disabled = true;
     focus.hidden = false;
     Object.values(shades).forEach(node => {
       node.hidden = false;
@@ -847,11 +849,18 @@
     applyCardPlacement(step);
     updateAssets();
 
-    if (step.prepare) await step.prepare();
+    try {
+      if (step.prepare) await step.prepare();
+    } catch (_) {
+      /* Ko‘rinish yuklanmasa ham kartani qotirib qo‘ymaymiz. */
+    }
     screen.scrollTop = 0;
     if (token !== runToken) return;
     const target = await waitForTarget(step, token);
     if (!target || token !== runToken) {
+      card.classList.remove('is-preparing');
+      next.disabled = false;
+      focus.hidden = true;
       showToast('Bu qadamdagi element hali yuklanmadi. Qayta urinib ko‘ring.');
       return;
     }
@@ -1087,11 +1096,14 @@
   }
 
   next.addEventListener('click', () => {
+    if (next.disabled || actionPending) return;
     const step = steps[stepIndex];
     if (step?.requireClick && step.actionButton && activeTarget) {
       activeTarget.click();
       return;
     }
+    actionPending = true;
+    next.disabled = true;
     advance();
   });
   screen.addEventListener('pointerdown', event => {
@@ -1173,19 +1185,22 @@
     const step = steps[stepIndex];
     const clickedTarget = activeTargets.some(node => node.contains(event.target));
     if (!clickedTarget) return;
+    if (actionPending) return;
     if (!step?.requireClick) {
       event.preventDefault();
       event.stopPropagation();
       showToast('Sayohatni davom ettirish uchun pastdagi tugmani bosing.');
       return;
     }
-    if (step.action === 'lesson') setTimeout(openLesson, 120);
-    else setTimeout(() => activateStep(stepIndex + 1), 440);
+    actionPending = true;
+    if (step.action === 'lesson') setTimeout(openLesson, 90);
+    else setTimeout(() => activateStep(stepIndex + 1), 170);
   }, true);
 
   const targetObserver = new MutationObserver(() => injectTeamCard());
   targetObserver.observe(document.querySelector('#screens') || content, { childList: true, subtree: true });
   injectTeamCard();
+  polishProgressiveScreens();
 
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });
