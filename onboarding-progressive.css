@@ -64,3 +64,387 @@
 @media (prefers-reduced-motion: reduce) {
   .j-tour__card.is-preparing { transform: none; }
 }
+
+/* Junior kurslari: haqiqiy platformadagi kurs yo‘li va amaliy dars ko‘rinishi. */
+.j-tour__lesson {
+  color: #11182b;
+  background: #fff;
+}
+
+.j-course__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  min-height: 58px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 8px;
+  background: #fff;
+}
+
+.j-course__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  color: #090b11;
+  background: transparent;
+  font: 800 15px/1 var(--f, "Nunito", sans-serif);
+  cursor: pointer;
+}
+
+.j-course__back span {
+  font: 400 34px/.8 Arial, sans-serif;
+  transform: translateY(-1px);
+}
+
+.j-course__balances {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.j-course__balances span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 38px;
+  padding: 0 10px;
+  border-radius: 14px;
+  background: #f7f8fa;
+  font-size: 14px;
+}
+
+.j-course__balances i { font-size: 19px; font-style: normal; }
+.j-course__balances b { font-size: 13px; }
+.j-course__step { display: none; }
+
+.j-tour__lesson .j-lesson__progress {
+  flex: none;
+  height: 6px;
+  margin: 0 2px;
+  border: 1px solid #e9ebef;
+  border-radius: 99px;
+  background: #fff;
+}
+
+.j-tour__lesson .j-lesson__progress i {
+  background: #ff532c;
+  transition: width .22s ease-out;
+}
+
+.j-tour__lesson .j-lesson__body {
+  padding: 14px 14px 18px;
+  background: #fff;
+}
+
+.j-course__path {
+  min-height: 100%;
+  animation: j-lesson-stage-in .24s ease-out both;
+}
+
+.j-course__tabs {
+  display: grid;
+  grid-template-columns: .78fr 1.45fr .78fr;
+  gap: 8px;
+  margin: 0 -4px 16px;
+  overflow: hidden;
+}
+
+.j-course__tabs span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 72px;
+  padding: 11px 12px;
+  border-radius: 18px;
+  color: #71809f;
+  background: #f0f2f7;
+}
+
+.j-course__tabs b {
+  overflow: hidden;
+  color: #111;
+  font-size: 13px;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.j-course__tabs small {
+  display: block;
+  margin-top: 5px;
+  overflow: hidden;
+  font-size: 8.5px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.j-course__tabs .is-active {
+  color: rgba(255,255,255,.88);
+  background: linear-gradient(120deg, #ff572d 0 68%, #ef421c 68%);
+  box-shadow: 0 8px 20px rgba(255,83,44,.2);
+}
+
+.j-course__tabs .is-active b { color: #fff; font-size: 16px; }
+
+.j-course__timeline {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 2px 0 18px 39px;
+}
+
+.j-course__timeline::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 12px;
+  bottom: 28px;
+  border-left: 2px dashed #dbe0e9;
+}
+
+.j-course__lesson-card {
+  position: relative;
+  min-width: 0;
+  padding: 14px 13px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: #f5f6f8;
+}
+
+.j-course__lesson-card > small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #66738d;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.j-course__lesson-card > small i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 15px;
+  border: 1px solid #13bd85;
+  border-radius: 99px;
+  color: #13bd85;
+  font-size: 8px;
+  font-style: normal;
+}
+
+.j-course__lesson-card > b {
+  display: block;
+  margin-top: 5px;
+  color: #2e3c5d;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.j-course__node {
+  position: absolute;
+  left: -37px;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  background: #c9cfda;
+  box-shadow: 0 0 0 2px #dbe0e9;
+  font-size: 10px;
+  font-weight: 900;
+  transform: translateY(-50%);
+}
+
+.j-course__lesson-card.is-done .j-course__node {
+  background: #12c783;
+  box-shadow: 0 0 0 2px #12c783;
+  font-size: 14px;
+}
+
+.j-course__lesson-card.is-current {
+  padding: 13px 13px 12px;
+  border: 2px solid #ff542b;
+  color: #ff542b;
+  background: #ffd8cf;
+  box-shadow: 0 8px 18px rgba(255,84,43,.13);
+}
+
+.j-course__lesson-card.is-current .j-course__node {
+  color: #ff542b;
+  background: #ffe2da;
+  box-shadow: 0 0 0 2px #ff542b;
+}
+
+.j-course__lesson-card.is-current > small,
+.j-course__lesson-card.is-current > b { color: #ff542b; }
+
+.j-course__lesson-card.is-current > small i {
+  border-color: #deb15a;
+  color: #c88d1a;
+}
+
+.j-course__lesson-card.is-current button {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 11px;
+  border: 0;
+  border-radius: 13px;
+  color: #fff;
+  background: #ff542b;
+  box-shadow: 0 4px 0 #cf3816;
+  font: 900 13px/1 var(--f, "Nunito", sans-serif);
+  cursor: pointer;
+}
+
+.j-course__lesson-card.is-current button:active {
+  box-shadow: 0 2px 0 #cf3816;
+  transform: translateY(2px);
+}
+
+.j-course__lesson-card.is-locked { padding-right: 86px; }
+.j-course__lesson-card.is-locked .j-course__node { color: #9aa5bb; background: #fff; font-size: 12px; }
+.j-course__lesson-card.is-locked em {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  padding: 7px 8px;
+  border: 1px solid #ff542b;
+  border-radius: 99px;
+  color: #12151c;
+  background: #fff;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+.j-course__lesson-card.is-next { padding-right: 13px; }
+
+.j-platform__task {
+  padding-bottom: 10px;
+  animation: j-lesson-stage-in .24s ease-out both;
+}
+
+.j-platform__task-hero {
+  position: relative;
+  min-height: 228px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #ff5b3b 0 64%, #f4f4f4 64%);
+  box-shadow: 0 10px 24px rgba(39,45,68,.08);
+}
+
+.j-platform__task-copy {
+  position: relative;
+  z-index: 2;
+  width: 72%;
+  padding: 17px 14px;
+}
+
+.j-platform__task-copy > small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #171a20;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.j-platform__task-copy > small i { width: 20px; height: 2px; background: #171a20; }
+.j-platform__task-copy h2 { margin: 15px 0 14px; color: #fff; font-size: 27px; line-height: 1; }
+.j-platform__task-copy ol { margin: 0; padding-left: 19px; color: #17213d; font-size: 9.5px; line-height: 1.5; font-weight: 800; }
+.j-platform__task-copy li { margin: 5px 0; }
+.j-platform__task-copy li b { color: #f02118; }
+
+.j-platform__task-hero > img {
+  position: absolute;
+  z-index: 1;
+  right: -21px;
+  bottom: -4px;
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  filter: drop-shadow(0 9px 10px rgba(20,25,40,.12));
+}
+
+.j-platform__code-card {
+  display: grid;
+  gap: 6px;
+  margin: -38px 14px 0;
+  padding: 13px 14px;
+  position: relative;
+  z-index: 3;
+  border-radius: 14px;
+  color: #161a22;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(32,38,60,.14);
+  font-size: 8px;
+}
+
+.j-platform__code-card strong { font-size: 13px; text-decoration: underline; }
+.j-platform__code-card strong span { color: #1676ff; }
+.j-platform__code-card s { color: #777; font-size: 7px; }
+.j-platform__code-card ul { display: flex; gap: 14px; margin: 0; padding-left: 17px; color: #ff4f68; }
+.j-platform__code-card li:nth-child(2) { color: #f4a441; }
+.j-platform__code-card li:nth-child(3) { color: #1ac8e8; }
+.j-platform__code-card p { margin: 0; }
+.j-platform__code-card p b { color: #19a862; }
+
+.j-platform__question {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid #eceef2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(32,38,60,.06);
+}
+
+.j-platform__question > small { color: #ff4f28; font-size: 8px; font-weight: 900; text-transform: uppercase; }
+.j-platform__question h2 { margin: 7px 0 11px; font-size: 15px; line-height: 1.25; }
+.j-platform__question .j-lesson__answers { gap: 6px; }
+.j-platform__question .j-lesson__answers button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 5px;
+  font-size: 9.5px;
+}
+.j-platform__question > p { margin: 9px 1px 0; color: #737e94; font-size: 9px; font-weight: 700; }
+
+.j-tour__lesson[data-stage="reward"] .j-lesson__body {
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+
+.j-tour__lesson .j-lesson__stage--reward {
+  width: 100%;
+  border-color: #edf0f5;
+  background: radial-gradient(circle at 50% 12%, #fff0d5 0, #fff 52%);
+}
+
+.j-tour__lesson .j-lesson__stage--reward .j-lesson__reward-pop {
+  color: #fff;
+  background: #13c984;
+}
+
+.j-tour__lesson:not([data-stage="reward"]) .j-lesson__foot { display: none; }
+.j-tour__lesson .j-lesson__foot { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+
+@media (max-width: 350px) {
+  .j-course__balances { gap: 4px; }
+  .j-course__balances span { padding: 0 6px; }
+  .j-course__tabs { grid-template-columns: .7fr 1.6fr .7fr; gap: 5px; }
+  .j-course__tabs span { padding: 9px 8px; }
+  .j-platform__task-copy { width: 75%; padding-left: 12px; }
+  .j-platform__task-copy h2 { font-size: 24px; }
+  .j-platform__task-hero > img { right: -28px; width: 116px; height: 116px; }
+}

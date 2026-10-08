@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v4-progressive';
+  const VERSION = 'v5-progressive';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const storageKey = `junior:onboarding:${userId}:${VERSION}`;
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -36,45 +36,89 @@
         <button class="j-tour__next" type="button"></button>
       </div>
     </aside>
-    <section class="j-tour__lesson" hidden aria-label="Birinchi dars">
-      <header class="j-lesson__head">
-        <span class="j-lesson__brand"><i>J</i> Junior</span>
-        <span class="j-lesson__step"><b data-lesson-step>1</b>/3 qadam</span>
+    <section class="j-tour__lesson" hidden aria-label="Bootstrap kursi">
+      <header class="j-course__top">
+        <button class="j-course__back" type="button" data-lesson-back aria-label="Ortga"><span>‹</span><b>Ortga</b></button>
+        <div class="j-course__balances" aria-label="Balans">
+          <span><i>⚡</i><b>15091</b></span>
+          <span><i>🪙</i><b>15321</b></span>
+        </div>
+        <span class="j-course__step" aria-hidden="true"><b data-lesson-step>1</b>/3</span>
       </header>
       <div class="j-lesson__progress"><i></i></div>
       <div class="j-lesson__body">
-        <div class="j-lesson__intro">
-          <img data-a="a2" alt="Junior maskoti">
-          <span><small>Birinchi missiya</small><b>3 ta qisqa qadam — ilk natijangiz tayyor</b></span>
-        </div>
-        <section class="j-lesson__stage" data-lesson-stage="video">
-          <div class="j-lesson__stage-head"><i>1</i><span><b>Junior bilan tanishuv</b><small>1 daqiqalik qisqa video</small></span></div>
-          <button class="j-lesson__preview" type="button" data-lesson-video>
-            <span class="j-lesson__preview-play">▶</span>
-            <span><b>Platformada dars qanday o‘tiladi?</b><small>01:04</small></span>
-          </button>
-          <p>Avval videoni ko‘ring. Keyin bitta kichik mashqni bajarasiz.</p>
-          <button class="j-lesson__stage-action" type="button" data-lesson-video>Videoni boshlash</button>
-        </section>
-        <section class="j-lesson__stage" data-lesson-stage="practice" hidden>
-          <div class="j-lesson__stage-head"><i>2</i><span><b>Kichik mashq</b><small>To‘g‘ri javobni tanlang</small></span></div>
-          <h2>Sahifaning asosiy sarlavhasi qaysi teg bilan yoziladi?</h2>
-          <div class="j-lesson__answers">
-            <button type="button" data-lesson-answer="wrong">&lt;p&gt;</button>
-            <button type="button" data-lesson-answer="correct">&lt;h1&gt;</button>
-            <button type="button" data-lesson-answer="wrong">&lt;img&gt;</button>
+        <section class="j-course__path" data-lesson-stage="video">
+          <div class="j-course__tabs" aria-label="Kurslar">
+            <span><b>HTML</b><small>16 ta dars</small></span>
+            <span class="is-active"><b>Bootstrap</b><small>12 ta dars · 16 ta amaliyot</small></span>
+            <span><b>Tilda</b><small>14 ta dars</small></span>
           </div>
-          <p data-lesson-feedback>Bir variantni tanlang.</p>
+          <div class="j-course__timeline">
+            <article class="j-course__lesson-card is-done">
+              <span class="j-course__node">✓</span>
+              <small>7 O‘rganish <i>▣</i></small>
+              <b>Bootstrapda matnlar bilan ishlash</b>
+            </article>
+            <article class="j-course__lesson-card is-current">
+              <span class="j-course__node">8</span>
+              <small>8 Amaliyot <i>⌕</i></small>
+              <b>Amaliy ish. Bootstrapda matnlar bilan ishlash</b>
+              <button type="button" data-lesson-video>Davom etish</button>
+            </article>
+            <article class="j-course__lesson-card is-locked">
+              <span class="j-course__node">🔒</span>
+              <small>9 Amaliyot</small>
+              <b>Mustahkamlash amaliy ishi — 1</b>
+              <em>🔥 Mustahkamlash</em>
+            </article>
+            <article class="j-course__lesson-card is-locked is-next">
+              <span class="j-course__node">🔒</span>
+              <small>10 O‘rganish <i>▣</i></small>
+              <b>Spinner bilan ishlash</b>
+            </article>
+          </div>
         </section>
+
+        <section class="j-platform__task" data-lesson-stage="practice" hidden>
+          <div class="j-platform__task-hero">
+            <div class="j-platform__task-copy">
+              <small><i></i> BOOTSTRAP</small>
+              <h2>Amaliy vazifa</h2>
+              <ol>
+                <li>Bootstrapni ulab oling</li>
+                <li>Har bir yozgan matningizga <b>rang</b> bering</li>
+                <li><b>fw</b>, <b>fs</b> yoki <b>fst</b> classini ishlating</li>
+              </ol>
+            </div>
+            <img data-a="a2" alt="Junior yordamchisi">
+          </div>
+          <div class="j-platform__code-card">
+            <strong>Salom, meni ismim <span>Jamoliddin</span></strong>
+            <s>Bu men xarid qilgan narsalar ro‘yxati</s>
+            <ul><li>Kitob 1</li><li>Kitob 2</li><li>Kitob 3</li></ul>
+            <p>Men endi <b>Bootstrap</b>dan foydalanishni o‘rgandim</p>
+          </div>
+          <div class="j-platform__question">
+            <small>Qisqa test</small>
+            <h2>Matnga rang berish uchun qaysi class ishlatiladi?</h2>
+            <div class="j-lesson__answers">
+              <button type="button" data-lesson-answer="wrong">fw-bold</button>
+              <button type="button" data-lesson-answer="correct">text-primary</button>
+              <button type="button" data-lesson-answer="wrong">img-fluid</button>
+            </div>
+            <p data-lesson-feedback>To‘g‘ri variantni tanlang.</p>
+          </div>
+        </section>
+
         <section class="j-lesson__stage j-lesson__stage--reward" data-lesson-stage="reward" hidden>
-          <span class="j-lesson__reward-pop">🎉</span>
-          <small>3-qadam · natija</small>
+          <span class="j-lesson__reward-pop">✓</span>
+          <small>Dars yakunlandi</small>
           <h2>Birinchi natijangiz tayyor!</h2>
-          <p>Video va testni yakunladingiz. Birinchi 20 coiningiz tayyor.</p>
-          <div class="j-lesson__reward"><span>🪙 <b>+20 coin</b></span><span>⌨️ <b>Amaliy vazifa ochildi</b></span></div>
+          <p>Bootstrap amaliyoti va qisqa testni yakunladingiz. Birinchi 20 coiningiz tayyor.</p>
+          <div class="j-lesson__reward"><span>🪙 <b>+20 coin</b></span><span>⚡ <b>+100 point</b></span></div>
         </section>
       </div>
-      <footer class="j-lesson__foot"><span data-lesson-hint>Videodan boshlang</span><button type="button" class="j-lesson__finish" disabled>Natijani olish</button></footer>
+      <footer class="j-lesson__foot"><span data-lesson-hint>Kursdan boshlang</span><button type="button" class="j-lesson__finish" disabled>Natijani olish</button></footer>
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
@@ -141,6 +185,7 @@
   const instructionText = instruction.querySelector('b');
   const next = root.querySelector('.j-tour__next');
   const lesson = root.querySelector('.j-tour__lesson');
+  const lessonBack = root.querySelector('[data-lesson-back]');
   const lessonFinish = root.querySelector('.j-lesson__finish');
   const lessonProgress = root.querySelector('.j-lesson__progress i');
   const lessonStep = root.querySelector('[data-lesson-step]');
@@ -922,10 +967,11 @@
   function showLessonStage(index) {
     lessonStageIndex = Math.max(0, Math.min(2, index));
     const names = ['video', 'practice', 'reward'];
+    lesson.dataset.stage = names[lessonStageIndex];
     lessonStages.forEach(stage => { stage.hidden = stage.dataset.lessonStage !== names[lessonStageIndex]; });
     lessonStep.textContent = String(lessonStageIndex + 1);
     lessonProgress.style.width = `${((lessonStageIndex + 1) / 3) * 100}%`;
-    lessonHint.textContent = ['Videodan boshlang', 'To‘g‘ri javobni tanlang', 'Mukofotingiz tayyor'][lessonStageIndex];
+    lessonHint.textContent = ['8-amaliyotni davom ettiring', 'To‘g‘ri javobni tanlang', 'Mukofotingiz tayyor'][lessonStageIndex];
     lessonFinish.disabled = lessonStageIndex !== 2;
     lesson.querySelectorAll('[data-lesson-answer]').forEach(button => button.classList.remove('is-correct', 'is-wrong'));
     const feedback = lesson.querySelector('[data-lesson-feedback]');
@@ -1115,9 +1161,17 @@
       if (lessonStageIndex !== 0) return;
       playSound('video');
       lesson.querySelectorAll('[data-lesson-video]').forEach(node => node.classList.add('is-played'));
-      lessonHint.textContent = 'Video ko‘rildi ✓';
+      lessonHint.textContent = 'Amaliy vazifa ochildi ✓';
       setTimeout(() => showLessonStage(1), 260);
     });
+  });
+  lessonBack?.addEventListener('click', () => {
+    if (lessonStageIndex > 0) {
+      showLessonStage(lessonStageIndex - 1);
+      return;
+    }
+    lesson.hidden = true;
+    activateStep(2);
   });
   lesson.querySelectorAll('[data-lesson-answer]').forEach(button => {
     button.addEventListener('click', () => {
