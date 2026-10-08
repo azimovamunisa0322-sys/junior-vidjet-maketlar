@@ -37,6 +37,10 @@
   animation-delay: .04s;
 }
 
+.j-tour__card.is-top.is-lowered {
+  top: max(54px, calc(env(safe-area-inset-top, 0px) + 38px)) !important;
+}
+
 .j-tour__bar i { transition-duration: .18s; }
 .j-tour__next:disabled { cursor: wait; opacity: .78; }
 
@@ -59,6 +63,78 @@
 
 [data-screen="leaders"] .lb-mewrap::before {
   height: 12px;
+}
+
+/* Streak natijasi: maskot va olov alohida turadi, blok ekranning markaziga yaqinlashadi. */
+.j-reward__panel--streak {
+  justify-content: center;
+  padding-top: max(34px, env(safe-area-inset-top, 0px));
+  padding-bottom: calc(34px + env(safe-area-inset-bottom, 0px));
+  background: radial-gradient(circle at 50% 43%, #fff3cf 0, #fff 48%);
+}
+
+.j-reward__panel--streak .j-reward__speech {
+  max-width: 318px;
+}
+
+.j-reward__panel--streak .j-reward__hero {
+  width: 270px;
+  height: 172px;
+  margin: 15px 0 3px;
+}
+
+.j-reward__panel--streak .j-reward__hero .j-reward__flame {
+  left: 8px;
+  top: 5px;
+  width: 116px;
+  height: 136px;
+}
+
+.j-reward__panel--streak .j-reward__hero .j-reward__flame > i {
+  bottom: 20px;
+  width: 49px;
+  height: 57px;
+}
+
+.j-reward__panel--streak .j-reward__hero img {
+  right: 4px;
+  bottom: 0;
+  width: 126px;
+  height: 126px;
+}
+
+.j-reward__panel--streak .j-reward__number {
+  font-size: 60px;
+}
+
+.j-reward__panel--streak h2 {
+  margin: 7px 0 15px;
+  font-size: 18px;
+}
+
+.j-reward__panel--streak .j-reward__primary {
+  flex: 0 0 auto;
+  margin-top: 24px;
+}
+
+/* Webinar taymeridagi raqam va yorliqlar kartochka ichida to‘liq ko‘rinsin. */
+article[data-widget="webinar"] .wtimer {
+  align-items: stretch;
+}
+
+article[data-widget="webinar"] .wtimer__b {
+  min-height: 49px;
+  padding: 4px 0 3px;
+}
+
+article[data-widget="webinar"] .wtimer__b b {
+  font-size: 22px;
+  line-height: 25px;
+}
+
+article[data-widget="webinar"] .wtimer__b span {
+  font-size: 9px;
+  line-height: 11px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -436,6 +512,71 @@
   background: #13c984;
 }
 
+.j-lesson__praise-mascot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 138px;
+  height: 132px;
+  margin: -2px auto 7px;
+}
+
+.j-lesson__praise-mascot::before {
+  content: "";
+  position: absolute;
+  inset: 10px 4px 2px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 75, .43), rgba(255, 235, 185, .17) 54%, transparent 72%);
+  animation: j-progressive-praise-glow 1.9s ease-in-out infinite;
+}
+
+.j-lesson__praise-mascot img {
+  position: relative;
+  z-index: 1;
+  width: 132px;
+  height: 132px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 12px rgba(31, 38, 58, .14));
+  animation: j-progressive-praise-mascot .62s cubic-bezier(.18, .9, .28, 1.2) both;
+}
+
+.j-lesson__praise-checks {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.j-lesson__praise-checks span {
+  padding: 8px 12px;
+  border-radius: 99px;
+  color: #087453;
+  background: #e8faf4;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.j-reward__panel--coin:not(.is-opened) .j-reward__chest {
+  animation: j-progressive-chest-idle 1.65s ease-in-out infinite;
+}
+
+.j-reward__panel--coin:not(.is-opened) .j-reward__chest-glow {
+  animation: j-progressive-chest-glow 1.65s ease-in-out infinite;
+}
+
+.j-reward__panel--coin.is-opened .j-reward__chest-lid {
+  transform: translate(-38px, -64px) rotate(-19deg);
+  transition-duration: .44s;
+}
+
+.j-reward__panel--coin.is-opened .j-reward__chest-body {
+  animation: j-progressive-chest-body-open .62s cubic-bezier(.18, .88, .28, 1.22) both;
+}
+
+.j-reward__panel--coin.is-opened .j-reward__chest-lock {
+  animation: j-progressive-lock-pop .5s cubic-bezier(.18, .88, .28, 1.22) both;
+}
+
 .j-tour__lesson:not([data-stage="reward"]) .j-lesson__foot { display: none; }
 .j-tour__lesson .j-lesson__foot { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
 
@@ -583,13 +724,13 @@
 .j-platform__quiz .j-lesson__answers button { min-height: 54px; padding: 0 14px; border-radius: 10px; text-align: left; color: #2d3443; background: #fff; font-size: 15px; }
 .j-platform__quiz > p { margin: 12px 2px 0; color: #7a8394; font-size: 10px; font-weight: 800; }
 
-.j-platform__task { padding-top: 8px; }
-.j-platform__task-hero { min-height: 306px; }
-.j-platform__task-copy { width: 70%; padding: 24px 16px; }
+.j-platform__task { padding: 8px 0 18px; }
+.j-platform__task-hero { min-height: 340px; }
+.j-platform__task-copy { width: 70%; padding: 24px 16px 18px; }
 .j-platform__task-copy h2 { margin-top: 22px; font-size: 29px; }
 .j-platform__task-copy ol { font-size: 10px; line-height: 1.58; }
-.j-platform__task-hero > img { right: -14px; bottom: 5px; width: 142px; height: 142px; }
-.j-platform__code-card { margin-top: -79px; padding: 15px; }
+.j-platform__task-hero > img { right: 2px; bottom: 10px; width: 144px; height: 144px; }
+.j-platform__code-card { margin: 13px 8px 0; padding: 15px; }
 
 .j-platform__mentor-note {
   display: grid;
@@ -626,9 +767,70 @@
 }
 .j-tour__lesson .j-lesson__finish:disabled { color: #7d8795; background: #edf3f8; }
 
+/* iOS va messenjer ichidagi brauzer panellari pastki tugmani yopmasin. */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  .j-tour__lesson {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .j-tour__lesson .j-lesson__foot {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 14px;
+    box-shadow: 0 -8px 20px rgba(20, 29, 50, .06);
+  }
+}
+
 @keyframes j-progressive-video {
   from { width: 2%; }
   to { width: 100%; }
+}
+
+@keyframes j-progressive-praise-mascot {
+  from { opacity: 0; transform: translateY(18px) scale(.74) rotate(7deg); }
+  68% { opacity: 1; transform: translateY(-4px) scale(1.05) rotate(-2deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes j-progressive-praise-glow {
+  0%, 100% { opacity: .58; transform: scale(.88); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes j-progressive-chest-idle {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  12% { transform: translateY(-2px) rotate(-1.5deg); }
+  24% { transform: translateY(-4px) rotate(1.8deg); }
+  36% { transform: translateY(-2px) rotate(-1deg); }
+  48%, 78% { transform: translateY(0) rotate(0); }
+  88% { transform: translateY(-3px) rotate(1deg); }
+}
+
+@keyframes j-progressive-chest-glow {
+  0%, 100% { opacity: .5; }
+  50% { opacity: 1; box-shadow: 0 0 38px rgba(255, 196, 50, .42); }
+}
+
+@keyframes j-progressive-chest-body-open {
+  0% { transform: scale(1); }
+  30% { transform: scale(.91, 1.08); }
+  68% { transform: scale(1.06, .96); }
+  100% { transform: scale(1); }
+}
+
+@keyframes j-progressive-lock-pop {
+  0% { opacity: 1; transform: translateX(-50%) scale(1); }
+  45% { opacity: 1; transform: translate(-50%, 18px) scale(1.16) rotate(8deg); }
+  100% { opacity: 0; transform: translate(-50%, 38px) scale(.6) rotate(18deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .j-lesson__praise-mascot::before,
+  .j-lesson__praise-mascot img,
+  .j-reward__panel--coin:not(.is-opened) .j-reward__chest,
+  .j-reward__panel--coin:not(.is-opened) .j-reward__chest-glow,
+  .j-reward__panel--coin.is-opened .j-reward__chest-body,
+  .j-reward__panel--coin.is-opened .j-reward__chest-lock { animation: none !important; }
 }
 
 @media (max-width: 350px) {
@@ -638,7 +840,7 @@
   .j-course__tabs span { padding: 9px 8px; }
   .j-platform__task-copy { width: 75%; padding-left: 12px; }
   .j-platform__task-copy h2 { font-size: 24px; }
-  .j-platform__task-hero > img { right: -28px; width: 116px; height: 116px; }
+  .j-platform__task-hero > img { right: 0; bottom: 8px; width: 120px; height: 120px; }
   .j-platform__player { height: 190px; }
   .j-platform__slide-preview { min-height: 156px; margin-inline: 13px; }
   .j-platform__slide-copy b { font-size: 15px; }
