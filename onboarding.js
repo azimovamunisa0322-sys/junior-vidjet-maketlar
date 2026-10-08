@@ -502,6 +502,7 @@
 
   function applyCardPlacement(step) {
     const atTop = step.cardPosition === 'top';
+    card.classList.toggle('is-top', atTop);
     card.classList.toggle('is-compact', !!step.compact);
     card.style.top = atTop ? '6px' : 'auto';
     card.style.bottom = atTop ? 'auto' : '6px';

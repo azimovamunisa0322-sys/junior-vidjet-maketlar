@@ -114,6 +114,25 @@
   will-change: clip-path, opacity, filter;
 }
 
+/* Mobile browser controls (especially Safari's bottom address bar) can cover
+   the last onboarding action. Keep bottom cards inside the tappable viewport. */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  .j-tour__card:not(.is-top) {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .j-tour__card.is-top {
+    top: max(6px, env(safe-area-inset-top, 0px)) !important;
+    bottom: auto !important;
+  }
+
+  .j-tour__next {
+    position: relative;
+    z-index: 1;
+    touch-action: manipulation;
+  }
+}
+
 .j-tour__card.is-preparing {
   opacity: 0;
   pointer-events: none;
