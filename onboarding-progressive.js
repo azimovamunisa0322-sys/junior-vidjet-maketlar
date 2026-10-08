@@ -733,15 +733,6 @@
         target: '.plan__hero',
         title: 'Xush kelibsiz! 👋',
         text: 'Men Junior yordamchisiman. Platformadagi kerakli imkoniyatlarni o‘z vaqtida ko‘rsatib boraman.',
-        button: 'Bugungi rejani ko‘rish',
-        prepare: goHome
-      },
-      {
-        id: 'today-plan',
-        target: '.mk',
-        fallback: '.mk__row--now .mk__card',
-        title: 'Bugungi reja',
-        text: 'Birinchi videodarsni ko‘rasiz, qisqa testni yechasiz va amaliy vazifani bajarasiz.',
         button: 'Birinchi darsga o‘tish',
         prepare: goHome
       },
@@ -1017,10 +1008,15 @@
       const tr = activeTargetRect();
       if (!tr) return;
       const pad = activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
-      const x = Math.max(5, tr.left - sr.left - pad);
-      let y = Math.max(5, tr.top - sr.top - pad);
-      const width = Math.min(sr.width - x - 5, tr.width + pad * 2);
-      let height = Math.min(sr.height - y - 5, tr.height + pad * 2);
+      const edgeInset = 12;
+      const rawLeft = tr.left - sr.left - pad;
+      const rawTop = tr.top - sr.top - pad;
+      const rawRight = tr.right - sr.left + pad;
+      const rawBottom = tr.bottom - sr.top + pad;
+      const x = Math.max(edgeInset, rawLeft);
+      let y = Math.max(edgeInset, rawTop);
+      const width = Math.max(8, Math.min(sr.width - edgeInset, rawRight) - x);
+      let height = Math.max(8, Math.min(sr.height - edgeInset, rawBottom) - y);
       const targetRadius = parseFloat(getComputedStyle(activeTarget).borderTopLeftRadius) || 12;
       const cardRect = card.getBoundingClientRect();
       const gap = 18;

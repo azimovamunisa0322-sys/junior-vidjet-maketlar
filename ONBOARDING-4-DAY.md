@@ -7,12 +7,11 @@
 
 ## 1-kun — platforma bilan tanishuv
 
-1. Junior yordamchisi bilan tanishish.
-2. Bugungi reja: videodars, test va amaliy vazifa.
-3. Darsni yakunlab, 50 Coin va 100 Point olish.
-4. Amaliy vazifani topshirib, 70 Coin olish.
-5. Birinchi streakni boshlash va uni har kuni dars bilan saqlash.
-6. Kurator va mentor vazifalarini bilib olish.
+1. Junior yordamchisi bilan tanishish va birinchi darsga o‘tish.
+2. Darsni yakunlab, 50 Coin va 100 Point olish.
+3. Amaliy vazifani topshirib, 70 Coin olish.
+4. Birinchi streakni boshlash va uni har kuni dars bilan saqlash.
+5. Kurator va mentor vazifalarini bilib olish.
 
 Push xabar: birinchi dars tayyorligi va bugungi vazifa eslatiladi.
 
