@@ -235,7 +235,7 @@
             <h2 id="j-coinshop-modal-title">Coin’larni qayerga sarflashni bilasizmi?</h2>
             <p>Yig‘gan Coin’laringizni Coin Shop’da sovg‘alarga almashtirishingiz mumkin.</p>
             <span class="j-coinshop-modal__balance">🪙 Birinchi 50 Coin tayyor</span>
-            <button type="button" data-coinshop-modal-next>Tushunarli</button>
+            <button type="button" data-coinshop-modal-next>Coin Shop’ni ochish</button>
           </div>
         </section>
       </section>
@@ -323,6 +323,7 @@
   let cardAnimationTimer = 0;
   let autoFinishTimer = 0;
   let pushPreviewTimer = 0;
+  let awaitingCoinShopReturn = false;
 
   function ensureAudio() {
     if (!audioContext) {
@@ -839,21 +840,10 @@
         text: 'Yangi bilimlarni egallash va Junior’da o‘qishni davom ettirishga tayyormisiz?',
         button: 'Ha, tayyorman',
         later: 'Keyinroq',
+        openPayment: true,
         hideFocus: true,
         fullDim: true,
         prepare: goHome
-      },
-      {
-        id: 'payment-qr',
-        target: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
-        fallback: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
-        title: 'To‘lovni amalga oshiring',
-        text: 'QR-kodni skanerlang yoki to‘lov havolasidan foydalaning va Akademiya o‘quvchisiga aylaning.',
-        compact: true,
-        hideNext: true,
-        hideFocus: true,
-        noShade: true,
-        prepare: preparePaymentQr
       }
     ],
     4: []
@@ -1277,6 +1267,13 @@
   async function advance() {
     const step = steps[stepIndex];
     await transitionCurrentStep();
+    if (step.openPayment) {
+      playSound('bubble');
+      safeSet();
+      closeTour(false);
+      await preparePaymentQr();
+      return;
+    }
     if (step.flow === 'streak') {
       await startStreakReward();
       return;
@@ -1291,6 +1288,7 @@
   }
 
   function startTour() {
+    awaitingCoinShopReturn = false;
     steps = selectedSteps();
     if (selectedDay === 4) {
       openPasswordRecovery();
@@ -1301,6 +1299,7 @@
   }
 
   function closeTour(markComplete = false) {
+    awaitingCoinShopReturn = false;
     runToken += 1;
     if (markComplete) safeSet();
     clearTarget();
@@ -1782,11 +1781,23 @@
     rewardChest?.focus({ preventScroll: true });
   });
   rewardChest?.addEventListener('click', openRewardChest);
-  coinShopModalNext?.addEventListener('click', () => {
+  coinShopModalNext?.addEventListener('click', async () => {
+    if (coinShopModalNext.disabled) return;
+    coinShopModalNext.disabled = true;
+    actionPending = true;
     playSound('bubble');
     coinShopModal.hidden = true;
     success.hidden = true;
-    activateStep(findStepIndex('leaderboard'));
+    card.hidden = true;
+    focus.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    screen.classList.remove('j-tour-scroll-locked');
+    root.classList.remove('is-running');
+    root.hidden = true;
+    awaitingCoinShopReturn = true;
+    await goScreen('coinshop');
+    actionPending = false;
+    coinShopModalNext.disabled = false;
   });
   finish.addEventListener('click', () => {
     playSound('finish');
@@ -1816,6 +1827,11 @@
   });
 
   document.addEventListener('click', event => {
+    if (awaitingCoinShopReturn && event.target.closest('.scr[data-screen="coinshop"] [data-back]')) {
+      awaitingCoinShopReturn = false;
+      setTimeout(() => activateStep(findStepIndex('leaderboard')), 0);
+    }
+
     const telegram = event.target.closest('[data-j-team]');
     if (telegram) {
       const contacts = window.JUNIOR_ONBOARDING_CONTACTS || {};
