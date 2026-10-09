@@ -882,7 +882,6 @@
     updateDayPicker();
     if (selectedDay === 4) openPasswordRecovery();
     else startTour();
-    setTimeout(showDayPush, 520);
   }
 
   async function choosePushPermission(allow) {
@@ -1008,7 +1007,7 @@
       const tr = activeTargetRect();
       if (!tr) return;
       const pad = activeTarget.matches('.plan__hero')
-        ? 0
+        ? 3
         : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       const edgeInset = 12;
       const rawLeft = tr.left - sr.left - pad;
