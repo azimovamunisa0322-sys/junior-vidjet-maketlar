@@ -185,7 +185,7 @@
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
-        <span class="j-reward__kicker">Birinchi streak</span>
+        <span class="j-reward__kicker" data-streak-kicker>Birinchi streak</span>
         <div class="j-reward__flame-wrap" aria-hidden="true">
           <i class="j-reward__spark j-reward__spark--one"></i>
           <i class="j-reward__spark j-reward__spark--two"></i>
@@ -197,7 +197,7 @@
         <button type="button" class="j-reward__ignite" data-reward-ignite><span>↑</span> Olovni yoqish</button>
       </section>
       <section class="j-reward__panel j-reward__panel--streak" data-reward-panel="streak" hidden>
-        <div class="j-reward__speech">Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.</div>
+        <div class="j-reward__speech" data-streak-speech>Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.</div>
         <div class="j-reward__hero">
           <div class="j-reward__flame j-reward__flame--lit" aria-hidden="true"><i></i></div>
           <img data-a="a2" alt="Junior maskoti">
@@ -808,8 +808,7 @@
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
         title: 'Pointlaringiz sizni yuqoriga olib chiqadi 🏆',
         text: 'Hozir siz 3-o‘rindasiz. Yaqin raqiblaringiz natijasini ko‘rib, keyingi marraga intiling.',
-        button: 'Birinchi streakni olish',
-        flow: 'streak',
+        button: 'Davom etish',
         prepare: prepareLeaderboardNearby
       }
     ],
@@ -1578,6 +1577,15 @@
 
   async function startStreakReward() {
     rewardMode = 'streak';
+    const streakKicker = success.querySelector('[data-streak-kicker]');
+    const streakSpeech = success.querySelector('[data-streak-speech]');
+    if (selectedDay === 3) {
+      if (streakKicker) streakKicker.textContent = 'Bugungi streak';
+      if (streakSpeech) streakSpeech.textContent = 'Zo‘r! Bugungi dars va vazifani yakunladingiz 🎉 Endi streakingiz boshlandi.';
+    } else {
+      if (streakKicker) streakKicker.textContent = 'Birinchi streak';
+      if (streakSpeech) streakSpeech.textContent = 'Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.';
+    }
     playSound('complete');
     await goHome();
     content.scrollTo({ top: 0, behavior: 'auto' });
@@ -1785,6 +1793,7 @@
       playSound('finish');
       success.hidden = true;
       if (selectedDay === 1) activateStep(findStepIndex('teachers'));
+      else if (selectedDay === 3) activateStep(findStepIndex('streak-goal'));
       else closeTour(true);
       return;
     }
@@ -1832,7 +1841,7 @@
         return;
       }
       if (selectedDay === 3 && !hasPurchasedCourse) {
-        activateStep(findStepIndex('streak-goal'));
+        startStreakReward();
         return;
       }
     }
