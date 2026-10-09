@@ -145,25 +145,25 @@
       </div>
       <footer class="j-lesson__foot"><span data-lesson-hint>Videoni ko‘ring</span><button type="button" class="j-lesson__finish" disabled>Davom etish</button></footer>
     </section>
-    <section class="j-tour__auth" hidden aria-label="Parolni tiklash">
+    <section class="j-tour__auth" hidden aria-label="Akkauntga qayta kirish">
       <header class="j-auth__brand"><b>J</b><span>Junior<small>academy</small></span></header>
       <section class="j-auth__panel" data-auth-stage="login">
         <small>4-KUN · XAVFSIZ KIRISH</small>
-        <h2>Akkauntdan chiqib qoldingizmi?</h2>
-        <p>Telefon raqamingiz orqali parolni tezda tiklab olasiz.</p>
-        <label>Telefon raqam<input type="tel" value="+998 90 123 45 67" readonly></label>
-        <label>Parol<input type="password" value="junior-demo" readonly></label>
+        <h2>Junior’ga kirish</h2>
+        <p>Telefon raqamingiz va parolingizni kiriting.</p>
+        <label>Telefon raqam<input type="tel" placeholder="+998 __ ___ __ __" autocomplete="off" data-auth-login-phone></label>
+        <label>Parol<input type="password" placeholder="Parolni kiriting" autocomplete="off" data-auth-login-password></label>
         <button type="button" data-auth-forgot>Parolni unutdingizmi?</button>
       </section>
       <section class="j-auth__panel" data-auth-stage="phone" hidden>
-        <small>1/3 QADAM</small>
+        <small>1/2 QADAM</small>
         <h2>Raqamingizni tasdiqlang</h2>
         <p>4 xonali tasdiqlash kodini shu raqamga yuboramiz.</p>
-        <label>Telefon raqam<input type="tel" value="+998 90 123 45 67" data-auth-phone></label>
+        <label>Telefon raqam<input type="tel" placeholder="+998 __ ___ __ __" autocomplete="off" data-auth-phone></label>
         <button type="button" data-auth-send>Kodni yuborish</button>
       </section>
       <section class="j-auth__panel" data-auth-stage="code" hidden>
-        <small>2/3 QADAM</small>
+        <small>2/2 QADAM</small>
         <h2>Tasdiqlash kodini kiriting</h2>
         <p>+998 90 ••• •• 67 raqamiga yuborilgan 4 xonali kodni yozing.</p>
         <div class="j-auth__code" aria-label="4 xonali tasdiqlash kodi">
@@ -175,19 +175,11 @@
         <span class="j-auth__demo">Demo kod: <b>2486</b></span>
         <button type="button" data-auth-verify disabled>Kodni tasdiqlash</button>
       </section>
-      <section class="j-auth__panel" data-auth-stage="password" hidden>
-        <small>3/3 QADAM</small>
-        <h2>Yangi parol yarating</h2>
-        <p>Esda qoladigan, kamida 6 belgili yangi parol kiriting.</p>
-        <label>Yangi parol<input type="password" placeholder="Kamida 6 ta belgi" data-auth-password></label>
-        <label>Parolni takrorlang<input type="password" placeholder="Parolni qayta kiriting" data-auth-confirm></label>
-        <button type="button" data-auth-save disabled>Parolni saqlash</button>
-      </section>
       <section class="j-auth__panel j-auth__panel--success" data-auth-stage="success" hidden>
         <span class="j-auth__check">✓</span>
-        <small>PAROL TIKLANDI</small>
-        <h2>Akkauntingiz yana siz bilan!</h2>
-        <p>Yangi parol bilan Junior platformasiga qayta kirishingiz mumkin.</p>
+        <small>KIRISH TASDIQLANDI</small>
+        <h2>Akkauntingizga kirishingiz mumkin!</h2>
+        <p>Telefon raqamingiz muvaffaqiyatli tasdiqlandi.</p>
         <button type="button" data-auth-finish>Akkauntga kirish</button>
       </section>
     </section>
@@ -1520,14 +1512,14 @@
     Object.values(shades).forEach(node => { node.hidden = true; });
     const codeInputs = [...auth.querySelectorAll('.j-auth__code input')];
     codeInputs.forEach(input => { input.value = ''; input.removeAttribute('aria-invalid'); });
-    const password = auth.querySelector('[data-auth-password]');
-    const confirm = auth.querySelector('[data-auth-confirm]');
+    const loginPhone = auth.querySelector('[data-auth-login-phone]');
+    const loginPassword = auth.querySelector('[data-auth-login-password]');
+    const recoveryPhone = auth.querySelector('[data-auth-phone]');
     const verify = auth.querySelector('[data-auth-verify]');
-    const save = auth.querySelector('[data-auth-save]');
-    if (password) password.value = '';
-    if (confirm) confirm.value = '';
+    if (loginPhone) loginPhone.value = '';
+    if (loginPassword) loginPassword.value = '';
+    if (recoveryPhone) recoveryPhone.value = '';
     if (verify) verify.disabled = true;
-    if (save) save.disabled = true;
     updateDayPicker();
     showAuthStage('login');
   }
@@ -1536,9 +1528,6 @@
   const authPhone = auth.querySelector('[data-auth-phone]');
   const authSend = auth.querySelector('[data-auth-send]');
   const authVerify = auth.querySelector('[data-auth-verify]');
-  const authPassword = auth.querySelector('[data-auth-password]');
-  const authConfirm = auth.querySelector('[data-auth-confirm]');
-  const authSave = auth.querySelector('[data-auth-save]');
   const authFinish = auth.querySelector('[data-auth-finish]');
   const authCodeInputs = [...auth.querySelectorAll('.j-auth__code input')];
 
@@ -1568,18 +1557,6 @@
       return;
     }
     playSound('correct');
-    showAuthStage('password');
-  });
-
-  function validateNewPassword() {
-    const valid = authPassword.value.length >= 6 && authPassword.value === authConfirm.value;
-    authSave.disabled = !valid;
-    authConfirm.toggleAttribute('aria-invalid', !!authConfirm.value && authPassword.value !== authConfirm.value);
-  }
-  authPassword?.addEventListener('input', validateNewPassword);
-  authConfirm?.addEventListener('input', validateNewPassword);
-  authSave?.addEventListener('click', () => {
-    if (authSave.disabled) return;
     showAuthStage('success');
     fireConfetti();
   });

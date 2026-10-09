@@ -32,13 +32,12 @@ Push xabar: CoinShop va yaqin jonli dars haqida eslatiladi.
 
 Push xabar: o‘qishni davom ettirish va bugungi dars haqida eslatiladi.
 
-## 4-kun — parolni tiklash
+## 4-kun — akkauntga qayta kirish
 
-1. Akkauntdan chiqib qolgan holatni ko‘rsatish.
-2. Telefon raqami orqali tiklashni boshlash.
+1. Bo‘sh telefon raqami va parol maydonlari bilan kirish oynasini ko‘rsatish.
+2. «Parolni unutdingizmi?» orqali telefon raqamini tasdiqlashni boshlash.
 3. Raqamga yuborilgan 4 xonali tasdiqlash kodini kiritish.
-4. Yangi parol yaratish.
-5. Akkauntga qayta kirish.
+4. Kod tasdiqlangach, akkauntga qayta kirish.
 
 Bu demo-testda haqiqiy SMS yuborilmaydi. Tasdiqlash kodi: `2486`.
 
