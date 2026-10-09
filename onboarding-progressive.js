@@ -227,6 +227,17 @@
           <div class="j-reward__coin-result" aria-live="polite"><b>+50 Coin</b><span>+100 Point ham qo‘shildi</span></div>
         </div>
         <button type="button" class="j-tour__finish" hidden>Keyingi darsga o‘tish</button>
+        <section class="j-coinshop-modal" hidden role="dialog" aria-modal="true" aria-labelledby="j-coinshop-modal-title">
+          <div class="j-coinshop-modal__card">
+            <span class="j-coinshop-modal__icon" aria-hidden="true">🛍️</span>
+            <img data-a="a2" alt="Junior maskoti">
+            <small>COIN SHOP</small>
+            <h2 id="j-coinshop-modal-title">Coin’larni qayerga sarflashni bilasizmi?</h2>
+            <p>Yig‘gan Coin’laringizni Coin Shop’da sovg‘alar va foydali mahsulotlarga almashtirishingiz mumkin.</p>
+            <span class="j-coinshop-modal__balance">🪙 Birinchi 50 Coin tayyor</span>
+            <button type="button" data-coinshop-modal-next>Tushunarli</button>
+          </div>
+        </section>
       </section>
     </section>
     <div class="j-tour__toast" role="status"></div>`;
@@ -286,6 +297,8 @@
   const authStages = [...root.querySelectorAll('[data-auth-stage]')];
   const success = root.querySelector('.j-tour__success');
   const finish = root.querySelector('.j-tour__finish');
+  const coinShopModal = root.querySelector('.j-coinshop-modal');
+  const coinShopModalNext = root.querySelector('[data-coinshop-modal-next]');
   const rewardPanels = [...root.querySelectorAll('[data-reward-panel]')];
   const rewardIgnite = root.querySelector('[data-reward-ignite]');
   const rewardNext = root.querySelector('[data-reward-next]');
@@ -776,21 +789,13 @@
         prepare: goHome
       },
       {
-        id: 'coinshop-entry',
-        target: 'button[data-go="coinshop"]',
-        title: 'Coin’larni qayerga sarflashni bilishni xohlaysizmi?',
-        text: 'Hozirgina olgan Coin’laringiz bilan Coin Shop’dagi sovg‘alarni ko‘rishingiz mumkin.',
-        actionButton: 'Coin Shop’ni ochish',
-        requireClick: true,
-        prepare: goHome
-      },
-      {
         id: 'leaderboard',
         target: '.scr[data-screen="leaders"] .j-lb-nearby',
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
         title: 'Pointlaringiz sizni yuqoriga olib chiqadi 🏆',
         text: 'Hozir siz 3-o‘rindasiz. Yaqin raqiblaringiz natijasini ko‘rib, keyingi marraga intiling.',
-        button: 'Streak maqsadini tanlash',
+        button: 'Birinchi streakni olish',
+        flow: 'streak',
         prepare: prepareLeaderboardNearby
       },
       {
@@ -806,9 +811,11 @@
         id: 'streak-confirmed',
         target: 'article[data-widget="streak"]',
         title: () => `${getStreakGoal()} kunlik maqsad — zo‘r tanlov! 🔥`,
-        text: () => `Kelishdik! Har bir yakunlangan dars sizni ${getStreakGoal()} kunlik maqsadingizga yaqinlashtiradi. Junior sizga ishonadi!`,
+        text: () => `Kelishdik! Endi har bir dars sizni ${getStreakGoal()} kunlik marrangizga yaqinlashtiradi. Olg‘a, siz buni uddalaysiz!`,
         celebration: true,
-        autoFinishAfter: 4300,
+        hideFocus: true,
+        fullDim: true,
+        button: 'Davom etish',
         prepare: () => prepareWidget('streak')
       }
     ],
@@ -842,8 +849,8 @@
         fallback: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
         title: 'To‘lovni amalga oshiring',
         text: 'QR-kodni skanerlang yoki to‘lov havolasidan foydalaning va Akademiya o‘quvchisiga aylaning.',
-        button: '3-kunni yakunlash',
         compact: true,
+        hideNext: true,
         hideFocus: true,
         noShade: true,
         prepare: preparePaymentQr
@@ -1191,13 +1198,13 @@
     text.textContent = typeof step.text === 'function' ? step.text() : step.text;
     instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
-    streakVisual.hidden = step.id !== 'streak-goal';
-    if (step.id === 'streak-goal') streakPreview.textContent = String(getStreakGoal() || 7);
+    streakVisual.hidden = step.id !== 'streak-goal' && !step.celebration;
+    if (step.id === 'streak-goal' || step.celebration) streakPreview.textContent = String(getStreakGoal() || 7);
     choices.hidden = !step.choices;
     choices.querySelectorAll('[data-streak-goal]').forEach(button => {
       button.classList.toggle('is-active', Number(button.dataset.streakGoal) === getStreakGoal());
     });
-    next.hidden = (!!step.requireClick && !step.actionButton) || !!step.autoFinishAfter;
+    next.hidden = (!!step.requireClick && !step.actionButton) || !!step.autoFinishAfter || !!step.hideNext;
     next.textContent = step.actionButton || step.button || 'Keyingisi';
     later.hidden = !step.later;
     later.textContent = step.later || 'Keyinroq';
@@ -1240,6 +1247,10 @@
       if (token !== runToken) return;
       focus.hidden = !!step.hideFocus;
       playCardBubble();
+      if (step.celebration) {
+        fireConfetti();
+        playSound('streak');
+      }
     });
     setTimeout(() => {
       if (token === runToken && !root.hidden && activeTarget) positionTour();
@@ -1464,8 +1475,14 @@
       const coinText = panel.querySelector('[data-coin-text]');
       if (coinTitle) coinTitle.textContent = config.title;
       if (coinText) coinText.textContent = config.text;
-      finish.hidden = false;
-      finish.focus({ preventScroll: true });
+      if (selectedDay === 2 && rewardMode === 'lesson-result') {
+        coinShopModal.hidden = false;
+        updateAssets();
+        coinShopModalNext?.focus({ preventScroll: true });
+      } else {
+        finish.hidden = false;
+        finish.focus({ preventScroll: true });
+      }
     }, 780);
   }
 
@@ -1488,6 +1505,7 @@
     rewardLocked = false;
     rewardSwipeStart = null;
     finish.hidden = true;
+    coinShopModal.hidden = true;
     success.querySelector('[data-reward-panel="ignite"]')?.classList.remove('is-igniting');
     success.querySelector('[data-reward-panel="coin"]')?.classList.remove('is-opened');
     const coinTitle = success.querySelector('[data-coin-title]');
@@ -1502,7 +1520,7 @@
     if (coinBadge) coinBadge.textContent = '+50';
     if (coinResult) coinResult.textContent = '+50 Coin';
     if (coinResultText) coinResultText.textContent = '+100 Point ham qo‘shildi';
-    finish.textContent = selectedDay === 2 ? 'Davom etish' : 'Amaliy vazifaga o‘tish';
+    finish.textContent = 'Amaliy vazifaga o‘tish';
     showRewardStage('coin');
     updateAssets();
     rewardChest?.focus({ preventScroll: true });
@@ -1525,6 +1543,7 @@
     shades.top.style.background = 'rgba(14, 20, 35, .66)';
     ['left', 'right', 'bottom'].forEach(key => { shades[key].style.width = '0px'; shades[key].style.height = '0px'; });
     finish.hidden = true;
+    coinShopModal.hidden = true;
     const panel = success.querySelector('[data-reward-panel="coin"]');
     panel?.classList.remove('is-opened');
     const kicker = panel?.querySelector('.j-reward__kicker');
@@ -1754,6 +1773,7 @@
       playSound('finish');
       success.hidden = true;
       if (selectedDay === 1) activateStep(findStepIndex('teachers'));
+      else if (selectedDay === 2) activateStep(findStepIndex('streak-goal'));
       else closeTour(true);
       return;
     }
@@ -1762,14 +1782,16 @@
     rewardChest?.focus({ preventScroll: true });
   });
   rewardChest?.addEventListener('click', openRewardChest);
+  coinShopModalNext?.addEventListener('click', () => {
+    playSound('bubble');
+    coinShopModal.hidden = true;
+    success.hidden = true;
+    activateStep(findStepIndex('leaderboard'));
+  });
   finish.addEventListener('click', () => {
     playSound('finish');
     if (rewardMode === 'lesson-result') {
       success.hidden = true;
-      if (selectedDay === 2) {
-        activateStep(findStepIndex('coinshop-entry'));
-        return;
-      }
       card.hidden = true;
       focus.hidden = true;
       Object.values(shades).forEach(node => { node.hidden = true; });

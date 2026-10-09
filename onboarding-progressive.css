@@ -318,13 +318,122 @@
 .j-tour__card.is-streak-goal .j-tour__actions .j-tour__mascot { display: none; }
 
 .j-tour__card.is-streak-confirmed {
+  inset: 0 !important;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 100%;
+  padding: 68px 25px 38px;
+  border: 0;
+  border-radius: 0;
   text-align: center;
-  background: linear-gradient(180deg, #fff 0%, #fff9f3 100%);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 183, 45, .28), transparent 31%),
+    radial-gradient(circle at 50% 100%, rgba(255, 82, 43, .15), transparent 38%),
+    linear-gradient(180deg, #fffaf4 0%, #fff 58%, #fff5ed 100%);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.j-tour__card.is-streak-confirmed .j-tour__text { max-width: 310px; margin: 8px auto 0; }
-.j-tour__card.is-streak-confirmed .j-tour__actions { justify-content: center; }
-.j-tour__card.is-streak-confirmed .j-tour__mascot { width: 86px; height: 86px; }
+.j-tour__card.is-streak-confirmed::before {
+  content: "MAQSAD TANLANDI";
+  display: inline-flex;
+  margin-bottom: 18px;
+  padding: 8px 13px;
+  border-radius: 99px;
+  color: #e84625;
+  background: #ffebe4;
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: 1.2px;
+}
+
+.j-tour__card.is-streak-confirmed .j-tour__meta,
+.j-tour__card.is-streak-confirmed .j-tour__bar { display: none; }
+
+.j-tour__card.is-streak-confirmed .j-streak-goal__visual {
+  order: 2;
+  width: 100%;
+  height: 244px;
+  margin: 12px 0 26px;
+  overflow: hidden;
+}
+
+.j-tour__card.is-streak-confirmed .j-streak-goal__visual::before {
+  content: "🔥";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: 0;
+  font-size: 178px;
+  line-height: 1;
+  filter: drop-shadow(0 18px 24px rgba(255, 111, 0, .24));
+  transform: translate(-50%, -50%);
+  animation: j-progressive-praise-glow 1.35s ease-in-out infinite;
+}
+
+.j-tour__card.is-streak-confirmed .j-streak-goal__calendar {
+  z-index: 2;
+  width: 126px;
+  height: 116px;
+  margin: 0 74px 16px 0;
+  border-width: 5px;
+  border-radius: 24px;
+  background: linear-gradient(#ff6948 0 34px, #fff 34px);
+  box-shadow: 0 18px 35px rgba(40, 35, 54, .2);
+  animation: j-progressive-chest-idle 1.8s ease-in-out infinite;
+}
+
+.j-tour__card.is-streak-confirmed .j-streak-goal__calendar b { margin-top: 20px; font-size: 48px; }
+.j-tour__card.is-streak-confirmed .j-streak-goal__calendar small { font-size: 11px; }
+
+.j-tour__card.is-streak-confirmed .j-streak-goal__visual img {
+  z-index: 3;
+  right: calc(50% - 116px);
+  bottom: 15px;
+  width: 154px;
+  height: 154px;
+  animation: j-progressive-praise-mascot .72s cubic-bezier(.18, .9, .28, 1.2) both;
+}
+
+.j-tour__card.is-streak-confirmed .j-tour__title {
+  order: 3;
+  max-width: 330px;
+  margin: 0;
+  color: #17213d;
+  font-size: 31px;
+  line-height: 1.08;
+  letter-spacing: -.8px;
+}
+
+.j-tour__card.is-streak-confirmed .j-tour__text {
+  order: 4;
+  max-width: 310px;
+  margin: 13px auto 0;
+  color: #68748b;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.j-tour__card.is-streak-confirmed .j-tour__actions {
+  order: 5;
+  display: block;
+  width: min(100%, 330px);
+  margin-top: 26px;
+}
+
+.j-tour__card.is-streak-confirmed .j-tour__mascot { display: none; }
+
+.j-tour__card.is-streak-confirmed .j-tour__next {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 18px;
+  box-shadow: 0 13px 28px rgba(255, 79, 40, .28);
+  font-size: 16px;
+}
 
 .j-tour__later {
   width: 100%;
@@ -1073,6 +1182,123 @@ article[data-widget="webinar"] .wtimer__b span {
 
 .j-reward__panel--coin.is-opened .j-reward__chest-lock {
   animation: j-progressive-lock-pop .5s cubic-bezier(.18, .88, .28, 1.22) both;
+}
+
+/* 2-kun: Coin Shop tushuntirishi mukofot ekranining o‘zida ochiladi. */
+.j-coinshop-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 28, 50, .56);
+  backdrop-filter: blur(3px);
+  animation: j-progressive-focus-in .28s ease-out both;
+}
+
+.j-coinshop-modal[hidden] { display: none !important; }
+
+.j-coinshop-modal__card {
+  position: relative;
+  width: min(100%, 340px);
+  padding: 28px 24px 22px;
+  overflow: hidden;
+  border: 1px solid #ffe0d7;
+  border-radius: 28px;
+  text-align: center;
+  background: linear-gradient(180deg, #fff 0%, #fff8f5 100%);
+  box-shadow: 0 24px 64px rgba(19, 28, 51, .28);
+  animation: j-progressive-card-in .42s cubic-bezier(.18,.82,.24,1.05) both;
+}
+
+.j-coinshop-modal__card::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -74px;
+  width: 220px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 176, 57, .3), transparent 68%);
+  transform: translateX(-50%);
+}
+
+.j-coinshop-modal__card > img {
+  position: absolute;
+  z-index: 2;
+  right: 19px;
+  top: 18px;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 10px rgba(23, 33, 61, .14));
+}
+
+.j-coinshop-modal__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 14px;
+  border-radius: 22px;
+  background: #fff0e9;
+  box-shadow: inset 0 0 0 1px #ffd9cc;
+  font-size: 34px;
+}
+
+.j-coinshop-modal__card > small {
+  display: inline-block;
+  color: #e84625;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 1.4px;
+}
+
+.j-coinshop-modal__card h2 {
+  max-width: 280px;
+  margin: 10px auto 8px;
+  color: #17213d;
+  font-size: 23px;
+  line-height: 1.13;
+  letter-spacing: -.45px;
+}
+
+.j-coinshop-modal__card p {
+  max-width: 286px;
+  margin: 0 auto;
+  color: #737d91;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 750;
+}
+
+.j-coinshop-modal__balance {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto 18px;
+  padding: 9px 14px;
+  border: 1px solid #ffc44e;
+  border-radius: 99px;
+  color: #b66b00;
+  background: #fff8dd;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.j-coinshop-modal__card button {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: 17px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6847, #ff4325);
+  box-shadow: 0 10px 24px rgba(255, 79, 40, .25);
+  font: 900 15px/1 var(--f, "Nunito", sans-serif);
+  cursor: pointer;
 }
 
 .j-tour__lesson:not([data-stage="reward"]) .j-lesson__foot { display: none; }
