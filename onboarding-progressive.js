@@ -233,7 +233,7 @@
             <img data-a="a2" alt="Junior maskoti">
             <small>COIN SHOP</small>
             <h2 id="j-coinshop-modal-title">Coin’larni qayerga sarflashni bilasizmi?</h2>
-            <p>Yig‘gan Coin’laringizni Coin Shop’da sovg‘alar va foydali mahsulotlarga almashtirishingiz mumkin.</p>
+            <p>Yig‘gan Coin’laringizni Coin Shop’da sovg‘alarga almashtirishingiz mumkin.</p>
             <span class="j-coinshop-modal__balance">🪙 Birinchi 50 Coin tayyor</span>
             <button type="button" data-coinshop-modal-next>Tushunarli</button>
           </div>
