@@ -790,6 +790,19 @@
         prepare: goHome
       },
       {
+        id: 'coinshop-preview',
+        target: '.scr[data-screen="coinshop"] .scr__body',
+        fallback: '.scr[data-screen="coinshop"]',
+        title: 'Coin Shop ochildi 🛍️',
+        text: 'Yig‘gan Coin’laringizni shu yerda sovg‘alarga almashtirasiz. Endi sayohatni davom ettiramiz.',
+        button: 'Davom etish',
+        compact: true,
+        hideFocus: true,
+        noShade: true,
+        onNext: () => { awaitingCoinShopReturn = false; },
+        prepare: () => goScreen('coinshop')
+      },
+      {
         id: 'leaderboard',
         target: '.scr[data-screen="leaders"] .j-lb-nearby',
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
@@ -798,6 +811,19 @@
         button: 'Birinchi streakni olish',
         flow: 'streak',
         prepare: prepareLeaderboardNearby
+      }
+    ],
+    3: [
+      {
+        id: 'day-three-lesson',
+        target: '.mk__row--now .mk__card',
+        targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
+        title: 'Bugungi darsingiz tayyor',
+        text: 'Videodars, test va amaliy vazifani yakunlab, Coin hamda Point oling.',
+        actionButton: 'Darsni boshlash',
+        requireClick: true,
+        action: 'lesson',
+        prepare: goHome
       },
       {
         id: 'streak-goal',
@@ -816,21 +842,8 @@
         celebration: true,
         hideFocus: true,
         fullDim: true,
-        button: 'Davom etish',
+        button: 'To‘lov taklifini ko‘rish',
         prepare: () => prepareWidget('streak')
-      }
-    ],
-    3: [
-      {
-        id: 'day-three-lesson',
-        target: '.mk__row--now .mk__card',
-        targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
-        title: 'Bugungi darsingiz tayyor',
-        text: 'Videodars, test va amaliy vazifani yakunlab, Coin hamda Point oling.',
-        actionButton: 'Darsni boshlash',
-        requireClick: true,
-        action: 'lesson',
-        prepare: goHome
       },
       {
         id: 'purchase-offer',
@@ -1772,7 +1785,6 @@
       playSound('finish');
       success.hidden = true;
       if (selectedDay === 1) activateStep(findStepIndex('teachers'));
-      else if (selectedDay === 2) activateStep(findStepIndex('streak-goal'));
       else closeTour(true);
       return;
     }
@@ -1796,6 +1808,7 @@
     root.hidden = true;
     awaitingCoinShopReturn = true;
     await goScreen('coinshop');
+    await activateStep(findStepIndex('coinshop-preview'));
     actionPending = false;
     coinShopModalNext.disabled = false;
   });
@@ -1819,7 +1832,7 @@
         return;
       }
       if (selectedDay === 3 && !hasPurchasedCourse) {
-        activateStep(findStepIndex('purchase-offer'));
+        activateStep(findStepIndex('streak-goal'));
         return;
       }
     }
