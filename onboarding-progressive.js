@@ -995,8 +995,9 @@
       const sr = root.getBoundingClientRect();
       const tr = activeTargetRect();
       if (!tr) return;
-      const pad = activeTarget.matches('.plan__hero')
-        ? -3
+      const isPlanHero = activeTarget.matches('.plan__hero');
+      const pad = isPlanHero
+        ? 0
         : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       const edgeInset = 12;
       const rawLeft = tr.left - sr.left - pad;
@@ -1029,7 +1030,8 @@
         top: `${y}px`,
         width: `${width}px`,
         height: `${height}px`,
-        borderRadius: `${targetRadius + pad}px`
+        borderRadius: `${targetRadius + pad}px`,
+        boxShadow: isPlanHero ? 'none' : ''
       });
     });
   }
