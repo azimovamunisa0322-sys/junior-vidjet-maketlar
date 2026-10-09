@@ -706,6 +706,7 @@
     },
     {
       target: '.mk__row--now .mk__card',
+      targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
       title: 'Birinchi darsni boshlash vaqti',
       text: 'Endi birinchi darsingizni oching. Uni tugatsangiz, dastlabki streak va 20 coin olasiz.',
       actionButton: 'Birinchi darsni boshlash',
@@ -728,6 +729,7 @@
       {
         id: 'lesson-entry',
         target: '.mk__row--now .mk__card',
+        targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
         title: 'Birinchi darsingiz tayyor',
         text: 'Darsni muvaffaqiyatli yakunlab, birinchi Coin va Pointlaringizni olasiz.',
         actionButton: 'Darsni boshlash',
@@ -777,6 +779,7 @@
       {
         id: 'day-three-lesson',
         target: '.mk__row--now .mk__card',
+        targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
         title: 'Bugungi darsingiz tayyor',
         text: 'Videodars, test va amaliy vazifani yakunlab, Coin hamda Point oling.',
         actionButton: 'Darsni boshlash',
@@ -1000,7 +1003,7 @@
         ? 0
         : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
       Object.values(shades).forEach(node => {
-        node.style.background = isPlanHero ? 'transparent' : 'rgba(12, 18, 34, .68)';
+        node.style.background = 'transparent';
       });
       const edgeInset = 12;
       const rawLeft = tr.left - sr.left - pad;
@@ -1034,7 +1037,7 @@
         width: `${width}px`,
         height: `${height}px`,
         borderRadius: `${targetRadius + pad}px`,
-        boxShadow: isPlanHero ? '0 0 0 9999px rgba(12, 18, 34, .68)' : ''
+        boxShadow: '0 0 0 9999px rgba(12, 18, 34, .68)'
       });
     });
   }
@@ -1164,7 +1167,7 @@
         .slice(0, step.targetGroupLimit || 99)
       : [];
     activeTargets = groupedTargets.length ? groupedTargets : [target];
-    activeTarget = activeTargets[0];
+    activeTarget = target;
     activeTargets.forEach(node => node.classList.add('j-tour__target'));
     await revealTarget(target, step);
     screen.scrollTop = 0;
