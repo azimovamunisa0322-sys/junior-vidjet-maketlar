@@ -52,11 +52,15 @@
       <h2 class="j-tour__title"></h2>
       <p class="j-tour__text"></p>
       <p class="j-tour__instruction" hidden><span>☝️</span><b></b></p>
+      <div class="j-streak-goal__visual" hidden aria-hidden="true">
+        <span class="j-streak-goal__calendar"><b data-streak-preview>7</b><small>KUN</small></span>
+        <img data-a="a2" alt="">
+      </div>
       <div class="j-tour__choices" hidden aria-label="Streak maqsadini tanlash">
-        <button type="button" data-streak-goal="5">5 kun</button>
-        <button type="button" data-streak-goal="6">6 kun</button>
-        <button type="button" data-streak-goal="7">7 kun</button>
-        <button type="button" data-streak-goal="12">12 kun</button>
+        <button type="button" data-streak-goal="5"><b>5 kun</b><small>Yaxshi boshlanish</small></button>
+        <button type="button" data-streak-goal="6"><b>6 kun</b><small>Barqaror temp</small></button>
+        <button type="button" data-streak-goal="7"><b>7 kun</b><small>Zo‘r natija</small></button>
+        <button type="button" data-streak-goal="12"><b>12 kun</b><small>Kuchli challenge</small></button>
       </div>
       <div class="j-tour__actions">
         <img class="j-tour__mascot" data-a="a2" alt="Junior maskoti">
@@ -266,6 +270,8 @@
   const text = root.querySelector('.j-tour__text');
   const instruction = root.querySelector('.j-tour__instruction');
   const instructionText = instruction.querySelector('b');
+  const streakVisual = root.querySelector('.j-streak-goal__visual');
+  const streakPreview = root.querySelector('[data-streak-preview]');
   const choices = root.querySelector('.j-tour__choices');
   const next = root.querySelector('.j-tour__next');
   const later = root.querySelector('.j-tour__later');
@@ -536,11 +542,11 @@
     const nearby = document.createElement('div');
     nearby.className = 'lb-list j-lb-nearby';
     const students = [
-      [15, 'SH', 'Shohruh Qodirov', '6418'],
-      [16, 'KS', 'Kamola Sattorova', '6378'],
-      [17, 'IA', 'Ismoilov Abdulaziz', '6290'],
-      [18, 'MY', 'Malika Yusupova', '6215'],
-      [19, 'BN', 'Bekzod Nazarov', '6140']
+      [1, 'SH', 'Shohruh Qodirov', '7420'],
+      [2, 'KS', 'Kamola Sattorova', '7010'],
+      [3, 'IA', 'Ismoilov Abdulaziz', '6680'],
+      [4, 'MY', 'Malika Yusupova', '6415'],
+      [5, 'BN', 'Bekzod Nazarov', '6140']
     ];
     students.forEach(([rank, initials, name, points], index) => {
       const row = (index === 2 ? me : template).cloneNode(true);
@@ -553,6 +559,11 @@
       if (avatar) avatar.textContent = initials;
       if (nameNode) nameNode.textContent = name;
       if (pointsNode) pointsNode.textContent = points;
+      if (index === 2) {
+        [...row.querySelectorAll('*')]
+          .filter(node => !node.children.length && /o['‘’]ringacha/i.test(node.textContent || ''))
+          .forEach(node => node.remove());
+      }
       nearby.appendChild(row);
     });
     pane.querySelector('.lb-hd')?.after(nearby);
@@ -754,10 +765,21 @@
     ],
     2: [
       {
+        id: 'day-two-lesson',
+        target: '.mk__row--now .mk__card',
+        targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
+        title: 'Bugungi darsni boshlaymiz',
+        text: 'Videodarsni ko‘ring, testni yeching va Coin hamda Point oling.',
+        actionButton: 'Darsni boshlash',
+        requireClick: true,
+        action: 'lesson',
+        prepare: goHome
+      },
+      {
         id: 'coinshop-entry',
         target: 'button[data-go="coinshop"]',
-        title: 'Coin Shop 🪙',
-        text: 'Yig‘gan Coin’laringizni nimalarga sarflashingiz mumkinligini ko‘ring.',
+        title: 'Coin’larni qayerga sarflashni bilishni xohlaysizmi?',
+        text: 'Hozirgina olgan Coin’laringiz bilan Coin Shop’dagi sovg‘alarni ko‘rishingiz mumkin.',
         actionButton: 'Coin Shop’ni ochish',
         requireClick: true,
         prepare: goHome
@@ -766,18 +788,27 @@
         id: 'leaderboard',
         target: '.scr[data-screen="leaders"] .j-lb-nearby',
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
-        title: 'Guruhdagi o‘rningizni ko‘ring 🏆',
-        text: 'Pointlaringiz va sizga eng yaqin 5 ishtirokchi ko‘rinadi: 2 nafari yuqorida, siz va 2 nafari pastda.',
+        title: 'Pointlaringiz sizni yuqoriga olib chiqadi 🏆',
+        text: 'Hozir siz 3-o‘rindasiz. Yaqin raqiblaringiz natijasini ko‘rib, keyingi marraga intiling.',
         button: 'Streak maqsadini tanlash',
         prepare: prepareLeaderboardNearby
       },
       {
         id: 'streak-goal',
         target: 'article[data-widget="streak"]',
-        title: 'Streakni necha kun saqlaysiz? 🔥',
-        text: 'O‘zingizga mos maqsadni tanlang. Tanlovingiz profilingizda saqlanadi.',
+        title: 'Streak maqsadini tanlang',
+        text: 'Har kuni dars qilish uchun o‘zingizga mos maqsad qo‘yamiz!',
         choices: true,
         button: 'Maqsadni saqlash',
+        prepare: () => prepareWidget('streak')
+      },
+      {
+        id: 'streak-confirmed',
+        target: 'article[data-widget="streak"]',
+        title: () => `${getStreakGoal()} kunlik maqsad — zo‘r tanlov! 🔥`,
+        text: () => `Kelishdik! Har bir yakunlangan dars sizni ${getStreakGoal()} kunlik maqsadingizga yaqinlashtiradi. Junior sizga ishonadi!`,
+        celebration: true,
+        autoFinishAfter: 4300,
         prepare: () => prepareWidget('streak')
       }
     ],
@@ -801,16 +832,20 @@
         text: 'Yangi bilimlarni egallash va Junior’da o‘qishni davom ettirishga tayyormisiz?',
         button: 'Ha, tayyorman',
         later: 'Keyinroq',
+        hideFocus: true,
+        fullDim: true,
         prepare: goHome
       },
       {
         id: 'payment-qr',
-        target: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .s-qr',
+        target: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
         fallback: '#sheetHost:not([hidden]) .sheet[data-widget="payment"][data-sheet="qr"] .sheet__body',
         title: 'To‘lovni amalga oshiring',
         text: 'QR-kodni skanerlang yoki to‘lov havolasidan foydalaning va Akademiya o‘quvchisiga aylaning.',
         button: '3-kunni yakunlash',
         compact: true,
+        hideFocus: true,
+        noShade: true,
         prepare: preparePaymentQr
       }
     ],
@@ -835,7 +870,7 @@
   function showDayPush() {
     const messages = {
       1: ['Birinchi darsingiz tayyor', 'Bugun video, qisqa test va amaliy vazifa sizni kutmoqda.'],
-      2: ['Bugungi maqsad', 'Coin Shop, liderbord va streak maqsadingizni ko‘rib chiqing.'],
+      2: ['Bugungi darsingiz tayyor', 'Avval darsni yakunlab Coin va Point oling. Keyin yangi imkoniyatlarni ko‘rsatamiz.'],
       3: ['O‘qishni davom ettiring', 'Bugungi darsni yakunlab, Junior bilan doimiy qolish imkoniyatini ko‘ring.'],
       4: ['Akkauntingiz himoyalangan', 'Parol esdan chiqsa, telefon raqamingiz orqali tezda tiklaysiz.']
     };
@@ -971,7 +1006,7 @@
     clearTimeout(cardAnimationTimer);
     card.classList.remove('is-preparing');
     card.classList.add('is-bubbling');
-    next.disabled = false;
+    next.disabled = !!steps[stepIndex]?.choices && !getStreakGoal();
     playSound('bubble');
     cardAnimationTimer = setTimeout(() => card.classList.remove('is-bubbling'), 500);
   }
@@ -1002,6 +1037,24 @@
       const step = steps[stepIndex];
       applyCardPlacement(step);
       const sr = root.getBoundingClientRect();
+      if (step.noShade) {
+        Object.values(shades).forEach(node => { node.hidden = true; });
+        focus.hidden = true;
+        return;
+      }
+      if (step.fullDim) {
+        Object.values(shades).forEach(node => { node.hidden = true; });
+        shades.top.hidden = false;
+        Object.assign(shades.top.style, {
+          left: '0px',
+          top: '0px',
+          width: `${sr.width}px`,
+          height: `${sr.height}px`,
+          background: 'rgba(12, 18, 34, .68)'
+        });
+        focus.hidden = true;
+        return;
+      }
       const tr = activeTargetRect();
       if (!tr) return;
       const isPlanHero = activeTarget.matches('.plan__hero');
@@ -1134,10 +1187,12 @@
     count.textContent = `${stepIndex + 1}/${steps.length}`;
     tourLabel.textContent = `${selectedDay}-kun sayohati`;
     bar.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
-    title.textContent = step.title;
-    text.textContent = step.text;
+    title.textContent = typeof step.title === 'function' ? step.title() : step.title;
+    text.textContent = typeof step.text === 'function' ? step.text() : step.text;
     instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
+    streakVisual.hidden = step.id !== 'streak-goal';
+    if (step.id === 'streak-goal') streakPreview.textContent = String(getStreakGoal() || 7);
     choices.hidden = !step.choices;
     choices.querySelectorAll('[data-streak-goal]').forEach(button => {
       button.classList.toggle('is-active', Number(button.dataset.streakGoal) === getStreakGoal());
@@ -1148,6 +1203,8 @@
     later.textContent = step.later || 'Keyinroq';
     next.classList.toggle('j-tour__next--action', !!step.requireClick && !!step.actionButton);
     card.classList.toggle('is-action-required', !!step.requireClick);
+    card.classList.toggle('is-streak-goal', step.id === 'streak-goal');
+    card.classList.toggle('is-streak-confirmed', !!step.celebration);
     applyCardPlacement(step);
     updateAssets();
 
@@ -1181,7 +1238,7 @@
     positionTour();
     requestAnimationFrame(() => {
       if (token !== runToken) return;
-      focus.hidden = false;
+      focus.hidden = !!step.hideFocus;
       playCardBubble();
     });
     setTimeout(() => {
@@ -1445,7 +1502,7 @@
     if (coinBadge) coinBadge.textContent = '+50';
     if (coinResult) coinResult.textContent = '+50 Coin';
     if (coinResultText) coinResultText.textContent = '+100 Point ham qo‘shildi';
-    finish.textContent = 'Amaliy vazifaga o‘tish';
+    finish.textContent = selectedDay === 2 ? 'Davom etish' : 'Amaliy vazifaga o‘tish';
     showRewardStage('coin');
     updateAssets();
     rewardChest?.focus({ preventScroll: true });
@@ -1598,6 +1655,7 @@
     button.addEventListener('click', () => {
       const days = Number(button.dataset.streakGoal);
       saveStreakGoal(days);
+      streakPreview.textContent = String(days);
       choices.querySelectorAll('[data-streak-goal]').forEach(node => node.classList.toggle('is-active', node === button));
       next.disabled = false;
       playSound('correct');
@@ -1708,6 +1766,10 @@
     playSound('finish');
     if (rewardMode === 'lesson-result') {
       success.hidden = true;
+      if (selectedDay === 2) {
+        activateStep(findStepIndex('coinshop-entry'));
+        return;
+      }
       card.hidden = true;
       focus.hidden = true;
       Object.values(shades).forEach(node => { node.hidden = true; });
