@@ -296,6 +296,7 @@
   let audioContext = null;
   let actionPending = false;
   let cardAnimationTimer = 0;
+  let autoFinishTimer = 0;
   let pushPreviewTimer = 0;
 
   function ensureAudio() {
@@ -739,7 +740,7 @@
         target: '.j-team',
         title: 'Ustozlaringiz doim yoningizda',
         text: 'Kurator tashkiliy masalalarda, mentor esa dars va amaliy vazifalarda yordam beradi.',
-        button: '1-kunni yakunlash',
+        autoFinishAfter: 4500,
         prepare: goChat
       }
     ],
@@ -1094,6 +1095,7 @@
     const step = steps[stepIndex];
     actionPending = false;
     clearTimeout(cardAnimationTimer);
+    clearTimeout(autoFinishTimer);
     clearTarget();
     clearStreakFire();
     root.hidden = false;
@@ -1126,7 +1128,7 @@
     choices.querySelectorAll('[data-streak-goal]').forEach(button => {
       button.classList.toggle('is-active', Number(button.dataset.streakGoal) === getStreakGoal());
     });
-    next.hidden = !!step.requireClick && !step.actionButton;
+    next.hidden = (!!step.requireClick && !step.actionButton) || !!step.autoFinishAfter;
     next.textContent = step.actionButton || step.button || 'Keyingisi';
     later.hidden = !step.later;
     later.textContent = step.later || 'Keyinroq';
@@ -1175,9 +1177,18 @@
       requestAnimationFrame(() => animateStreakFire(target, token));
     }
 
+    if (step.autoFinishAfter) {
+      autoFinishTimer = setTimeout(() => {
+        if (token !== runToken || root.hidden) return;
+        playSound('finish');
+        closeTour(true);
+      }, step.autoFinishAfter);
+    }
+
     next.disabled = !!step.choices && !getStreakGoal();
 
-    if (step.requireClick && !step.actionButton) target.focus({ preventScroll: true });
+    if (step.autoFinishAfter) card.focus({ preventScroll: true });
+    else if (step.requireClick && !step.actionButton) target.focus({ preventScroll: true });
     else next.focus({ preventScroll: true });
   }
 
@@ -1213,6 +1224,7 @@
     clearTarget();
     clearStreakFire();
     clearTimeout(cardAnimationTimer);
+    clearTimeout(autoFinishTimer);
     clearTimeout(pushPreviewTimer);
     pushPreview.classList.remove('is-visible');
     pushPreview.hidden = true;
