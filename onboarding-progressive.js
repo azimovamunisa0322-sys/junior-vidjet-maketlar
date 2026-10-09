@@ -821,8 +821,8 @@
         id: 'day-three-lesson',
         target: '.mk__row--now .mk__card',
         targetGroup: '.mk__row--now > .mk__num, .mk__row--now > .mk__card',
-        title: 'Bugungi darsingiz tayyor',
-        text: 'Videodars, test va amaliy vazifani yakunlab, Coin hamda Point oling.',
+        title: 'Uchinchi kun — marraga yaqinmiz! 🚀',
+        text: 'Ikki kunlik mehnatingizni davom ettiring: bugun 3-darsni ko‘ring, test va amaliy vazifani yakunlang.',
         actionButton: 'Darsni boshlash',
         requireClick: true,
         action: 'lesson',
@@ -884,7 +884,7 @@
     const messages = {
       1: ['Birinchi darsingiz tayyor', 'Bugun video, qisqa test va amaliy vazifa sizni kutmoqda.'],
       2: ['Bugungi darsingiz tayyor', 'Avval darsni yakunlab Coin va Point oling. Keyin yangi imkoniyatlarni ko‘rsatamiz.'],
-      3: ['O‘qishni davom ettiring', 'Bugungi darsni yakunlab, Junior bilan doimiy qolish imkoniyatini ko‘ring.'],
+      3: ['Uchinchi kun darsi tayyor', 'Bugun 3-darsni yakunlang — keyin Junior bilan keyingi qadamingizni tanlaysiz.'],
       4: ['Akkauntingiz himoyalangan', 'Parol esdan chiqsa, telefon raqamingiz orqali tezda tiklaysiz.']
     };
     const message = messages[selectedDay];
