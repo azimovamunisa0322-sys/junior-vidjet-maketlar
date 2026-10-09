@@ -1246,6 +1246,13 @@
     root.classList.remove('is-running');
     screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
+    // Kunlik ma'lumot tugagach, foydalanuvchini ochiq qolgan ichki sahifada
+    // (masalan, mentor chatida) qoldirmaymiz — odatiy bosh sahifaga qaytaramiz.
+    if (markComplete) {
+      goHome()
+        .then(resetViewportScroll)
+        .catch(resetViewportScroll);
+    }
   }
 
   function resetViewportScroll() {
