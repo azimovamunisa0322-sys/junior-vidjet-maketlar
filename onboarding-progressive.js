@@ -202,12 +202,12 @@
           <div class="j-reward__flame j-reward__flame--lit" aria-hidden="true"><i></i></div>
           <img data-a="a2" alt="Junior maskoti">
         </div>
-        <strong class="j-reward__number">1</strong>
-        <h2>kunlik streak — zo‘r boshlanish!</h2>
+        <strong class="j-reward__number" data-streak-number>1</strong>
+        <h2 data-streak-title>kunlik streak — zo‘r boshlanish!</h2>
         <div class="j-reward__week" aria-label="7 kunlik streak maqsadi">
-          <span class="is-done"><b>1</b><i>✓</i></span>
-          <span><b>2</b><i></i></span><span><b>3</b><i></i></span><span><b>4</b><i></i></span>
-          <span><b>5</b><i></i></span><span><b>6</b><i></i></span><span><b>7</b><i></i></span>
+          <span data-streak-day="1"><b>1</b><i>✓</i></span>
+          <span data-streak-day="2"><b>2</b><i></i></span><span data-streak-day="3"><b>3</b><i></i></span><span data-streak-day="4"><b>4</b><i></i></span>
+          <span data-streak-day="5"><b>5</b><i></i></span><span data-streak-day="6"><b>6</b><i></i></span><span data-streak-day="7"><b>7</b><i></i></span>
         </div>
         <button type="button" class="j-reward__primary" data-reward-next>Davom etish</button>
       </section>
@@ -808,7 +808,8 @@
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
         title: 'Pointlaringiz sizni yuqoriga olib chiqadi 🏆',
         text: 'Hozir siz 3-o‘rindasiz. Yaqin raqiblaringiz natijasini ko‘rib, keyingi marraga intiling.',
-        button: 'Davom etish',
+        button: '2-kunlik streakni olish',
+        flow: 'streak',
         prepare: prepareLeaderboardNearby
       }
     ],
@@ -1577,15 +1578,23 @@
 
   async function startStreakReward() {
     rewardMode = 'streak';
+    const streakCount = Math.min(Math.max(selectedDay, 1), 7);
     const streakKicker = success.querySelector('[data-streak-kicker]');
     const streakSpeech = success.querySelector('[data-streak-speech]');
-    if (selectedDay === 3) {
-      if (streakKicker) streakKicker.textContent = 'Bugungi streak';
-      if (streakSpeech) streakSpeech.textContent = 'Zo‘r! Bugungi dars va vazifani yakunladingiz 🎉 Endi streakingiz boshlandi.';
-    } else {
-      if (streakKicker) streakKicker.textContent = 'Birinchi streak';
-      if (streakSpeech) streakSpeech.textContent = 'Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.';
-    }
+    const streakNumber = success.querySelector('[data-streak-number]');
+    const streakTitle = success.querySelector('[data-streak-title]');
+    const copy = {
+      1: ['Birinchi streak', 'Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.', '1 kunlik streak — zo‘r boshlanish!'],
+      2: ['2-kunlik streak', 'Zo‘r! Ikkinchi kun ham bajarildi 🎉 Streakingiz 2 kunga yetdi.', '2 kunlik streak — barqaror ketayapsiz!'],
+      3: ['3-kunlik streak', 'Zo‘r! Bugungi dars va vazifani yakunladingiz 🎉 Streakingiz 3 kunga yetdi.', '3 kunlik streak — zo‘r davom etyapsiz!']
+    }[streakCount] || ['Streak', 'Zo‘r! Bugungi dars bajarildi 🎉 Streakingiz davom etmoqda.', `${streakCount} kunlik streak — zo‘r!`];
+    if (streakKicker) streakKicker.textContent = copy[0];
+    if (streakSpeech) streakSpeech.textContent = copy[1];
+    if (streakNumber) streakNumber.textContent = String(streakCount);
+    if (streakTitle) streakTitle.textContent = copy[2];
+    success.querySelectorAll('[data-streak-day]').forEach(day => {
+      day.classList.toggle('is-done', Number(day.dataset.streakDay) <= streakCount);
+    });
     playSound('complete');
     await goHome();
     content.scrollTo({ top: 0, behavior: 'auto' });
