@@ -238,7 +238,12 @@
     <button type="button" data-tour-day="3">3-kun</button>
     <button type="button" data-tour-day="4">4-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
-  screen.appendChild(dayPicker);
+  // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
+  // tashqarida ushlaymiz, shunda platforma headeri bilan ustma-ust tushmaydi.
+  const stage = document.querySelector('#stage');
+  const phoneWrap = document.querySelector('#phoneWrap');
+  if (stage && phoneWrap) stage.insertBefore(dayPicker, phoneWrap);
+  else screen.appendChild(dayPicker);
 
   const shades = {
     top: root.querySelector('.j-tour__shade--top'),
@@ -837,7 +842,7 @@
     clearTimeout(pushPreviewTimer);
     pushPreviewTitle.textContent = message[0];
     pushPreviewText.textContent = message[1];
-    pushPreview.classList.toggle('has-day-picker', qaDays);
+    pushPreview.classList.remove('has-day-picker');
     pushPreview.hidden = false;
     requestAnimationFrame(() => pushPreview.classList.add('is-visible'));
     playSound('push');

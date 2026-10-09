@@ -2,20 +2,22 @@
 
 /* QA: kunlarni bir havolaning o‘zida erkin tekshirish. */
 .j-day-picker {
-  position: absolute;
-  z-index: 12050;
-  top: max(40px, calc(env(safe-area-inset-top, 0px) + 6px));
-  left: 50%;
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 3px;
+  box-sizing: border-box;
+  width: min(402px, 100%);
+  min-height: 39px;
+  margin: 0 0 10px;
   padding: 4px;
   border: 1px solid rgba(255,255,255,.88);
-  border-radius: 999px;
+  border-radius: 14px;
   background: rgba(23,33,61,.9);
   box-shadow: 0 8px 24px rgba(12,18,34,.2);
   backdrop-filter: blur(10px);
-  transform: translateX(-50%) translateZ(0);
 }
 
 .j-day-picker[hidden] { display: none !important; }
@@ -110,7 +112,6 @@
   transform: translate3d(0,-14px,0) scale(.985);
   transition: opacity .38s ease, transform .38s cubic-bezier(.2,.78,.25,1);
 }
-.j-push-preview.has-day-picker { top: max(76px, calc(env(safe-area-inset-top, 0px) + 42px)); }
 .j-push-preview.is-visible { opacity: 1; transform: translate3d(0,0,0) scale(1); }
 .j-push-preview__icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: #fff0ea; font-size: 21px; }
 .j-push-preview b, .j-push-preview small { display: block; }
