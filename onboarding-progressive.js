@@ -137,10 +137,6 @@
             <ul><li>Kitob 1</li><li>Kitob 2</li><li>Kitob 3</li></ul>
             <p>Men endi <b>Bootstrap</b>dan foydalanishni o‘rgandim</p>
           </div>
-          <div class="j-platform__mentor-note">
-            <span>🎙️</span>
-            <p><b>Yordam kerak bo‘lsa, mentor yoningizda</b><small>Amaliy vazifada xato chiqsa, savolingizni mentorga yuborasiz.</small></p>
-          </div>
         </section>
       </div>
       <footer class="j-lesson__foot"><span data-lesson-hint>Videoni ko‘ring</span><button type="button" class="j-lesson__finish" disabled>Davom etish</button></footer>
