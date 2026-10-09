@@ -841,7 +841,7 @@
         celebration: true,
         hideFocus: true,
         fullDim: true,
-        button: 'To‘lov taklifini ko‘rish',
+        button: 'Davom etish',
         prepare: () => prepareWidget('streak')
       },
       {
