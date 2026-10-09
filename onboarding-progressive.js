@@ -999,6 +999,9 @@
       const pad = isPlanHero
         ? 0
         : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
+      Object.values(shades).forEach(node => {
+        node.style.background = isPlanHero ? 'transparent' : 'rgba(12, 18, 34, .68)';
+      });
       const edgeInset = 12;
       const rawLeft = tr.left - sr.left - pad;
       const rawTop = tr.top - sr.top - pad;
@@ -1031,7 +1034,7 @@
         width: `${width}px`,
         height: `${height}px`,
         borderRadius: `${targetRadius + pad}px`,
-        boxShadow: isPlanHero ? 'none' : ''
+        boxShadow: isPlanHero ? '0 0 0 9999px rgba(12, 18, 34, .68)' : ''
       });
     });
   }
