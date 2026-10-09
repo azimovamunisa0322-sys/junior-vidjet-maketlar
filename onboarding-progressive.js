@@ -218,6 +218,7 @@
             <span class="j-reward__chest-body"></span>
             <span class="j-reward__chest-lock">J</span>
             <span class="j-reward__coin">+20</span>
+            <img class="j-reward__coin-mascot" data-a="a2" alt="Junior maskoti">
           </button>
           <div class="j-reward__coin-result" aria-live="polite"><b>+50 Coin</b><span>+100 Point ham qo‘shildi</span></div>
         </div>

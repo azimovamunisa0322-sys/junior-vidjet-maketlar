@@ -851,6 +851,96 @@ article[data-widget="webinar"] .wtimer__b span {
   font-weight: 900;
 }
 
+/* Coin mukofoti: Junior'ning oq, orange va to‘q ko‘k vizual tili. */
+.j-reward__panel--coin {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 84, 48, .12) 0, rgba(255, 84, 48, .035) 34%, transparent 59%),
+    linear-gradient(180deg, #fff 0%, #fffaf8 58%, #fff 100%);
+}
+
+.j-reward__panel--coin::before,
+.j-reward__panel--coin::after {
+  content: "";
+  position: absolute;
+  border: 18px solid rgba(255, 84, 48, .055);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.j-reward__panel--coin::before { top: 88px; right: -132px; width: 210px; height: 210px; }
+.j-reward__panel--coin::after { left: -106px; bottom: 72px; width: 168px; height: 168px; }
+
+.j-reward__panel--coin .j-reward__coin-content {
+  position: relative;
+  z-index: 1;
+  justify-content: flex-start;
+  padding: clamp(30px, 4.5vh, 42px) 0 8px;
+}
+
+.j-reward__panel--coin .j-reward__kicker {
+  color: #e84625;
+  background: #fff0eb;
+}
+
+.j-reward__panel--coin h2 {
+  max-width: 330px;
+  margin: 18px 0 10px;
+  color: #17213d;
+}
+
+.j-reward__panel--coin p {
+  max-width: 310px;
+  color: #737d91;
+}
+
+.j-reward__panel--coin .j-reward__chest {
+  width: 220px;
+  height: 188px;
+  margin: clamp(54px, 7vh, 68px) 0 8px;
+  filter: drop-shadow(0 18px 15px rgba(23, 33, 61, .16));
+}
+
+.j-reward__panel--coin .j-reward__chest-glow {
+  background: rgba(255, 84, 48, .14);
+}
+
+.j-reward__panel--coin .j-reward__chest-lid {
+  border-color: #17213d;
+  background: linear-gradient(#ff7758 0 52%, #ff4f28 52%);
+}
+
+.j-reward__panel--coin .j-reward__chest-body {
+  border-color: #17213d;
+  background: linear-gradient(90deg, #eb4020 0 17%, #ff6543 17% 83%, #eb4020 83%);
+}
+
+.j-reward__panel--coin .j-reward__chest-lock {
+  border-color: #17213d;
+  color: #ff4f28;
+  background: #fff;
+}
+
+.j-reward__coin-mascot {
+  position: absolute;
+  z-index: 6;
+  right: -19px;
+  bottom: -2px;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px rgba(23, 33, 61, .16));
+  pointer-events: none;
+}
+
+.j-reward__panel--coin .j-reward__coin-result {
+  position: relative;
+  z-index: 2;
+  margin-top: 8px;
+}
+
+.j-reward__panel--coin .j-reward__coin-result b { color: #ff4f28; }
+
 .j-reward__panel--coin:not(.is-opened) .j-reward__chest {
   animation: j-progressive-chest-idle 1.65s ease-in-out infinite;
 }
@@ -860,8 +950,12 @@ article[data-widget="webinar"] .wtimer__b span {
 }
 
 .j-reward__panel--coin.is-opened .j-reward__chest-lid {
-  transform: translate(-38px, -64px) rotate(-19deg);
+  transform: translate(-30px, -42px) rotate(-16deg);
   transition-duration: .44s;
+}
+
+.j-reward__panel--coin.is-opened .j-reward__coin-mascot {
+  animation: j-progressive-praise-mascot .62s .18s cubic-bezier(.18, .9, .28, 1.2) both;
 }
 
 .j-reward__panel--coin.is-opened .j-reward__chest-body {
