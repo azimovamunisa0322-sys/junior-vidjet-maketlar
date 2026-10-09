@@ -794,12 +794,16 @@
         target: '.scr[data-screen="coinshop"] .scr__body',
         fallback: '.scr[data-screen="coinshop"]',
         title: 'Coin Shop ochildi 🛍️',
-        text: 'Yig‘gan Coin’laringizni shu yerda sovg‘alarga almashtirasiz. Endi sayohatni davom ettiramiz.',
-        button: 'Davom etish',
+        text: 'Yig‘gan Coin’laringizni shu yerda sovg‘alarga almashtirasiz. Endi amaliy vazifaga o‘tamiz.',
+        button: 'Amaliy vazifaga o‘tish',
         compact: true,
         hideFocus: true,
         noShade: true,
-        onNext: () => { awaitingCoinShopReturn = false; },
+        manualNext: true,
+        onNext: async () => {
+          awaitingCoinShopReturn = false;
+          await openPracticalTask();
+        },
         prepare: () => goScreen('coinshop')
       },
       {
@@ -808,8 +812,7 @@
         fallback: '.scr[data-screen="leaders"] .lb-pane--a',
         title: 'Pointlaringiz sizni yuqoriga olib chiqadi 🏆',
         text: 'Hozir siz 3-o‘rindasiz. Yaqin raqiblaringiz natijasini ko‘rib, keyingi marraga intiling.',
-        button: '2-kunlik streakni olish',
-        flow: 'streak',
+        button: 'Davom etish',
         prepare: prepareLeaderboardNearby
       }
     ],
@@ -1292,6 +1295,7 @@
       return;
     }
     if (step.onNext) await step.onNext();
+    if (step.manualNext) return;
     if (stepIndex >= steps.length - 1) {
       playSound('finish');
       closeTour(true);
@@ -1616,6 +1620,18 @@
     rewardIgnite?.focus({ preventScroll: true });
   }
 
+  async function openPracticalTask() {
+    await goHome();
+    success.hidden = true;
+    card.hidden = true;
+    focus.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    lesson.hidden = false;
+    showLessonStage(3);
+    updateAssets();
+    lessonFinish.focus({ preventScroll: true });
+  }
+
   function showAuthStage(name) {
     auth.dataset.stage = name;
     authStages.forEach(stage => {
@@ -1802,6 +1818,7 @@
       playSound('finish');
       success.hidden = true;
       if (selectedDay === 1) activateStep(findStepIndex('teachers'));
+      else if (selectedDay === 2) activateStep(findStepIndex('leaderboard'));
       else if (selectedDay === 3) activateStep(findStepIndex('streak-goal'));
       else closeTour(true);
       return;
@@ -1849,6 +1866,10 @@
         startStreakReward();
         return;
       }
+      if (selectedDay === 2) {
+        startStreakReward();
+        return;
+      }
       if (selectedDay === 3 && !hasPurchasedCourse) {
         startStreakReward();
         return;
@@ -1860,7 +1881,7 @@
   document.addEventListener('click', event => {
     if (awaitingCoinShopReturn && event.target.closest('.scr[data-screen="coinshop"] [data-back]')) {
       awaitingCoinShopReturn = false;
-      setTimeout(() => activateStep(findStepIndex('leaderboard')), 0);
+      setTimeout(() => { openPracticalTask(); }, 0);
     }
 
     const telegram = event.target.closest('[data-j-team]');
