@@ -118,6 +118,7 @@
         </section>
 
         <section class="j-lesson__stage j-lesson__stage--reward" data-lesson-stage="reward" hidden>
+          <div class="j-lesson__result-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <div class="j-lesson__praise-mascot" aria-hidden="true"><img data-a="a2" alt=""></div>
           <small>Dars muvaffaqiyatli yakunlandi</small>
           <h2>Natijangiz tayyor!</h2>
@@ -221,14 +222,11 @@
           <h2 data-coin-title>Mukofot sandig‘ingiz tayyor!</h2>
           <p data-coin-text>Darsni muvaffaqiyatli tugatganingiz uchun sandiqni oching.</p>
           <button type="button" class="j-reward__chest" data-reward-chest aria-label="Mukofot sandig‘ini ochish">
-            <span class="j-reward__chest-glow"></span>
-            <span class="j-reward__chest-lid"></span>
-            <span class="j-reward__chest-body"></span>
-            <span class="j-reward__chest-lock">J</span>
-            <span class="j-reward__coin">+20</span>
-            <img class="j-reward__coin-mascot" data-a="a2" alt="Junior maskoti">
+            <img class="j-reward__chest-art j-reward__chest-art--closed" src="../bugungi-reja/src/assets/reward-chest-closed.png" alt="Yopiq mukofot sandig‘i">
+            <img class="j-reward__chest-art j-reward__chest-art--open" src="../bugungi-reja/src/assets/reward-chest-open.png" alt="Coinlarga to‘la ochilgan sandiq">
+            <span class="j-reward__chest-prompt">Ekranni bosing!</span>
           </button>
-          <div class="j-reward__coin-result" aria-live="polite"><b>+50 Coin</b><span>+100 Point ham qo‘shildi</span></div>
+          <div class="j-reward__coin-result" aria-live="polite"><b>+32 coin</b><span>+32 point</span></div>
         </div>
         <button type="button" class="j-tour__finish" hidden>Keyingi darsga o‘tish</button>
         <section class="j-coinshop-modal" hidden role="dialog" aria-modal="true" aria-labelledby="j-coinshop-modal-title">
@@ -1438,6 +1436,7 @@
       if (feedback) feedback.textContent = 'To‘g‘ri javobni tanlang.';
     }
     if (lessonStageIndex > 0) playSound('bubble');
+    if (lessonStageIndex === 2) fireConfetti();
   }
 
   function openLesson() {
@@ -1545,10 +1544,10 @@
         text: 'Amaliy vazifani muvaffaqiyatli topshirdingiz. 70 Coin balansingizga qo‘shildi.'
       }
       : {
-        coin: 50,
-        point: 100,
-        title: 'Ajoyib! Birinchi natijangiz tayyor! 🎉',
-        text: 'Darsni muvaffaqiyatli yakunladingiz. 50 Coin va 100 Point balansingizga qo‘shildi.'
+        coin: 32,
+        point: 32,
+        title: 'Mukofot sandig‘ingiz tayyor!',
+        text: 'Darsni muvaffaqiyatli tugatganingiz uchun sandiqni oching.'
       };
     panel.classList.add('is-opened');
     playSound('chest');
@@ -1603,10 +1602,10 @@
     const coinBadge = success.querySelector('.j-reward__coin');
     const coinResult = success.querySelector('.j-reward__coin-result b');
     const coinResultText = success.querySelector('.j-reward__coin-result span');
-    if (coinBadge) coinBadge.textContent = '+50';
-    if (coinResult) coinResult.textContent = '+50 Coin';
-    if (coinResultText) coinResultText.textContent = '+100 Point ham qo‘shildi';
-    finish.textContent = 'Amaliy vazifaga o‘tish';
+    if (coinBadge) coinBadge.textContent = '+32';
+    if (coinResult) coinResult.textContent = '+32 coin';
+    if (coinResultText) coinResultText.textContent = '+32 point';
+    finish.textContent = 'Davom etish';
     showRewardStage('coin');
     updateAssets();
     rewardChest?.focus({ preventScroll: true });
@@ -1644,7 +1643,7 @@
     if (coinBadge) coinBadge.textContent = '+70';
     if (coinResult) coinResult.textContent = '+70 Coin';
     if (coinResultText) coinResultText.textContent = 'Balansingizga qo‘shildi';
-    finish.textContent = selectedDay === 1 ? 'Davom etish' : 'Keyingi qadam';
+    finish.textContent = 'Davom etish';
     showRewardStage('coin');
     updateAssets();
     rewardChest?.focus({ preventScroll: true });
