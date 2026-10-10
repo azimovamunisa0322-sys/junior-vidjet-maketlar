@@ -1117,7 +1117,22 @@
         }
       } else {
         const maxBottom = cardRect.top - sr.top - gap;
-        height = Math.max(8, Math.min(height, maxBottom - y));
+        const availableHeight = maxBottom - y;
+        // Pastki sheet maqsad elementini yopib qo'ysa, 8px balandlikdagi
+        // "uzilib qolgan" ramkani chizmaymiz. Figma'dagidek faqat dim
+        // fon va sheet qoladi.
+        if (availableHeight < 20) {
+          Object.values(shades).forEach(node => { node.hidden = true; });
+          shades.top.hidden = false;
+          Object.assign(shades.top.style, {
+            left: '0px', top: '0px', width: `${sr.width}px`, height: `${sr.height}px`,
+            background: 'rgba(19, 27, 47, .72)'
+          });
+          root.dataset.focusBlocked = 'true';
+          focus.hidden = true;
+          return;
+        }
+        height = Math.min(height, availableHeight);
       }
 
       setShadeLayout(x, y, width, height, sr.width, sr.height);
@@ -1207,6 +1222,7 @@
     card.hidden = false;
     card.classList.remove('is-bubbling', 'is-leaving');
     card.classList.add('is-preparing');
+    root.dataset.focusBlocked = 'false';
     next.disabled = true;
     focus.classList.remove('is-leaving');
     focus.hidden = true;

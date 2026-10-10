@@ -563,6 +563,8 @@
   box-shadow: 0 0 0 9999px rgba(19, 27, 47, .72), 0 16px 34px rgba(8, 15, 31, .28);
 }
 
+.j-tour[data-focus-blocked="true"] .j-tour__focus { display: none !important; }
+
 .j-tour[data-figma-style="true"] .j-tour__card:not(.is-streak-confirmed) {
   left: 0 !important;
   right: 0;
