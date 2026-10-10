@@ -1486,15 +1486,14 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-reward__panel--coin .j-reward__coin-result {
   display: none;
   width: 100%;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 8px;
   margin: 4px 0 0;
 }
 
 .j-reward__panel--coin.is-opened .j-reward__coin-result {
-  display: flex;
+  display: grid;
   animation: j-progressive-card-in .38s .05s both;
 }
 
@@ -1505,7 +1504,7 @@ article[data-widget="webinar"] .wtimer__b span {
   justify-content: center;
   min-width: 0;
   min-height: 48px;
-  max-width: 100%;
+  max-width: min(100%, 260px);
   padding: 0 13px;
   border: 3px solid #f3b900;
   border-radius: 999px;
