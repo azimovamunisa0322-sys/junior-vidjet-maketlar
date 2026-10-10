@@ -926,8 +926,11 @@
     steps = selectedSteps();
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
-    if (selectedDay === 4) openPasswordRecovery();
-    else startTour();
+    if (selectedDay === 4) {
+      showPlainApp();
+      return;
+    }
+    startTour();
   }
 
   async function choosePushPermission(allow) {
@@ -1308,7 +1311,7 @@
     awaitingCoinShopReturn = false;
     steps = selectedSteps();
     if (selectedDay === 4) {
-      openPasswordRecovery();
+      showPlainApp();
       return;
     }
     stepIndex = 0;
@@ -1338,6 +1341,35 @@
         .then(resetViewportScroll)
         .catch(resetViewportScroll);
     }
+  }
+
+  // 4-kun QA holati onboarding ssenariysi emas: foydalanuvchi ilovaning
+  // odatiy bosh sahifasini hech qanday parda, karta yoki autentifikatsiya
+  // oynasisiz ko‘radi. Kun filtri test uchun tashqarida qoladi.
+  function showPlainApp() {
+    awaitingCoinShopReturn = false;
+    runToken += 1;
+    clearTarget();
+    clearStreakFire();
+    closeSheet();
+    clearTimeout(cardAnimationTimer);
+    clearTimeout(autoFinishTimer);
+    clearTimeout(pushPreviewTimer);
+    pushPreview.classList.remove('is-visible');
+    pushPreview.hidden = true;
+    pushPermission.hidden = true;
+    card.hidden = true;
+    focus.hidden = true;
+    lesson.hidden = true;
+    auth.hidden = true;
+    success.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    root.classList.remove('is-running');
+    root.hidden = true;
+    screen.classList.remove('j-tour-scroll-locked');
+    goHome()
+      .then(resetViewportScroll)
+      .catch(resetViewportScroll);
   }
 
   function resetViewportScroll() {
@@ -1961,7 +1993,9 @@
   updateAssets();
   updateDayPicker();
   const forcePreview = params.get('onboarding') === '1';
-  if (forcePreview || !safeGet()) {
+  if (selectedDay === 4) {
+    showPlainApp();
+  } else if (forcePreview || !safeGet()) {
     if (forcePushPrompt || !getPushPreference()) showPushPermission();
     else startSelectedDay();
   }
