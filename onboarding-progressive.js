@@ -1642,7 +1642,7 @@
     if (coinText) coinText.textContent = 'Vazifangiz qabul qilindi. Sandiqni oching.';
     if (coinBadge) coinBadge.textContent = '+70';
     if (coinResult) coinResult.textContent = '+70 Coin';
-    if (coinResultText) coinResultText.textContent = 'Balansingizga qo‘shildi';
+    if (coinResultText) coinResultText.textContent = 'Balansda';
     finish.textContent = 'Davom etish';
     showRewardStage('coin');
     updateAssets();

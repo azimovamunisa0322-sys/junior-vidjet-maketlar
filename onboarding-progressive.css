@@ -1489,6 +1489,7 @@ article[data-widget="webinar"] .wtimer__b span {
   justify-content: center;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
   margin: 4px 0 0;
 }
 
@@ -1502,24 +1503,26 @@ article[data-widget="webinar"] .wtimer__b span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  padding: 0 17px;
+  min-width: 0;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 0 13px;
   border: 3px solid #f3b900;
   border-radius: 999px;
   background: #fffaf0;
   color: #d39800;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 900;
   white-space: nowrap;
 }
 
-.j-reward__panel--coin .j-reward__coin-result b::before { content: '🪙'; margin-right: 8px; font-size: 22px; }
+.j-reward__panel--coin .j-reward__coin-result b::before { content: '🪙'; margin-right: 7px; font-size: 20px; }
 .j-reward__panel--coin .j-reward__coin-result span {
   border-color: #6863ff;
   background: #f3f2ff;
   color: #4c49f1;
 }
-.j-reward__panel--coin .j-reward__coin-result span::before { content: '⚡'; margin-right: 7px; font-size: 25px; }
+.j-reward__panel--coin .j-reward__coin-result span::before { content: '⚡'; margin-right: 6px; font-size: 22px; }
 
 .j-reward__panel--coin + .j-tour__finish {
   position: absolute;
