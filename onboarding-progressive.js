@@ -1091,7 +1091,10 @@
       const isPlanHero = activeTarget.matches('.plan__hero');
       const pad = isPlanHero
         ? 0
-        : activeTarget.matches('button, .plan__shortcut') ? 7 : 9;
+        // Figma'dagi ramka kartochkaning o'ziga yopishib turadi. Oldingi
+        // 7–9px tashqi oraliq qorong'i fonni "uzilib qolgan" chiziqdek
+        // ko'rsatardi.
+        : 0;
       Object.values(shades).forEach(node => {
         node.style.background = 'transparent';
       });
