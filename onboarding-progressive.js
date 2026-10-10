@@ -14,7 +14,7 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  let selectedDay = Math.max(1, Math.min(4, Number(params.get('day')) || 1));
+  let selectedDay = Math.max(1, Math.min(5, Number(params.get('day')) || 1));
   const hasPurchasedCourse = window.JUNIOR_HAS_COURSE === true || params.get('paid') === '1';
   let storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
   const pushStorageKey = `junior:push-permission:${userId}:${VERSION}`;
@@ -253,6 +253,7 @@
     <button type="button" data-tour-day="2">2-kun</button>
     <button type="button" data-tour-day="3">3-kun</button>
     <button type="button" data-tour-day="4">4-kun</button>
+    <button type="button" data-tour-day="5">5-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
   // tashqarida ushlaymiz, shunda platforma headeri bilan ustma-ust tushmaydi.
@@ -926,8 +927,15 @@
     steps = selectedSteps();
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
-    if (selectedDay === 4) openPasswordRecovery();
-    else startTour();
+    if (selectedDay === 4) {
+      openPasswordRecovery();
+      return;
+    }
+    if (selectedDay === 5) {
+      showPlainApp();
+      return;
+    }
+    startTour();
   }
 
   async function choosePushPermission(allow) {
@@ -941,7 +949,7 @@
   }
 
   function selectDay(day) {
-    selectedDay = Math.max(1, Math.min(4, Number(day) || 1));
+    selectedDay = Math.max(1, Math.min(5, Number(day) || 1));
     const url = new URL(window.location.href);
     url.searchParams.set('qa', 'days');
     url.searchParams.set('day', String(selectedDay));
@@ -1311,6 +1319,10 @@
       openPasswordRecovery();
       return;
     }
+    if (selectedDay === 5) {
+      showPlainApp();
+      return;
+    }
     stepIndex = 0;
     activateStep(0);
   }
@@ -1338,6 +1350,33 @@
         .then(resetViewportScroll)
         .catch(resetViewportScroll);
     }
+  }
+
+  // 5-kun QA holati: ilovaning o‘zi, onboarding qatlamlarisiz.
+  function showPlainApp() {
+    awaitingCoinShopReturn = false;
+    runToken += 1;
+    clearTarget();
+    clearStreakFire();
+    closeSheet();
+    clearTimeout(cardAnimationTimer);
+    clearTimeout(autoFinishTimer);
+    clearTimeout(pushPreviewTimer);
+    pushPreview.classList.remove('is-visible');
+    pushPreview.hidden = true;
+    pushPermission.hidden = true;
+    card.hidden = true;
+    focus.hidden = true;
+    lesson.hidden = true;
+    auth.hidden = true;
+    success.hidden = true;
+    Object.values(shades).forEach(node => { node.hidden = true; });
+    root.classList.remove('is-running');
+    root.hidden = true;
+    screen.classList.remove('j-tour-scroll-locked');
+    goHome()
+      .then(resetViewportScroll)
+      .catch(resetViewportScroll);
   }
 
   function resetViewportScroll() {
@@ -1961,7 +2000,11 @@
   updateAssets();
   updateDayPicker();
   const forcePreview = params.get('onboarding') === '1';
-  if (forcePreview || !safeGet()) {
+  if (selectedDay === 4) {
+    openPasswordRecovery();
+  } else if (selectedDay === 5) {
+    showPlainApp();
+  } else if (forcePreview || !safeGet()) {
     if (forcePushPrompt || !getPushPreference()) showPushPermission();
     else startSelectedDay();
   }
