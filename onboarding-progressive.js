@@ -47,8 +47,12 @@
       </div>
     </section>
     <aside class="j-tour__card" role="dialog" aria-live="polite">
-      <div class="j-tour__meta"><span class="j-tour__count"></span><span class="j-tour__label">Junior sayohati</span></div>
+      <div class="j-tour__meta"><span class="j-tour__count"></span><span class="j-tour__label">Junior sayohati</span><button class="j-tour__skip" type="button">O‘tkazib yuborish</button></div>
       <div class="j-tour__bar" aria-hidden="true"><i></i></div>
+      <div class="j-tour__guide" aria-hidden="true">
+        <img data-a="a2" alt="">
+        <p><b></b><small></small></p>
+      </div>
       <h2 class="j-tour__title"></h2>
       <p class="j-tour__text"></p>
       <p class="j-tour__instruction" hidden><span>☝️</span><b></b></p>
@@ -278,6 +282,9 @@
   const count = root.querySelector('.j-tour__count');
   const tourLabel = root.querySelector('.j-tour__label');
   const bar = root.querySelector('.j-tour__bar i');
+  const guide = root.querySelector('.j-tour__guide');
+  const guideTitle = guide.querySelector('b');
+  const guideText = guide.querySelector('small');
   const title = root.querySelector('.j-tour__title');
   const text = root.querySelector('.j-tour__text');
   const instruction = root.querySelector('.j-tour__instruction');
@@ -286,6 +293,7 @@
   const streakPreview = root.querySelector('[data-streak-preview]');
   const choices = root.querySelector('.j-tour__choices');
   const next = root.querySelector('.j-tour__next');
+  const skip = root.querySelector('.j-tour__skip');
   const later = root.querySelector('.j-tour__later');
   const lesson = root.querySelector('.j-tour__lesson');
   const lessonBack = root.querySelector('[data-lesson-back]');
@@ -925,6 +933,8 @@
   function startSelectedDay() {
     pushPermission.hidden = true;
     steps = selectedSteps();
+    root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 4);
+    root.dataset.tourDay = String(selectedDay);
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
     if (selectedDay === 4) {
@@ -1210,6 +1220,8 @@
     bar.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
     title.textContent = typeof step.title === 'function' ? step.title() : step.title;
     text.textContent = typeof step.text === 'function' ? step.text() : step.text;
+    guideTitle.textContent = title.textContent;
+    guideText.textContent = text.textContent;
     instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
     streakVisual.hidden = step.id !== 'streak-goal' && !step.celebration;
@@ -1765,6 +1777,10 @@
     });
   });
   later.addEventListener('click', () => {
+    playSound('finish');
+    closeTour(true);
+  });
+  skip.addEventListener('click', () => {
     playSound('finish');
     closeTour(true);
   });
