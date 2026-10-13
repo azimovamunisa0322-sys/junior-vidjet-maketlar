@@ -1,6 +1,6 @@
 (() => {
   const steps = [
-    { art: '👋', title: 'Junior’ga xush kelibsiz!', text: 'Interfeys o‘zgarmaydi. Endi unda farzandingizning o‘qishi haqidagi kerakli ma’lumotlar siz uchun ham ko‘rinadi.', extra: '<div><span>☀️</span><b>Bugungi holat</b><small>Farzandingiz ayni paytda nimani bajarayotgani</small></div>', action: 'Keyingisi' },
+    { art: '👋', title: 'Junior’ga xush kelibsiz!', text: 'Farzandingizning o‘qishi haqidagi kerakli ma’lumotlar endi siz uchun ham ko‘rinadi.', extra: '<div><span>☀️</span><b>Bugungi holat</b><small>Farzandingiz ayni paytda nimani bajarayotgani</small></div>', action: 'Keyingisi' },
     { art: '📈', title: 'Eng muhimini bir qarashda ko‘ring', text: 'Bugun nechta dars tugatgani, keyingi darsi va faolligi — hammasi bir joyda.', extra: '<div><span>✓</span><b>Bajarilgan darslar</b><small>Bugungi natija va keyingi qadam</small></div><div><span>⌁</span><b>Yordam signali</b><small>Faqat e’tibor kerak bo‘lgan paytda</small></div>', action: 'Yana bitta narsa' },
     { art: '<img src="../bugungi-reja/src/assets/robomentor.png" alt="Farzandim natijasi boti">', title: 'Farzandim natijasi', text: 'Savol tug‘ilsa, @junior_farzandim_bot sizga farzandingizning natijalari va o‘qishi haqida yordam beradi.', extra: '<div class="bot-intro"><span>✦</span><b>@junior_farzandim_bot</b><small>Natijani tez tushunish va kerakli tavsiyalar uchun</small></div>', action: 'Botni ochish', bot: true }
   ];
