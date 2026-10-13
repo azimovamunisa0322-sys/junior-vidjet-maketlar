@@ -7,74 +7,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="parent-onboarding.css?v=1">
+  <link rel="stylesheet" href="parent-onboarding.css?v=2">
 </head>
 <body>
-  <main class="parent-demo">
-    <nav class="parent-days" aria-label="Ota-ona onboarding kunlari">
-      <span class="parent-days__caption">OTA-ONA TESTI</span>
-      <button type="button" data-day="1">1-kun</button>
-      <button type="button" data-day="2">2-kun</button>
-      <button type="button" data-day="3">3-kun</button>
-      <button type="button" data-day="4">4-kun</button>
-      <button type="button" data-day="5">5-kun</button>
-      <button type="button" data-day="6">6-kun</button>
-    </nav>
-
-    <section class="phone" aria-label="Junior ota-ona kabineti">
-      <div class="status"><span>9:41</span><span>▮▮▮ ◔ ▱</span></div>
-      <header class="app-header">
-        <div class="junior-logo"><b>▰</b><strong>Junior</strong><small>academy</small></div>
-        <button class="profile" type="button" aria-label="Ota-ona profili"><span>MA</span></button>
-      </header>
-      <div class="child-switch"><span class="child-avatar">A</span><span><b>Azizbek</b><small>6-sinf · mening farzandim</small></span><i>⌄</i></div>
-
-      <section class="welcome-card" data-target="today">
-        <div><small>BUGUNGI HOLAT</small><h1>Azizbek bugun<br><b>1/2 dars</b>ni tugatdi</h1><p>Keyingi dars: Ingliz tili</p></div>
-        <div class="progress-orbit"><b>50%</b><span></span></div>
-      </section>
-
-      <section class="quick-grid">
-        <article><span class="quick-icon quick-icon--mint">✓</span><b>1 dars</b><small>yakunlandi</small></article>
-        <article><span class="quick-icon quick-icon--gold">★</span><b>100 Coin</b><small>bugun oldi</small></article>
-        <article><span class="quick-icon quick-icon--blue">↗</span><b>Yaxshi</b><small>faollik</small></article>
-      </section>
-
-      <section class="section-head"><h2>O‘qish jarayoni</h2><button type="button">Barchasi</button></section>
-      <article class="lesson-card" data-target="lesson">
-        <div class="lesson-art"><span>ENGLISH</span><img src="../bugungi-reja/src/assets/robomentor.png" alt="Junior maskoti"></div>
-        <div><b>Ingliz tili</b><p>Present simple</p><small><i></i> Video dars yakunlandi</small></div><em>›</em>
-      </article>
-
-      <article class="insight-card" data-target="insight">
-        <div class="insight-icon">⌁</div>
-        <div><b>Farzandingiz ritmni ushlab turibdi</b><p>Bu hafta 4 ta dars yakunlandi.</p></div>
-      </article>
-
-      <article class="bot-card" data-target="bot">
-        <div class="bot-card__copy"><span>JUNIOR PARENT BOT</span><b>Savollaringiz bormi?</b><p>O‘qish haqida sodda va aniq javoblar.</p><button type="button">Bot bilan yozish</button></div>
-        <img src="../bugungi-reja/src/assets/robomentor.png" alt="Junior Parent bot">
-      </article>
-
-      <article class="notice-card" data-target="notices"><span>🔔</span><div><b>Muhim paytda xabardor bo‘ling</b><p>Dars, vazifa yoki e’tibor kerak bo‘lgan holatlarda.</p></div><i>›</i></article>
-
-      <nav class="bottom-nav"><span class="is-active">⌂<b>Bosh sahifa</b></span><span>▣<b>Hisobot</b></span><span>◌<b>Bot</b></span><span>☻<b>Profil</b></span></nav>
-
-      <div class="tour-shade" aria-hidden="true"></div>
-      <div class="tour-focus" aria-hidden="true"></div>
-      <section class="parent-sheet" role="dialog" aria-live="polite">
+  <main class="parent-preview">
+    <p class="preview-caption">OTA-ONA UCHUN · 1 KUNLIK ONBOARDING</p>
+    <section class="phone" aria-label="Junior ilovasi">
+      <iframe title="Junior ilovasi" src="../progressive/?onboarding=0" tabindex="-1"></iframe>
+      <div class="parent-shade" aria-hidden="true"></div>
+      <section class="parent-sheet" role="dialog" aria-labelledby="parent-title">
         <div class="sheet-handle"></div>
-        <div class="sheet-step"><span data-step>1/6</span><b>OTA-ONA YO‘LI</b></div>
+        <div class="sheet-top"><span>OTA-ONA UCHUN</span><b>1/1</b></div>
         <div class="sheet-progress"><i></i></div>
-        <div class="sheet-art" data-art></div>
-        <h2 data-title></h2>
-        <p data-text></p>
-        <div class="sheet-extra" data-extra></div>
-        <button type="button" class="sheet-action" data-next></button>
+        <div class="sheet-art">🤝</div>
+        <h1 id="parent-title">Farzandingizning o‘qishi — bir qarashda</h1>
+        <p>Junior interfeysi o‘zgarmaydi. Sizga faqat eng muhim uchta ma’lumotni ko‘rsatamiz.</p>
+        <div class="key-info">
+          <div><span>☀️</span><b>Bugungi holat</b><small>Nechta dars tugatgani va keyingi qadam</small></div>
+          <div><span>📈</span><b>O‘qish jarayoni</b><small>Mavzu, topshiriq va kerak bo‘lsa yordam signali</small></div>
+          <div><span>🤖</span><b>Parent bot</b><small>Savol tug‘ilsa — bola o‘rniga emas, sizga yordam</small></div>
+        </div>
+        <button type="button" data-start>Davom etish</button>
       </section>
     </section>
-    <p class="demo-note">6 kunlik demo: har kuni faqat kerakli bitta yordam — ortiqcha o‘rgatishsiz.</p>
+    <p class="preview-note">Onboarding tugagach, ota-ona odatiy Junior ilovasini ko‘radi.</p>
   </main>
-  <script src="parent-onboarding.js?v=1"></script>
+  <script src="parent-onboarding.js?v=2"></script>
 </body>
 </html>
