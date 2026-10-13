@@ -145,16 +145,16 @@
 }
 
 .j-tour__card.is-bubbling {
-  animation: j-progressive-card-in .46s cubic-bezier(.2,.78,.25,1) both;
+  animation: j-progressive-card-in .52s cubic-bezier(.22,1,.36,1) both;
 }
 
 .j-tour__card.is-leaving {
   pointer-events: none;
-  animation: j-progressive-card-out .28s ease-in both;
+  animation: j-progressive-card-out .34s cubic-bezier(.55,0,1,.45) both;
 }
 
 .j-tour__focus.is-leaving {
-  animation: j-progressive-focus-out .28s ease-in both;
+  animation: j-progressive-focus-out .34s cubic-bezier(.55,0,1,.45) both;
 }
 
 .j-tour__card.is-bubbling .j-tour__meta,
@@ -167,8 +167,9 @@
 }
 
 @keyframes j-progressive-card-in {
-  from { opacity: 0; transform: translate3d(0, 13px, 0) scale(.988); }
-  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(.965); filter: blur(4px); }
+  72% { opacity: 1; transform: translate3d(0, -1px, 0) scale(1.004); filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
 }
 
 @keyframes j-progressive-focus-in {
@@ -176,7 +177,7 @@
   to { opacity: 1; }
 }
 
-@keyframes j-progressive-card-out { from { opacity: 1; transform: translate3d(0,0,0); } to { opacity: 0; transform: translate3d(0,-7px,0) scale(.992); } }
+@keyframes j-progressive-card-out { from { opacity: 1; transform: translate3d(0,0,0) scale(1); filter: blur(0); } to { opacity: 0; transform: translate3d(0,-13px,0) scale(.98); filter: blur(2px); } }
 @keyframes j-progressive-focus-out { from { opacity: 1; } to { opacity: 0; } }
 @keyframes j-progressive-permission-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes j-progressive-bell { 0%, 100% { transform: rotate(0); } 12% { transform: rotate(-10deg); } 24% { transform: rotate(9deg); } 36% { transform: rotate(-5deg); } 48% { transform: rotate(0); } }

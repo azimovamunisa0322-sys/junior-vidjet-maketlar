@@ -976,7 +976,7 @@
     card.classList.add('is-leaving');
     focus.classList.add('is-leaving');
     playSound('transition');
-    await delay(280);
+    await delay(340);
   }
 
   async function waitForTarget(step, token) {
