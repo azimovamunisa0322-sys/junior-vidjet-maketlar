@@ -1178,6 +1178,38 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .st__ring>svg path, .st__ice, .st__ico--ice{ animation:none !important; }
 }
 /* PLAN:CSS:END */</style>
+<style>/* SCHEDULE:CSS:START */
+/* 5-kun: O'yinlar o'rniga dars jadvali. U alohida ilova ekrani kabi ochiladi. */
+.schedule { position:absolute; inset:0; z-index:46; overflow:hidden; background:#F8F9FB; color:#111; font-family:var(--f); opacity:0; transform:translate3d(18px,0,0); transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1); }
+.schedule[hidden] { display:none!important; }
+.schedule.is-open { opacity:1; transform:translate3d(0,0,0); }
+.schedule__body { height:100%; overflow-y:auto; overscroll-behavior:contain; padding:54px 16px 38px; box-sizing:border-box; }
+.schedule__top { height:42px; display:grid; grid-template-columns:42px 1fr 42px; align-items:center; margin-bottom:20px; }
+.schedule__back { width:38px; height:38px; border:0; background:transparent; color:#151B2D; font:500 34px/1 var(--f); cursor:pointer; padding:0 0 4px; }
+.schedule__top h2 { margin:0; text-align:center; font:700 17px/22px var(--f); letter-spacing:-.2px; }
+.schedule__weekhead { display:flex; align-items:center; justify-content:space-between; margin:0 0 16px; }
+.schedule__range { display:flex; flex-direction:column; gap:4px; }
+.schedule__range b { font:700 17px/22px var(--f); }.schedule__range span { font:600 13px/18px var(--f); color:#7B8391; }
+.schedule__arrows { display:flex; gap:8px; }.schedule__arrows button { width:42px; height:42px; border:0; border-radius:50%; background:#fff; color:#77808D; font:400 34px/35px var(--f); cursor:pointer; }
+.schedule__days { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin-bottom:28px; }
+.schedule__day { height:70px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:11px; background:#fff; color:#171717; font:700 15px/18px var(--f); }
+.schedule__day small { font:600 13px/16px var(--f); color:#7C838E; }.schedule__day i { width:7px; height:7px; border-radius:50%; background:#F3F4F6; }
+.schedule__day--active { box-shadow:inset 0 0 0 1.5px #FF4F28; background:#FFF6F3; }.schedule__day--active i { background:#FF5B36; }.schedule__day--active small { color:#3B3F48; }
+.schedule__intro { margin-bottom:17px; }.schedule__intro b { display:block; font:700 17px/22px var(--f); }.schedule__intro span { display:block; margin-top:5px; font:600 14px/19px var(--f); color:#737A86; }
+.schedule__grid { position:relative; min-height:640px; padding:10px 0 0 78px; border-radius:20px; background:#fff; overflow:hidden; }
+.schedule__times { position:absolute; left:0; top:10px; bottom:8px; width:78px; display:flex; flex-direction:column; justify-content:space-between; padding:7px 0; box-sizing:border-box; }
+.schedule__times span { padding-right:15px; text-align:right; font:600 13px/16px var(--f); color:#737A86; }
+.schedule__lines { position:absolute; left:94px; right:16px; top:27px; bottom:25px; display:flex; flex-direction:column; justify-content:space-between; }
+.schedule__lines i { border-top:1px dashed #C9CDD3; }
+.schedule__now { position:absolute; left:10px; right:16px; top:144px; display:flex; align-items:center; gap:7px; color:#FF5B36; }
+.schedule__now b { width:62px; height:24px; border-radius:999px; display:grid; place-items:center; background:#FF6947; color:#fff; font:700 12px/14px var(--f); }.schedule__now i { flex:1; border-top:1.5px solid #FF5B36; }
+.schedule__event { position:absolute; left:126px; right:24px; height:88px; border:0; border-radius:15px; overflow:hidden; text-align:left; cursor:pointer; color:#fff; box-shadow:0 8px 18px rgba(28,39,76,.12); }
+.schedule__event--math { top:160px; background:linear-gradient(125deg,#38BFEA,#4AA4E8); }.schedule__event--web { top:400px; background:linear-gradient(125deg,#FF7B59,#FF4F3E); }
+.schedule__event b { position:absolute; left:12px; bottom:10px; z-index:2; font:800 21px/22px var(--f); letter-spacing:-.4px; text-shadow:0 1px 2px rgba(0,0,0,.14); }.schedule__event--web b { max-width:120px; font-size:16px; line-height:15px; }
+.schedule__event span { position:absolute; left:12px; top:10px; z-index:2; padding:3px 7px; border-radius:8px; background:rgba(255,255,255,.22); font:700 10px/12px var(--f); }
+.schedule__event img { position:absolute; right:-8px; bottom:-4px; width:92px; height:92px; object-fit:contain; object-position:bottom right; filter:drop-shadow(0 4px 4px rgba(0,0,0,.15)); }
+.schedule__event:active { transform:scale(.98); }
+/* SCHEDULE:CSS:END */</style>
 </head>
 <body>
 <main class="page">
@@ -1293,8 +1325,8 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                 <button class="plan__shortcut" type="button" data-go="certificates">
                   <span class="plan__shortcut-ic" aria-hidden="true">📜</span><span>Sertifikatlar</span>
                 </button>
-                <button class="plan__shortcut" type="button" data-go="games">
-                  <span class="plan__shortcut-ic" aria-hidden="true">🎮</span><span>O'yinlar</span>
+                <button class="plan__shortcut" type="button" data-go="schedule">
+                  <span class="plan__shortcut-ic" aria-hidden="true">🗓️</span><span>Dars jadvali</span>
                 </button>
                 <button class="plan__shortcut" type="button" data-go="courses">
                   <span class="plan__shortcut-ic" aria-hidden="true">📚</span><span>Kurslarim</span>
@@ -1357,6 +1389,31 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
             <button class="gameh__x" type="button" id="gameClose" aria-label="Yopish"><i class="ic" style="--src:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHBhdGggZD0iTTIwLjEzIDE2Ljk4QzIwLjEzIDE3LjM0MjEgMjAuMDAzMyAxNy42NDk5IDE5Ljc0OTggMTcuOTAzM0wxNy45MDMzIDE5Ljc0OThDMTcuNjQ5OSAyMC4wMDMzIDE3LjM0MjEgMjAuMTMgMTYuOTggMjAuMTNDMTYuNjE4IDIwLjEzIDE2LjMxMDIgMjAuMDAzMyAxNi4wNTY4IDE5Ljc0OThMMTIuMDY1IDE1Ljc1ODFMOC4wNzMyMyAxOS43NDk4QzcuODE5NzkgMjAuMDAzMyA3LjUxMjAzIDIwLjEzIDcuMTQ5OTcgMjAuMTNDNi43ODc5IDIwLjEzIDYuNDgwMTUgMjAuMDAzMyA2LjIyNjcgMTkuNzQ5OEw0LjM4MDE3IDE3LjkwMzNDNC4xMjY3MiAxNy42NDk5IDQgMTcuMzQyMSA0IDE2Ljk4QzQgMTYuNjE4IDQuMTI2NzIgMTYuMzEwMiA0LjM4MDE3IDE2LjA1NjhMOC4zNzE5NCAxMi4wNjVMNC4zODAxNyA4LjA3MzIzQzQuMTI2NzIgNy44MTk3OSA0IDcuNTEyMDMgNCA3LjE0OTk3QzQgNi43ODc5IDQuMTI2NzIgNi40ODAxNSA0LjM4MDE3IDYuMjI2N0w2LjIyNjcgNC4zODAxN0M2LjQ4MDE1IDQuMTI2NzIgNi43ODc5IDQgNy4xNDk5NyA0QzcuNTEyMDMgNCA3LjgxOTc5IDQuMTI2NzIgOC4wNzMyMyA0LjM4MDE3TDEyLjA2NSA4LjM3MTk0TDE2LjA1NjggNC4zODAxN0MxNi4zMTAyIDQuMTI2NzIgMTYuNjE4IDQgMTYuOTggNEMxNy4zNDIxIDQgMTcuNjQ5OSA0LjEyNjcyIDE3LjkwMzMgNC4zODAxN0wxOS43NDk4IDYuMjI2N0MyMC4wMDMzIDYuNDgwMTUgMjAuMTMgNi43ODc5IDIwLjEzIDcuMTQ5OTdDMjAuMTMgNy41MTIwMyAyMC4wMDMzIDcuODE5NzkgMTkuNzQ5OCA4LjA3MzIzTDE1Ljc1ODEgMTIuMDY1TDE5Ljc0OTggMTYuMDU2OEMyMC4wMDMzIDE2LjMxMDIgMjAuMTMgMTYuNjE4IDIwLjEzIDE2Ljk4WiIgZmlsbD0iIzc3ODZBNCIvPiA8L3N2Zz4g)"></i></button>
             <iframe class="gameh__f" id="gameFrame" title="O'yin" referrerpolicy="no-referrer"></iframe>
           </div>
+
+          <section class="schedule" id="scheduleScreen" hidden aria-label="Mening darslarim">
+            <div class="schedule__body">
+              <header class="schedule__top">
+                <button class="schedule__back" id="scheduleClose" type="button" aria-label="Ortga">‹</button>
+                <h2>Mening darslarim</h2><span></span>
+              </header>
+              <div class="schedule__weekhead">
+                <div class="schedule__range"><b>12 – 18 oktyabr</b><span>2026</span></div>
+                <div class="schedule__arrows"><button type="button" aria-label="Oldingi hafta">‹</button><button type="button" aria-label="Keyingi hafta">›</button></div>
+              </div>
+              <div class="schedule__days" aria-label="Hafta kunlari">
+                <div class="schedule__day"><b>Du</b><small>12</small><i></i></div><div class="schedule__day"><b>Se</b><small>13</small><i></i></div><div class="schedule__day"><b>Ch</b><small>14</small><i></i></div>
+                <div class="schedule__day schedule__day--active"><b>Pa</b><small>15</small><i></i></div><div class="schedule__day"><b>Ju</b><small>16</small><i></i></div><div class="schedule__day"><b>Sh</b><small>17</small><i></i></div>
+              </div>
+              <div class="schedule__intro"><b>Payshanba, 15 oktyabr</b><span>Bugun 2 ta dars bor!</span></div>
+              <div class="schedule__grid">
+                <div class="schedule__times"><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span><span>18:00</span><span>19:00</span><span>20:00</span></div>
+                <div class="schedule__lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="schedule__now" aria-label="Hozir 12:00"><b>12:00</b><i></i></div>
+                <button class="schedule__event schedule__event--math" type="button" data-toast="Matematika darsi soat 12:00 da boshlanadi"><span>12:00</span><b>Matematika</b><img data-a="a2" alt=""></button>
+                <button class="schedule__event schedule__event--web" type="button" data-toast="Web dasturlash darsi soat 16:00 da boshlanadi"><span>16:00</span><b>WEB<br>DASTURLASH</b><img data-a="a2" alt=""></button>
+              </div>
+            </div>
+          </section>
 
           <div class="sheeth" id="sheetHost" hidden data-kind="sheet">
             <div class="sheeth__scrim" data-close></div>
@@ -1696,6 +1753,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-go]'); if (!b) return;
     e.preventDefault(); e.stopPropagation();
+    if (b.dataset.go === 'schedule') { openSchedule(); return; }
     setMentor(b.dataset.who || '');
     showTab(b.dataset.go);
     if (b.dataset.goview) aiView(b.dataset.goview);
@@ -1999,13 +2057,32 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     gameHost.hidden = true;
     gameFrame.src = 'about:blank';
   }
+  const scheduleScreen = $('#scheduleScreen');
+  function openSchedule() {
+    if (!scheduleScreen) return;
+    closeGame();
+    closeSheet();
+    scheduleScreen.hidden = false;
+    requestAnimationFrame(() => scheduleScreen.classList.add('is-open'));
+  }
+  function closeSchedule() {
+    if (!scheduleScreen || scheduleScreen.hidden) return;
+    scheduleScreen.classList.remove('is-open');
+    setTimeout(() => { if (!scheduleScreen.classList.contains('is-open')) scheduleScreen.hidden = true; }, 260);
+  }
   $('#gameClose')?.addEventListener('click', closeGame);
+  $('#scheduleClose')?.addEventListener('click', closeSchedule);
   document.addEventListener('click', e => {
     const g = e.target.closest('[data-game]'); if (!g) return;
     e.preventDefault();
     openGame(g.dataset.game);
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !gameHost.hidden) closeGame(); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!gameHost.hidden) closeGame();
+    else closeSchedule();
+  });
+  window.__openSchedule = openSchedule;
 
   function buildSheetList() {
     const box = $('#sheetList'); if (!box) return;

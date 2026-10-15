@@ -1404,8 +1404,16 @@
     root.hidden = true;
     screen.classList.remove('j-tour-scroll-locked');
     goHome()
-      .then(resetViewportScroll)
-      .catch(resetViewportScroll);
+      .then(() => {
+        resetViewportScroll();
+        // 5-kun maketi dars jadvalidan boshlanadi: o'quvchi kirishi bilan
+        // bugungi ikkita dars qaysi vaqtda ekanini ko'radi.
+        if (selectedDay === 5) window.__openSchedule?.();
+      })
+      .catch(() => {
+        resetViewportScroll();
+        if (selectedDay === 5) window.__openSchedule?.();
+      });
   }
 
   function resetViewportScroll() {
