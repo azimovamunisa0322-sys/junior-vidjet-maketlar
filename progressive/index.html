@@ -1409,8 +1409,8 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
                 <div class="schedule__times"><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span><span>18:00</span><span>19:00</span><span>20:00</span></div>
                 <div class="schedule__lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 <div class="schedule__now" aria-label="Hozir 12:00"><b>12:00</b><i></i></div>
-                <button class="schedule__event schedule__event--math" type="button" data-toast="Matematika darsi soat 12:00 da boshlanadi"><span>12:00</span><b>Matematika</b><img data-a="a2" alt=""></button>
-                <button class="schedule__event schedule__event--web" type="button" data-toast="Web dasturlash darsi soat 16:00 da boshlanadi"><span>16:00</span><b>WEB<br>DASTURLASH</b><img data-a="a2" alt=""></button>
+                <button class="schedule__event schedule__event--math" type="button" data-toast="Matematika darsi soat 12:00 da boshlanadi"><b>Matematika</b><img data-a="a2" alt=""></button>
+                <button class="schedule__event schedule__event--web" type="button" data-toast="Web dasturlash darsi soat 16:00 da boshlanadi"><b>WEB<br>DASTURLASH</b><img data-a="a2" alt=""></button>
               </div>
             </div>
           </section>
@@ -2083,6 +2083,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     else closeSchedule();
   });
   window.__openSchedule = openSchedule;
+  window.__closeSchedule = closeSchedule;
 
   function buildSheetList() {
     const box = $('#sheetList'); if (!box) return;

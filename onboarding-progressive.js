@@ -1403,6 +1403,9 @@
     root.classList.remove('is-running');
     root.hidden = true;
     screen.classList.remove('j-tour-scroll-locked');
+    // 5-kun bosh sahifadan boshlanadi. Jadval faqat «Dars jadvali» yorlig'i
+    // bosilganda ochilishi mumkin.
+    window.__closeSchedule?.();
     goHome()
       .then(resetViewportScroll)
       .catch(resetViewportScroll);
