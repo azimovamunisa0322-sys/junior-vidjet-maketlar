@@ -1527,7 +1527,7 @@
       banner.innerHTML = '<span class="j-expired-banner__icon">⌛</span><span><b>O‘qish muddati tugagan</b><small>Kurslar saqlangan. Davom etish uchun qayta faollashtiring.</small></span><button type="button" data-reactivate>Qayta faollashtirish</button>';
       (topbar || home.firstElementChild)?.after(banner);
     }
-    document.querySelectorAll('.scr[data-screen="home"] .mk__card').forEach(card => {
+    document.querySelectorAll('.scr[data-screen="home"] .mk__card, .scr[data-screen="courses"] .plan__course').forEach(card => {
       card.classList.add('j-course-locked');
       card.setAttribute('aria-disabled', 'true');
     });
@@ -1602,7 +1602,7 @@
       if (event.target.closest('[data-reactivate]')) {
         event.preventDefault(); event.stopImmediatePropagation(); open('sales'); return;
       }
-      if (event.target.closest('.scr[data-screen="home"] .mk__card')) {
+      if (event.target.closest('.j-course-locked')) {
         event.preventDefault(); event.stopImmediatePropagation(); open('continue');
       }
     }, true);
