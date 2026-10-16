@@ -572,8 +572,8 @@
 
   function syncActivityRecordings() {
     const slot = document.querySelector('#sheetSlot');
-    const sheet = slot?.querySelector('.sheet[data-widget="activity"][data-sheet="day-view"]');
-    if (!sheet || sheet.querySelector('.j-recording-list')) return;
+    const sheet = slot?.querySelector('.sheet[data-widget="activity"]');
+    if (!sheet || ['calendar', 'recording'].includes(sheet.dataset.sheet) || sheet.querySelector('.j-recording-list')) return;
     const title = sheet.querySelector('.sheet__title')?.textContent?.trim().toLowerCase();
     const recordings = activityRecordings[title];
     if (!recordings?.length) return;
