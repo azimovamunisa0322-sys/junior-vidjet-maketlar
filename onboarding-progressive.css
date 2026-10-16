@@ -58,6 +58,9 @@
 .j-payment-expired .mk__card { position: relative; overflow: hidden; filter: saturate(.62); }
 .j-payment-expired .mk__card::after { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; background: rgba(27, 35, 56, .53); content: "🔒  Kurs yopiq"; font: 900 12px/1 var(--f, "Nunito", sans-serif); text-shadow: 0 1px 4px rgba(0,0,0,.22); }
 .j-payment-expired #track .wcard:not([data-widget="streak"]) { display: none; }
+/* 6-kun: katta masкот карточкадан pastga chiqadi. Indikatorlarga alohida
+   bo'sh joy beramiz, shunda nuqtalar robotning oyoqlariga yopishmaydi. */
+.j-payment-expired #track { padding-bottom: 54px; }
 .j-expired-modal { position: fixed; z-index: 80; inset: 0; display: grid; place-items: center; padding: 20px; }
 .j-expired-modal[hidden] { display: none; }
 .j-expired-modal__scrim { position: absolute; inset: 0; background: rgba(16, 23, 40, .62); backdrop-filter: blur(5px); }
