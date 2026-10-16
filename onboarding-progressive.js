@@ -498,26 +498,8 @@
   }
 
   function injectTeamCard() {
-    const ai = document.querySelector('.scr[data-screen="ai"]');
-    if (!ai || ai.querySelector('.j-team')) return;
-    const team = document.createElement('section');
-    team.className = 'j-team';
-    team.setAttribute('aria-label', 'Sizga biriktirilgan ustozlar');
-    team.innerHTML = `
-      <div class="j-team__head"><span><b>Sizga biriktirilgan ustozlar</b><small>O‘qish davomida yordam beradi</small></span><i>2 ustoz</i></div>
-      <div class="j-team__person">
-        <span class="j-team__avatar j-team__avatar--curator">🧭</span>
-        <span><b>Shaxsiy kurator</b><small>Jadval, progress va tashkiliy masalalar</small></span>
-        <button type="button" data-j-team="curator" aria-label="Kuratorga Telegram orqali yozish">Telegram</button>
-      </div>
-      <div class="j-team__person">
-        <span class="j-team__avatar j-team__avatar--mentor">🎙️</span>
-        <span><b>Mentor</b><small>Jonli darslar va mavzuga oid savollar</small></span>
-        <button type="button" data-j-team="mentor" aria-label="Mentorga Telegram orqali yozish">Telegram</button>
-      </div>`;
-    const feed = ai.querySelector('.ai-feed');
-    if (feed) feed.before(team);
-    else ai.appendChild(team);
+    // Chat ichidagi «Sizga biriktirilgan ustozlar» bloki mahsulot oqimidan olib tashlandi.
+    document.querySelectorAll('.scr[data-screen="ai"] .j-team').forEach(node => node.remove());
   }
 
   function polishProgressiveScreens() {
