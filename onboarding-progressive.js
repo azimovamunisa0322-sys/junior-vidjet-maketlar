@@ -1008,6 +1008,7 @@
   }
 
   function startSelectedDay() {
+    if (selectedDay !== 6) clearPaymentExpiredState();
     pushPermission.hidden = true;
     steps = selectedSteps();
     root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 4);
@@ -1425,6 +1426,7 @@
   }
 
   function startTour() {
+    if (selectedDay !== 6) clearPaymentExpiredState();
     awaitingCoinShopReturn = false;
     steps = selectedSteps();
     if (selectedDay === 4) {
