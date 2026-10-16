@@ -574,7 +574,7 @@
     const slot = document.querySelector('#sheetSlot');
     const sheet = slot?.querySelector('.sheet[data-widget="activity"]');
     if (!sheet || ['calendar', 'recording'].includes(sheet.dataset.sheet) || sheet.querySelector('.j-recording-list')) return;
-    const title = sheet.querySelector('.sheet__title')?.textContent?.trim().toLowerCase();
+    const title = sheet.querySelector('.sheet__title')?.textContent?.trim().toLowerCase().split(',')[0];
     const recordings = activityRecordings[title];
     if (!recordings?.length) return;
 
