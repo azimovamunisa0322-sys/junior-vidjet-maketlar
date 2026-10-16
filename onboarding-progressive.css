@@ -553,6 +553,27 @@
 .j-auth__panel--success { text-align: center; }
 .j-auth__check { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 15px; border-radius: 50%; color: #fff; background: #0bc87a; box-shadow: 0 13px 28px rgba(11,200,122,.24); font-size: 34px; font-weight: 900; }
 
+/* 5-kun: ilovaning yangi profil ko'rinishi. CoinShop, sertifikatlar va
+   kurslar bosh sahifadagi tezkor menyuga ko'chirilgan. */
+.scr[data-screen="profile"] .p-mobile { padding: 16px 16px 30px; color: #151515; }
+.p-mobile__hero { display: grid; justify-items: center; padding: 7px 0 20px; text-align: center; }
+.p-mobile__avatar { width: 92px; height: 92px; object-fit: contain; filter: drop-shadow(0 9px 14px rgba(28,39,76,.12)); }
+.p-mobile__hero h1 { margin: 8px 0 3px; font: 800 26px/31px var(--f, "Nunito", sans-serif); letter-spacing: -.5px; }
+.p-mobile__hero p { margin: 0; color: #7b8390; font: 600 15px/20px var(--f, "Nunito", sans-serif); }
+.p-mobile__stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 27px; overflow: hidden; border-radius: 22px; background: #ffe0da; }
+.p-mobile__stat { position: relative; display: grid; justify-items: center; gap: 3px; min-height: 104px; padding: 15px 6px 10px; text-align: center; }
+.p-mobile__stat + .p-mobile__stat::before { position: absolute; left: 0; top: 22px; bottom: 22px; width: 1.5px; background: #ff9f8b; content: ""; }
+.p-mobile__stat i { height: 26px; color: #ff5a2d; font: 700 24px/26px system-ui, sans-serif; font-style: normal; }
+.p-mobile__stat span { color: #50627f; font: 800 12px/16px var(--f, "Nunito", sans-serif); }
+.p-mobile__stat b { font: 800 19px/22px var(--f, "Nunito", sans-serif); }
+.p-mobile__section { margin: 0 0 7px; font: 800 23px/29px var(--f, "Nunito", sans-serif); letter-spacing: -.3px; }
+.p-mobile__rows { display: flex; flex-direction: column; }
+.p-mobile__row { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 9px; min-height: 62px; border: 0; border-bottom: 1px solid #edf0f4; background: transparent; color: #151515; text-align: left; cursor: pointer; }
+.p-mobile__row:active { background: #f7f8fa; }
+.p-mobile__icon { display:grid; place-items:center; width:34px; height:34px; border-radius:11px; color:#aab8d2; background:#f4f6fa; font:700 19px/1 system-ui,sans-serif; }
+.p-mobile__row b { font: 800 16px/20px var(--f, "Nunito", sans-serif); }.p-mobile__row small { color:#aab5c9; font:700 14px/18px var(--f, "Nunito", sans-serif); }
+.p-mobile__chev { color:#b9c5d9; font:400 32px/1 system-ui,sans-serif; }.p-mobile__row--exit b, .p-mobile__row--exit .p-mobile__chev { color:#ff5a2d; }.p-mobile__row--exit .p-mobile__icon { color:#ff5a2d; background:#fff0ec; }
+
 /* 1–4 kun: Figma'dagi fokus + pastki sheet kompozitsiyasi. */
 .j-tour[data-figma-style="true"] .j-tour__shade {
   background: rgba(19, 27, 47, .72) !important;

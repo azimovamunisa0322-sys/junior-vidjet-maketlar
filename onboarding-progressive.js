@@ -505,6 +505,31 @@
   function polishProgressiveScreens() {
     const leadersEnd = document.querySelector('.scr[data-screen="leaders"] .lb-end');
     if (leadersEnd) leadersEnd.textContent = 'Sizdan oldinda yana 6 nafar o‘quvchi bor';
+
+    const profile = document.querySelector('.scr[data-screen="profile"]');
+    if (profile && !profile.querySelector('.p-mobile')) {
+      profile.innerHTML = `
+        <section class="p-mobile" aria-label="Profil">
+          <div class="p-mobile__hero">
+            <img class="p-mobile__avatar" data-a="a2" alt="Junior maskoti">
+            <h1>Tursunov Shodimurod</h1><p>Junior o‘quvchisi</p>
+          </div>
+          <div class="p-mobile__stats" aria-label="O‘quvchi statistikasi">
+            <div class="p-mobile__stat"><i>♙</i><span>Liderlarda</span><b>5008</b></div>
+            <div class="p-mobile__stat"><i>▣</i><span>Faollik</span><b>1</b></div>
+            <div class="p-mobile__stat"><i>●</i><span>Status</span><b>Faol</b></div>
+          </div>
+          <h2 class="p-mobile__section">Sozlamalar</h2>
+          <div class="p-mobile__rows">
+            <button class="p-mobile__row" type="button" data-toast="Til sozlamalari ochilmoqda"><span class="p-mobile__icon">◎</span><b>Til</b><small>O‘zbek tili&nbsp; ›</small></button>
+            <button class="p-mobile__row" type="button" data-toast="Coinlar tarixi ochilmoqda"><span class="p-mobile__icon">◴</span><b>Coinlar tarixi</b><span class="p-mobile__chev">›</span></button>
+            <button class="p-mobile__row" type="button" data-go="help"><span class="p-mobile__icon">?</span><b>Yordam</b><span class="p-mobile__chev">›</span></button>
+            <button class="p-mobile__row" type="button" data-toast="Sozlamalar ochilmoqda"><span class="p-mobile__icon">⚙</span><b>Sozlamalar</b><span class="p-mobile__chev">›</span></button>
+            <button class="p-mobile__row p-mobile__row--exit" type="button" data-toast="Hisobdan chiqish oynasi ochilmoqda"><span class="p-mobile__icon">↪</span><b>Chiqish</b><span class="p-mobile__chev">›</span></button>
+          </div>
+        </section>`;
+      updateAssets();
+    }
   }
 
   const streakGoalKey = `junior:streak-goal:${userId}`;
