@@ -59,6 +59,9 @@
 .j-payment-expired .mk__card::after { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; background: rgba(27, 35, 56, .53); content: "🔒  Kurs yopiq"; font: 900 12px/1 var(--f, "Nunito", sans-serif); text-shadow: 0 1px 4px rgba(0,0,0,.22); }
 .j-payment-expired .plan__course.j-course-locked { position: relative; isolation: isolate; overflow: hidden; filter: saturate(.5); }
 .j-payment-expired .plan__course.j-course-locked::after { position: absolute; z-index: 4; inset: 0; display: grid; place-items: center; color: #fff; background: rgba(27, 35, 56, .55); content: "🔒  Kurs yopiq"; font: 900 13px/1 var(--f, "Nunito", sans-serif); text-shadow: 0 1px 4px rgba(0,0,0,.25); }
+/* Muddati o'tgan o'quvchi bonus deadline'ini emas, avval olgan
+   sertifikatlarini ko'radi. Shu sabab vaqtli mukofot oynasi 6-kunda chiqmaydi. */
+.j-payment-expired #sheetHost:has(.sheet[data-title*="Марра"]) { display: none !important; }
 .j-payment-expired #track .wcard:not([data-widget="streak"]) { display: none; }
 /* 6-kun: katta masкот карточкадан pastga chiqadi. Indikatorlarga alohida
    bo'sh joy beramiz, shunda nuqtalar robotning oyoqlariga yopishmaydi. */
