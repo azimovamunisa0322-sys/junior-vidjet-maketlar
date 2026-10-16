@@ -1557,12 +1557,12 @@
           <h2>Sotuv bo‘limi yordam beradi</h2>
           <p>Raqamingizni qoldiring — mutaxassisimiz sizga qulay to‘lov havolasini yuboradi.</p>
           <label>Telefon raqam<input name="phone" inputmode="tel" placeholder="+998 90 123 45 67"></label>
-          <button type="button" data-expired-send>So‘rov yuborish</button>
+          <button type="button" data-expired-send>Telefon raqam qoldirish</button>
           <button type="button" data-expired-close>Bekor qilish</button>
         </div>
         <div data-expired-view="sent" hidden>
           <span class="j-expired-modal__sent">✓</span>
-          <h2>So‘rovingiz qabul qilindi</h2>
+          <h2>Telefon raqamingiz qabul qilindi</h2>
           <p>Sotuv bo‘limi siz bilan bog‘lanib, to‘lov havolasini yuboradi.</p>
           <button type="button" data-expired-close>Tushunarli</button>
         </div>
