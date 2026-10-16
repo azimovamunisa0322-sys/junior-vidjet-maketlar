@@ -532,6 +532,77 @@
     }
   }
 
+  // Faollik kalendaridagi yozuvlar faqat webinar bo'lgan kunlarda ko'rinadi.
+  // Keyinchalik bu ro'yxat backenddan o'sha kunning recordinglari bilan keladi.
+  const activityRecordings = {
+    '2-sentabr': [
+      { id: 'responsive', label: 'Vebinar yozuvi', title: 'Responsive dizayn: mobilga moslashuv', course: 'Dasturlash kursi' }
+    ],
+    '3-sentabr': [
+      { id: 'html', label: 'TA booking yozuvi', title: 'Amaliy ish. HTML nima va nega kerak?', course: 'Dasturlash kursi' }
+    ],
+    '5-sentabr': [
+      { id: 'position', label: 'Vebinar yozuvi', title: 'Position xususiyati (Qiyinlashtirilgan mavzu)', course: 'Dasturlash kursi' },
+      { id: 'html', label: 'TA booking yozuvi', title: 'Amaliy ish. HTML nima va nega kerak?', course: 'Dasturlash kursi' }
+    ]
+  };
+
+  function renderRecordingPlayer(recording) {
+    const slot = document.querySelector('#sheetSlot');
+    if (!slot || !recording) return;
+    slot.innerHTML = `
+      <section class="sheet j-recording-screen" data-widget="activity" data-sheet="recording">
+        <header class="sheet__head">
+          <div class="sheet__title">Yozuvni ko‘rish</div>
+          <div class="sheet__sub sheet__sub--brand">${recording.label}</div>
+        </header>
+        <div class="sheet__body">
+          <div class="j-recording-player" aria-label="${recording.title} videosi">
+            <span>YOZUV</span><button type="button" data-toast="Yozuv ijro etilmoqda" aria-label="Yozuvni ijro etish">▶</button>
+          </div>
+          <h3>${recording.title}</h3>
+          <p>${recording.course}</p>
+          <div class="j-recording-note">Yozuv saqlangan — istalgan vaqtda shu kalendardan qayta ko‘rishingiz mumkin.</div>
+        </div>
+        <footer class="sheet__foot">
+          <button class="s-btn s-btn--ghost" type="button" data-open="calendar">Kalendarga qaytish</button>
+        </footer>
+      </section>`;
+  }
+
+  function syncActivityRecordings() {
+    const slot = document.querySelector('#sheetSlot');
+    const sheet = slot?.querySelector('.sheet[data-widget="activity"][data-sheet="day-view"]');
+    if (!sheet || sheet.querySelector('.j-recording-list')) return;
+    const title = sheet.querySelector('.sheet__title')?.textContent?.trim().toLowerCase();
+    const recordings = activityRecordings[title];
+    if (!recordings?.length) return;
+
+    const list = document.createElement('section');
+    list.className = 'j-recording-list';
+    list.setAttribute('aria-label', 'Ushbu kunning yozuvlari');
+    list.innerHTML = recordings.map(recording => `
+      <article class="j-recording-card">
+        <span class="j-recording-card__type">${recording.label}</span>
+        <b>${recording.title}</b>
+        <small>${recording.course}</small>
+        <button type="button" data-recording-id="${recording.id}">Yozuvni ko‘rish <span>↗</span></button>
+      </article>`).join('');
+    sheet.querySelector('.sheet__body')?.appendChild(list);
+  }
+
+  function installActivityRecordings() {
+    const observer = new MutationObserver(syncActivityRecordings);
+    observer.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('click', event => {
+      const button = event.target.closest('[data-recording-id]');
+      if (!button) return;
+      const recording = Object.values(activityRecordings).flat().find(item => item.id === button.dataset.recordingId);
+      if (recording) renderRecordingPlayer(recording);
+    });
+    syncActivityRecordings();
+  }
+
   const streakGoalKey = `junior:streak-goal:${userId}`;
 
   function getStreakGoal() {
@@ -2009,6 +2080,7 @@
   targetObserver.observe(document.querySelector('#screens') || content, { childList: true, subtree: true });
   injectTeamCard();
   polishProgressiveScreens();
+  installActivityRecordings();
 
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });

@@ -1894,6 +1894,45 @@ article[data-widget="webinar"] .wtimer__b span {
   to { width: 100%; }
 }
 
+/* Faollik kalendari: webinar va TA booking yozuvlari */
+.j-recording-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #edf0f5;
+}
+.j-recording-card {
+  display: grid;
+  gap: 7px;
+  padding: 15px;
+  border: 1px solid #edf0f5;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 7px 18px rgba(40, 51, 74, .045);
+}
+.j-recording-card__type { color: #1689c9; font-size: 11px; font-weight: 900; }
+.j-recording-card b { color: #151923; font-size: 15px; line-height: 1.28; }
+.j-recording-card small { color: #737984; font-size: 12px; font-weight: 700; }
+.j-recording-card button {
+  width: 100%; min-height: 42px; margin-top: 5px; border: 0; border-radius: 11px;
+  color: #1188c9; background: #e5f5ff; font: inherit; font-size: 13px; font-weight: 900;
+}
+.j-recording-card button span { margin-left: 5px; font-size: 16px; }
+.j-recording-screen h3 { margin: 16px 0 5px; color: #161b25; font-size: 18px; line-height: 1.28; }
+.j-recording-screen .sheet__body > p { margin: 0; color: #717988; font-size: 13px; font-weight: 700; }
+.j-recording-player {
+  display: grid; place-items: center; min-height: 178px; overflow: hidden; border-radius: 17px;
+  color: #d8f4ff; background: radial-gradient(circle at 75% 20%, #3cc4ee 0, #157eb9 28%, #142c4e 70%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+}
+.j-recording-player span { align-self: start; margin-top: 16px; letter-spacing: .13em; font-size: 10px; font-weight: 900; }
+.j-recording-player button {
+  width: 58px; height: 58px; margin: -34px 0 0; padding-left: 5px; border: 0; border-radius: 50%;
+  color: #fff; background: #ff5a3e; box-shadow: 0 8px 20px rgba(0,0,0,.25); font-size: 22px;
+}
+.j-recording-note { margin-top: 16px; padding: 12px; border-radius: 12px; color: #466987; background: #edf8ff; font-size: 12px; line-height: 1.4; font-weight: 700; }
+
 @keyframes j-progressive-praise-mascot {
   from { opacity: 0; transform: translateY(18px) scale(.74) rotate(7deg); }
   68% { opacity: 1; transform: translateY(-4px) scale(1.05) rotate(-2deg); }
