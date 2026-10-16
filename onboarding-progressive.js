@@ -2199,6 +2199,12 @@
   polishProgressiveScreens();
   installActivityRecordings();
   installPaymentExpiredFlow();
+  // Ichki ekran qayta chizilsa ham 6-kundagi cheklov va qayta faollashtirish
+  // banneri yo'qolib ketmasin.
+  const paymentExpiredObserver = new MutationObserver(() => {
+    if (selectedDay === 6) setPaymentExpiredState();
+  });
+  paymentExpiredObserver.observe(content, { childList: true, subtree: true });
 
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });
