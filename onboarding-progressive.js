@@ -14,7 +14,7 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  let selectedDay = Math.max(1, Math.min(5, Number(params.get('day')) || 1));
+  let selectedDay = Math.max(1, Math.min(6, Number(params.get('day')) || 1));
   const hasPurchasedCourse = window.JUNIOR_HAS_COURSE === true || params.get('paid') === '1';
   let storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
   const pushStorageKey = `junior:push-permission:${userId}:${VERSION}`;
@@ -256,6 +256,7 @@
     <button type="button" data-tour-day="3">3-kun</button>
     <button type="button" data-tour-day="4">4-kun</button>
     <button type="button" data-tour-day="5">5-kun</button>
+    <button type="button" data-tour-day="6">6-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
   // tashqarida ushlaymiz, shunda platforma headeri bilan ustma-ust tushmaydi.
@@ -1021,6 +1022,10 @@
       showPlainApp();
       return;
     }
+    if (selectedDay === 6) {
+      showExpiredPaymentApp();
+      return;
+    }
     startTour();
   }
 
@@ -1035,7 +1040,7 @@
   }
 
   function selectDay(day) {
-    selectedDay = Math.max(1, Math.min(5, Number(day) || 1));
+    selectedDay = Math.max(1, Math.min(6, Number(day) || 1));
     const url = new URL(window.location.href);
     url.searchParams.set('qa', 'days');
     url.searchParams.set('day', String(selectedDay));
@@ -1430,6 +1435,10 @@
       showPlainApp();
       return;
     }
+    if (selectedDay === 6) {
+      showExpiredPaymentApp();
+      return;
+    }
     stepIndex = 0;
     activateStep(0);
   }
@@ -1460,7 +1469,7 @@
   }
 
   // 5-kun QA holati: ilovaning o‘zi, onboarding qatlamlarisiz.
-  function showPlainApp() {
+  function showPlainApp(paymentExpired = false) {
     awaitingCoinShopReturn = false;
     runToken += 1;
     clearTarget();
@@ -1485,8 +1494,116 @@
     // bosilganda ochilishi mumkin.
     window.__closeSchedule?.();
     goHome()
-      .then(resetViewportScroll)
+      .then(() => {
+        resetViewportScroll();
+        if (paymentExpired) setPaymentExpiredState();
+        else clearPaymentExpiredState();
+      })
       .catch(resetViewportScroll);
+  }
+
+  function showExpiredPaymentApp() {
+    showPlainApp(true);
+  }
+
+  function clearPaymentExpiredState() {
+    document.body.classList.remove('j-payment-expired');
+    document.querySelector('.j-expired-banner')?.remove();
+    document.querySelectorAll('.j-course-locked').forEach(card => {
+      card.classList.remove('j-course-locked');
+      card.removeAttribute('aria-disabled');
+    });
+  }
+
+  function setPaymentExpiredState() {
+    document.body.classList.add('j-payment-expired');
+    const home = document.querySelector('.scr[data-screen="home"]');
+    const topbar = home?.querySelector('.topbar');
+    if (home && !home.querySelector('.j-expired-banner')) {
+      const banner = document.createElement('aside');
+      banner.className = 'j-expired-banner';
+      banner.innerHTML = '<span class="j-expired-banner__icon">⌛</span><span><b>O‘qish muddati tugagan</b><small>Kurslar saqlangan. Davom etish uchun qayta faollashtiring.</small></span><button type="button" data-reactivate>Qayta faollashtirish</button>';
+      (topbar || home.firstElementChild)?.after(banner);
+    }
+    document.querySelectorAll('.scr[data-screen="home"] .mk__card').forEach(card => {
+      card.classList.add('j-course-locked');
+      card.setAttribute('aria-disabled', 'true');
+    });
+  }
+
+  function installPaymentExpiredFlow() {
+    if (document.querySelector('.j-expired-modal')) return;
+    const modal = document.createElement('section');
+    modal.className = 'j-expired-modal';
+    modal.hidden = true;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Kursni qayta faollashtirish');
+    modal.innerHTML = `
+      <div class="j-expired-modal__scrim" data-expired-close></div>
+      <div class="j-expired-modal__card">
+        <span class="j-expired-modal__lock">🔒</span>
+        <div data-expired-view="continue">
+          <small>O‘QISHNI DAVOM ETTIRISH</small>
+          <h2>Sizni uzoq kutdik!</h2>
+          <p>Darslarni davom ettiramizmi? Kurslaringiz, natijalaringiz va Coin’laringiz saqlab qolingan.</p>
+          <button type="button" data-expired-pay>Ha, davom ettiraman</button>
+          <button type="button" data-expired-close>Hozir emas</button>
+        </div>
+        <div data-expired-view="sales" hidden>
+          <small>QAYTA FAOLLASHTIRISH</small>
+          <h2>Sotuv bo‘limi yordam beradi</h2>
+          <p>Raqamingizni qoldiring — mutaxassisimiz sizga qulay to‘lov havolasini yuboradi.</p>
+          <label>Telefon raqam<input name="phone" inputmode="tel" placeholder="+998 90 123 45 67"></label>
+          <button type="button" data-expired-send>So‘rov yuborish</button>
+          <button type="button" data-expired-close>Bekor qilish</button>
+        </div>
+        <div data-expired-view="sent" hidden>
+          <span class="j-expired-modal__sent">✓</span>
+          <h2>So‘rovingiz qabul qilindi</h2>
+          <p>Sotuv bo‘limi siz bilan bog‘lanib, to‘lov havolasini yuboradi.</p>
+          <button type="button" data-expired-close>Tushunarli</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const showView = name => modal.querySelectorAll('[data-expired-view]').forEach(view => {
+      view.hidden = view.dataset.expiredView !== name;
+    });
+    const open = mode => {
+      showView(mode);
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('is-open'));
+    };
+    const close = () => {
+      modal.classList.remove('is-open');
+      modal.hidden = true;
+    };
+    modal.addEventListener('click', async event => {
+      if (event.target.closest('[data-expired-close]')) { close(); return; }
+      if (event.target.closest('[data-expired-pay]')) {
+        close();
+        await preparePaymentQr();
+        const note = document.querySelector('#sheetHost .sheet[data-widget="payment"] .s-note');
+        if (note) note.textContent = 'Kurslarni qayta faollashtirish uchun to‘lovni amalga oshiring.';
+        return;
+      }
+      if (event.target.closest('[data-expired-send]')) {
+        const phone = modal.querySelector('input[name="phone"]')?.value.trim();
+        window.dispatchEvent(new CustomEvent('junior:sales-lead', { detail: { phone, source: 'payment-expired' } }));
+        if (typeof window.JUNIOR_CREATE_SALES_LEAD === 'function') window.JUNIOR_CREATE_SALES_LEAD({ phone, source: 'payment-expired' });
+        showView('sent');
+      }
+    });
+    document.addEventListener('click', event => {
+      if (selectedDay !== 6) return;
+      if (event.target.closest('[data-reactivate]')) {
+        event.preventDefault(); event.stopImmediatePropagation(); open('sales'); return;
+      }
+      if (event.target.closest('.scr[data-screen="home"] .mk__card')) {
+        event.preventDefault(); event.stopImmediatePropagation(); open('continue');
+      }
+    }, true);
   }
 
   function resetViewportScroll() {
@@ -2081,6 +2198,7 @@
   injectTeamCard();
   polishProgressiveScreens();
   installActivityRecordings();
+  installPaymentExpiredFlow();
 
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });
@@ -2120,6 +2238,8 @@
     openPasswordRecovery();
   } else if (selectedDay === 5) {
     showPlainApp();
+  } else if (selectedDay === 6) {
+    showExpiredPaymentApp();
   } else if (forcePreview || !safeGet()) {
     if (forcePushPrompt || !getPushPreference()) showPushPermission();
     else startSelectedDay();
