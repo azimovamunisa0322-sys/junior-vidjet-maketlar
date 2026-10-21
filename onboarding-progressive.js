@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v12-streak-goal-screen';
+  const VERSION = 'v13-figma-payment-sheet';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -248,6 +248,87 @@
     </section>
     <div class="j-tour__toast" role="status"></div>`;
   screen.appendChild(root);
+
+  const paymentAddress = '0xbf88b57b5b831fd72a9f597c4a7753fff';
+  const day3Payment = document.createElement('section');
+  day3Payment.className = 'j-day3-payment';
+  day3Payment.hidden = true;
+  day3Payment.setAttribute('role', 'dialog');
+  day3Payment.setAttribute('aria-modal', 'true');
+  day3Payment.setAttribute('aria-labelledby', 'j-day3-payment-title');
+  day3Payment.innerHTML = `
+    <button class="j-day3-payment__scrim" type="button" data-day3-payment-close aria-label="To‘lov oynasini yopish"></button>
+    <section class="j-day3-payment__sheet">
+      <header class="j-day3-payment__header">
+        <div>
+          <h2 id="j-day3-payment-title">Boshqa qurilmadan to’lash</h2>
+          <p>Muddat: 15 sentyabr 2026</p>
+        </div>
+        <button type="button" data-day3-payment-close aria-label="Yopish">
+          <img src="./assets/payment/payment-close.svg" alt="">
+        </button>
+      </header>
+      <img class="j-day3-payment__qr" src="./assets/payment/payment-qr.png" alt="To‘lov uchun QR kod">
+      <p class="j-day3-payment__notice">Kurslarni qayta faollashtirish uchun to’lovni amalga oshiring</p>
+      <img class="j-day3-payment__divider" src="./assets/payment/payment-divider.svg" alt="">
+      <div class="j-day3-payment__summary">
+        <div class="j-day3-payment__total"><span>Jami</span><b>450 000 so’m</b></div>
+        <div class="j-day3-payment__address">
+          <span>Deposit adress</span>
+          <b>${paymentAddress}</b>
+        </div>
+      </div>
+      <div class="j-day3-payment__actions">
+        <button type="button" data-day3-payment-copy>
+          <img src="./assets/payment/payment-copy.svg" alt=""><span>Nusxalash</span>
+        </button>
+        <button type="button" data-day3-payment-share>
+          <img src="./assets/payment/payment-share.svg" alt=""><span>Ulashish</span>
+        </button>
+      </div>
+      <i class="j-day3-payment__home" aria-hidden="true"></i>
+    </section>`;
+  screen.appendChild(day3Payment);
+
+  function openDay3Payment() {
+    day3Payment.hidden = false;
+    requestAnimationFrame(() => day3Payment.classList.add('is-open'));
+  }
+
+  function closeDay3Payment() {
+    day3Payment.classList.remove('is-open');
+    setTimeout(() => { day3Payment.hidden = true; }, 260);
+  }
+
+  day3Payment.addEventListener('click', async event => {
+    if (event.target.closest('[data-day3-payment-close]')) {
+      closeDay3Payment();
+      return;
+    }
+    const copyButton = event.target.closest('[data-day3-payment-copy]');
+    if (copyButton) {
+      try { await navigator.clipboard.writeText(paymentAddress); } catch (_) {}
+      const label = copyButton.querySelector('span');
+      if (label) label.textContent = 'Nusxalandi';
+      setTimeout(() => { if (label) label.textContent = 'Nusxalash'; }, 1400);
+      return;
+    }
+    if (event.target.closest('[data-day3-payment-share]')) {
+      const shareData = { title: 'Junior Academy to‘lovi', text: `To‘lov manzili: ${paymentAddress}` };
+      if (navigator.share) {
+        try { await navigator.share(shareData); } catch (_) {}
+      } else {
+        try { await navigator.clipboard.writeText(shareData.text); } catch (_) {}
+        const label = day3Payment.querySelector('[data-day3-payment-share] span');
+        if (label) label.textContent = 'Nusxalandi';
+        setTimeout(() => { if (label) label.textContent = 'Ulashish'; }, 1400);
+      }
+    }
+  });
+
+  if (qaDays && selectedDay === 3 && params.get('payment') === '1') {
+    setTimeout(openDay3Payment, 220);
+  }
 
   const dayPicker = document.createElement('nav');
   dayPicker.className = 'j-day-picker';
@@ -677,6 +758,10 @@
 
   async function preparePaymentQr() {
     await goHome();
+    if (selectedDay === 3) {
+      openDay3Payment();
+      return;
+    }
     const paymentGroup = [...document.querySelectorAll('.sheets__g')]
       .find(group => group.querySelector('code')?.textContent.trim() === 'payment');
     const qrButton = [...(paymentGroup?.querySelectorAll('button') || [])]
