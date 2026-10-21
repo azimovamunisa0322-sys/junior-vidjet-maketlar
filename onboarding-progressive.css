@@ -2450,7 +2450,192 @@ article[data-widget="webinar"] .wtimer__b span {
   .j-platform__quiz h2 { margin-top: 28px; font-size: 19px; }
 }
 
-/* Day 3 payment — Figma node 5254:3342 */
+/* Day 3 payment overview — debt and zero-balance states */
+.j-payment-page {
+  position: absolute;
+  inset: 0;
+  z-index: 11000;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #050505;
+  background: #f7f8f9;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  opacity: 0;
+  transform: translateX(18px);
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(.22, 1, .36, 1);
+}
+.j-payment-page[hidden] { display: none !important; }
+.j-payment-page.is-open { opacity: 1; transform: none; }
+.j-payment-page__status {
+  position: absolute;
+  top: 18px;
+  right: 31px;
+  left: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #141c29;
+  font-size: 15px;
+  line-height: 18px;
+}
+.j-payment-page__status b { font-weight: 700; }
+.j-payment-page__status span { font-size: 12px; letter-spacing: 1px; }
+.j-payment-page__top {
+  position: absolute;
+  top: 58px;
+  right: 17px;
+  left: 17px;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+}
+.j-payment-page__top h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.j-payment-page__top button {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #a5a7ac;
+  background: #fff;
+  font-size: 29px;
+  font-weight: 300;
+  line-height: 1;
+}
+.j-payment-page__top button:last-child { font-size: 28px; transform: rotate(-20deg); }
+.j-payment-page__student {
+  position: absolute;
+  top: 154px;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  min-height: 404px;
+  padding: 20px;
+  border-radius: 24px;
+  background: #fff;
+}
+.j-payment-page__id {
+  display: flex;
+  height: 56px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  color: #999;
+  background: #f8f8f8;
+  font-size: 16px;
+}
+.j-payment-page__id b { color: #000; font-weight: 500; }
+.j-payment-page__student dl { margin: 10px 0 0; }
+.j-payment-page__student dl div {
+  display: flex;
+  min-height: 63px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+}
+.j-payment-page__student dl div:last-child { border-bottom: 0; }
+.j-payment-page__student dt,
+.j-payment-page__student dd {
+  margin: 0;
+  font-size: 16px;
+  line-height: 21px;
+}
+.j-payment-page__student dt { color: #999; font-weight: 500; }
+.j-payment-page__student dd { max-width: 72%; text-align: right; color: #000; font-weight: 500; }
+.j-payment-page__student dd.is-negative { color: #f00; }
+.j-payment-page__plans {
+  position: absolute;
+  top: 569px;
+  right: 16px;
+  left: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.j-payment-page__plans button {
+  height: 48px;
+  padding: 0 6px;
+  border: 1px solid #dedede;
+  border-radius: 14px;
+  color: #999;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.j-payment-page__plans button.is-active {
+  border-color: #83df31;
+  color: #000;
+  background: #cbff9b;
+  font-weight: 600;
+}
+.j-payment-page__invoice {
+  position: absolute;
+  top: 629px;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  min-height: 210px;
+  padding: 24px 20px 20px;
+  border-radius: 24px 24px 0 0;
+  background: #fff;
+}
+.j-payment-page__invoice header {
+  display: flex;
+  height: 26px;
+  align-items: center;
+  justify-content: space-between;
+  color: #999;
+  font-size: 16px;
+}
+.j-payment-page__invoice header b { color: #000; font-weight: 500; }
+.j-payment-page__invoice header i { color: #999; font-size: 27px; font-style: normal; }
+.j-payment-page__invoice > div {
+  display: flex;
+  height: 56px;
+  margin-top: 13px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  background: #f8f8f8;
+  font-size: 15px;
+}
+.j-payment-page__invoice > div span { color: #999; }
+.j-payment-page__invoice > div b { color: #000; font-weight: 500; }
+.j-payment-page__invoice > button {
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: #ff581d;
+  font-size: 16px;
+  font-weight: 600;
+}
+.j-payment-page__home {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  z-index: 2;
+  width: 144px;
+  height: 5px;
+  border-radius: 99px;
+  background: #000;
+  transform: translateX(-50%);
+}
+
+/* Day 3 payment QR — Figma node 5254:3342 */
 .j-day3-payment {
   position: absolute;
   inset: 0;
@@ -2647,6 +2832,8 @@ article[data-widget="webinar"] .wtimer__b span {
 }
 
 @media (max-height: 810px) {
+  .j-payment-page { overflow-y: auto; }
+  .j-payment-page__invoice { min-height: 220px; }
   .j-day3-payment__sheet {
     top: 72px;
     min-height: calc(100% - 72px);

@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v13-figma-payment-sheet';
+  const VERSION = 'v14-payment-overview';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -249,6 +249,99 @@
     <div class="j-tour__toast" role="status"></div>`;
   screen.appendChild(root);
 
+  const paymentPlans = {
+    debt: [
+      { lessons: 12, amount: '1 200 000 UZS' },
+      { lessons: 24, amount: '2 400 000 UZS' },
+      { lessons: 56, amount: '5 600 000 UZS' }
+    ],
+    zero: [
+      { lessons: 12, amount: '1 200 000 UZS' },
+      { lessons: 36, amount: '3 600 000 UZS' },
+      { lessons: 56, amount: '5 600 000 UZS' }
+    ]
+  };
+  let paymentPageState = params.get('payment_state') === 'zero' ? 'zero' : 'debt';
+  let selectedPaymentPlan = 0;
+  const paymentPage = document.createElement('section');
+  paymentPage.className = 'j-payment-page';
+  paymentPage.hidden = true;
+  paymentPage.setAttribute('aria-label', 'To‘lov ma’lumotlari');
+  paymentPage.innerHTML = `
+    <div class="j-payment-page__status" aria-hidden="true"><b>9:41</b><span>▮▮▮⌁▰</span></div>
+    <header class="j-payment-page__top">
+      <button type="button" data-payment-page-back aria-label="Ortga">←</button>
+      <h1>To’lov</h1>
+      <button type="button" data-payment-page-state aria-label="To‘lov holatini almashtirish">↶</button>
+    </header>
+    <section class="j-payment-page__student">
+      <div class="j-payment-page__id"><span>Talaba ID</span><b>1234567</b></div>
+      <dl>
+        <div><dt>Talaba:</dt><dd>Toshpo’latov Toshmuhammad</dd></div>
+        <div><dt>Kurs:</dt><dd>Web-dasturlash</dd></div>
+        <div><dt>Guruh:</dt><dd>GW30</dd></div>
+        <div><dt>Filial:</dt><dd>Yashnabod</dd></div>
+        <div><dt>Balans</dt><dd data-payment-balance></dd></div>
+      </dl>
+    </section>
+    <div class="j-payment-page__plans" role="group" aria-label="Darslar soni"></div>
+    <section class="j-payment-page__invoice">
+      <header><span>Hisob: <b>№123453</b></span><i aria-hidden="true">☷</i></header>
+      <div><span data-payment-summary-lessons></span><b data-payment-summary-amount></b></div>
+      <button type="button" data-payment-page-pay>To’lash</button>
+    </section>
+    <i class="j-payment-page__home" aria-hidden="true"></i>`;
+  screen.appendChild(paymentPage);
+
+  function renderPaymentPage() {
+    const isDebt = paymentPageState === 'debt';
+    const plans = paymentPlans[paymentPageState];
+    const balance = paymentPage.querySelector('[data-payment-balance]');
+    const planList = paymentPage.querySelector('.j-payment-page__plans');
+    const summaryLessons = paymentPage.querySelector('[data-payment-summary-lessons]');
+    const summaryAmount = paymentPage.querySelector('[data-payment-summary-amount]');
+    paymentPage.dataset.state = paymentPageState;
+    balance.textContent = isDebt ? '-240 000 UZS' : '0 UZS';
+    balance.classList.toggle('is-negative', isDebt);
+    planList.innerHTML = plans.map((plan, index) => `
+      <button type="button" data-payment-plan="${index}" class="${index === selectedPaymentPlan ? 'is-active' : ''}">
+        ${plan.lessons} ta dars
+      </button>`).join('');
+    summaryLessons.textContent = `${plans[selectedPaymentPlan].lessons} dars`;
+    summaryAmount.textContent = plans[selectedPaymentPlan].amount;
+  }
+
+  function openDay3PaymentPage() {
+    renderPaymentPage();
+    paymentPage.hidden = false;
+    requestAnimationFrame(() => paymentPage.classList.add('is-open'));
+  }
+
+  function closeDay3PaymentPage() {
+    paymentPage.classList.remove('is-open');
+    setTimeout(() => { paymentPage.hidden = true; }, 240);
+  }
+
+  paymentPage.addEventListener('click', event => {
+    if (event.target.closest('[data-payment-page-back]')) {
+      closeDay3PaymentPage();
+      return;
+    }
+    if (event.target.closest('[data-payment-page-state]')) {
+      paymentPageState = paymentPageState === 'debt' ? 'zero' : 'debt';
+      selectedPaymentPlan = 0;
+      renderPaymentPage();
+      return;
+    }
+    const plan = event.target.closest('[data-payment-plan]');
+    if (plan) {
+      selectedPaymentPlan = Number(plan.dataset.paymentPlan) || 0;
+      renderPaymentPage();
+      return;
+    }
+    if (event.target.closest('[data-payment-page-pay]')) openDay3Payment();
+  });
+
   const paymentAddress = '0xbf88b57b5b831fd72a9f597c4a7753fff';
   const day3Payment = document.createElement('section');
   day3Payment.className = 'j-day3-payment';
@@ -328,6 +421,9 @@
 
   if (qaDays && selectedDay === 3 && params.get('payment') === '1') {
     setTimeout(openDay3Payment, 220);
+  }
+  if (qaDays && selectedDay === 3 && params.get('payment_page') === '1') {
+    setTimeout(openDay3PaymentPage, 220);
   }
 
   const dayPicker = document.createElement('nav');
@@ -759,7 +855,7 @@
   async function preparePaymentQr() {
     await goHome();
     if (selectedDay === 3) {
-      openDay3Payment();
+      openDay3PaymentPage();
       return;
     }
     const paymentGroup = [...document.querySelectorAll('.sheets__g')]
