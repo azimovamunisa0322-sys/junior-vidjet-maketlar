@@ -1211,7 +1211,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__event:active { transform:scale(.98); }
 /* Haftalik jadval — barcha onboarding kunlarida bir xil ochiladi. */
 .schedule__board-scroll{ margin:0 -16px; padding:0 16px 22px; overflow-x:auto; overscroll-behavior-x:contain; }
-.schedule__board{ min-width:700px; display:grid; grid-template-columns:repeat(7,1fr); border:1px solid #EDF0F4; border-radius:18px; overflow:hidden; background:#fff; }
+.schedule__board{ min-width:840px; display:grid; grid-template-columns:repeat(7,120px); border:1px solid #EDF0F4; border-radius:18px; overflow:hidden; background:#fff; }
 .schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; }
 .schedule__column:last-child{ border-right:0; }
 .schedule__lesson{ display:block; width:100%; margin:0 0 14px; padding:0; border:0; background:transparent; color:#161A25; text-align:left; font-family:var(--f); cursor:pointer; }
@@ -1229,7 +1229,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .schedule__weekhead{ margin-top:30px; }
   .schedule__range b{ font-size:23px; line-height:28px; }.schedule__range span{ font-size:15px; }
   .schedule__day{ height:94px; font-size:16px; }.schedule__day small{ font-size:14px; }
-  .schedule__board-scroll{ margin:0; padding:0; overflow:visible; }.schedule__board{ min-width:0; }.schedule__column{ min-height:430px; padding:16px; }.schedule__lesson img{ height:92px; }
+  .schedule__board-scroll{ margin:0; padding:0; overflow:visible; }.schedule__board{ min-width:0; grid-template-columns:repeat(7,minmax(0,1fr)); }.schedule__column{ min-height:430px; padding:16px; }.schedule__lesson img{ height:92px; }
 }
 /* SCHEDULE:CSS:END */</style>
 </head>
