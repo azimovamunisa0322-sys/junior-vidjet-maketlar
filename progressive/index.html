@@ -1215,7 +1215,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; }
 .schedule__column:last-child{ border-right:0; }
 .schedule__lesson{ display:block; width:100%; margin:0 0 14px; padding:0; border:0; background:transparent; color:#161A25; text-align:left; font-family:var(--f); cursor:pointer; }
-.schedule__lesson img{ display:block; width:100%; height:70px; border-radius:12px; object-fit:cover; object-position:center; background:#FFE3D8; box-shadow:0 4px 10px rgba(28,39,76,.10); }
+.schedule__lesson img{ display:block; box-sizing:border-box; width:100%; height:70px; padding:3px; border-radius:12px; object-fit:contain; object-position:center; background:#FFE3D8; box-shadow:0 4px 10px rgba(28,39,76,.10); }
 .schedule__lesson b{ display:block; margin-top:8px; font:800 14px/17px var(--f); letter-spacing:-.2px; }
 .schedule__lesson small{ display:block; margin-top:5px; color:#8B919B; font:600 12px/15px var(--f); }
 .schedule__lesson--design img{ background:#F4E3CF; filter:saturate(.72) brightness(1.08); }
