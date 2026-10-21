@@ -2156,6 +2156,234 @@ article[data-widget="webinar"] .wtimer__b span {
 }
 .j-recording-note { margin-top: 16px; padding: 12px; border-radius: 12px; color: #466987; background: #edf8ff; font-size: 12px; line-height: 1.4; font-weight: 700; }
 
+/* 3-kun: Figma'dagi to‘liq ekranli streak maqsadi. */
+.j-tour[data-figma-style="true"] .j-tour__card.is-streak-goal {
+  inset: 0 !important;
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  max-width: none;
+  height: 100% !important;
+  min-height: 100% !important;
+  padding: 18px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+}
+
+.j-tour__card.is-streak-goal > .j-tour__meta,
+.j-tour__card.is-streak-goal > .j-tour__bar,
+.j-tour__card.is-streak-goal > .j-tour__guide,
+.j-tour__card.is-streak-goal > .j-tour__title,
+.j-tour__card.is-streak-goal > .j-tour__text,
+.j-tour__card.is-streak-goal > .j-tour__instruction,
+.j-tour__card.is-streak-goal > .j-tour__later { display: none !important; }
+
+.j-streak-goal__chrome { display: block; flex: none; }
+.j-streak-goal__chrome[hidden] { display: none !important; }
+
+.j-streak-goal__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  padding: 0 17px;
+  color: #080a10;
+  font: 900 14px/1 var(--f, "Nunito", sans-serif);
+}
+
+.j-streak-goal__status span {
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.j-streak-goal__brand {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 2px 7px 0;
+}
+
+.j-streak-goal__brand img {
+  width: 93px;
+  height: 32px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.j-streak-goal__brand span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 55px;
+  height: 34px;
+  margin-left: 7px;
+  border-radius: 99px;
+  color: #0b1020;
+  background: #f7f8fa;
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+.j-streak-goal__brand span:first-of-type { margin-left: auto; }
+.j-streak-goal__brand span b { font-size: 13px; }
+
+.j-streak-goal__speech {
+  position: relative;
+  display: block;
+  margin: 17px 7px 0;
+  padding: 16px 18px;
+  border: 2px solid #cde3fa;
+  border-radius: 18px;
+  color: #444;
+  background: #f9fbff;
+  box-shadow: 0 4px 0 #cde3fa;
+}
+
+.j-streak-goal__speech::after {
+  content: '';
+  position: absolute;
+  right: 82px;
+  bottom: -17px;
+  width: 27px;
+  height: 27px;
+  border-right: 3px solid #cde3fa;
+  border-bottom: 3px solid #cde3fa;
+  background: #f9fbff;
+  clip-path: polygon(0 0, 100% 100%, 100% 0);
+  transform: rotate(45deg);
+}
+
+.j-streak-goal__speech b,
+.j-streak-goal__speech span { position: relative; z-index: 1; display: block; }
+.j-streak-goal__speech b { font-size: 15px; line-height: 1.25; font-weight: 1000; }
+.j-streak-goal__speech span { margin-top: 6px; color: #747474; font-size: 12px; line-height: 1.38; font-weight: 700; }
+
+.j-tour__card.is-streak-goal .j-streak-goal__visual {
+  flex: none;
+  height: 194px;
+  margin: 12px 0 5px;
+}
+
+.j-tour__card.is-streak-goal .j-streak-goal__calendar {
+  width: 142px;
+  height: 132px;
+  margin-right: 58px;
+  border: 5px solid #ba6e16;
+  border-radius: 22px;
+  color: #ff671b;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff3d9 100%);
+  box-shadow: 0 12px 18px rgba(99, 67, 34, .22), inset 0 0 0 3px rgba(255,255,255,.75);
+  transform: rotate(-2deg);
+}
+
+.j-tour__card.is-streak-goal .j-streak-goal__calendar::before,
+.j-tour__card.is-streak-goal .j-streak-goal__calendar::after {
+  top: -12px;
+  width: 11px;
+  height: 22px;
+  border: 3px solid #9d5c17;
+  background: #f8b14d;
+}
+.j-tour__card.is-streak-goal .j-streak-goal__calendar::before { left: 29px; }
+.j-tour__card.is-streak-goal .j-streak-goal__calendar::after { right: 29px; }
+.j-tour__card.is-streak-goal .j-streak-goal__calendar b {
+  margin-top: -1px;
+  color: #ff671b;
+  font-size: 63px;
+  line-height: .82;
+  text-shadow: 0 3px 0 #b75216, 0 5px 8px rgba(170, 91, 20, .26);
+}
+.j-tour__card.is-streak-goal .j-streak-goal__calendar small {
+  margin-top: -8px;
+  color: #ff671b;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: lowercase;
+  text-shadow: 0 2px 0 #b75216;
+}
+
+.j-tour__card.is-streak-goal .j-streak-goal__visual img {
+  right: calc(50% - 104px);
+  bottom: -2px;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.j-tour__card.is-streak-goal .j-tour__choices {
+  display: grid;
+  flex: none;
+  grid-template-columns: 1fr;
+  gap: 9px;
+  margin: 0;
+}
+
+.j-tour__card.is-streak-goal .j-tour__choices button {
+  min-height: 49px;
+  padding: 0 14px;
+  border: 1px solid #dce7ef;
+  border-radius: 14px;
+  color: #121212;
+  background: #fff;
+  box-shadow: none;
+}
+.j-tour__card.is-streak-goal .j-tour__choices button.is-active {
+  border: 2px solid #ff4d2d;
+  color: #121212;
+  background: #fffaf8;
+  box-shadow: none;
+}
+.j-tour__card.is-streak-goal .j-tour__choices b { font-size: 14px; font-weight: 900; }
+.j-tour__card.is-streak-goal .j-tour__choices small,
+.j-tour__card.is-streak-goal .j-tour__choices button.is-active small {
+  padding: 5px 9px;
+  border: 1px solid #f2b900;
+  border-radius: 99px;
+  color: #c68e00;
+  background: #fff8d4;
+  font-size: 10px;
+  font-weight: 1000;
+}
+
+.j-tour__card.is-streak-goal .j-tour__actions {
+  display: block;
+  flex: none;
+  margin-top: auto;
+  padding-top: 12px;
+}
+.j-tour__card.is-streak-goal .j-tour__mascot { display: none; }
+.j-tour[data-figma-style="true"] .j-tour__card.is-streak-goal .j-tour__next {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 13px;
+  color: #fff;
+  background: #ff4d2d;
+  box-shadow: none;
+  font-size: 14px;
+}
+.j-tour[data-figma-style="true"] .j-tour__card.is-streak-goal .j-tour__next:disabled {
+  color: #ffa48e;
+  background: #fff0ea;
+  opacity: 1;
+  cursor: default;
+}
+
+@media (max-height: 720px) {
+  .j-streak-goal__speech { margin-top: 8px; padding: 11px 14px; }
+  .j-tour__card.is-streak-goal .j-streak-goal__visual { height: 154px; margin-top: 8px; }
+  .j-tour__card.is-streak-goal .j-streak-goal__calendar { width: 118px; height: 108px; }
+  .j-tour__card.is-streak-goal .j-streak-goal__calendar b { font-size: 51px; }
+  .j-tour__card.is-streak-goal .j-streak-goal__calendar small { font-size: 18px; }
+  .j-tour__card.is-streak-goal .j-streak-goal__visual img { width: 122px; height: 122px; }
+  .j-tour__card.is-streak-goal .j-tour__choices { gap: 6px; }
+  .j-tour__card.is-streak-goal .j-tour__choices button { min-height: 42px; }
+}
+
 @keyframes j-progressive-praise-mascot {
   from { opacity: 0; transform: translateY(18px) scale(.74) rotate(7deg); }
   68% { opacity: 1; transform: translateY(-4px) scale(1.05) rotate(-2deg); }

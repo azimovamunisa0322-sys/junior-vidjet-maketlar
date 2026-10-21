@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v11-exact-streak-flame';
+  const VERSION = 'v12-streak-goal-screen';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -49,6 +49,17 @@
     <aside class="j-tour__card" role="dialog" aria-live="polite">
       <div class="j-tour__meta"><span class="j-tour__count"></span><span class="j-tour__label">Junior sayohati</span><button class="j-tour__skip" type="button">O‘tkazib yuborish</button></div>
       <div class="j-tour__bar" aria-hidden="true"><i></i></div>
+      <div class="j-streak-goal__chrome" hidden>
+        <div class="j-streak-goal__status" aria-hidden="true"><b>9:41</b><span>▮▮▮⌁▰</span></div>
+        <div class="j-streak-goal__brand">
+          <img data-a="a28" alt="Junior">
+          <span><b>🪙</b> 0</span><span><b>⚡</b> 0</span>
+        </div>
+        <div class="j-streak-goal__speech">
+          <b data-streak-goal-title>O‘rganish odati shakllanmoqda!</b>
+          <span data-streak-goal-text>O‘qish kundalik odatga aylanishi uchun har kuni ozgina vaqt ajrating.</span>
+        </div>
+      </div>
       <div class="j-tour__guide" aria-hidden="true">
         <img data-a="a2" alt="">
         <p><b></b><small></small></p>
@@ -281,6 +292,9 @@
   const text = root.querySelector('.j-tour__text');
   const instruction = root.querySelector('.j-tour__instruction');
   const instructionText = instruction.querySelector('b');
+  const streakGoalChrome = root.querySelector('.j-streak-goal__chrome');
+  const streakGoalTitle = root.querySelector('[data-streak-goal-title]');
+  const streakGoalText = root.querySelector('[data-streak-goal-text]');
   const streakVisual = root.querySelector('.j-streak-goal__visual');
   const streakPreview = root.querySelector('[data-streak-preview]');
   const choices = root.querySelector('.j-tour__choices');
@@ -596,7 +610,7 @@
     syncActivityRecordings();
   }
 
-  const streakGoalKey = `junior:streak-goal:${userId}`;
+  const streakGoalKey = `junior:streak-goal:${userId}:${VERSION}`;
 
   function getStreakGoal() {
     try { return Number(localStorage.getItem(streakGoalKey)) || 0; }
@@ -912,7 +926,9 @@
         title: 'Streak maqsadini tanlang',
         text: 'Har kuni dars qilish uchun o‘zingizga mos maqsad qo‘yamiz!',
         choices: true,
-        button: 'Maqsadni saqlash',
+        hideFocus: true,
+        fullDim: true,
+        button: 'Davom etish  →',
         prepare: () => prepareWidget('streak')
       },
       {
@@ -1317,6 +1333,14 @@
     guideText.textContent = text.textContent;
     instruction.hidden = !step.instruction;
     instructionText.textContent = step.instruction || '';
+    streakGoalChrome.hidden = step.id !== 'streak-goal';
+    if (step.id === 'streak-goal') {
+      const hasGoal = getStreakGoal() > 0;
+      streakGoalTitle.textContent = hasGoal ? 'O‘zingga maqsad qo‘y!' : 'O‘rganish odati shakllanmoqda!';
+      streakGoalText.textContent = hasGoal
+        ? 'Necha kun ketma-ket o‘rganishni xohlaysan? Maqsadingni tanla va intil!'
+        : 'O‘qish kundalik odatga aylanishi uchun har kuni ozgina vaqt ajrating.';
+    }
     streakVisual.hidden = step.id !== 'streak-goal' && !step.celebration;
     if (step.id === 'streak-goal' || step.celebration) streakPreview.textContent = String(getStreakGoal() || 7);
     choices.hidden = !step.choices;
@@ -1974,6 +1998,8 @@
       const days = Number(button.dataset.streakGoal);
       saveStreakGoal(days);
       streakPreview.textContent = String(days);
+      streakGoalTitle.textContent = 'O‘zingga maqsad qo‘y!';
+      streakGoalText.textContent = 'Necha kun ketma-ket o‘rganishni xohlaysan? Maqsadingni tanla va intil!';
       choices.querySelectorAll('[data-streak-goal]').forEach(node => node.classList.toggle('is-active', node === button));
       next.disabled = false;
       playSound('correct');
