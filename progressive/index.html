@@ -1191,7 +1191,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__range { display:flex; flex-direction:column; gap:4px; }
 .schedule__range b { font:700 17px/22px var(--f); }.schedule__range span { font:600 13px/18px var(--f); color:#7B8391; }
 .schedule__arrows { display:flex; gap:8px; }.schedule__arrows button { width:42px; height:42px; border:0; border-radius:50%; background:#fff; color:#77808D; font:400 34px/35px var(--f); cursor:pointer; }
-.schedule__days { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin-bottom:28px; }
+.schedule__days { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-bottom:22px; }
 .schedule__day { height:70px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:11px; background:#fff; color:#171717; font:700 15px/18px var(--f); }
 .schedule__day small { font:600 13px/16px var(--f); color:#7C838E; }.schedule__day i { width:7px; height:7px; border-radius:50%; background:#F3F4F6; }
 .schedule__day--active { box-shadow:inset 0 0 0 1.5px #FF4F28; background:#FFF6F3; }.schedule__day--active i { background:#FF5B36; }.schedule__day--active small { color:#3B3F48; }
@@ -1209,6 +1209,28 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__event span { position:absolute; left:12px; top:10px; z-index:2; padding:3px 7px; border-radius:8px; background:rgba(255,255,255,.22); font:700 10px/12px var(--f); }
 .schedule__event img { position:absolute; right:-8px; bottom:-4px; width:92px; height:92px; object-fit:contain; object-position:bottom right; filter:drop-shadow(0 4px 4px rgba(0,0,0,.15)); }
 .schedule__event:active { transform:scale(.98); }
+/* Haftalik jadval — barcha onboarding kunlarida bir xil ochiladi. */
+.schedule__board-scroll{ margin:0 -16px; padding:0 16px 22px; overflow-x:auto; overscroll-behavior-x:contain; }
+.schedule__board{ min-width:700px; display:grid; grid-template-columns:repeat(7,1fr); border:1px solid #EDF0F4; border-radius:18px; overflow:hidden; background:#fff; }
+.schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; }
+.schedule__column:last-child{ border-right:0; }
+.schedule__lesson{ display:block; width:100%; margin:0 0 14px; padding:0; border:0; background:transparent; color:#161A25; text-align:left; font-family:var(--f); cursor:pointer; }
+.schedule__lesson img{ display:block; width:100%; height:70px; border-radius:12px; object-fit:cover; object-position:center; background:#FFE3D8; box-shadow:0 4px 10px rgba(28,39,76,.10); }
+.schedule__lesson b{ display:block; margin-top:8px; font:800 14px/17px var(--f); letter-spacing:-.2px; }
+.schedule__lesson small{ display:block; margin-top:5px; color:#8B919B; font:600 12px/15px var(--f); }
+.schedule__lesson--design img{ background:#F4E3CF; filter:saturate(.72) brightness(1.08); }
+.schedule__calendar-title{ margin:0 0 17px; }
+.schedule__calendar-title b{ display:block; font:800 19px/24px var(--f); }
+.schedule__calendar-title span{ display:block; margin-top:5px; color:#767E8C; font:600 13px/18px var(--f); }
+@media (min-width:720px){
+  .schedule__body{ max-width:1060px; margin:0 auto; padding:50px 34px 44px; }
+  .schedule__top{ grid-template-columns:42px 1fr 42px; }
+  .schedule__top h2{ font-size:28px; line-height:32px; }
+  .schedule__weekhead{ margin-top:30px; }
+  .schedule__range b{ font-size:23px; line-height:28px; }.schedule__range span{ font-size:15px; }
+  .schedule__day{ height:94px; font-size:16px; }.schedule__day small{ font-size:14px; }
+  .schedule__board-scroll{ margin:0; padding:0; overflow:visible; }.schedule__board{ min-width:0; }.schedule__column{ min-height:430px; padding:16px; }.schedule__lesson img{ height:92px; }
+}
 /* SCHEDULE:CSS:END */</style>
 </head>
 <body>
@@ -1402,15 +1424,19 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
               </div>
               <div class="schedule__days" aria-label="Hafta kunlari">
                 <div class="schedule__day"><b>Du</b><small>12</small><i></i></div><div class="schedule__day"><b>Se</b><small>13</small><i></i></div><div class="schedule__day"><b>Ch</b><small>14</small><i></i></div>
-                <div class="schedule__day schedule__day--active"><b>Pa</b><small>15</small><i></i></div><div class="schedule__day"><b>Ju</b><small>16</small><i></i></div><div class="schedule__day"><b>Sh</b><small>17</small><i></i></div>
+                <div class="schedule__day schedule__day--active"><b>Pa</b><small>15</small><i></i></div><div class="schedule__day"><b>Ju</b><small>16</small><i></i></div><div class="schedule__day"><b>Sh</b><small>17</small><i></i></div><div class="schedule__day"><b>Ya</b><small>18</small><i></i></div>
               </div>
-              <div class="schedule__intro"><b>Payshanba, 15 oktyabr</b><span>Bugun 2 ta dars bor!</span></div>
-              <div class="schedule__grid">
-                <div class="schedule__times"><span>10:00</span><span>11:00</span><span aria-hidden="true"></span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span><span>18:00</span><span>19:00</span><span>20:00</span></div>
-                <div class="schedule__lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                <div class="schedule__now" aria-label="Hozir 12:00"><b>12:00</b><i></i></div>
-                <button class="schedule__event schedule__event--math" type="button" data-toast="Matematika darsi soat 12:00 da boshlanadi"><b>Matematika</b><img data-a="a2" alt=""></button>
-                <button class="schedule__event schedule__event--web" type="button" data-toast="Web dasturlash darsi soat 16:00 da boshlanadi"><b>WEB<br>DASTURLASH</b><img data-a="a2" alt=""></button>
+              <div class="schedule__calendar-title"><b>Haftalik darslaringiz</b><span>Tanlangan kunda 2 ta dars bor</span></div>
+              <div class="schedule__board-scroll" aria-label="Haftalik darslar jadvali">
+                <div class="schedule__board">
+                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Veb programmalash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Veb programmalash</b><small>20:00 – 21:10</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Grafik dizayn darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Veb programmalash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Veb programmalash</b><small>18:30 – 19:40</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Grafik dizayn darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
+                </div>
               </div>
             </div>
           </section>
