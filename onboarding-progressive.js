@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v10-progressive-four-day';
+  const VERSION = 'v11-exact-streak-flame';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -61,10 +61,10 @@
         <img data-a="a2" alt="">
       </div>
       <div class="j-tour__choices" hidden aria-label="Streak maqsadini tanlash">
-        <button type="button" data-streak-goal="5"><b>5 kun</b><small>Yaxshi boshlanish</small></button>
-        <button type="button" data-streak-goal="6"><b>6 kun</b><small>Barqaror temp</small></button>
-        <button type="button" data-streak-goal="7"><b>7 kun</b><small>Zo‘r natija</small></button>
-        <button type="button" data-streak-goal="12"><b>12 kun</b><small>Kuchli challenge</small></button>
+        <button type="button" data-streak-goal="7"><b>7 - kun</b><small>🪙 +10 coin</small></button>
+        <button type="button" data-streak-goal="14"><b>14 - kun</b><small>🪙 +20 coin</small></button>
+        <button type="button" data-streak-goal="30"><b>30 - kun</b><small>🪙 +40 coin</small></button>
+        <button type="button" data-streak-goal="60"><b>60 - kun</b><small>🪙 +60 coin</small></button>
       </div>
       <div class="j-tour__actions">
         <img class="j-tour__mascot" data-a="a2" alt="Junior maskoti">
@@ -190,31 +190,24 @@
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
-        <span class="j-reward__kicker" data-streak-kicker>Birinchi streak</span>
-        <div class="j-reward__flame-wrap" aria-hidden="true">
-          <i class="j-reward__spark j-reward__spark--one"></i>
-          <i class="j-reward__spark j-reward__spark--two"></i>
-          <i class="j-reward__spark j-reward__spark--three"></i>
-          <div class="j-reward__flame"><i></i></div>
-        </div>
-        <h2>O‘qish olovini yoqing</h2>
-        <p>Olovni yuqoriga suring yoki pastdagi tugmani bosing.</p>
-        <button type="button" class="j-reward__ignite" data-reward-ignite><span>↑</span> Olovni yoqish</button>
+        <iframe class="j-reward__ignite-frame" data-streak-ignite-frame src="./ignite-streak.html?v=20261021-4" title="Streak olovini yoqish"></iframe>
       </section>
       <section class="j-reward__panel j-reward__panel--streak" data-reward-panel="streak" hidden>
-        <div class="j-reward__speech" data-streak-speech>Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.</div>
+        <div class="j-reward__status" aria-hidden="true"><b>9:41</b><span>▮▮▮⌁▰</span></div>
+        <div class="j-reward__brand"><span><i>••</i> Junior</span><em>🪙 0</em><em>⚡ 0</em></div>
+        <div class="j-reward__speech"><b>O‘rganish odati shakllanmoqda!</b><span data-streak-speech>O‘qish kundalik odatga aylanishi uchun har kuni ozgina vaqt ajrating.</span></div>
         <div class="j-reward__hero">
-          <div class="j-reward__flame j-reward__flame--lit" aria-hidden="true"><i></i></div>
+          <div class="j-reward__result-flame" aria-hidden="true"><iframe src="./ignite-streak.html?preview=lit&v=20261021-4" tabindex="-1" title=""></iframe></div>
           <img data-a="a2" alt="Junior maskoti">
         </div>
         <strong class="j-reward__number" data-streak-number>1</strong>
-        <h2 data-streak-title>kunlik streak — zo‘r boshlanish!</h2>
+        <h2 data-streak-title>1 kunlik seriya</h2>
         <div class="j-reward__week" aria-label="7 kunlik streak maqsadi">
-          <span data-streak-day="1"><b>1</b><i>✓</i></span>
-          <span data-streak-day="2"><b>2</b><i></i></span><span data-streak-day="3"><b>3</b><i></i></span><span data-streak-day="4"><b>4</b><i></i></span>
-          <span data-streak-day="5"><b>5</b><i></i></span><span data-streak-day="6"><b>6</b><i></i></span><span data-streak-day="7"><b>7</b><i></i></span>
+          <span data-streak-day="1"><b>Du</b><i>✓</i></span>
+          <span data-streak-day="2"><b>Se</b><i></i></span><span data-streak-day="3"><b>Ch</b><i></i></span><span data-streak-day="4"><b>Pa</b><i></i></span>
+          <span data-streak-day="5"><b>Ju</b><i></i></span><span data-streak-day="6"><b>Sh</b><i></i></span><span data-streak-day="7"><b>Ya</b><i></i></span>
         </div>
-        <button type="button" class="j-reward__primary" data-reward-next>Davom etish</button>
+        <button type="button" class="j-reward__primary" data-reward-next>Davom etish&nbsp;&nbsp; →</button>
       </section>
       <section class="j-reward__panel j-reward__panel--coin" data-reward-panel="coin" hidden>
         <div class="j-reward__coin-content">
@@ -308,7 +301,7 @@
   const coinShopModal = root.querySelector('.j-coinshop-modal');
   const coinShopModalNext = root.querySelector('[data-coinshop-modal-next]');
   const rewardPanels = [...root.querySelectorAll('[data-reward-panel]')];
-  const rewardIgnite = root.querySelector('[data-reward-ignite]');
+  const igniteFrame = root.querySelector('[data-streak-ignite-frame]');
   const rewardNext = root.querySelector('[data-reward-next]');
   const rewardChest = root.querySelector('[data-reward-chest]');
   const toast = root.querySelector('.j-tour__toast');
@@ -324,7 +317,6 @@
   let lessonStageIndex = 0;
   let videoCompleted = false;
   let rewardLocked = false;
-  let rewardSwipeStart = null;
   let rewardMode = 'lesson-result';
   let audioContext = null;
   let actionPending = false;
@@ -1721,16 +1713,13 @@
     if (rewardLocked || success.dataset.rewardStage !== 'ignite') return;
     rewardLocked = true;
     playSound('whoosh');
-    const panel = success.querySelector('[data-reward-panel="ignite"]');
-    panel?.classList.add('is-igniting');
     setTimeout(() => {
-      panel?.classList.remove('is-igniting');
       showRewardStage('streak');
       fireConfetti();
       playSound('streak');
       rewardLocked = false;
       rewardNext?.focus({ preventScroll: true });
-    }, 900);
+    }, 1250);
   }
 
   function openRewardChest() {
@@ -1788,7 +1777,6 @@
     shades.top.style.background = 'rgba(14, 20, 35, .66)';
     ['left', 'right', 'bottom'].forEach(key => { shades[key].style.width = '0px'; shades[key].style.height = '0px'; });
     rewardLocked = false;
-    rewardSwipeStart = null;
     finish.hidden = true;
     coinShopModal.hidden = true;
     success.querySelector('[data-reward-panel="ignite"]')?.classList.remove('is-igniting');
@@ -1852,19 +1840,17 @@
   async function startStreakReward() {
     rewardMode = 'streak';
     const streakCount = Math.min(Math.max(selectedDay, 1), 7);
-    const streakKicker = success.querySelector('[data-streak-kicker]');
     const streakSpeech = success.querySelector('[data-streak-speech]');
     const streakNumber = success.querySelector('[data-streak-number]');
     const streakTitle = success.querySelector('[data-streak-title]');
     const copy = {
-      1: ['Birinchi streak', 'Zo‘r! Birinchi kun bajarildi 🎉 Har kuni bitta dars tugatsangiz, streakingiz o‘sib boradi.', '1 kunlik streak — zo‘r boshlanish!'],
-      2: ['2-kunlik streak', 'Zo‘r! Ikkinchi kun ham bajarildi 🎉 Streakingiz 2 kunga yetdi.', '2 kunlik streak — barqaror ketayapsiz!'],
-      3: ['3-kunlik streak', 'Zo‘r! Bugungi dars va vazifani yakunladingiz 🎉 Streakingiz 3 kunga yetdi.', '3 kunlik streak — zo‘r davom etyapsiz!']
-    }[streakCount] || ['Streak', 'Zo‘r! Bugungi dars bajarildi 🎉 Streakingiz davom etmoqda.', `${streakCount} kunlik streak — zo‘r!`];
-    if (streakKicker) streakKicker.textContent = copy[0];
-    if (streakSpeech) streakSpeech.textContent = copy[1];
+      1: ['O‘qish kundalik odatga aylanishi uchun har kuni ozgina vaqt ajrating.', '1 kunlik seriya'],
+      2: ['Ikki kun ketma-ket dars qildingiz. Shu tempni saqlab qoling!', '2 kunlik seriya'],
+      3: ['Uch kunlik odat shakllanmoqda. Har kuni ozgina qadam tashlang!', '3 kunlik seriya']
+    }[streakCount] || ['Har kuni ozgina vaqt ajrating va seriyangizni davom ettiring.', `${streakCount} kunlik seriya`];
+    if (streakSpeech) streakSpeech.textContent = copy[0];
     if (streakNumber) streakNumber.textContent = String(streakCount);
-    if (streakTitle) streakTitle.textContent = copy[2];
+    if (streakTitle) streakTitle.textContent = copy[1];
     success.querySelectorAll('[data-streak-day]').forEach(day => {
       day.classList.toggle('is-done', Number(day.dataset.streakDay) <= streakCount);
     });
@@ -1882,11 +1868,10 @@
     shades.top.style.background = 'rgba(14, 20, 35, .66)';
     ['left', 'right', 'bottom'].forEach(key => { shades[key].style.width = '0px'; shades[key].style.height = '0px'; });
     rewardLocked = false;
-    rewardSwipeStart = null;
-    rewardNext.textContent = 'Davom etish';
+    rewardNext.innerHTML = 'Davom etish&nbsp;&nbsp; →';
+    if (igniteFrame) igniteFrame.src = `./ignite-streak.html?v=20261021-4&run=${Date.now()}`;
     showRewardStage('ignite');
     updateAssets();
-    rewardIgnite?.focus({ preventScroll: true });
   }
 
   async function openPracticalTask() {
@@ -2078,13 +2063,10 @@
       showTaskAcceptedReward();
     }
   });
-  rewardIgnite?.addEventListener('click', igniteRewardStreak);
-  success.querySelector('[data-reward-panel="ignite"]')?.addEventListener('pointerdown', event => {
-    rewardSwipeStart = event.clientY;
-  });
-  success.querySelector('[data-reward-panel="ignite"]')?.addEventListener('pointerup', event => {
-    if (rewardSwipeStart !== null && rewardSwipeStart - event.clientY > 34) igniteRewardStreak();
-    rewardSwipeStart = null;
+  window.addEventListener('message', event => {
+    if (event.origin !== window.location.origin) return;
+    if (!igniteFrame || event.source !== igniteFrame.contentWindow) return;
+    if (event.data?.type === 'junior-streak-ignited') igniteRewardStreak();
   });
   rewardNext?.addEventListener('click', () => {
     if (rewardMode === 'streak') {

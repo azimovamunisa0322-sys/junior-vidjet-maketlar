@@ -900,6 +900,184 @@ article[data-widget="webinar"] .wtimer__b span {
   .j-tour__card.is-preparing { transform: none; }
 }
 
+/* Figma 5201:3283: yuborilgan iOS streak sahifalari bilan bir xil oqim. */
+.j-reward__panel--ignite {
+  display: block;
+  padding: 0;
+  background: #160b2d;
+}
+
+.j-reward__ignite-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #160b2d;
+}
+
+.j-reward__panel--streak {
+  justify-content: flex-start;
+  padding: 12px 25px 28px;
+  color: #080808;
+  background: #fff;
+}
+
+.j-reward__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2px 18px 18px;
+  color: #090909;
+  font-size: 14px;
+}
+
+.j-reward__status span { font-size: 12px; letter-spacing: 1px; }
+
+.j-reward__brand {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.j-reward__brand > span {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  color: #050505;
+  font-size: 22px;
+  font-weight: 1000;
+}
+
+.j-reward__brand > span i {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 22px;
+  margin-right: 7px;
+  border-radius: 3px 3px 10px 10px;
+  color: #fff;
+  background: #ff4d2d;
+  font-size: 8px;
+  font-style: normal;
+  letter-spacing: 2px;
+}
+
+.j-reward__brand em {
+  min-width: 54px;
+  margin-left: 8px;
+  padding: 8px 10px;
+  border-radius: 99px;
+  background: #f7f8fa;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.j-reward__panel--streak .j-reward__speech {
+  width: 100%;
+  max-width: none;
+  padding: 14px 16px;
+  border-color: #c7e0fb;
+  border-radius: 16px;
+  color: #767676;
+  background: #f8fbff;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.j-reward__panel--streak .j-reward__speech::after {
+  left: 73%;
+  border-color: #c7e0fb;
+  background: #f8fbff;
+}
+
+.j-reward__speech b,
+.j-reward__speech span { display: block; }
+.j-reward__speech b { margin-bottom: 3px; color: #454545; font-size: 13px; }
+
+.j-reward__panel--streak .j-reward__hero {
+  width: 260px;
+  height: 213px;
+  margin: 12px 0 2px;
+}
+
+.j-reward__result-flame {
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  width: 162px;
+  height: 183px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.j-reward__result-flame iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 393px;
+  height: 852px;
+  border: 0;
+  transform: translate(-70px, -145px) scale(.72);
+  transform-origin: 0 0;
+}
+
+.j-reward__panel--streak .j-reward__hero img {
+  right: 1px;
+  bottom: 0;
+  width: 146px;
+  height: 146px;
+}
+
+.j-reward__panel--streak .j-reward__number {
+  color: #ff5a16;
+  font-size: 69px;
+  line-height: .92;
+}
+
+.j-reward__panel--streak h2 {
+  margin: 8px 0 20px;
+  color: #080808;
+  font-size: 18px;
+}
+
+.j-reward__panel--streak .j-reward__week { gap: 8px; width: 100%; }
+.j-reward__panel--streak .j-reward__week span { gap: 7px; color: #767676; font-size: 9px; }
+.j-reward__panel--streak .j-reward__week .is-done { color: #ff4d2d; }
+.j-reward__panel--streak .j-reward__week i { width: 32px; height: 32px; background: #e9eaed; }
+.j-reward__panel--streak .j-reward__week .is-done i { background: #ff674d; }
+
+.j-reward__panel--streak .j-reward__primary {
+  width: 100%;
+  max-width: none;
+  min-height: 54px;
+  margin-top: auto;
+  border-radius: 13px;
+  background: #ff4d2d;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+.j-tour__card.is-streak-goal .j-tour__choices button {
+  min-height: 48px;
+  border-color: #dce7ef;
+  border-width: 1px;
+  border-radius: 14px;
+}
+
+.j-tour__card.is-streak-goal .j-tour__choices button.is-active { border: 2px solid #ff4d2d; }
+.j-tour__card.is-streak-goal .j-tour__choices b { font-size: 13px; }
+.j-tour__card.is-streak-goal .j-tour__choices small {
+  padding: 5px 9px;
+  border: 1px solid #f7b900;
+  border-radius: 99px;
+  color: #c58b00;
+  background: #fff9db;
+  font-size: 10px;
+}
+
 /* Junior kurslari: haqiqiy platformadagi kurs yo‘li va amaliy dars ko‘rinishi. */
 .j-tour__lesson {
   color: #11182b;
