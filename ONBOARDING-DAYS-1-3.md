@@ -1,4 +1,4 @@
-# Junior: 4 kunlik onboarding tartibi
+# Junior: onboardingning 1–3-kunlari
 
 ## Ilovaga birinchi kirish
 
@@ -32,17 +32,8 @@ Push xabar: CoinShop va yaqin jonli dars haqida eslatiladi.
 
 Push xabar: o‘qishni davom ettirish va bugungi dars haqida eslatiladi.
 
-## 4-kun — akkauntga qayta kirish
-
-1. Bo‘sh telefon raqami va parol maydonlari bilan kirish oynasini ko‘rsatish.
-2. «Parolni unutdingizmi?» orqali telefon raqamini tasdiqlashni boshlash.
-3. Raqamga yuborilgan 4 xonali tasdiqlash kodini kiritish.
-4. Kod tasdiqlangach, akkauntga qayta kirish.
-
-Bu demo-testda haqiqiy SMS yuborilmaydi. Tasdiqlash kodi: `2486`.
-
 ## Test qilish
 
-- `1-kun`, `2-kun`, `3-kun`, `4-kun` tugmalari orqali istalgan kun alohida ochiladi.
+- `1-kun`, `2-kun`, `3-kun` tugmalari orqali istalgan kun alohida ochiladi.
 - Qo‘ng‘iroq tugmasi push ruxsat oynasini qayta ko‘rsatadi.
 - Har bir kun mustaqil boshlanadi; oldingi kunni qayta ko‘rish shart emas.

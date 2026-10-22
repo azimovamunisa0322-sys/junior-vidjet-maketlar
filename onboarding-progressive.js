@@ -14,7 +14,17 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  let selectedDay = Math.max(1, Math.min(6, Number(params.get('day')) || 1));
+  const availableDays = new Set([1, 2, 3, 5, 6]);
+  const normalizeDay = value => {
+    const day = Number(value) || 1;
+    return availableDays.has(day) ? day : 1;
+  };
+  let selectedDay = normalizeDay(params.get('day'));
+  if (params.has('day') && Number(params.get('day')) !== selectedDay) {
+    const normalizedUrl = new URL(window.location.href);
+    normalizedUrl.searchParams.set('day', String(selectedDay));
+    history.replaceState(null, '', normalizedUrl);
+  }
   const hasPurchasedCourse = window.JUNIOR_HAS_COURSE === true || params.get('paid') === '1';
   let storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
   const pushStorageKey = `junior:push-permission:${userId}:${VERSION}`;
@@ -160,44 +170,6 @@
         </section>
       </div>
       <footer class="j-lesson__foot"><span data-lesson-hint>Videoni ko‘ring</span><button type="button" class="j-lesson__finish" disabled>Davom etish</button></footer>
-    </section>
-    <section class="j-tour__auth" hidden aria-label="Akkauntga qayta kirish">
-      <header class="j-auth__brand"><b>J</b><span>Junior<small>academy</small></span></header>
-      <section class="j-auth__panel" data-auth-stage="login">
-        <small>4-KUN · XAVFSIZ KIRISH</small>
-        <h2>Junior’ga kirish</h2>
-        <p>Telefon raqamingiz va parolingizni kiriting.</p>
-        <label>Telefon raqam<input type="tel" placeholder="+998 __ ___ __ __" autocomplete="off" data-auth-login-phone></label>
-        <label>Parol<input type="password" placeholder="Parolni kiriting" autocomplete="off" data-auth-login-password></label>
-        <button type="button" data-auth-forgot>Parolni unutdingizmi?</button>
-      </section>
-      <section class="j-auth__panel" data-auth-stage="phone" hidden>
-        <small>1/2 QADAM</small>
-        <h2>Raqamingizni tasdiqlang</h2>
-        <p>4 xonali tasdiqlash kodini shu raqamga yuboramiz.</p>
-        <label>Telefon raqam<input type="tel" placeholder="+998 __ ___ __ __" autocomplete="off" data-auth-phone></label>
-        <button type="button" data-auth-send>Kodni yuborish</button>
-      </section>
-      <section class="j-auth__panel" data-auth-stage="code" hidden>
-        <small>2/2 QADAM</small>
-        <h2>Tasdiqlash kodini kiriting</h2>
-        <p>+998 90 ••• •• 67 raqamiga yuborilgan 4 xonali kodni yozing.</p>
-        <div class="j-auth__code" aria-label="4 xonali tasdiqlash kodi">
-          <input inputmode="numeric" maxlength="1" aria-label="Kodning 1-raqami">
-          <input inputmode="numeric" maxlength="1" aria-label="Kodning 2-raqami">
-          <input inputmode="numeric" maxlength="1" aria-label="Kodning 3-raqami">
-          <input inputmode="numeric" maxlength="1" aria-label="Kodning 4-raqami">
-        </div>
-        <span class="j-auth__demo">Demo kod: <b>2486</b></span>
-        <button type="button" data-auth-verify disabled>Kodni tasdiqlash</button>
-      </section>
-      <section class="j-auth__panel j-auth__panel--success" data-auth-stage="success" hidden>
-        <span class="j-auth__check">✓</span>
-        <small>KIRISH TASDIQLANDI</small>
-        <h2>Akkauntingizga kirishingiz mumkin!</h2>
-        <p>Telefon raqamingiz muvaffaqiyatli tasdiqlandi.</p>
-        <button type="button" data-auth-finish>Akkauntga kirish</button>
-      </section>
     </section>
     <section class="j-tour__success" hidden role="dialog" aria-label="Birinchi dars mukofoti">
       <section class="j-reward__panel j-reward__panel--ignite" data-reward-panel="ignite">
@@ -435,7 +407,6 @@
     <button type="button" data-tour-day="1">1-kun</button>
     <button type="button" data-tour-day="2">2-kun</button>
     <button type="button" data-tour-day="3">3-kun</button>
-    <button type="button" data-tour-day="4">4-kun</button>
     <button type="button" data-tour-day="5">5-kun</button>
     <button type="button" data-tour-day="6">6-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
@@ -485,8 +456,6 @@
   const lessonStep = root.querySelector('[data-lesson-step]');
   const lessonHint = root.querySelector('[data-lesson-hint]');
   const lessonStages = [...root.querySelectorAll('[data-lesson-stage]')];
-  const auth = root.querySelector('.j-tour__auth');
-  const authStages = [...root.querySelectorAll('[data-auth-stage]')];
   const success = root.querySelector('.j-tour__success');
   const finish = root.querySelector('.j-tour__finish');
   const coinShopModal = root.querySelector('.j-coinshop-modal');
@@ -1136,8 +1105,7 @@
         fullDim: true,
         prepare: goHome
       }
-    ],
-    4: []
+    ]
   };
 
   function selectedSteps() {
@@ -1159,8 +1127,7 @@
     const messages = {
       1: ['Birinchi darsingiz tayyor', 'Bugun video, qisqa test va amaliy vazifa sizni kutmoqda.'],
       2: ['Bugungi darsingiz tayyor', 'Avval darsni yakunlab Coin va Point oling. Keyin yangi imkoniyatlarni ko‘rsatamiz.'],
-      3: ['Uchinchi kun darsi tayyor', 'Bugun 3-darsni yakunlang — keyin Junior bilan keyingi qadamingizni tanlaysiz.'],
-      4: ['Akkauntingiz himoyalangan', 'Parol esdan chiqsa, telefon raqamingiz orqali tezda tiklaysiz.']
+      3: ['Uchinchi kun darsi tayyor', 'Bugun 3-darsni yakunlang — keyin Junior bilan keyingi qadamingizni tanlaysiz.']
     };
     const message = messages[selectedDay];
     clearTimeout(pushPreviewTimer);
@@ -1189,7 +1156,6 @@
     card.hidden = true;
     focus.hidden = true;
     lesson.hidden = true;
-    auth.hidden = true;
     success.hidden = true;
     Object.values(shades).forEach(node => { node.hidden = true; });
     updateDayPicker();
@@ -1200,14 +1166,10 @@
     if (selectedDay !== 6) clearPaymentExpiredState();
     pushPermission.hidden = true;
     steps = selectedSteps();
-    root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 4);
+    root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 3);
     root.dataset.tourDay = String(selectedDay);
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
-    if (selectedDay === 4) {
-      openPasswordRecovery();
-      return;
-    }
     if (selectedDay === 5) {
       showPlainApp();
       return;
@@ -1230,7 +1192,7 @@
   }
 
   function selectDay(day) {
-    selectedDay = Math.max(1, Math.min(6, Number(day) || 1));
+    selectedDay = normalizeDay(day);
     const url = new URL(window.location.href);
     url.searchParams.set('qa', 'days');
     url.searchParams.set('day', String(selectedDay));
@@ -1490,7 +1452,6 @@
     screen.classList.add('j-tour-scroll-locked');
     screen.scrollTop = 0;
     lesson.hidden = true;
-    auth.hidden = true;
     success.hidden = true;
     pushPermission.hidden = true;
     card.hidden = false;
@@ -1626,10 +1587,6 @@
     if (selectedDay !== 6) clearPaymentExpiredState();
     awaitingCoinShopReturn = false;
     steps = selectedSteps();
-    if (selectedDay === 4) {
-      openPasswordRecovery();
-      return;
-    }
     if (selectedDay === 5) {
       showPlainApp();
       return;
@@ -1654,7 +1611,6 @@
     pushPreview.classList.remove('is-visible');
     pushPreview.hidden = true;
     pushPermission.hidden = true;
-    auth.hidden = true;
     root.classList.remove('is-running');
     screen.classList.remove('j-tour-scroll-locked');
     root.hidden = true;
@@ -1683,7 +1639,6 @@
     card.hidden = true;
     focus.hidden = true;
     lesson.hidden = true;
-    auth.hidden = true;
     success.hidden = true;
     Object.values(shades).forEach(node => { node.hidden = true; });
     root.classList.remove('is-running');
@@ -1972,7 +1927,6 @@
     content.scrollTo({ top: 0, behavior: 'auto' });
     resetViewportScroll();
     lesson.hidden = true;
-    auth.hidden = true;
     success.hidden = false;
     card.hidden = true;
     focus.hidden = true;
@@ -2011,7 +1965,6 @@
     content.scrollTo({ top: 0, behavior: 'auto' });
     resetViewportScroll();
     lesson.hidden = true;
-    auth.hidden = true;
     success.hidden = false;
     card.hidden = true;
     focus.hidden = true;
@@ -2090,89 +2043,6 @@
     updateAssets();
     lessonFinish.focus({ preventScroll: true });
   }
-
-  function showAuthStage(name) {
-    auth.dataset.stage = name;
-    authStages.forEach(stage => {
-      stage.hidden = stage.dataset.authStage !== name;
-      stage.classList.remove('is-entering');
-      if (!stage.hidden) stage.classList.add('is-entering');
-    });
-    playSound(name === 'success' ? 'complete' : 'bubble');
-    const active = authStages.find(stage => stage.dataset.authStage === name);
-    requestAnimationFrame(() => active?.querySelector('button:not(:disabled), input:not([readonly])')?.focus({ preventScroll: true }));
-  }
-
-  function openPasswordRecovery() {
-    runToken += 1;
-    clearTarget();
-    clearStreakFire();
-    closeSheet();
-    resetViewportScroll();
-    root.hidden = false;
-    root.classList.add('is-running');
-    screen.classList.add('j-tour-scroll-locked');
-    pushPermission.hidden = true;
-    card.hidden = true;
-    focus.hidden = true;
-    lesson.hidden = true;
-    success.hidden = true;
-    auth.hidden = false;
-    Object.values(shades).forEach(node => { node.hidden = true; });
-    const codeInputs = [...auth.querySelectorAll('.j-auth__code input')];
-    codeInputs.forEach(input => { input.value = ''; input.removeAttribute('aria-invalid'); });
-    const loginPhone = auth.querySelector('[data-auth-login-phone]');
-    const loginPassword = auth.querySelector('[data-auth-login-password]');
-    const recoveryPhone = auth.querySelector('[data-auth-phone]');
-    const verify = auth.querySelector('[data-auth-verify]');
-    if (loginPhone) loginPhone.value = '';
-    if (loginPassword) loginPassword.value = '';
-    if (recoveryPhone) recoveryPhone.value = '';
-    if (verify) verify.disabled = true;
-    updateDayPicker();
-    showAuthStage('login');
-  }
-
-  const authForgot = auth.querySelector('[data-auth-forgot]');
-  const authPhone = auth.querySelector('[data-auth-phone]');
-  const authSend = auth.querySelector('[data-auth-send]');
-  const authVerify = auth.querySelector('[data-auth-verify]');
-  const authFinish = auth.querySelector('[data-auth-finish]');
-  const authCodeInputs = [...auth.querySelectorAll('.j-auth__code input')];
-
-  authForgot?.addEventListener('click', () => showAuthStage('phone'));
-  authSend?.addEventListener('click', () => {
-    if (!authPhone?.value.trim()) return;
-    playSound('push');
-    showAuthStage('code');
-  });
-  authCodeInputs.forEach((input, index) => {
-    input.addEventListener('input', () => {
-      input.value = input.value.replace(/\D/g, '').slice(-1);
-      input.removeAttribute('aria-invalid');
-      if (input.value && authCodeInputs[index + 1]) authCodeInputs[index + 1].focus();
-      authVerify.disabled = authCodeInputs.some(node => !node.value);
-    });
-    input.addEventListener('keydown', event => {
-      if (event.key === 'Backspace' && !input.value && authCodeInputs[index - 1]) authCodeInputs[index - 1].focus();
-    });
-  });
-  authVerify?.addEventListener('click', () => {
-    const code = authCodeInputs.map(input => input.value).join('');
-    if (code !== '2486') {
-      playSound('wrong');
-      authCodeInputs.forEach(input => input.setAttribute('aria-invalid', 'true'));
-      showToast('Kod mos kelmadi. Demo kod: 2486');
-      return;
-    }
-    playSound('correct');
-    showAuthStage('success');
-    fireConfetti();
-  });
-  authFinish?.addEventListener('click', () => {
-    playSound('finish');
-    closeTour(true);
-  });
 
   choices.querySelectorAll('[data-streak-goal]').forEach(button => {
     button.addEventListener('click', () => {
@@ -2431,9 +2301,7 @@
   updateAssets();
   updateDayPicker();
   const forcePreview = params.get('onboarding') === '1';
-  if (selectedDay === 4) {
-    openPasswordRecovery();
-  } else if (selectedDay === 5) {
+  if (selectedDay === 5) {
     showPlainApp();
   } else if (selectedDay === 6) {
     showExpiredPaymentApp();
