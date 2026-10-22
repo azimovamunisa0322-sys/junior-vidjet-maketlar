@@ -1183,7 +1183,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 /* PLAN:CSS:END */</style>
 <style>/* SCHEDULE:CSS:START */
 /* 5-kun: O'yinlar o'rniga dars jadvali. U alohida ilova ekrani kabi ochiladi. */
-.schedule { position:absolute; inset:0; z-index:46; overflow:hidden; background:#F8F9FB; color:#111; font-family:var(--f); opacity:0; transform:translate3d(18px,0,0); transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1); }
+.schedule { position:absolute; inset:0; z-index:46; overflow:hidden; background:#F8F9FB; color:#111; font-family:var(--f); opacity:0; transform:translate3d(18px,0,0); transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1); container-type:inline-size; }
 .schedule[hidden] { display:none!important; }
 .schedule.is-open { opacity:1; transform:translate3d(0,0,0); }
 .schedule__body { height:100%; overflow-y:auto; overscroll-behavior:contain; padding:54px 16px 38px; box-sizing:border-box; }
@@ -1213,9 +1213,10 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__event img { position:absolute; right:-8px; bottom:-4px; width:92px; height:92px; object-fit:contain; object-position:bottom right; filter:drop-shadow(0 4px 4px rgba(0,0,0,.15)); }
 .schedule__event:active { transform:scale(.98); }
 /* Haftalik jadval — barcha onboarding kunlarida bir xil ochiladi. */
-.schedule__board-scroll{ margin:0 -16px; padding:0 16px 22px; overflow-x:auto; overscroll-behavior-x:contain; }
+.schedule__board-scroll{ margin:0 -16px; padding:0 16px 22px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scrollbar-width:none; }
+.schedule__board-scroll::-webkit-scrollbar{ display:none; }
 .schedule__board{ min-width:840px; display:grid; grid-template-columns:repeat(7,120px); border:1px solid #EDF0F4; border-radius:18px; overflow:hidden; background:#fff; }
-.schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; }
+.schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; scroll-snap-align:start; }
 .schedule__column:last-child{ border-right:0; }
 .schedule__lesson{ display:block; width:100%; margin:0 0 14px; padding:0; border:0; background:transparent; color:#161A25; text-align:left; font-family:var(--f); cursor:pointer; }
 .schedule__lesson img{ display:block; box-sizing:border-box; width:100%; height:70px; padding:3px; border-radius:12px; object-fit:contain; object-position:center; background:#FFE3D8; box-shadow:0 4px 10px rgba(28,39,76,.10); }
@@ -1225,7 +1226,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .schedule__calendar-title{ margin:0 0 17px; }
 .schedule__calendar-title b{ display:block; font:800 19px/24px var(--f); }
 .schedule__calendar-title span{ display:block; margin-top:5px; color:#767E8C; font:600 13px/18px var(--f); }
-@media (min-width:720px){
+@container (min-width:720px){
   .schedule__body{ max-width:1060px; margin:0 auto; padding:50px 34px 44px; }
   .schedule__top{ grid-template-columns:42px 1fr 42px; }
   .schedule__top h2{ font-size:28px; line-height:32px; }
