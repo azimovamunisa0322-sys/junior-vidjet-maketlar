@@ -39,6 +39,7 @@
 }
 .plan__robo{
   position:absolute; right:-4px; bottom:-15px; height:132px; width:auto;
+  transform:scaleX(-1); transform-origin:center;
   animation:3.2s ease-in-out infinite plan-float;
 }
 
@@ -248,7 +249,10 @@
 @keyframes plan-rise { 0%{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
 @keyframes plan-nudge{ 0%,to{ transform:translateX(0); } 50%{ transform:translateX(4px); } }
 @keyframes plan-shake{ 0%,to{ transform:translateX(0); } 25%{ transform:translateX(-3px); } 75%{ transform:translateX(3px); } }
-@keyframes plan-float{ 0%,to{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+@keyframes plan-float{
+  0%,to{ transform:translateY(0) scaleX(-1); }
+  50%{ transform:translateY(-5px) scaleX(-1); }
+}
 
 .plan__deco{ animation:26s linear infinite plan-spin; }
 .plan__hi{ animation:.45s cubic-bezier(.2,.9,.3,1.3) both plan-pop; }
