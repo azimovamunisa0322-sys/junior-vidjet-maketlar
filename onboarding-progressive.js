@@ -1646,12 +1646,16 @@
     screen.classList.remove('j-tour-scroll-locked');
     // 5-kun bosh sahifadan boshlanadi. Jadval faqat «Dars jadvali» yorlig'i
     // bosilganda ochilishi mumkin.
+    window.__closeModuleConsultation?.();
     window.__closeSchedule?.();
     goHome()
       .then(() => {
         resetViewportScroll();
         if (paymentExpired) setPaymentExpiredState();
         else clearPaymentExpiredState();
+        if (selectedDay === 5 && params.get('consult') === '1') {
+          setTimeout(() => window.__openModuleConsultation?.(), 180);
+        }
       })
       .catch(resetViewportScroll);
   }
@@ -1758,6 +1762,90 @@
         event.preventDefault(); event.stopImmediatePropagation(); open('continue');
       }
     }, true);
+  }
+
+  function installModuleConsultationFlow() {
+    if (screen.querySelector('.j-module-consult')) return;
+    const modal = document.createElement('section');
+    modal.className = 'j-module-consult';
+    modal.hidden = true;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'j-module-consult-title');
+    modal.innerHTML = `
+      <div class="j-module-consult__scrim" data-module-consult-close></div>
+      <article class="j-module-consult__card">
+        <button class="j-module-consult__close" type="button" data-module-consult-close aria-label="Yopish">×</button>
+        <div data-module-consult-view="form">
+          <div class="j-module-consult__hero">
+            <span class="j-module-consult__done"><i>✓</i><small>1-MODUL</small><b>To‘liq yakunlandi!</b></span>
+            <img data-a="a2" alt="Junior maskoti">
+          </div>
+          <small class="j-module-consult__eyebrow">KEYINGI BOSQICH</small>
+          <h2 id="j-module-consult-title">2-modulga birga o‘tamizmi?</h2>
+          <p>Keyingi modulni boshlashdan oldin sotuv bo‘limi mutaxassisi sizga mos o‘qish rejasini tanlashga yordam beradi.</p>
+          <div class="j-module-consult__benefits">
+            <span>✓ Bepul konsultatsiya</span><span>✓ Sizga mos reja</span>
+          </div>
+          <label>Telefon raqamingiz
+            <input name="module-consult-phone" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67">
+          </label>
+          <button class="j-module-consult__primary" type="button" data-module-consult-send>Konsultatsiyaga yozilish</button>
+          <button class="j-module-consult__later" type="button" data-module-consult-close>Keyinroq</button>
+        </div>
+        <div class="j-module-consult__success" data-module-consult-view="success" hidden>
+          <span>✓</span>
+          <small>SO‘ROV QABUL QILINDI</small>
+          <h2>2-modul sari bir qadam qoldi!</h2>
+          <p>Sotuv bo‘limi mutaxassisi tez orada siz bilan bog‘lanib, keyingi qadamlarni tushuntiradi.</p>
+          <button class="j-module-consult__primary" type="button" data-module-consult-close>Tushunarli</button>
+        </div>
+      </article>`;
+    screen.appendChild(modal);
+    updateAssets();
+
+    const showView = name => modal.querySelectorAll('[data-module-consult-view]').forEach(view => {
+      view.hidden = view.dataset.moduleConsultView !== name;
+    });
+    const open = () => {
+      if (selectedDay !== 5) return;
+      showView('form');
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('is-open'));
+      updateAssets();
+    };
+    const close = () => {
+      modal.classList.remove('is-open');
+      modal.hidden = true;
+    };
+    window.__openModuleConsultation = open;
+    window.__closeModuleConsultation = close;
+
+    modal.addEventListener('click', event => {
+      if (event.target.closest('[data-module-consult-close]')) { close(); return; }
+      if (event.target.closest('[data-module-consult-send]')) {
+        const phone = modal.querySelector('[name="module-consult-phone"]')?.value.trim() || '';
+        window.dispatchEvent(new CustomEvent('junior:sales-lead', {
+          detail: { phone, source: 'module-2-consultation' }
+        }));
+        showView('success');
+      }
+    });
+
+    const bindSecondModuleCard = () => {
+      const cards = [...document.querySelectorAll('.scr[data-screen="home"] .mk__card')];
+      const secondModuleCard = cards[1];
+      if (!secondModuleCard || secondModuleCard.dataset.moduleConsultBound === '1') return;
+      secondModuleCard.dataset.moduleConsultBound = '1';
+      secondModuleCard.addEventListener('click', event => {
+        if (selectedDay !== 5) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        open();
+      }, true);
+    };
+    bindSecondModuleCard();
+    new MutationObserver(bindSecondModuleCard).observe(content, { childList: true, subtree: true });
   }
 
   function resetViewportScroll() {
@@ -2260,6 +2348,7 @@
   polishProgressiveScreens();
   installActivityRecordings();
   installPaymentExpiredFlow();
+  installModuleConsultationFlow();
   // Ichki ekran qayta chizilsa ham 6-kundagi cheklov va qayta faollashtirish
   // banneri yo'qolib ketmasin.
   const paymentExpiredObserver = new MutationObserver(() => {
