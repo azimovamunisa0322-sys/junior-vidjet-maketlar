@@ -290,6 +290,206 @@
   .j-module-consult__primary, .j-module-consult__later { min-height: 42px; }
 }
 
+/* 7-kun: birinchi darsdan keyin sotuv bo‘limi haqida yumshoq eslatma. */
+.j-sales-reminder {
+  position: absolute;
+  z-index: 91;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  padding: 18px;
+  overflow: hidden;
+}
+.j-sales-reminder[hidden] { display: none !important; }
+.j-sales-reminder__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 43, .66);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .24s ease;
+}
+.j-sales-reminder.is-open .j-sales-reminder__scrim { opacity: 1; }
+.j-sales-reminder__card {
+  position: relative;
+  width: min(100%, 342px);
+  max-height: calc(100% - 12px);
+  box-sizing: border-box;
+  padding: 14px 18px 16px;
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.92);
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 28px 70px rgba(8,14,30,.34);
+  color: #18213a;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px) scale(.97);
+  transition: opacity .28s ease, transform .38s cubic-bezier(.18,.82,.24,1.06);
+}
+.j-sales-reminder.is-open .j-sales-reminder__card { opacity: 1; transform: none; }
+.j-sales-reminder__close {
+  position: absolute;
+  z-index: 4;
+  right: 12px;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #657086;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 5px 14px rgba(24,33,58,.1);
+  font: 600 24px/1 system-ui, sans-serif;
+}
+.j-sales-reminder__hero {
+  position: relative;
+  height: 116px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border-radius: 21px;
+  background:
+    radial-gradient(circle at 14% 26%, rgba(255,255,255,.68) 0 27px, transparent 28px),
+    linear-gradient(135deg, #ecfbf6 0%, #e1f6ff 100%);
+}
+.j-sales-reminder__hero::after {
+  position: absolute;
+  right: -25px;
+  bottom: -54px;
+  width: 138px;
+  height: 138px;
+  border: 13px solid rgba(35,178,145,.12);
+  border-radius: 50%;
+  content: '';
+}
+.j-sales-reminder__hero > img {
+  position: absolute;
+  z-index: 2;
+  right: 6px;
+  bottom: -25px;
+  width: 132px;
+  height: 132px;
+  object-fit: contain;
+  filter: drop-shadow(0 9px 12px rgba(36,45,68,.14));
+}
+.j-sales-reminder__hero > span {
+  position: absolute;
+  z-index: 3;
+  left: 15px;
+  top: 19px;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 8px;
+  text-align: left;
+}
+.j-sales-reminder__hero > span i {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  background: #13b982;
+  box-shadow: 0 6px 14px rgba(19,185,130,.2);
+  font: 900 16px/1 system-ui, sans-serif;
+  font-style: normal;
+}
+.j-sales-reminder__hero > span small { color: #118b68; font: 900 8px/1.2 var(--f, "Nunito", sans-serif); letter-spacing: .08em; }
+.j-sales-reminder__hero > span b { max-width: 118px; font: 900 13px/1.16 var(--f, "Nunito", sans-serif); }
+.j-sales-reminder__eyebrow,
+.j-sales-reminder__success > small {
+  display: block;
+  color: #ef5633;
+  font: 950 9px/1 var(--f, "Nunito", sans-serif);
+  letter-spacing: .11em;
+}
+.j-sales-reminder h2 {
+  margin: 8px auto 7px;
+  max-width: 300px;
+  color: #18213a;
+  font: 950 22px/1.13 var(--f, "Nunito", sans-serif);
+  letter-spacing: -.4px;
+}
+.j-sales-reminder p {
+  margin: 0 auto;
+  max-width: 300px;
+  color: #747e91;
+  font: 750 12px/1.42 var(--f, "Nunito", sans-serif);
+}
+.j-sales-reminder__help {
+  display: grid;
+  gap: 7px;
+  margin: 13px 0;
+  text-align: left;
+}
+.j-sales-reminder__help span {
+  display: grid;
+  grid-template-columns: 29px 1fr;
+  gap: 8px;
+  align-items: center;
+  min-height: 39px;
+  padding: 4px 10px;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  background: #fafbfc;
+}
+.j-sales-reminder__help i {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 9px;
+  background: #fff2ec;
+  font: 16px/1 system-ui, sans-serif;
+  font-style: normal;
+}
+.j-sales-reminder__help b { color: #4e596e; font: 850 10px/1.25 var(--f, "Nunito", sans-serif); }
+.j-sales-reminder__primary,
+.j-sales-reminder__later {
+  width: 100%;
+  min-height: 47px;
+  border: 0;
+  border-radius: 14px;
+  font: 950 13px/1 var(--f, "Nunito", sans-serif);
+}
+.j-sales-reminder__primary {
+  color: #fff;
+  background: linear-gradient(135deg, #ff6847, #ff4325);
+  box-shadow: 0 10px 22px rgba(255,79,40,.24);
+}
+.j-sales-reminder__later { margin-top: 7px; color: #7b8495; background: #f2f4f7; }
+.j-sales-reminder__success { padding: 35px 4px 6px; }
+.j-sales-reminder__success > span {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #18ce8b, #08a86d);
+  box-shadow: 0 13px 28px rgba(9,174,112,.24);
+  font: 900 34px/1 system-ui, sans-serif;
+}
+.j-sales-reminder__success p { margin-bottom: 22px; }
+
+@media (max-height: 720px) {
+  .j-sales-reminder { padding: 11px 16px; }
+  .j-sales-reminder__card { padding: 11px 16px 13px; border-radius: 24px; }
+  .j-sales-reminder__hero { height: 91px; margin-bottom: 10px; }
+  .j-sales-reminder__hero > img { width: 107px; height: 107px; bottom: -23px; }
+  .j-sales-reminder h2 { font-size: 19px; }
+  .j-sales-reminder__help { gap: 5px; margin: 9px 0; }
+  .j-sales-reminder__help span { min-height: 34px; }
+  .j-sales-reminder__primary, .j-sales-reminder__later { min-height: 41px; }
+}
+
 /* Ilovaga kirishdan oldingi push ruxsat oynasi. */
 .j-push-permission {
   position: absolute;
