@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v16-remove-day6';
+  const VERSION = 'v17-day7-plain';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -1164,7 +1164,6 @@
 
   function startSelectedDay() {
     window.__closeModuleConsultation?.();
-    window.__closeSalesReminder?.();
     pushPermission.hidden = true;
     steps = selectedSteps();
     root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 3);
@@ -1639,16 +1638,12 @@
     // 5-kun bosh sahifadan boshlanadi. Jadval faqat «Dars jadvali» yorlig'i
     // bosilganda ochilishi mumkin.
     window.__closeModuleConsultation?.();
-    window.__closeSalesReminder?.();
     window.__closeSchedule?.();
     goHome()
       .then(() => {
         resetViewportScroll();
         if (selectedDay === 5 && params.get('consult') === '1') {
           setTimeout(() => window.__openModuleConsultation?.(), 180);
-        }
-        if (selectedDay === 7 && params.get('sales') !== '0') {
-          setTimeout(() => window.__openSalesReminder?.(), 180);
         }
       })
       .catch(resetViewportScroll);
@@ -1736,87 +1731,6 @@
     };
     bindSecondModuleCard();
     new MutationObserver(bindSecondModuleCard).observe(content, { childList: true, subtree: true });
-  }
-
-  function installSalesReminderFlow() {
-    if (screen.querySelector('.j-sales-reminder')) return;
-    const modal = document.createElement('section');
-    modal.className = 'j-sales-reminder';
-    modal.hidden = true;
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-modal', 'true');
-    modal.setAttribute('aria-labelledby', 'j-sales-reminder-title');
-    modal.innerHTML = `
-      <div class="j-sales-reminder__scrim" data-sales-reminder-close></div>
-      <article class="j-sales-reminder__card">
-        <button class="j-sales-reminder__close" type="button" data-sales-reminder-close aria-label="Yopish">×</button>
-        <div data-sales-reminder-view="info">
-          <div class="j-sales-reminder__hero">
-            <span><i>✓</i><small>1-DARS</small><b>Muvaffaqiyatli yakunlandi!</b></span>
-            <img data-a="a2" alt="Junior maskoti">
-          </div>
-          <small class="j-sales-reminder__eyebrow">YANGI O‘QUVCHI UCHUN ESLATMA</small>
-          <h2 id="j-sales-reminder-title">Savolingiz bo‘lsa, biz yoningizdamiz</h2>
-          <p>Sotuv bo‘limi faqat to‘lov uchun emas — o‘qishni qulay davom ettirishingizga ham yordam beradi.</p>
-          <div class="j-sales-reminder__help">
-            <span><i>🎯</i><b>To‘g‘ri kurs va tarifni tanlash</b></span>
-            <span><i>💳</i><b>To‘lov bo‘yicha savollarga javob</b></span>
-            <span><i>🗓️</i><b>Guruh va dars jadvalini aniqlash</b></span>
-          </div>
-          <button class="j-sales-reminder__primary" type="button" data-sales-reminder-send>Sotuv bo‘limiga yozilish</button>
-          <button class="j-sales-reminder__later" type="button" data-sales-reminder-close>Tushunarli</button>
-        </div>
-        <div class="j-sales-reminder__success" data-sales-reminder-view="success" hidden>
-          <span>✓</span>
-          <small>SO‘ROV QABUL QILINDI</small>
-          <h2>Mutaxassisimiz siz bilan bog‘lanadi</h2>
-          <p>Profilingizdagi telefon raqami orqali sizga qulay vaqtda bog‘lanamiz.</p>
-          <button class="j-sales-reminder__primary" type="button" data-sales-reminder-close>Davom etish</button>
-        </div>
-      </article>`;
-    screen.appendChild(modal);
-    updateAssets();
-
-    const showView = name => modal.querySelectorAll('[data-sales-reminder-view]').forEach(view => {
-      view.hidden = view.dataset.salesReminderView !== name;
-    });
-    const open = () => {
-      if (selectedDay !== 7) return;
-      showView('info');
-      modal.hidden = false;
-      requestAnimationFrame(() => modal.classList.add('is-open'));
-      updateAssets();
-    };
-    const close = () => {
-      modal.classList.remove('is-open');
-      modal.hidden = true;
-    };
-    window.__openSalesReminder = open;
-    window.__closeSalesReminder = close;
-
-    modal.addEventListener('click', event => {
-      if (event.target.closest('[data-sales-reminder-close]')) { close(); return; }
-      if (event.target.closest('[data-sales-reminder-send]')) {
-        window.dispatchEvent(new CustomEvent('junior:sales-lead', {
-          detail: { source: 'first-lesson-sales-reminder' }
-        }));
-        showView('success');
-      }
-    });
-
-    const bindFirstLessonCard = () => {
-      const firstLessonCard = document.querySelector('.scr[data-screen="home"] .mk__card');
-      if (!firstLessonCard || firstLessonCard.dataset.salesReminderBound === '1') return;
-      firstLessonCard.dataset.salesReminderBound = '1';
-      firstLessonCard.addEventListener('click', event => {
-        if (selectedDay !== 7) return;
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        open();
-      }, true);
-    };
-    bindFirstLessonCard();
-    new MutationObserver(bindFirstLessonCard).observe(content, { childList: true, subtree: true });
   }
 
   function resetViewportScroll() {
@@ -2319,7 +2233,6 @@
   polishProgressiveScreens();
   installActivityRecordings();
   installModuleConsultationFlow();
-  installSalesReminderFlow();
 
   content.addEventListener('scroll', positionTour, { passive: true });
   document.querySelector('#track')?.addEventListener('scroll', positionTour, { passive: true });

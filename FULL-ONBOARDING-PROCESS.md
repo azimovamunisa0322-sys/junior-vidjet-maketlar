@@ -38,8 +38,7 @@ flowchart TD
     M --> N
     N --> O[1-modul yakunlandi]
     O --> P[2-modul oldidan konsultatsiya]
-    P --> Q[7-kun: sotuv bo‘limi haqida eslatma]
-    Q --> R[Doimiy o‘qish jarayoni]
+    P --> R[Doimiy o‘qish jarayoni]
 ```
 
 > `4-kun` prototipdan to‘liq olib tashlangan. Shu sabab QA menyusida 4-kun yo‘q.
@@ -61,7 +60,7 @@ O‘quvchi push xabarlarga hali javob bermagan bo‘lsa, onboarding boshlanishid
 - Har bir kun alohida ochiladi.
 - Bir kunni test qilish uchun oldingi kunlarni qayta o‘tish shart emas.
 - Kun holati `user_id + onboarding versiyasi + kun` bo‘yicha saqlanadi.
-- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v15-sales-reminder:day-<kun>`.
+- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v17-day7-plain:day-<kun>`.
 
 ### 3.3. Darsning umumiy tuzilishi
 
@@ -304,47 +303,15 @@ Muvaffaqiyat holati:
 - Sarlavha: `2-modul sari bir qadam qoldi!`
 - Sotuv bo‘limi o‘quvchi bilan bog‘lanishi tushuntiriladi.
 
-## 9. 7-kun — birinchi darsdan keyingi sotuv bo‘limi eslatmasi
+## 9. 7-kun — odatiy bosh sahifa
 
-### Maqsad
+7-kunda qo‘shimcha modalka ko‘rsatilmaydi. O‘quvchi odatiy bosh sahifani ko‘radi va birinchi kurs kartasini odatdagi tartibda ochadi.
 
-Yangi o‘quvchiga sotuv bo‘limi faqat to‘lov qabul qiladigan bo‘lim emasligini, balki o‘qishni qulay tashkil qilishda ham yordam berishini o‘rgatish.
+Olib tashlangan elementlar:
 
-### Trigger
-
-Production holatida:
-
-- o‘quvchi birinchi darsni muvaffaqiyatli tugatadi;
-- dars mukofoti ko‘rsatilgach, yumshoq eslatma chiqadi.
-
-QA holatida:
-
-- `7-kun` tanlanganda modalka avtomatik ochiladi;
-- yopilgandan keyin birinchi kurs kartasi bosilsa, qayta ochiladi.
-
-### Modalka
-
-- Status: `1-DARS — Muvaffaqiyatli yakunlandi!`
-- Kicker: `YANGI O‘QUVCHI UCHUN ESLATMA`
-- Sarlavha: `Savolingiz bo‘lsa, biz yoningizdamiz`
-- Matn: sotuv bo‘limi o‘qishni qulay davom ettirishga yordam berishi tushuntiriladi.
-
-Yordam yo‘nalishlari:
-
-1. To‘g‘ri kurs va tarifni tanlash.
-2. To‘lov bo‘yicha savollarga javob berish.
-3. Guruh va dars jadvalini aniqlash.
-
-Tugmalar:
-
-- Asosiy CTA: `Sotuv bo‘limiga yozilish`
-- Ikkinchi CTA: `Tushunarli`
-
-Muvaffaqiyat holati:
-
-- Status: `SO‘ROV QABUL QILINDI`
-- Sarlavha: `Mutaxassisimiz siz bilan bog‘lanadi`
-- Profil telefon raqami orqali qulay vaqtda bog‘lanish tushuntiriladi.
+- birinchi darsdan keyingi sotuv bo‘limi eslatmasi;
+- `Sotuv bo‘limiga yozilish` modalkasi;
+- birinchi kurs kartasini bosganda modalkani qayta ochish logikasi.
 
 ## 10. Faollik bo‘lmasa yuboriladigan pushlar
 
@@ -381,7 +348,6 @@ Manbalar:
 
 | Source | Qayerdan yuboriladi |
 |---|---|
-| `first-lesson-sales-reminder` | 7-kun, birinchi darsdan keyingi eslatma |
 | `module-2-consultation` | 5-kun, 2-modul oldidan konsultatsiya |
 
 Backendga yuboriladigan tavsiya etilgan ma’lumotlar:
@@ -390,7 +356,7 @@ Backendga yuboriladigan tavsiya etilgan ma’lumotlar:
 {
   "user_id": "string",
   "phone": "+998...",
-  "source": "first-lesson-sales-reminder",
+  "source": "module-2-consultation",
   "course_id": "string",
   "module_id": "string|null",
   "created_at": "ISO-8601"
@@ -415,7 +381,6 @@ Bir o‘quvchi bir source bo‘yicha qayta-qayta lead bo‘lib ketmasligi uchun 
 | `purchase_offer_answered` | Ha yoki Keyinroq bosilganda | `answer` |
 | `payment_plan_selected` | Tarif tanlanganda | `lessons`, `amount` |
 | `payment_qr_opened` | To‘lash bosilganda | `amount`, `payment_method` |
-| `sales_reminder_viewed` | 7-kun eslatmasi ochilganda | `source` |
 | `sales_lead_created` | Sotuv bo‘limiga so‘rov yuborilganda | `source`, `user_id` |
 | `module_consultation_viewed` | 2-modul konsultatsiyasi ochilganda | `module_id` |
 
@@ -439,8 +404,7 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 | 3-kun, QR modalka | `?onboarding=1&qa=days&day=3&payment=1` |
 | 5-kun | `?onboarding=1&qa=days&day=5` |
 | 5-kun, 2-modul konsultatsiyasi | `?onboarding=1&qa=days&day=5&consult=1` |
-| 7-kun, sotuv bo‘limi eslatmasi | `?onboarding=1&qa=days&day=7` |
-| 7-kun, modalkasiz bosh sahifa | `?onboarding=1&qa=days&day=7&sales=0` |
+| 7-kun, modalkasiz bosh sahifa | `?onboarding=1&qa=days&day=7` |
 
 ## 14. Qabul mezonlari
 
@@ -459,10 +423,9 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 
 ### 7-kun
 
-- Eslatma birinchi dars tugagandan keyin ko‘rsatiladi.
-- Eslatma sotuv bosimi kabi emas, yordamchi ma’lumot kabi ko‘rinadi.
-- `Sotuv bo‘limiga yozilish` lead yaratadi.
-- `Tushunarli` modalkani yopadi va o‘quvchini bosh sahifada qoldiradi.
+- Birinchi darsdan keyingi sotuv bo‘limi modalkasi ko‘rsatilmaydi.
+- Birinchi kurs kartasi odatdagi tartibda ochiladi.
+- Bosh sahifa qo‘shimcha qatlamlarsiz ko‘rinadi.
 
 ## 15. Yakuniy natija
 
