@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v18-trial-curriculum';
+  const VERSION = 'v19-sales-call-modal';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -467,10 +467,7 @@
       <section class="j-trial-expired__body">
         <h3>2-modulga birga o‘tamizmi?</h3>
         <p>Keyingi moduldan oldin sotuv mutaxassisi sizga mos o‘qish rejasini tanlashga yordam beradi.</p>
-        <label>Telefon raqamingiz
-          <input name="trial-phone" inputmode="tel" autocomplete="tel" value="+998 97 760 05 17">
-        </label>
-        <button class="j-trial-expired__primary" type="button" data-trial-expired-pay>To‘lov qilish</button>
+        <a class="j-trial-expired__primary" href="tel:+998977600517" data-trial-expired-call aria-label="Sotuv bo‘limiga qo‘ng‘iroq qilish">Men bilan bog‘laning</a>
         <button class="j-trial-expired__later" type="button" data-trial-expired-close>Keyinroq</button>
       </section>
     </article>`;
@@ -515,10 +512,10 @@
       closeTrialExpired();
       return;
     }
-    if (event.target.closest('[data-trial-expired-pay]')) {
-      closeTrialExpired();
-      closeTrialCurriculum();
-      openDay3PaymentPage();
+    if (event.target.closest('[data-trial-expired-call]')) {
+      window.dispatchEvent(new CustomEvent('junior:sales-call', {
+        detail: { source: 'trial-module-11', phone: '+998977600517' }
+      }));
     }
   });
 

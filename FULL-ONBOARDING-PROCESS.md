@@ -62,7 +62,7 @@ O‘quvchi push xabarlarga hali javob bermagan bo‘lsa, onboarding boshlanishid
 - Har bir kun alohida ochiladi.
 - Bir kunni test qilish uchun oldingi kunlarni qayta o‘tish shart emas.
 - Kun holati `user_id + onboarding versiyasi + kun` bo‘yicha saqlanadi.
-- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v18-trial-curriculum:day-<kun>`.
+- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v19-sales-call-modal:day-<kun>`.
 
 ### 3.3. Darsning umumiy tuzilishi
 
@@ -320,11 +320,11 @@ Boshlang‘ich holat:
 - Sarlavha: `Birinchi modul yakunlandi`;
 - Izoh: `Ajoyib boshlanish!`;
 - Asosiy savol: `2-modulga birga o‘tamizmi?`;
-- Telefon raqami: `+998 97 760 05 17`;
-- Asosiy CTA: `To‘lov qilish`;
+- Telefon raqamini kiritish maydoni ko‘rsatilmaydi;
+- Asosiy CTA: `Men bilan bog‘laning`;
 - Ikkinchi CTA: `Keyinroq`.
 
-`To‘lov qilish` bosilganda Raxmat to‘lov sahifasi ochiladi.
+`Men bilan bog‘laning` bosilganda qurilmaning qo‘ng‘iroq oynasi ochilib, sotuv bo‘limining `+998 97 760 05 17` raqami teriladi.
 
 ## 10. Faollik bo‘lmasa yuboriladigan pushlar
 
@@ -441,7 +441,7 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 - 1–10-darslar tugallangan holatda ko‘rinadi.
 - 11-dars qulflangan holatda turadi.
 - 11-dars bosilganda birinchi modul tugagani haqidagi modalka ochiladi.
-- `To‘lov qilish` Raxmat to‘lov sahifasini ochadi.
+- `Men bilan bog‘laning` sotuv bo‘limining telefon raqamiga qo‘ng‘iroq oynasini ochadi.
 - `Keyinroq` modalkani yopib, mundarijada qoldiradi.
 
 ## 15. Yakuniy natija

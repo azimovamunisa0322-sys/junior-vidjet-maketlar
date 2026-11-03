@@ -3120,26 +3120,32 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-trial-expired.is-open .j-trial-expired__card { opacity: 1; transform: none; }
 .j-trial-expired__hero {
   position: relative;
-  height: 272px;
+  height: 282px;
   box-sizing: border-box;
-  padding: 34px 16px 0;
+  padding: 32px 16px 0;
   overflow: hidden;
   background:
     radial-gradient(circle at 16% 14%, rgba(208,239,255,.9), transparent 45%),
     radial-gradient(circle at 86% 22%, rgba(255,252,209,.92), transparent 44%),
     #f8fbf7;
 }
+.j-trial-expired__hero h2,
+.j-trial-expired__hero p {
+  position: relative;
+  z-index: 5;
+  text-shadow: 0 2px 12px rgba(255,255,255,.96);
+}
 .j-trial-expired__hero h2 { margin: 0; color: #000; font: 950 29px/1.08 var(--f, "Nunito", sans-serif); letter-spacing: -.6px; }
-.j-trial-expired__hero p { margin: 12px 0 0; color: #8d8d8d; font: 750 17px/1.15 var(--f, "Nunito", sans-serif); }
+.j-trial-expired__hero p { margin: 10px 0 0; color: #777; font: 800 17px/1.15 var(--f, "Nunito", sans-serif); }
 .j-trial-expired__hero img {
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: -38px;
-  width: 230px;
-  height: 230px;
+  bottom: -28px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
-  transform: translateX(-50%) scale(1.15);
+  transform: translateX(-50%);
   filter: drop-shadow(0 11px 14px rgba(25,33,50,.15));
 }
 .j-trial-expired__hero i,
@@ -3157,30 +3163,20 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-trial-expired__hero::before { left: -44px; transform: rotate(8deg); }
 .j-trial-expired__hero::after { right: -44px; transform: rotate(-8deg); }
 .j-trial-expired__hero i { left: 50%; width: 190px; transform: translateX(-50%); }
-.j-trial-expired__body { position: relative; z-index: 4; padding: 18px 18px 16px; background: #fff; }
+.j-trial-expired__body { position: relative; z-index: 4; padding: 22px 18px 16px; background: #fff; }
 .j-trial-expired__body h3 { margin: 0; color: #000; font: 950 21px/1.15 var(--f, "Nunito", sans-serif); letter-spacing: -.35px; }
-.j-trial-expired__body > p { margin: 10px auto 18px; max-width: 285px; color: #999; font: 700 13px/1.38 var(--f, "Nunito", sans-serif); }
-.j-trial-expired__body label { display: block; margin-bottom: 16px; color: #999; text-align: left; font: 750 13px/1 var(--f, "Nunito", sans-serif); }
-.j-trial-expired__body input {
-  width: 100%;
-  height: 52px;
-  box-sizing: border-box;
-  margin-top: 10px;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 12px;
-  outline: 0;
-  color: #111;
-  background: #f7f7f8;
-  font: 850 16px/1 var(--f, "Nunito", sans-serif);
-}
+.j-trial-expired__body > p { margin: 10px auto 20px; max-width: 285px; color: #8d929b; font: 700 13px/1.42 var(--f, "Nunito", sans-serif); }
 .j-trial-expired__primary,
 .j-trial-expired__later {
+  display: grid;
   width: 100%;
   min-height: 49px;
+  box-sizing: border-box;
+  place-items: center;
   border: 0;
   border-radius: 14px;
   font: 950 14px/1 var(--f, "Nunito", sans-serif);
+  text-decoration: none;
 }
 .j-trial-expired__primary {
   color: #fff;
@@ -3194,12 +3190,10 @@ article[data-widget="webinar"] .wtimer__b span {
   .j-trial-curriculum__tabs { padding-top: 9px; padding-bottom: 9px; }
   .j-trial-curriculum__tabs button { min-height: 50px; }
   .j-trial-lesson { min-height: 53px; }
-  .j-trial-expired__hero { height: 232px; padding-top: 24px; }
+  .j-trial-expired__hero { height: 240px; padding-top: 22px; }
   .j-trial-expired__hero h2 { font-size: 25px; }
   .j-trial-expired__hero p { margin-top: 8px; font-size: 15px; }
-  .j-trial-expired__hero img { width: 198px; height: 198px; }
+  .j-trial-expired__hero img { bottom: -26px; width: 154px; height: 154px; }
   .j-trial-expired__body { padding-top: 13px; }
   .j-trial-expired__body > p { margin-bottom: 12px; }
-  .j-trial-expired__body label { margin-bottom: 12px; }
-  .j-trial-expired__body input { height: 46px; }
 }
