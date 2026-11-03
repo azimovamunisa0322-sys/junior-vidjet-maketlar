@@ -1,7 +1,7 @@
 # Junior platformasi — to‘liq onboarding jarayoni
 
-Versiya: `2026-10-28`  
-Qamrov: `1, 2, 3, 5, 6 va 7-kun`  
+Versiya: `2026-11-03`
+Qamrov: `1, 2, 3, 5 va 7-kun`
 Holat: vizual prototip va biznes-logika tavsifi
 
 ## 1. Onboarding maqsadi
@@ -17,7 +17,6 @@ Asosiy maqsadlar:
 5. O‘quvchiga shaxsiy Streak maqsadini tanlatish.
 6. O‘qishni davom ettirish va to‘lov jarayonini tushuntirish.
 7. Sotuv bo‘limi qaysi masalalarda yordam berishini ko‘rsatish.
-8. To‘lov muddati tugagan o‘quvchini platformadan butunlay chiqarib yubormasdan qayta faollashtirish.
 
 ## 2. Umumiy voronka
 
@@ -41,8 +40,6 @@ flowchart TD
     O --> P[2-modul oldidan konsultatsiya]
     P --> Q[7-kun: sotuv bo‘limi haqida eslatma]
     Q --> R[Doimiy o‘qish jarayoni]
-    R -->|To‘lov muddati o‘tdi| S[6-kun: kurslar qulflanadi]
-    S --> T[Qayta faollashtirish yoki to‘lov]
 ```
 
 > `4-kun` prototipdan to‘liq olib tashlangan. Shu sabab QA menyusida 4-kun yo‘q.
@@ -307,45 +304,7 @@ Muvaffaqiyat holati:
 - Sarlavha: `2-modul sari bir qadam qoldi!`
 - Sotuv bo‘limi o‘quvchi bilan bog‘lanishi tushuntiriladi.
 
-## 9. 6-kun — to‘lov muddati tugagan o‘quvchi
-
-### Maqsad
-
-To‘lov qilmagan o‘quvchini platformadan butunlay chiqarib yubormasdan, natijalarini saqlab qolish va qayta faollashtirishga olib kelish.
-
-### Platforma holati
-
-- O‘quvchi platformaga kira oladi.
-- Kurslar ro‘yxati ko‘rinadi.
-- Barcha kurs kartalari qulflangan bo‘ladi.
-- O‘quvchi yangi darsni boshlay olmaydi.
-- Faqat Streak vidjeti qoladi; qolgan vidjetlar 6-kunda yashiriladi.
-- Avval olingan sertifikatlar ko‘rinadi.
-- Vaqtli mukofot taymeri ko‘rsatilmaydi.
-
-### Banner
-
-- Sarlavha: `O‘qish muddati tugagan`
-- Matn: `Kurslar saqlangan. Davom etish uchun qayta faollashtiring.`
-- CTA: `Qayta faollashtirish`
-
-### Qulflangan kurs bosilganda
-
-- Sarlavha: `Sizni uzoq kutdik!`
-- Matn: kurslar, natijalar va Coinlar saqlanganligi aytiladi.
-- Asosiy CTA: `Ha, davom ettiraman`
-- Ikkinchi CTA: `Hozir emas`
-
-`Ha, davom ettiraman` bosilganda to‘lov oynasi ochiladi.
-
-### Qayta faollashtirish bosilganda
-
-- Sarlavha: `Sotuv bo‘limi yordam beradi`
-- O‘quvchi telefon raqamini qoldiradi.
-- CTA: `Telefon raqam qoldirish`
-- Natija: sotuv bo‘limi qulay to‘lov havolasini yuborish uchun o‘quvchi bilan bog‘lanadi.
-
-## 10. 7-kun — birinchi darsdan keyingi sotuv bo‘limi eslatmasi
+## 9. 7-kun — birinchi darsdan keyingi sotuv bo‘limi eslatmasi
 
 ### Maqsad
 
@@ -387,7 +346,7 @@ Muvaffaqiyat holati:
 - Sarlavha: `Mutaxassisimiz siz bilan bog‘lanadi`
 - Profil telefon raqami orqali qulay vaqtda bog‘lanish tushuntiriladi.
 
-## 11. Faollik bo‘lmasa yuboriladigan pushlar
+## 10. Faollik bo‘lmasa yuboriladigan pushlar
 
 Bu qism backend va push servisi orqali ishlashi kerak. Prototip push preview’ni ko‘rsatadi.
 
@@ -402,7 +361,6 @@ Tavsiya etilgan triggerlar:
 | Streak maqsadini tanlamadi | Maqsad tanlashga qaytarish |
 | To‘lov taklifida `Keyinroq`ni tanladi | Keyingi kuni davom ettirish taklifini berish |
 | 1-modul tugadi, 2-modulga o‘tmadi | Bepul konsultatsiyani eslatish |
-| To‘lov muddati o‘tdi | Qayta faollashtirishni taklif qilish |
 
 Push chastotasi:
 
@@ -411,7 +369,7 @@ Push chastotasi:
 - Tunda push yuborilmaydi.
 - O‘quvchi push ruxsatini bermagan bo‘lsa, platforma ichidagi banner ishlatiladi.
 
-## 12. Sotuv bo‘limiga lead yuborish
+## 11. Sotuv bo‘limiga lead yuborish
 
 Prototipda yagona event ishlatiladi:
 
@@ -425,7 +383,6 @@ Manbalar:
 |---|---|
 | `first-lesson-sales-reminder` | 7-kun, birinchi darsdan keyingi eslatma |
 | `module-2-consultation` | 5-kun, 2-modul oldidan konsultatsiya |
-| `payment-expired` | 6-kun, kursni qayta faollashtirish |
 
 Backendga yuboriladigan tavsiya etilgan ma’lumotlar:
 
@@ -442,7 +399,7 @@ Backendga yuboriladigan tavsiya etilgan ma’lumotlar:
 
 Bir o‘quvchi bir source bo‘yicha qayta-qayta lead bo‘lib ketmasligi uchun deduplikatsiya kerak.
 
-## 13. Analitika eventlari
+## 12. Analitika eventlari
 
 | Event | Qachon yuboriladi | Parametrlar |
 |---|---|---|
@@ -461,10 +418,8 @@ Bir o‘quvchi bir source bo‘yicha qayta-qayta lead bo‘lib ketmasligi uchun 
 | `sales_reminder_viewed` | 7-kun eslatmasi ochilganda | `source` |
 | `sales_lead_created` | Sotuv bo‘limiga so‘rov yuborilganda | `source`, `user_id` |
 | `module_consultation_viewed` | 2-modul konsultatsiyasi ochilganda | `module_id` |
-| `course_locked_clicked` | 6-kun qulflangan kurs bosilganda | `course_id` |
-| `reactivation_started` | Qayta faollashtirish bosilganda | `source` |
 
-## 14. QA havolalar
+## 13. QA havolalar
 
 Asosiy URL:
 
@@ -484,11 +439,10 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 | 3-kun, QR modalka | `?onboarding=1&qa=days&day=3&payment=1` |
 | 5-kun | `?onboarding=1&qa=days&day=5` |
 | 5-kun, 2-modul konsultatsiyasi | `?onboarding=1&qa=days&day=5&consult=1` |
-| 6-kun | `?onboarding=1&qa=days&day=6` |
 | 7-kun, sotuv bo‘limi eslatmasi | `?onboarding=1&qa=days&day=7` |
 | 7-kun, modalkasiz bosh sahifa | `?onboarding=1&qa=days&day=7&sales=0` |
 
-## 15. Qabul mezonlari
+## 14. Qabul mezonlari
 
 ### 1–3-kun
 
@@ -503,13 +457,6 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 - 2-modul konsultatsiyasi faqat 1-modul tugagan holatda ko‘rsatiladi.
 - Telefon raqami va lead source sotuv tizimiga uzatiladi.
 
-### 6-kun
-
-- Platforma ochiladi, lekin darslar ishlamaydi.
-- Barcha kurs kartalarida qulf holati ko‘rinadi.
-- Qayta faollashtirish va to‘lov yo‘llari ishlaydi.
-- Avvalgi sertifikatlar saqlanadi, bonus taymer ko‘rsatilmaydi.
-
 ### 7-kun
 
 - Eslatma birinchi dars tugagandan keyin ko‘rsatiladi.
@@ -517,7 +464,7 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 - `Sotuv bo‘limiga yozilish` lead yaratadi.
 - `Tushunarli` modalkani yopadi va o‘quvchini bosh sahifada qoldiradi.
 
-## 16. Yakuniy natija
+## 15. Yakuniy natija
 
 To‘liq onboarding oxirida o‘quvchi:
 
@@ -528,4 +475,3 @@ To‘liq onboarding oxirida o‘quvchi:
 5. O‘ziga Streak maqsadini tanlaydi.
 6. Tarif va to‘lov jarayonini tushunadi.
 7. Sotuv bo‘limiga qaysi masalalarda murojaat qilishni biladi.
-8. To‘lov muddati tugasa ham natijalari yo‘qolmasligini va kursni qayta faollashtirish mumkinligini tushunadi.
