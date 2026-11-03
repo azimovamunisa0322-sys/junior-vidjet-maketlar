@@ -37,8 +37,10 @@ flowchart TD
     L --> N[5-kun: platforma imkoniyatlari]
     M --> N
     N --> O[1-modul yakunlandi]
-    O --> P[2-modul oldidan konsultatsiya]
-    P --> R[Doimiy o‘qish jarayoni]
+    O --> P[7-kun: 10 ta bepul dars yakunlandi]
+    P --> Q[11-dars bosiladi]
+    Q --> R[To‘lov modalkasi]
+    R --> S[Raxmat to‘lov sahifasi]
 ```
 
 > `4-kun` prototipdan to‘liq olib tashlangan. Shu sabab QA menyusida 4-kun yo‘q.
@@ -60,7 +62,7 @@ O‘quvchi push xabarlarga hali javob bermagan bo‘lsa, onboarding boshlanishid
 - Har bir kun alohida ochiladi.
 - Bir kunni test qilish uchun oldingi kunlarni qayta o‘tish shart emas.
 - Kun holati `user_id + onboarding versiyasi + kun` bo‘yicha saqlanadi.
-- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v17-day7-plain:day-<kun>`.
+- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v18-trial-curriculum:day-<kun>`.
 
 ### 3.3. Darsning umumiy tuzilishi
 
@@ -303,15 +305,26 @@ Muvaffaqiyat holati:
 - Sarlavha: `2-modul sari bir qadam qoldi!`
 - Sotuv bo‘limi o‘quvchi bilan bog‘lanishi tushuntiriladi.
 
-## 9. 7-kun — odatiy bosh sahifa
+## 9. 7-kun — bepul modul tugashi va to‘lovga o‘tish
 
-7-kunda qo‘shimcha modalka ko‘rsatilmaydi. O‘quvchi odatiy bosh sahifani ko‘radi va birinchi kurs kartasini odatdagi tartibda ochadi.
+7-kunda o‘quvchiga Junior platformasidagi mundarija uslubida HTML moduli ko‘rsatiladi.
 
-Olib tashlangan elementlar:
+Boshlang‘ich holat:
 
-- birinchi darsdan keyingi sotuv bo‘limi eslatmasi;
-- `Sotuv bo‘limiga yozilish` modalkasi;
-- birinchi kurs kartasini bosganda modalkani qayta ochish logikasi.
+- 1–10-darslar tugallangan;
+- 1-modul progressi `10/10`;
+- 11-dars `CSS moduliga kirish` holatida qulflangan.
+
+11-dars bosilganda modalka ochiladi:
+
+- Sarlavha: `Birinchi modul yakunlandi`;
+- Izoh: `Ajoyib boshlanish!`;
+- Asosiy savol: `2-modulga birga o‘tamizmi?`;
+- Telefon raqami: `+998 97 760 05 17`;
+- Asosiy CTA: `To‘lov qilish`;
+- Ikkinchi CTA: `Keyinroq`.
+
+`To‘lov qilish` bosilganda Raxmat to‘lov sahifasi ochiladi.
 
 ## 10. Faollik bo‘lmasa yuboriladigan pushlar
 
@@ -381,6 +394,8 @@ Bir o‘quvchi bir source bo‘yicha qayta-qayta lead bo‘lib ketmasligi uchun 
 | `purchase_offer_answered` | Ha yoki Keyinroq bosilganda | `answer` |
 | `payment_plan_selected` | Tarif tanlanganda | `lessons`, `amount` |
 | `payment_qr_opened` | To‘lash bosilganda | `amount`, `payment_method` |
+| `trial_lesson_locked_clicked` | 11-dars bosilganda | `day`, `lesson_id` |
+| `trial_payment_started` | 7-kun modalkasida to‘lov bosilganda | `phone`, `source` |
 | `sales_lead_created` | Sotuv bo‘limiga so‘rov yuborilganda | `source`, `user_id` |
 | `module_consultation_viewed` | 2-modul konsultatsiyasi ochilganda | `module_id` |
 
@@ -404,7 +419,7 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 | 3-kun, QR modalka | `?onboarding=1&qa=days&day=3&payment=1` |
 | 5-kun | `?onboarding=1&qa=days&day=5` |
 | 5-kun, 2-modul konsultatsiyasi | `?onboarding=1&qa=days&day=5&consult=1` |
-| 7-kun, modalkasiz bosh sahifa | `?onboarding=1&qa=days&day=7` |
+| 7-kun, 10 ta bepul dars tugagan | `?onboarding=1&qa=days&day=7` |
 
 ## 14. Qabul mezonlari
 
@@ -423,9 +438,11 @@ https://azimovamunisa0322-sys.github.io/junior-vidjet-maketlar/progressive/
 
 ### 7-kun
 
-- Birinchi darsdan keyingi sotuv bo‘limi modalkasi ko‘rsatilmaydi.
-- Birinchi kurs kartasi odatdagi tartibda ochiladi.
-- Bosh sahifa qo‘shimcha qatlamlarsiz ko‘rinadi.
+- 1–10-darslar tugallangan holatda ko‘rinadi.
+- 11-dars qulflangan holatda turadi.
+- 11-dars bosilganda birinchi modul tugagani haqidagi modalka ochiladi.
+- `To‘lov qilish` Raxmat to‘lov sahifasini ochadi.
+- `Keyinroq` modalkani yopib, mundarijada qoldiradi.
 
 ## 15. Yakuniy natija
 

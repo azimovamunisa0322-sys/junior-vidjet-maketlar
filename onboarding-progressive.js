@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v17-day7-plain';
+  const VERSION = 'v18-trial-curriculum';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -397,6 +397,130 @@
   if (qaDays && selectedDay === 3 && params.get('payment_page') === '1') {
     setTimeout(openDay3PaymentPage, 220);
   }
+
+  const trialCurriculum = document.createElement('section');
+  trialCurriculum.className = 'j-trial-curriculum';
+  trialCurriculum.hidden = true;
+  trialCurriculum.setAttribute('aria-label', 'HTML kursi mundarijasi');
+  const trialLessonTitles = [
+    'HTML bilan tanishuv',
+    'Birinchi HTML sahifa',
+    'Teglar va elementlar',
+    'Sarlavha va matnlar',
+    'Havolalar bilan ishlash',
+    'Rasmlar joylashtirish',
+    'Ro‘yxatlar',
+    'Jadvallar',
+    'Forma elementlari',
+    '1-modul yakuniy testi'
+  ];
+  trialCurriculum.innerHTML = `
+    <header class="j-trial-curriculum__header">
+      <button type="button" data-trial-back aria-label="Ortga">←</button>
+      <div><h1>Web dasturlash</h1><p>HTML · 1-modul</p></div>
+      <span><b>10</b>/10</span>
+    </header>
+    <nav class="j-trial-curriculum__tabs" aria-label="Kurs modullari">
+      <button type="button" class="is-active"><b>HTML</b><small>10 ta dars</small></button>
+      <button type="button"><b>CSS</b><small>34 ta dars</small></button>
+      <button type="button"><b>Bootstrap</b><small>12 ta dars</small></button>
+      <button type="button"><b>Tilda</b><small>14 ta dars</small></button>
+      <button type="button"><b>Git</b><small>12 ta dars</small></button>
+    </nav>
+    <main class="j-trial-curriculum__main">
+      <section class="j-trial-curriculum__summary">
+        <span>✓</span>
+        <div><small>1-MODUL</small><h2>HTML asoslari tugallandi</h2><p>10 ta bepul dars muvaffaqiyatli yakunlandi</p></div>
+      </section>
+      <div class="j-trial-curriculum__list" data-trial-lessons></div>
+    </main>`;
+  screen.appendChild(trialCurriculum);
+
+  const trialLessonList = trialCurriculum.querySelector('[data-trial-lessons]');
+  trialLessonList.innerHTML = trialLessonTitles.map((lessonTitle, index) => `
+    <button type="button" class="j-trial-lesson is-complete" data-trial-lesson="${index + 1}">
+      <span class="j-trial-lesson__state">✓</span>
+      <span class="j-trial-lesson__copy"><small>${index + 1} ${index === 9 ? 'Test' : 'O‘rganish'}</small><b>${lessonTitle}</b></span>
+      <span class="j-trial-lesson__type">${index === 9 ? '🏆' : '▣'}</span>
+    </button>`).join('') + `
+    <button type="button" class="j-trial-lesson is-locked" data-trial-lesson="11">
+      <span class="j-trial-lesson__state">🔒</span>
+      <span class="j-trial-lesson__copy"><small>11 O‘rganish</small><b>CSS moduliga kirish</b></span>
+      <span class="j-trial-lesson__type">▣</span>
+    </button>`;
+
+  const trialExpired = document.createElement('section');
+  trialExpired.className = 'j-trial-expired';
+  trialExpired.hidden = true;
+  trialExpired.setAttribute('role', 'dialog');
+  trialExpired.setAttribute('aria-modal', 'true');
+  trialExpired.setAttribute('aria-labelledby', 'j-trial-expired-title');
+  trialExpired.innerHTML = `
+    <button class="j-trial-expired__scrim" type="button" data-trial-expired-close aria-label="Yopish"></button>
+    <article class="j-trial-expired__card">
+      <section class="j-trial-expired__hero">
+        <h2 id="j-trial-expired-title">Birinchi modul<br>yakunlandi</h2>
+        <p>Ajoyib boshlanish!</p>
+        <img data-a="a2" alt="Junior maskoti">
+        <i aria-hidden="true"></i>
+      </section>
+      <section class="j-trial-expired__body">
+        <h3>2-modulga birga o‘tamizmi?</h3>
+        <p>Keyingi moduldan oldin sotuv mutaxassisi sizga mos o‘qish rejasini tanlashga yordam beradi.</p>
+        <label>Telefon raqamingiz
+          <input name="trial-phone" inputmode="tel" autocomplete="tel" value="+998 97 760 05 17">
+        </label>
+        <button class="j-trial-expired__primary" type="button" data-trial-expired-pay>To‘lov qilish</button>
+        <button class="j-trial-expired__later" type="button" data-trial-expired-close>Keyinroq</button>
+      </section>
+    </article>`;
+  screen.appendChild(trialExpired);
+  updateAssets();
+
+  function openTrialCurriculum() {
+    if (selectedDay !== 7) return;
+    trialCurriculum.hidden = false;
+    trialCurriculum.scrollTop = 0;
+    requestAnimationFrame(() => trialCurriculum.classList.add('is-open'));
+  }
+
+  function closeTrialCurriculum() {
+    trialCurriculum.classList.remove('is-open');
+    trialCurriculum.hidden = true;
+  }
+
+  function openTrialExpired() {
+    trialExpired.hidden = false;
+    requestAnimationFrame(() => trialExpired.classList.add('is-open'));
+    updateAssets();
+  }
+
+  function closeTrialExpired() {
+    trialExpired.classList.remove('is-open');
+    trialExpired.hidden = true;
+  }
+
+  trialCurriculum.addEventListener('click', event => {
+    if (event.target.closest('[data-trial-back]')) {
+      closeTrialCurriculum();
+      return;
+    }
+    const lessonButton = event.target.closest('[data-trial-lesson]');
+    if (!lessonButton) return;
+    if (lessonButton.dataset.trialLesson === '11') openTrialExpired();
+  });
+
+  trialExpired.addEventListener('click', event => {
+    if (event.target.closest('[data-trial-expired-close]')) {
+      closeTrialExpired();
+      return;
+    }
+    if (event.target.closest('[data-trial-expired-pay]')) {
+      closeTrialExpired();
+      closeTrialCurriculum();
+      openDay3PaymentPage();
+    }
+  });
 
   const dayPicker = document.createElement('nav');
   dayPicker.className = 'j-day-picker';
@@ -1164,6 +1288,8 @@
 
   function startSelectedDay() {
     window.__closeModuleConsultation?.();
+    closeTrialExpired();
+    closeTrialCurriculum();
     pushPermission.hidden = true;
     steps = selectedSteps();
     root.dataset.figmaStyle = String(selectedDay >= 1 && selectedDay <= 3);
@@ -1638,12 +1764,17 @@
     // 5-kun bosh sahifadan boshlanadi. Jadval faqat «Dars jadvali» yorlig'i
     // bosilganda ochilishi mumkin.
     window.__closeModuleConsultation?.();
+    closeTrialExpired();
+    closeTrialCurriculum();
     window.__closeSchedule?.();
     goHome()
       .then(() => {
         resetViewportScroll();
         if (selectedDay === 5 && params.get('consult') === '1') {
           setTimeout(() => window.__openModuleConsultation?.(), 180);
+        }
+        if (selectedDay === 7) {
+          setTimeout(openTrialCurriculum, 180);
         }
       })
       .catch(resetViewportScroll);

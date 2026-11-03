@@ -2895,3 +2895,311 @@ article[data-widget="webinar"] .wtimer__b span {
     overflow-y: auto;
   }
 }
+
+/* 7-kun: 10 ta bepul darsdan keyingi Junior uslubidagi mundarija. */
+.j-trial-curriculum {
+  position: absolute;
+  z-index: 84;
+  inset: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #18213a;
+  background: #f7f8fb;
+  font-family: var(--f, "Nunito", sans-serif);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity .22s ease, transform .28s ease;
+}
+.j-trial-curriculum[hidden] { display: none !important; }
+.j-trial-curriculum.is-open { opacity: 1; transform: none; }
+.j-trial-curriculum__header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: grid;
+  grid-template-columns: 42px 1fr 48px;
+  min-height: 78px;
+  box-sizing: border-box;
+  padding: 19px 16px 12px;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #edf0f5;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(14px);
+}
+.j-trial-curriculum__header > button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #e8ebf1;
+  border-radius: 50%;
+  color: #19233b;
+  background: #fff;
+  font: 700 22px/1 system-ui, sans-serif;
+}
+.j-trial-curriculum__header h1 { margin: 0; font: 950 18px/1.1 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__header p { margin: 4px 0 0; color: #8a93a3; font: 750 11px/1 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__header > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 4px solid #e7ecf4;
+  border-top-color: #ff562f;
+  border-radius: 50%;
+  color: #1c2745;
+  background: #fff;
+  font: 850 10px/1 var(--f, "Nunito", sans-serif);
+}
+.j-trial-curriculum__header > span b { font-size: 14px; }
+.j-trial-curriculum__tabs {
+  display: flex;
+  gap: 9px;
+  padding: 13px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: #fff;
+}
+.j-trial-curriculum__tabs::-webkit-scrollbar { display: none; }
+.j-trial-curriculum__tabs button {
+  flex: 0 0 116px;
+  min-height: 57px;
+  padding: 10px 12px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  color: #18213a;
+  background: #f2f4f8;
+  text-align: left;
+}
+.j-trial-curriculum__tabs button.is-active {
+  border-color: #ff562f;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b35, #ff4b20);
+  box-shadow: 0 7px 16px rgba(255,81,42,.22);
+}
+.j-trial-curriculum__tabs b { display: block; font: 950 14px/1 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__tabs small { display: block; margin-top: 6px; color: #8c96a8; font: 750 10px/1 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__tabs .is-active small { color: rgba(255,255,255,.82); }
+.j-trial-curriculum__main { padding: 12px 14px 28px; }
+.j-trial-curriculum__summary {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #ffd6ca;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff5f1, #fff);
+  box-shadow: 0 7px 18px rgba(37,45,68,.06);
+}
+.j-trial-curriculum__summary > span {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  background: #18c984;
+  font: 950 20px/1 system-ui, sans-serif;
+}
+.j-trial-curriculum__summary small { color: #ff552f; font: 950 8px/1 var(--f, "Nunito", sans-serif); letter-spacing: .1em; }
+.j-trial-curriculum__summary h2 { margin: 4px 0 3px; font: 950 14px/1.15 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__summary p { margin: 0; color: #818a9b; font: 700 10px/1.3 var(--f, "Nunito", sans-serif); }
+.j-trial-curriculum__list {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.j-trial-curriculum__list::before {
+  position: absolute;
+  top: 22px;
+  bottom: 22px;
+  left: 19px;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #dce2ec 0 5px, transparent 5px 10px);
+  content: '';
+}
+.j-trial-lesson {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 40px 1fr 28px;
+  min-height: 58px;
+  box-sizing: border-box;
+  padding: 8px 10px 8px 0;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #eef1f5;
+  border-radius: 15px;
+  color: #2f3d59;
+  background: #fff;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(36,45,68,.035);
+}
+.j-trial-lesson__state {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  margin-left: 7px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  background: #18c984;
+  box-shadow: 0 0 0 1px #18c984;
+  font: 950 13px/1 system-ui, sans-serif;
+}
+.j-trial-lesson__copy small { display: block; color: #7d8799; font: 750 9px/1 var(--f, "Nunito", sans-serif); }
+.j-trial-lesson__copy b { display: block; margin-top: 5px; color: #33405c; font: 900 12px/1.15 var(--f, "Nunito", sans-serif); }
+.j-trial-lesson__type {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  color: #16b978;
+  background: #eafaf4;
+  font: 12px/1 system-ui, sans-serif;
+}
+.j-trial-lesson.is-locked {
+  border: 1.5px solid #ff5a34;
+  background: linear-gradient(135deg, #fff0ea, #fff8f5);
+  box-shadow: 0 8px 20px rgba(255,83,42,.12);
+}
+.j-trial-lesson.is-locked .j-trial-lesson__state {
+  color: #ff552f;
+  background: #fff;
+  box-shadow: 0 0 0 1px #ff552f;
+  font-size: 12px;
+}
+.j-trial-lesson.is-locked .j-trial-lesson__copy small,
+.j-trial-lesson.is-locked .j-trial-lesson__copy b { color: #ff552f; }
+.j-trial-lesson.is-locked .j-trial-lesson__type { color: #ff552f; background: #fff; }
+
+.j-trial-expired {
+  position: absolute;
+  z-index: 96;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  padding: 18px;
+  font-family: var(--f, "Nunito", sans-serif);
+}
+.j-trial-expired[hidden] { display: none !important; }
+.j-trial-expired__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(15,23,43,.72);
+  backdrop-filter: blur(7px);
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+.j-trial-expired.is-open .j-trial-expired__scrim { opacity: 1; }
+.j-trial-expired__card {
+  position: relative;
+  width: min(100%, 340px);
+  max-height: calc(100% - 8px);
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.92);
+  border-radius: 24px;
+  color: #18213a;
+  background: #fff;
+  box-shadow: 0 28px 70px rgba(8,14,30,.35);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px) scale(.96);
+  transition: opacity .24s ease, transform .34s cubic-bezier(.18,.82,.24,1.06);
+}
+.j-trial-expired.is-open .j-trial-expired__card { opacity: 1; transform: none; }
+.j-trial-expired__hero {
+  position: relative;
+  height: 272px;
+  box-sizing: border-box;
+  padding: 34px 16px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(208,239,255,.9), transparent 45%),
+    radial-gradient(circle at 86% 22%, rgba(255,252,209,.92), transparent 44%),
+    #f8fbf7;
+}
+.j-trial-expired__hero h2 { margin: 0; color: #000; font: 950 29px/1.08 var(--f, "Nunito", sans-serif); letter-spacing: -.6px; }
+.j-trial-expired__hero p { margin: 12px 0 0; color: #8d8d8d; font: 750 17px/1.15 var(--f, "Nunito", sans-serif); }
+.j-trial-expired__hero img {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: -38px;
+  width: 230px;
+  height: 230px;
+  object-fit: contain;
+  transform: translateX(-50%) scale(1.15);
+  filter: drop-shadow(0 11px 14px rgba(25,33,50,.15));
+}
+.j-trial-expired__hero i,
+.j-trial-expired__hero::before,
+.j-trial-expired__hero::after {
+  position: absolute;
+  z-index: 3;
+  bottom: -25px;
+  width: 160px;
+  height: 83px;
+  border-radius: 55% 55% 0 0;
+  background: #fff;
+  content: '';
+}
+.j-trial-expired__hero::before { left: -44px; transform: rotate(8deg); }
+.j-trial-expired__hero::after { right: -44px; transform: rotate(-8deg); }
+.j-trial-expired__hero i { left: 50%; width: 190px; transform: translateX(-50%); }
+.j-trial-expired__body { position: relative; z-index: 4; padding: 18px 18px 16px; background: #fff; }
+.j-trial-expired__body h3 { margin: 0; color: #000; font: 950 21px/1.15 var(--f, "Nunito", sans-serif); letter-spacing: -.35px; }
+.j-trial-expired__body > p { margin: 10px auto 18px; max-width: 285px; color: #999; font: 700 13px/1.38 var(--f, "Nunito", sans-serif); }
+.j-trial-expired__body label { display: block; margin-bottom: 16px; color: #999; text-align: left; font: 750 13px/1 var(--f, "Nunito", sans-serif); }
+.j-trial-expired__body input {
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  outline: 0;
+  color: #111;
+  background: #f7f7f8;
+  font: 850 16px/1 var(--f, "Nunito", sans-serif);
+}
+.j-trial-expired__primary,
+.j-trial-expired__later {
+  width: 100%;
+  min-height: 49px;
+  border: 0;
+  border-radius: 14px;
+  font: 950 14px/1 var(--f, "Nunito", sans-serif);
+}
+.j-trial-expired__primary {
+  color: #fff;
+  background: linear-gradient(135deg, #ff6743, #ff471f);
+  box-shadow: 0 11px 24px rgba(255,78,35,.24);
+}
+.j-trial-expired__later { margin-top: 8px; color: #7d8798; background: #f1f3f6; }
+
+@media (max-height: 720px) {
+  .j-trial-curriculum__header { min-height: 68px; padding-top: 11px; }
+  .j-trial-curriculum__tabs { padding-top: 9px; padding-bottom: 9px; }
+  .j-trial-curriculum__tabs button { min-height: 50px; }
+  .j-trial-lesson { min-height: 53px; }
+  .j-trial-expired__hero { height: 232px; padding-top: 24px; }
+  .j-trial-expired__hero h2 { font-size: 25px; }
+  .j-trial-expired__hero p { margin-top: 8px; font-size: 15px; }
+  .j-trial-expired__hero img { width: 198px; height: 198px; }
+  .j-trial-expired__body { padding-top: 13px; }
+  .j-trial-expired__body > p { margin-bottom: 12px; }
+  .j-trial-expired__body label { margin-bottom: 12px; }
+  .j-trial-expired__body input { height: 46px; }
+}
