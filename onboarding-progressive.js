@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v19-sales-call-modal';
+  const VERSION = 'v20-payment-and-sales-call';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -467,7 +467,8 @@
       <section class="j-trial-expired__body">
         <h3>2-modulga birga o‘tamizmi?</h3>
         <p>Keyingi moduldan oldin sotuv mutaxassisi sizga mos o‘qish rejasini tanlashga yordam beradi.</p>
-        <a class="j-trial-expired__primary" href="tel:+998977600517" data-trial-expired-call aria-label="Sotuv bo‘limiga qo‘ng‘iroq qilish">Men bilan bog‘laning</a>
+        <button class="j-trial-expired__primary" type="button" data-trial-expired-pay>To‘lov qilish</button>
+        <a class="j-trial-expired__call" href="tel:+998977600517" data-trial-expired-call aria-label="Sotuv bo‘limiga qo‘ng‘iroq qilish">Men bilan bog‘laning</a>
         <button class="j-trial-expired__later" type="button" data-trial-expired-close>Keyinroq</button>
       </section>
     </article>`;
@@ -510,6 +511,12 @@
   trialExpired.addEventListener('click', event => {
     if (event.target.closest('[data-trial-expired-close]')) {
       closeTrialExpired();
+      return;
+    }
+    if (event.target.closest('[data-trial-expired-pay]')) {
+      closeTrialExpired();
+      closeTrialCurriculum();
+      openDay3PaymentPage();
       return;
     }
     if (event.target.closest('[data-trial-expired-call]')) {
