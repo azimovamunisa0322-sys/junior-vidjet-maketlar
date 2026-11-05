@@ -559,18 +559,18 @@
       <div class="j-first-payment-widget__glow" aria-hidden="true"></div>
       <header class="j-first-payment-widget__head">
         <span class="j-first-payment-widget__icon" aria-hidden="true">💳</span>
-        <span class="j-first-payment-widget__badge">📌 BIRINCHI TO‘LOVGACHA</span>
+        <span class="j-first-payment-widget__badge">📌 BIRINCHI TO‘LOV</span>
       </header>
       <div class="j-first-payment-widget__copy">
-        <h3>To‘lovni hoziroq amalga oshiring</h3>
-        <p>Bepul muddat tugashini kutmang. Raxmat orqali to‘lash yoki sotuv bo‘limiga bog‘lanish mumkin.</p>
+        <h3>O‘qishni davom ettiramizmi?</h3>
+        <p>Birinchi to‘lovni Raxmat orqali amalga oshiring yoki sotuv bo‘limiga qo‘ng‘iroq qiling.</p>
       </div>
       <a class="j-first-payment-widget__phone" href="tel:+998977600517" data-first-payment-call>
         <span>☎</span><b>+998 97 760 05 17</b>
       </a>
       <footer class="j-first-payment-widget__actions">
-        <button type="button" data-first-payment-pay><span>⚡</span> To‘lov qilish</button>
-        <a href="tel:+998977600517" data-first-payment-call>Sotuv bo‘limi</a>
+        <button type="button" data-first-payment-pay><span>⚡</span> Raxmat orqali</button>
+        <a href="tel:+998977600517" data-first-payment-call>Qo‘ng‘iroq qilish</a>
       </footer>`;
     return widget;
   }
