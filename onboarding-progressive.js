@@ -9,7 +9,7 @@
   const content = document.querySelector('.content');
   if (!screen || !content) return;
 
-  const VERSION = 'v20-payment-and-sales-call';
+  const VERSION = 'v21-first-payment-widget';
   const userId = String(window.JUNIOR_USER_ID || 'demo-user');
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
@@ -525,6 +525,121 @@
       }));
     }
   });
+
+  /* Birinchi to'lovgacha bosh karuselning doimiy birinchi kartasi.
+   * Raxmat sahifasini ochish kartani yashirmaydi: u faqat backend to'lovni
+   * tasdiqlab `junior:first-payment-completed` hodisasini yuborganda yo'qoladi.
+   */
+  const firstPaymentStorageKey = `junior:first-payment:${userId}:completed`;
+  let syncingFirstPaymentWidget = false;
+
+  function isFirstPaymentCompleted() {
+    if (params.get('first_payment') === '0') return false;
+    if (params.get('first_payment') === '1' || window.JUNIOR_FIRST_PAYMENT_DONE === true) return true;
+    try { return localStorage.getItem(firstPaymentStorageKey) === '1'; } catch (_) { return false; }
+  }
+
+  function rebuildCarouselDots(track) {
+    const dotList = document.querySelector('#dots');
+    if (!dotList) return;
+    dotList.replaceChildren(...Array.from(track.children, (_, index) => {
+      const dot = document.createElement('i');
+      dot.className = `dot${index === 0 ? ' is-active' : ''}`;
+      return dot;
+    }));
+  }
+
+  function createFirstPaymentWidget() {
+    const widget = document.createElement('article');
+    widget.className = 'wcard j-first-payment-widget';
+    widget.dataset.widget = 'first-payment-priority';
+    widget.dataset.state = 'priority';
+    widget.dataset.label = 'Birinchi to‘lovgacha doim birinchi';
+    widget.innerHTML = `
+      <div class="j-first-payment-widget__glow" aria-hidden="true"></div>
+      <header class="j-first-payment-widget__head">
+        <span class="j-first-payment-widget__icon" aria-hidden="true">💳</span>
+        <span class="j-first-payment-widget__badge">📌 BIRINCHI TO‘LOVGACHA</span>
+      </header>
+      <div class="j-first-payment-widget__copy">
+        <h3>To‘lovni hoziroq amalga oshiring</h3>
+        <p>Bepul muddat tugashini kutmang. Raxmat orqali to‘lash yoki sotuv bo‘limiga bog‘lanish mumkin.</p>
+      </div>
+      <a class="j-first-payment-widget__phone" href="tel:+998977600517" data-first-payment-call>
+        <span>☎</span><b>+998 97 760 05 17</b>
+      </a>
+      <footer class="j-first-payment-widget__actions">
+        <button type="button" data-first-payment-pay><span>⚡</span> To‘lov qilish</button>
+        <a href="tel:+998977600517" data-first-payment-call>Sotuv bo‘limi</a>
+      </footer>`;
+    return widget;
+  }
+
+  function syncFirstPaymentWidget({ resetPosition = false } = {}) {
+    if (syncingFirstPaymentWidget) return;
+    const track = document.querySelector('#track');
+    if (!track || !track.children.length) return;
+    syncingFirstPaymentWidget = true;
+    const existing = track.querySelector('.j-first-payment-widget');
+    const completed = isFirstPaymentCompleted();
+    let changed = false;
+
+    if (completed && existing) {
+      existing.remove();
+      changed = true;
+    } else if (!completed && !existing) {
+      track.prepend(createFirstPaymentWidget());
+      changed = true;
+    } else if (!completed && existing !== track.firstElementChild) {
+      track.prepend(existing);
+      changed = true;
+    }
+
+    if (changed) rebuildCarouselDots(track);
+    if (!completed && (changed || resetPosition)) {
+      track.scrollLeft = 0;
+      track.dispatchEvent(new Event('scroll'));
+    }
+    syncingFirstPaymentWidget = false;
+  }
+
+  function markFirstPaymentCompleted(completed = true) {
+    try {
+      if (completed) localStorage.setItem(firstPaymentStorageKey, '1');
+      else localStorage.removeItem(firstPaymentStorageKey);
+    } catch (_) {}
+    syncFirstPaymentWidget({ resetPosition: !completed });
+  }
+
+  document.addEventListener('click', event => {
+    if (event.target.closest('[data-first-payment-pay]')) {
+      event.preventDefault();
+      event.stopPropagation();
+      window.dispatchEvent(new CustomEvent('junior:first-payment-action', {
+        detail: { source: 'priority-widget', action: 'payment' }
+      }));
+      openDay3PaymentPage();
+      return;
+    }
+    if (event.target.closest('[data-first-payment-call]')) {
+      window.dispatchEvent(new CustomEvent('junior:first-payment-action', {
+        detail: { source: 'priority-widget', action: 'sales-call', phone: '+998977600517' }
+      }));
+    }
+  });
+
+  window.addEventListener('junior:first-payment-completed', event => {
+    markFirstPaymentCompleted(event.detail?.completed !== false);
+  });
+
+  const firstPaymentTrack = document.querySelector('#track');
+  if (firstPaymentTrack) {
+    const firstPaymentObserver = new MutationObserver(() => {
+      if (!syncingFirstPaymentWidget) syncFirstPaymentWidget();
+    });
+    firstPaymentObserver.observe(firstPaymentTrack, { childList: true });
+    syncFirstPaymentWidget({ resetPosition: true });
+  }
 
   const dayPicker = document.createElement('nav');
   dayPicker.className = 'j-day-picker';
@@ -2397,6 +2512,8 @@
     close: closeTour,
     selectDay,
     showPushPermission,
+    setFirstPaymentCompleted: markFirstPaymentCompleted,
+    syncFirstPaymentWidget,
     get day() { return selectedDay; },
     get storageKey() { return storageKey; }
   };

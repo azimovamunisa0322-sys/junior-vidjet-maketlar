@@ -1,6 +1,6 @@
 # Junior platformasi — to‘liq onboarding jarayoni
 
-Versiya: `2026-11-03`
+Versiya: `2026-11-05`
 Qamrov: `1, 2, 3, 5 va 7-kun`
 Holat: vizual prototip va biznes-logika tavsifi
 
@@ -36,7 +36,8 @@ flowchart TD
     K -->|Keyinroq| M[Bosh sahifa]
     L --> N[5-kun: platforma imkoniyatlari]
     M --> N
-    N --> O[1-modul yakunlandi]
+    N --> N1[Birinchi to‘lov vidjeti doim birinchi]
+    N1 --> O[1-modul yakunlandi]
     O --> P[7-kun: 10 ta bepul dars yakunlandi]
     P --> Q[11-dars bosiladi]
     Q --> R[To‘lov modalkasi]
@@ -62,7 +63,18 @@ O‘quvchi push xabarlarga hali javob bermagan bo‘lsa, onboarding boshlanishid
 - Har bir kun alohida ochiladi.
 - Bir kunni test qilish uchun oldingi kunlarni qayta o‘tish shart emas.
 - Kun holati `user_id + onboarding versiyasi + kun` bo‘yicha saqlanadi.
-- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v20-payment-and-sales-call:day-<kun>`.
+- Prototipdagi storage kaliti: `junior:onboarding:<user_id>:v21-first-payment-widget:day-<kun>`.
+
+### 3.4. Birinchi to‘lov vidjeti
+
+O‘quvchi birinchi to‘lovini amalga oshirmaguncha bosh sahifa karuselining birinchi o‘rnida doimiy to‘lov vidjeti ko‘rsatiladi.
+
+- Vidjet boshqa kartalardan oldin turadi va karusel qayta yuklanganda ham birinchi o‘ringa qaytadi.
+- `To‘lov qilish` tugmasi Raxmat to‘lov jarayonini ochadi.
+- `Sotuv bo‘limi` tugmasi va `+998 97 760 05 17` raqami telefon qo‘ng‘irog‘ini boshlaydi.
+- Faqat to‘lov sahifasini ochish vidjetni yashirmaydi.
+- Backend birinchi to‘lov tasdiqlanganida `junior:first-payment-completed` hodisasi yuboradi; shundan keyin vidjet karuseldan olib tashlanadi.
+- QA uchun `?first_payment=0` vidjetni majburan ko‘rsatadi, `?first_payment=1` esa to‘lov qilingan holatni ko‘rsatadi.
 
 ### 3.3. Darsning umumiy tuzilishi
 
