@@ -3215,7 +3215,7 @@ article[data-widget="webinar"] .wtimer__b span {
   color: var(--c-text, #1c274c);
   font: var(--t-title, 600 17px/21px var(--f));
 }
-.j-first-payment-widget__message {
+.j-first-payment-widget .j-first-payment-widget__message {
   position: relative;
   display: flex;
   min-height: 58px;
@@ -3227,7 +3227,7 @@ article[data-widget="webinar"] .wtimer__b span {
   color: var(--c-text, #1c274c);
   background: var(--c-row, #f6f7f9);
 }
-.j-first-payment-widget__message::before {
+.j-first-payment-widget .j-first-payment-widget__message::before {
   position: absolute;
   left: 0;
   top: 0;
@@ -3236,7 +3236,7 @@ article[data-widget="webinar"] .wtimer__b span {
   background: var(--c-brand, #ff5a36);
   content: '';
 }
-.j-first-payment-widget__message strong { font: 800 18px/1.2 var(--f, "Nunito", sans-serif); letter-spacing: -.2px; }
+.j-first-payment-widget .j-first-payment-widget__message strong { font: 800 18px/1.2 var(--f, "Nunito", sans-serif); letter-spacing: -.2px; }
 .j-first-payment-widget__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
 .j-first-payment-widget__actions button,
 .j-first-payment-widget__actions a {
