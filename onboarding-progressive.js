@@ -556,21 +556,17 @@
     widget.dataset.state = 'priority';
     widget.dataset.label = 'Birinchi to‘lovgacha doim birinchi';
     widget.innerHTML = `
-      <div class="j-first-payment-widget__glow" aria-hidden="true"></div>
       <header class="j-first-payment-widget__head">
         <span class="j-first-payment-widget__icon" aria-hidden="true">💳</span>
-        <span class="j-first-payment-widget__badge">📌 BIRINCHI TO‘LOV</span>
+        <h3>Birinchi to‘lov</h3>
       </header>
-      <div class="j-first-payment-widget__copy">
-        <h3>O‘qishni davom ettiramizmi?</h3>
-        <p>Birinchi to‘lovni Raxmat orqali amalga oshiring yoki sotuv bo‘limiga qo‘ng‘iroq qiling.</p>
+      <div class="j-first-payment-widget__message">
+        <strong>O‘qishni davom ettiramizmi?</strong>
       </div>
-      <a class="j-first-payment-widget__phone" href="tel:+998977600517" data-first-payment-call>
-        <span>☎</span><b>+998 97 760 05 17</b>
-      </a>
       <footer class="j-first-payment-widget__actions">
-        <button type="button" data-first-payment-pay><span>⚡</span> Raxmat orqali</button>
-        <a href="tel:+998977600517" data-first-payment-call>Qo‘ng‘iroq qilish</a>
+        <button type="button" data-first-payment-pay>Onlayn to‘lov</button>
+        <button type="button" data-first-payment-consult>Konsultatsiyaga yozilish</button>
+        <a href="tel:+998977600517" data-first-payment-call aria-label="Sotuv bo‘limiga qo‘ng‘iroq qilish">☎ +998 97 760 05 17</a>
       </footer>`;
     return widget;
   }
@@ -619,6 +615,17 @@
         detail: { source: 'priority-widget', action: 'payment' }
       }));
       openDay3PaymentPage();
+      return;
+    }
+    const consultation = event.target.closest('[data-first-payment-consult]');
+    if (consultation) {
+      event.preventDefault();
+      event.stopPropagation();
+      const widget = consultation.closest('.j-first-payment-widget');
+      widget?.classList.add('is-consultation-open');
+      window.dispatchEvent(new CustomEvent('junior:first-payment-action', {
+        detail: { source: 'priority-widget', action: 'consultation' }
+      }));
       return;
     }
     if (event.target.closest('[data-first-payment-call]')) {

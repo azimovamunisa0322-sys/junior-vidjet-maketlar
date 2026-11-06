@@ -70,8 +70,8 @@ O‘quvchi push xabarlarga hali javob bermagan bo‘lsa, onboarding boshlanishid
 O‘quvchi birinchi to‘lovini amalga oshirmaguncha bosh sahifa karuselining birinchi o‘rnida doimiy to‘lov vidjeti ko‘rsatiladi.
 
 - Vidjet boshqa kartalardan oldin turadi va karusel qayta yuklanganda ham birinchi o‘ringa qaytadi.
-- `To‘lov qilish` tugmasi Raxmat to‘lov jarayonini ochadi.
-- `Sotuv bo‘limi` tugmasi va `+998 97 760 05 17` raqami telefon qo‘ng‘irog‘ini boshlaydi.
+- `Onlayn to‘lov` tugmasi to‘lov jarayonini ochadi.
+- Telefon raqami dastlab ko‘rinmaydi. `Konsultatsiyaga yozilish` bosilganda `+998 97 760 05 17` raqami ochiladi; raqam bosilganda sotuv bo‘limiga qo‘ng‘iroq boshlanadi.
 - Faqat to‘lov sahifasini ochish vidjetni yashirmaydi.
 - Backend birinchi to‘lov tasdiqlanganida `junior:first-payment-completed` hodisasi yuboradi; shundan keyin vidjet karuseldan olib tashlanadi.
 - QA uchun `?first_payment=0` vidjetni majburan ko‘rsatadi, `?first_payment=1` esa to‘lov qilingan holatni ko‘rsatadi.
