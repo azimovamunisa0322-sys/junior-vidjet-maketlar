@@ -648,6 +648,85 @@
     syncFirstPaymentWidget({ resetPosition: true });
   }
 
+  /* 5-kun: yangi o‘quvchiga birinchi kurs darhol ochiq, keyingi ikki
+   * kurs esa sovg‘a sifatida beriladi. Sovg‘a faqat shu sessiyada
+   * ochiladi — sahifa yangilansa test holati boshidan ko‘rinadi. */
+  function restoreGiftCourse(row) {
+    const card = row?.querySelector('.mk__card');
+    row?.querySelector('.j-course-gift')?.remove();
+    row?.classList.remove('j-course-gift-row', 'is-gift-opening', 'is-gift-opened');
+    if (!card) return;
+    card.disabled = card.dataset.giftWasDisabled === '1';
+    card.removeAttribute('aria-hidden');
+    if (card.dataset.giftTabindex === '') card.removeAttribute('tabindex');
+    else if (card.dataset.giftTabindex != null) card.setAttribute('tabindex', card.dataset.giftTabindex);
+    delete card.dataset.giftWasDisabled;
+    delete card.dataset.giftTabindex;
+  }
+
+  function openGiftCourse(row) {
+    if (!row || row.classList.contains('is-gift-opening')) return;
+    const gift = row.querySelector('.j-course-gift');
+    const card = row.querySelector('.mk__card');
+    if (!gift || !card) return;
+    row.classList.add('is-gift-opening');
+    gift.setAttribute('aria-label', 'Sovg‘a ochilmoqda');
+    unlockAudioAndPlay('chest');
+    setTimeout(() => {
+      row.classList.add('is-gift-opened');
+      card.disabled = card.dataset.giftWasDisabled === '1';
+      card.removeAttribute('aria-hidden');
+      if (card.dataset.giftTabindex === '') card.removeAttribute('tabindex');
+      else card.setAttribute('tabindex', card.dataset.giftTabindex || '0');
+      setTimeout(() => {
+        gift.remove();
+        row.classList.remove('j-course-gift-row', 'is-gift-opening');
+        card.focus({ preventScroll: true });
+      }, 420);
+    }, 720);
+  }
+
+  function createGiftCourse(row, index) {
+    const card = row.querySelector('.mk__card');
+    if (!card || row.querySelector('.j-course-gift')) return;
+    row.classList.add('j-course-gift-row');
+    card.dataset.giftWasDisabled = card.disabled ? '1' : '0';
+    card.dataset.giftTabindex = card.getAttribute('tabindex') || '';
+    card.disabled = true;
+    card.setAttribute('aria-hidden', 'true');
+    card.setAttribute('tabindex', '-1');
+
+    const gift = document.createElement('button');
+    gift.type = 'button';
+    gift.className = `j-course-gift j-course-gift--${index}`;
+    gift.setAttribute('aria-label', `${index}-kurs sovg‘asini ochish`);
+    gift.innerHTML = `
+      <span class="j-course-gift__glow" aria-hidden="true"></span>
+      <span class="j-course-gift__ribbon-v" aria-hidden="true"></span>
+      <span class="j-course-gift__ribbon-h" aria-hidden="true"></span>
+      <span class="j-course-gift__bow" aria-hidden="true"><i></i><i></i><b></b></span>
+      <span class="j-course-gift__spark j-course-gift__spark--one" aria-hidden="true">✦</span>
+      <span class="j-course-gift__spark j-course-gift__spark--two" aria-hidden="true">✦</span>
+      <span class="j-course-gift__copy"><b>Siz uchun sovg‘a</b><small>Ochish uchun bosing</small></span>`;
+    gift.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openGiftCourse(row);
+    });
+    row.appendChild(gift);
+  }
+
+  function syncGiftCourses() {
+    const rows = [...document.querySelectorAll('.mk__list > .mk__row')].slice(0, 3);
+    rows.forEach((row, index) => {
+      if (selectedDay !== 5 || index === 0) {
+        if (row.classList.contains('j-course-gift-row') || row.querySelector('.j-course-gift')) restoreGiftCourse(row);
+        return;
+      }
+      createGiftCourse(row, index + 1);
+    });
+  }
+
   const dayPicker = document.createElement('nav');
   dayPicker.className = 'j-day-picker';
   dayPicker.hidden = !qaDays;
@@ -1422,6 +1501,7 @@
     root.dataset.tourDay = String(selectedDay);
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
+    syncGiftCourses();
     if (selectedDay === 5 || selectedDay === 7) {
       showPlainApp();
       return;
@@ -1896,6 +1976,7 @@
     goHome()
       .then(() => {
         resetViewportScroll();
+        syncGiftCourses();
         if (selectedDay === 5 && params.get('consult') === '1') {
           setTimeout(() => window.__openModuleConsultation?.(), 180);
         }
@@ -2521,6 +2602,7 @@
     showPushPermission,
     setFirstPaymentCompleted: markFirstPaymentCompleted,
     syncFirstPaymentWidget,
+    syncGiftCourses,
     get day() { return selectedDay; },
     get storageKey() { return storageKey; }
   };

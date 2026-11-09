@@ -3274,6 +3274,146 @@ article[data-widget="webinar"] .wtimer__b span {
 .j-first-payment-widget__actions button:active,
 .j-first-payment-widget__actions a:active { transform: translateY(1px); }
 
+/* 5-kun — keyingi kurslar sovg‘a sifatida ochiladi. */
+.mk__row.j-course-gift-row { isolation: isolate; }
+.mk__row.j-course-gift-row .mk__card {
+  opacity: .28;
+  transform: scale(.965);
+  filter: saturate(.65);
+  transition: opacity .42s ease, transform .5s cubic-bezier(.2,.8,.2,1), filter .42s ease;
+}
+.j-course-gift {
+  position: absolute;
+  z-index: 4;
+  inset: 0 0 0 38px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 108px;
+  align-items: center;
+  min-width: 0;
+  padding: 14px 22px 14px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 90, 54, .18);
+  border-radius: 14px;
+  color: #1c274c;
+  background:
+    radial-gradient(circle at 84% 12%, rgba(255,255,255,.95) 0 5px, transparent 6px),
+    linear-gradient(135deg, #fff8f3 0%, #fff0e7 52%, #f5efff 100%);
+  box-shadow: 0 10px 26px rgba(28, 39, 76, .12), inset 0 0 0 1px rgba(255,255,255,.7);
+  font-family: var(--f, "Nunito", sans-serif);
+  text-align: left;
+  cursor: pointer;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.j-course-gift::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,.72) 43%, transparent 64%);
+  content: '';
+  transform: translateX(-120%);
+  animation: j-gift-shine 2.8s ease-in-out infinite 1s;
+}
+.j-course-gift__glow {
+  position: absolute;
+  right: 18px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,190,74,.3), transparent 68%);
+}
+.j-course-gift__copy { position: relative; z-index: 3; display: grid; gap: 3px; min-width: 0; }
+.j-course-gift__copy b { font: 900 18px/1.1 var(--f, "Nunito", sans-serif); letter-spacing: -.3px; }
+.j-course-gift__copy small { color: #788398; font: 700 12px/1.2 var(--f, "Nunito", sans-serif); }
+.j-course-gift__ribbon-v {
+  position: absolute;
+  z-index: 2;
+  right: 43px;
+  top: -10px;
+  bottom: -10px;
+  width: 30px;
+  background: linear-gradient(90deg, #e73f27, #ff6748 45%, #ff4b2d);
+  box-shadow: 0 0 0 1px rgba(199,48,25,.08), 0 5px 13px rgba(231,63,39,.2);
+}
+.j-course-gift__ribbon-h {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 42px;
+  width: 116px;
+  height: 25px;
+  background: linear-gradient(#ff694b, #f0442b);
+  box-shadow: 0 5px 12px rgba(231,63,39,.16);
+}
+.j-course-gift__bow {
+  position: absolute;
+  z-index: 5;
+  right: 46px;
+  top: 45px;
+  width: 24px;
+  height: 20px;
+  transform: translate(50%, -50%);
+}
+.j-course-gift__bow i {
+  position: absolute;
+  top: -4px;
+  width: 29px;
+  height: 24px;
+  border: 4px solid #ff5639;
+  background: #fff3ec;
+  box-shadow: 0 4px 9px rgba(231,63,39,.18);
+}
+.j-course-gift__bow i:first-child { right: 11px; border-radius: 70% 45% 55% 35%; transform: rotate(17deg); }
+.j-course-gift__bow i:nth-child(2) { left: 11px; border-radius: 45% 70% 35% 55%; transform: rotate(-17deg); }
+.j-course-gift__bow b {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #ff5a36;
+  box-shadow: 0 3px 6px rgba(180,49,27,.24);
+  transform: translate(-50%, -50%);
+}
+.j-course-gift__spark { position: absolute; z-index: 4; color: #ffbd2e; line-height: 1; filter: drop-shadow(0 2px 3px rgba(255,173,0,.25)); }
+.j-course-gift__spark--one { right: 94px; top: 12px; font-size: 16px; }
+.j-course-gift__spark--two { right: 16px; bottom: 10px; font-size: 11px; }
+.j-course-gift:active { transform: scale(.985); }
+.mk__row.is-gift-opening .j-course-gift {
+  pointer-events: none;
+  animation: j-gift-open-card 1.12s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.mk__row.is-gift-opening .j-course-gift__ribbon-v { animation: j-gift-ribbon-v .72s cubic-bezier(.55,0,.25,1) forwards; }
+.mk__row.is-gift-opening .j-course-gift__ribbon-h { animation: j-gift-ribbon-h .72s cubic-bezier(.55,0,.25,1) forwards; }
+.mk__row.is-gift-opening .j-course-gift__bow { animation: j-gift-bow .72s cubic-bezier(.2,.85,.25,1) forwards; }
+.mk__row.is-gift-opening .j-course-gift__copy { animation: j-gift-copy .42s ease forwards; }
+.mk__row.is-gift-opened .mk__card { opacity: 1; transform: scale(1); filter: none; }
+
+@keyframes j-gift-shine { 0%,56% { transform:translateX(-120%); } 84%,100% { transform:translateX(120%); } }
+@keyframes j-gift-ribbon-v { 0% { transform:scaleY(1); } 55% { transform:scaleY(.15); opacity:1; } 100% { transform:translateY(-90px) scaleY(.1); opacity:0; } }
+@keyframes j-gift-ribbon-h { 0% { transform:scaleX(1); } 55% { transform:scaleX(.15); opacity:1; } 100% { transform:translateX(120px) scaleX(.1); opacity:0; } }
+@keyframes j-gift-bow { 0% { transform:translate(50%,-50%) scale(1) rotate(0); } 45% { transform:translate(50%,-68%) scale(1.18) rotate(-8deg); } 100% { transform:translate(90%,-135%) scale(.3) rotate(28deg); opacity:0; } }
+@keyframes j-gift-copy { to { transform:translateY(-8px); opacity:0; } }
+@keyframes j-gift-open-card { 0%,55% { opacity:1; transform:scale(1); } 72% { opacity:1; transform:scale(1.025); } 100% { opacity:0; transform:translateY(-12px) scale(.94); } }
+
+@media (max-width: 390px) {
+  .j-course-gift { grid-template-columns:minmax(0,1fr) 92px; padding-left:16px; }
+  .j-course-gift__copy b { font-size:16px; }
+  .j-course-gift__ribbon-v { right:36px; }
+  .j-course-gift__ribbon-h { width:102px; }
+  .j-course-gift__bow { right:39px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .j-course-gift::before { animation:none; }
+  .mk__row.is-gift-opening .j-course-gift { animation:j-gift-open-card .25s ease forwards; }
+  .mk__row.is-gift-opening .j-course-gift__ribbon-v,
+  .mk__row.is-gift-opening .j-course-gift__ribbon-h,
+  .mk__row.is-gift-opening .j-course-gift__bow,
+  .mk__row.is-gift-opening .j-course-gift__copy { animation-duration:.18s; }
+}
+
 @media (max-height: 720px) {
   .j-trial-curriculum__header { min-height: 68px; padding-top: 11px; }
   .j-trial-curriculum__tabs { padding-top: 9px; padding-bottom: 9px; }
