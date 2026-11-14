@@ -14,8 +14,8 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  // Hozir onboarding testida faqat birinchi kun qoladi.
-  const availableDays = new Set([1]);
+  // 1-kun onboarding bilan, 2-kun esa odatiy ilova holatida ko‘rsatiladi.
+  const availableDays = new Set([1, 2]);
   const normalizeDay = value => {
     const day = Number(value) || 1;
     return availableDays.has(day) ? day : 1;
@@ -735,6 +735,7 @@
   dayPicker.innerHTML = `
     <span>TEST</span>
     <button type="button" data-tour-day="1">1-kun</button>
+    <button type="button" data-tour-day="2">2-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
   // tashqarida ushlaymiz, shunda platforma headeri bilan ustma-ust tushmaydi.
@@ -1499,7 +1500,7 @@
     storageKey = `junior:onboarding:${userId}:${VERSION}:day-${selectedDay}`;
     updateDayPicker();
     syncGiftCourses();
-    if (selectedDay === 5 || selectedDay === 7) {
+    if (selectedDay === 2 || selectedDay === 5 || selectedDay === 7) {
       showPlainApp();
       return;
     }
@@ -1911,7 +1912,7 @@
   function startTour() {
     awaitingCoinShopReturn = false;
     steps = selectedSteps();
-    if (selectedDay === 5 || selectedDay === 7) {
+    if (selectedDay === 2 || selectedDay === 5 || selectedDay === 7) {
       showPlainApp();
       return;
     }
@@ -1943,7 +1944,7 @@
     }
   }
 
-  // 5 va 7-kun QA holati: ilovaning o‘zi, onboarding qatlamlarisiz.
+  // 2-, 5- va 7-kun QA holati: ilovaning o‘zi, onboarding qatlamlarisiz.
   function showPlainApp() {
     awaitingCoinShopReturn = false;
     runToken += 1;
@@ -2606,7 +2607,7 @@
   updateAssets();
   updateDayPicker();
   const forcePreview = params.get('onboarding') === '1';
-  if (selectedDay === 5 || selectedDay === 7) {
+  if (selectedDay === 2 || selectedDay === 5 || selectedDay === 7) {
     showPlainApp();
   } else if (forcePreview || !safeGet()) {
     if (forcePushPrompt || !getPushPreference()) showPushPermission();
