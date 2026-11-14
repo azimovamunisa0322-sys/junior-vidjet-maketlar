@@ -14,7 +14,8 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  const availableDays = new Set([1, 2, 3, 5, 7]);
+  // Hozir onboarding testida faqat birinchi kun qoladi.
+  const availableDays = new Set([1]);
   const normalizeDay = value => {
     const day = Number(value) || 1;
     return availableDays.has(day) ? day : 1;
@@ -734,10 +735,6 @@
   dayPicker.innerHTML = `
     <span>TEST</span>
     <button type="button" data-tour-day="1">1-kun</button>
-    <button type="button" data-tour-day="2">2-kun</button>
-    <button type="button" data-tour-day="3">3-kun</button>
-    <button type="button" data-tour-day="5">5-kun</button>
-    <button type="button" data-tour-day="7">7-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
   // tashqarida ushlaymiz, shunda platforma headeri bilan ustma-ust tushmaydi.
