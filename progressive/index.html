@@ -1186,59 +1186,18 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 }
 /* PLAN:CSS:END */</style>
 <style>/* SCHEDULE:CSS:START */
-/* 5-kun: O'yinlar o'rniga dars jadvali. U alohida ilova ekrani kabi ochiladi. */
-.schedule { position:absolute; inset:0; z-index:46; overflow:hidden; background:#F8F9FB; color:#111; font-family:var(--f); opacity:0; transform:translate3d(18px,0,0); transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1); container-type:inline-size; }
-.schedule[hidden] { display:none!important; }
-.schedule.is-open { opacity:1; transform:translate3d(0,0,0); }
-.schedule__body { height:100%; overflow-y:auto; overscroll-behavior:contain; padding:54px 16px 38px; box-sizing:border-box; }
-.schedule__top { height:42px; display:grid; grid-template-columns:42px 1fr 42px; align-items:center; margin-bottom:20px; }
-.schedule__back { width:38px; height:38px; border:0; background:transparent; color:#151B2D; font:500 34px/1 var(--f); cursor:pointer; padding:0 0 4px; }
-.schedule__top h2 { margin:0; text-align:center; font:700 17px/22px var(--f); letter-spacing:-.2px; }
-.schedule__weekhead { display:flex; align-items:center; justify-content:space-between; margin:0 0 16px; }
-.schedule__range { display:flex; flex-direction:column; gap:4px; }
-.schedule__range b { font:700 17px/22px var(--f); }.schedule__range span { font:600 13px/18px var(--f); color:#7B8391; }
-.schedule__arrows { display:flex; gap:8px; }.schedule__arrows button { width:42px; height:42px; border:0; border-radius:50%; background:#fff; color:#77808D; font:400 34px/35px var(--f); cursor:pointer; }
-.schedule__days { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-bottom:22px; }
-.schedule__day { height:70px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:11px; background:#fff; color:#171717; font:700 15px/18px var(--f); }
-.schedule__day small { font:600 13px/16px var(--f); color:#7C838E; }.schedule__day i { width:7px; height:7px; border-radius:50%; background:#F3F4F6; }
-.schedule__day--active { box-shadow:inset 0 0 0 1.5px #FF4F28; background:#FFF6F3; }.schedule__day--active i { background:#FF5B36; }.schedule__day--active small { color:#3B3F48; }
-.schedule__intro { margin-bottom:17px; }.schedule__intro b { display:block; font:700 17px/22px var(--f); }.schedule__intro span { display:block; margin-top:5px; font:600 14px/19px var(--f); color:#737A86; }
-.schedule__grid { position:relative; min-height:640px; padding:10px 0 0 78px; border-radius:20px; background:#fff; overflow:hidden; }
-.schedule__times { position:absolute; left:0; top:10px; bottom:8px; width:78px; display:flex; flex-direction:column; justify-content:space-between; padding:7px 0; box-sizing:border-box; }
-.schedule__times span { padding-right:15px; text-align:right; font:600 13px/16px var(--f); color:#737A86; }
-.schedule__lines { position:absolute; left:94px; right:16px; top:27px; bottom:25px; display:flex; flex-direction:column; justify-content:space-between; }
-.schedule__lines i { border-top:1px dashed #C9CDD3; }
-.schedule__now { position:absolute; left:10px; right:16px; top:144px; display:flex; align-items:center; gap:7px; color:#FF5B36; }
-.schedule__now b { width:62px; height:24px; border-radius:999px; display:grid; place-items:center; background:#FF6947; color:#fff; font:700 12px/14px var(--f); }.schedule__now i { flex:1; border-top:1.5px solid #FF5B36; }
-.schedule__event { position:absolute; left:126px; right:24px; height:88px; border:0; border-radius:15px; overflow:hidden; text-align:left; cursor:pointer; color:#fff; box-shadow:0 8px 18px rgba(28,39,76,.12); }
-.schedule__event--math { top:160px; background:linear-gradient(125deg,#38BFEA,#4AA4E8); }.schedule__event--web { top:400px; background:linear-gradient(125deg,#FF7B59,#FF4F3E); }
-.schedule__event b { position:absolute; left:12px; bottom:10px; z-index:2; font:800 21px/22px var(--f); letter-spacing:-.4px; text-shadow:0 1px 2px rgba(0,0,0,.14); }.schedule__event--web b { max-width:120px; font-size:16px; line-height:15px; }
-.schedule__event span { position:absolute; left:12px; top:10px; z-index:2; padding:3px 7px; border-radius:8px; background:rgba(255,255,255,.22); font:700 10px/12px var(--f); }
-.schedule__event img { position:absolute; right:-8px; bottom:-4px; width:92px; height:92px; object-fit:contain; object-position:bottom right; filter:drop-shadow(0 4px 4px rgba(0,0,0,.15)); }
-.schedule__event:active { transform:scale(.98); }
-/* Haftalik jadval — barcha onboarding kunlarida bir xil ochiladi. */
-.schedule__board-scroll{ margin:0 -16px; padding:0 16px 22px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scrollbar-width:none; }
-.schedule__board-scroll::-webkit-scrollbar{ display:none; }
-.schedule__board{ min-width:840px; display:grid; grid-template-columns:repeat(7,120px); border:1px solid #EDF0F4; border-radius:18px; overflow:hidden; background:#fff; }
-.schedule__column{ min-height:390px; padding:13px 9px; border-right:1px solid #EDF0F4; scroll-snap-align:start; }
-.schedule__column:last-child{ border-right:0; }
-.schedule__lesson{ display:block; width:100%; margin:0 0 14px; padding:0; border:0; background:transparent; color:#161A25; text-align:left; font-family:var(--f); cursor:pointer; }
-.schedule__lesson img{ display:block; box-sizing:border-box; width:100%; height:70px; padding:3px; border-radius:12px; object-fit:contain; object-position:center; background:#FFE3D8; box-shadow:0 4px 10px rgba(28,39,76,.10); }
-.schedule__lesson b{ display:block; margin-top:8px; font:800 14px/17px var(--f); letter-spacing:-.2px; }
-.schedule__lesson small{ display:block; margin-top:5px; color:#8B919B; font:600 12px/15px var(--f); }
-.schedule__lesson--design img{ background:#F4E3CF; filter:saturate(.72) brightness(1.08); }
-.schedule__calendar-title{ margin:0 0 17px; }
-.schedule__calendar-title b{ display:block; font:800 19px/24px var(--f); }
-.schedule__calendar-title span{ display:block; margin-top:5px; color:#767E8C; font:600 13px/18px var(--f); }
-@container (min-width:720px){
-  .schedule__body{ max-width:1060px; margin:0 auto; padding:50px 34px 44px; }
-  .schedule__top{ grid-template-columns:42px 1fr 42px; }
-  .schedule__top h2{ font-size:28px; line-height:32px; }
-  .schedule__weekhead{ margin-top:30px; }
-  .schedule__range b{ font-size:23px; line-height:28px; }.schedule__range span{ font-size:15px; }
-  .schedule__day{ height:94px; font-size:16px; }.schedule__day small{ font-size:14px; }
-  .schedule__board-scroll{ margin:0; padding:0; overflow:visible; }.schedule__board{ min-width:0; grid-template-columns:repeat(7,minmax(0,1fr)); }.schedule__column{ min-height:430px; padding:16px; }.schedule__lesson img{ height:92px; }
-}
+.schedule{position:absolute;inset:0;z-index:46;overflow:hidden;background:#F8F9FB;color:#111;font-family:var(--f);opacity:0;transform:translate3d(18px,0,0);transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1);container-type:inline-size}
+.schedule[hidden],.schedule__view[hidden]{display:none!important}.schedule.is-open{opacity:1;transform:none}
+.schedule__body{height:100%;box-sizing:border-box}.schedule__view{height:100%;box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;padding:54px 16px 38px}
+.schedule__top{height:42px;display:grid;grid-template-columns:42px 1fr 42px;align-items:center;margin-bottom:24px}.schedule__back{width:38px;height:38px;border:0;background:transparent;color:#151B2D;font:500 34px/1 var(--f);cursor:pointer;padding:0 0 4px}.schedule__top h2{margin:0;text-align:center;font:700 18px/22px var(--f);letter-spacing:-.2px}
+.schedule-menu__lead{margin:8px 4px 24px}.schedule-menu__lead h3{margin:0 0 8px;font:800 28px/34px var(--f);letter-spacing:-.6px}.schedule-menu__lead p{margin:0;color:#7B8391;font:600 15px/21px var(--f)}
+.schedule-menu__cards{display:grid;gap:14px}.schedule-menu__card{position:relative;min-height:146px;padding:22px 70px 22px 22px;border:1px solid #E7EAF0;border-radius:24px;background:#fff;color:#171A23;text-align:left;font-family:var(--f);box-shadow:0 10px 30px rgba(38,48,73,.07);cursor:pointer;overflow:hidden}.schedule-menu__card:active{transform:scale(.985)}.schedule-menu__card--daily{background:linear-gradient(135deg,#FFF4EA,#FFF)}.schedule-menu__card--live{background:linear-gradient(135deg,#EEF7FF,#FFF)}.schedule-menu__icon{width:48px;height:48px;display:grid;place-items:center;margin-bottom:16px;border-radius:16px;background:#fff;font-size:27px;box-shadow:0 7px 18px rgba(38,48,73,.10)}.schedule-menu__card b{display:block;font:800 20px/25px var(--f)}.schedule-menu__card small{display:block;margin-top:6px;color:#777F8C;font:600 13px/18px var(--f)}.schedule-menu__arrow{position:absolute;right:22px;top:50%;translate:0 -50%;font:400 34px/1 var(--f);color:#A0A7B3}
+.schedule__weekhead{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}.schedule__range{display:flex;flex-direction:column;gap:4px}.schedule__range b{font:700 18px/23px var(--f)}.schedule__range span{font:600 13px/18px var(--f);color:#7B8391}.schedule__arrows{display:flex;gap:8px}.schedule__arrows button{width:42px;height:42px;border:0;border-radius:50%;background:#fff;color:#77808D;font:400 34px/35px var(--f);cursor:pointer}.schedule__arrows button:disabled{opacity:.35;cursor:default}
+.schedule__days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:25px}.schedule__day{height:72px;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:12px;background:#fff;color:#171717;font:700 15px/18px var(--f);cursor:pointer}.schedule__day small{font:600 13px/16px var(--f);color:#7C838E}.schedule__day i{width:7px;height:7px;border-radius:50%;background:#EDEFF3}.schedule__day--active{box-shadow:inset 0 0 0 1.5px #FF4F28;background:#FFF6F3}.schedule__day--active i{background:#FF5B36}.schedule__day--empty{visibility:hidden}.schedule__calendar-title{margin:0 0 17px}.schedule__calendar-title b{display:block;font:800 20px/25px var(--f)}.schedule__calendar-title span{display:block;margin-top:5px;color:#767E8C;font:600 13px/18px var(--f)}
+.schedule__board-scroll{margin:0 -16px;padding:0 16px 22px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}.schedule__board-scroll::-webkit-scrollbar{display:none}.schedule__board{min-width:840px;display:grid;grid-template-columns:repeat(7,120px);border:1px solid #EDF0F4;border-radius:18px;overflow:hidden;background:#fff}.schedule__column{min-height:390px;padding:13px 9px;border-right:1px solid #EDF0F4;scroll-snap-align:start}.schedule__column:last-child{border-right:0}.schedule__lesson{display:block;width:100%;margin:0 0 14px;padding:0;border:0;background:transparent;color:#161A25;text-align:left;font-family:var(--f);cursor:pointer}.schedule__lesson img{display:block;box-sizing:border-box;width:100%;height:70px;padding:3px;border-radius:12px;object-fit:contain;background:#FFE3D8;box-shadow:0 4px 10px rgba(28,39,76,.10)}.schedule__lesson b{display:block;margin-top:8px;font:800 14px/17px var(--f)}.schedule__lesson small{display:block;margin-top:5px;color:#8B919B;font:600 12px/15px var(--f)}.schedule__lesson--design img{background:#F4E3CF;filter:saturate(.72) brightness(1.08)}
+.schedule-tasks{display:grid;gap:12px;padding-bottom:18px}.schedule-task{display:grid;grid-template-columns:58px 1fr 28px;align-items:center;gap:14px;min-height:94px;padding:14px 15px;border:0;border-radius:20px;color:#171A23;text-align:left;font-family:var(--f);cursor:pointer}.schedule-task--web{background:#FFE2D8}.schedule-task--math{background:#DCEBFF}.schedule-task--english{background:#EADFFF}.schedule-task__icon{width:58px;height:58px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.72);font-size:27px}.schedule-task__body b{display:block;font:800 16px/20px var(--f)}.schedule-task__body span{display:block;margin-top:4px;color:#667080;font:600 13px/17px var(--f)}.schedule-task__body small{display:block;margin-top:7px;color:#8A909A;font:600 12px/15px var(--f)}.schedule-task__check{width:25px;height:25px;border:2px solid #6F7784;border-radius:50%;box-sizing:border-box}.schedule-task.is-done .schedule-task__body b{text-decoration:line-through}.schedule-task.is-done .schedule-task__check{border-color:#20C997;background:#20C997;box-shadow:inset 0 0 0 5px #fff}.schedule-empty{padding:32px 20px;border-radius:20px;background:#fff;text-align:center;color:#747C89;font:600 14px/20px var(--f)}
+html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-theme="dark"] .schedule__back{color:#F5F7FA}html[data-theme="dark"] .schedule-menu__card,html[data-theme="dark"] .schedule__arrows button,html[data-theme="dark"] .schedule__day,html[data-theme="dark"] .schedule__board,html[data-theme="dark"] .schedule-empty{background:#171E2A;color:#F5F7FA;border-color:#303A4B}html[data-theme="dark"] .schedule-menu__card--daily,html[data-theme="dark"] .schedule-menu__card--live{background:#171E2A}html[data-theme="dark"] .schedule-task{color:#F5F7FA}html[data-theme="dark"] .schedule-task--web{background:#3A2622}html[data-theme="dark"] .schedule-task--math{background:#1B3048}html[data-theme="dark"] .schedule-task--english{background:#302748}
+@container (min-width:720px){.schedule__view{max-width:1060px;margin:0 auto;padding:50px 34px 44px}.schedule__top h2{font-size:28px;line-height:32px}.schedule-menu__cards{grid-template-columns:1fr 1fr}.schedule-menu__card{min-height:210px}.schedule__weekhead{margin-top:30px}.schedule__range b{font-size:23px;line-height:28px}.schedule__range span{font-size:15px}.schedule__day{height:94px;font-size:16px}.schedule__day small{font-size:14px}.schedule__board-scroll{margin:0;padding:0;overflow:visible}.schedule__board{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr))}.schedule__column{min-height:430px;padding:16px}.schedule__lesson img{height:92px}.schedule-tasks{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* SCHEDULE:CSS:END */</style>
 </head>
 <body>
@@ -1422,30 +1381,33 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
 
           <section class="schedule" id="scheduleScreen" hidden aria-label="Mening darslarim">
             <div class="schedule__body">
-              <header class="schedule__top">
-                <button class="schedule__back" id="scheduleClose" type="button" aria-label="Ortga">‹</button>
-                <h2>Mening darslarim</h2><span></span>
-              </header>
-              <div class="schedule__weekhead">
-                <div class="schedule__range"><b>12 – 18 oktyabr</b><span>2026</span></div>
-                <div class="schedule__arrows"><button type="button" aria-label="Oldingi hafta">‹</button><button type="button" aria-label="Keyingi hafta">›</button></div>
-              </div>
-              <div class="schedule__days" aria-label="Hafta kunlari">
-                <div class="schedule__day"><b>Du</b><small>12</small><i></i></div><div class="schedule__day"><b>Se</b><small>13</small><i></i></div><div class="schedule__day"><b>Ch</b><small>14</small><i></i></div>
-                <div class="schedule__day schedule__day--active"><b>Pa</b><small>15</small><i></i></div><div class="schedule__day"><b>Ju</b><small>16</small><i></i></div><div class="schedule__day"><b>Sh</b><small>17</small><i></i></div><div class="schedule__day"><b>Ya</b><small>18</small><i></i></div>
-              </div>
-              <div class="schedule__calendar-title"><b>Haftalik darslaringiz</b><span>Tanlangan kunda 2 ta dars bor</span></div>
-              <div class="schedule__board-scroll" aria-label="Haftalik darslar jadvali">
-                <div class="schedule__board">
-                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Veb programmalash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Veb programmalash</b><small>20:00 – 21:10</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Grafik dizayn darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Veb programmalash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Veb programmalash</b><small>18:30 – 19:40</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Grafik dizayn darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div>
-                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
+              <section class="schedule__view" id="scheduleMenu">
+                <header class="schedule__top"><button class="schedule__back" id="scheduleClose" type="button" aria-label="Ortga">‹</button><h2>Dars jadvali</h2><span></span></header>
+                <div class="schedule-menu__lead"><h3>Qaysi jadvalni ko‘ramiz?</h3><p>Kerakli bo‘limni tanlang. Har biri alohida to‘liq ekranda ochiladi.</p></div>
+                <div class="schedule-menu__cards">
+                  <button class="schedule-menu__card schedule-menu__card--live" type="button" data-schedule-open="live"><span class="schedule-menu__icon">🎥</span><b>Haftalik jonli darslarim</b><small>O‘qituvchi bilan o‘tadigan jonli darslar va ularning vaqti</small><span class="schedule-menu__arrow">›</span></button>
+                  <button class="schedule-menu__card schedule-menu__card--daily" type="button" data-schedule-open="daily"><span class="schedule-menu__icon">✅</span><b>Kunlik vazifalarim</b><small>31 kunlik shaxsiy reja, kunma-kun kurs va vazifalar</small><span class="schedule-menu__arrow">›</span></button>
                 </div>
-              </div>
+              </section>
+
+              <section class="schedule__view" id="scheduleLive" hidden>
+                <header class="schedule__top"><button class="schedule__back" data-schedule-back type="button" aria-label="Ortga">‹</button><h2>Haftalik jonli darslarim</h2><span></span></header>
+                <div class="schedule__weekhead"><div class="schedule__range"><b>12 – 18 oktyabr</b><span>2026</span></div><div class="schedule__arrows"><button type="button" aria-label="Oldingi hafta">‹</button><button type="button" aria-label="Keyingi hafta">›</button></div></div>
+                <div class="schedule__days" aria-label="Hafta kunlari"><button class="schedule__day" type="button"><b>Du</b><small>12</small><i></i></button><button class="schedule__day" type="button"><b>Se</b><small>13</small><i></i></button><button class="schedule__day" type="button"><b>Ch</b><small>14</small><i></i></button><button class="schedule__day schedule__day--active" type="button"><b>Pa</b><small>15</small><i></i></button><button class="schedule__day" type="button"><b>Ju</b><small>16</small><i></i></button><button class="schedule__day" type="button"><b>Sh</b><small>17</small><i></i></button><button class="schedule__day" type="button"><b>Ya</b><small>18</small><i></i></button></div>
+                <div class="schedule__calendar-title"><b>Haftalik darslaringiz</b><span>Tanlangan kunda 2 ta jonli dars bor</span></div>
+                <div class="schedule__board-scroll" aria-label="Haftalik jonli darslar jadvali"><div class="schedule__board">
+                  <div class="schedule__column"><button class="schedule__lesson" type="button" data-toast="Web dasturlash darsi soat 18:30 da boshlanadi"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button><button class="schedule__lesson schedule__lesson--design" type="button" data-toast="Veb programmalash darsi soat 20:00 da boshlanadi"><img data-a="a2" alt=""><b>Veb programmalash</b><small>20:00 – 21:10</small></button></div>
+                  <div class="schedule__column"><button class="schedule__lesson" type="button"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div><div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div><div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button"><img data-a="a2" alt=""><b>Veb programmalash</b><small>18:30 – 19:40</small></button></div><div class="schedule__column"><button class="schedule__lesson" type="button"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div><div class="schedule__column"><button class="schedule__lesson schedule__lesson--design" type="button"><img data-a="a2" alt=""><b>Grafik dizayn</b><small>18:30 – 19:40</small></button><button class="schedule__lesson" type="button"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>20:00 – 21:10</small></button></div><div class="schedule__column"><button class="schedule__lesson" type="button"><img data-a="a2" alt=""><b>Dasturlash kursi</b><small>18:30 – 19:40</small></button></div>
+                </div></div>
+              </section>
+
+              <section class="schedule__view" id="scheduleDaily" hidden>
+                <header class="schedule__top"><button class="schedule__back" data-schedule-back type="button" aria-label="Ortga">‹</button><h2>Kunlik vazifalarim</h2><span></span></header>
+                <div class="schedule__weekhead"><div class="schedule__range"><b id="dailyRange">12 – 18 oktyabr</b><span id="dailyYear">2026</span></div><div class="schedule__arrows"><button id="dailyPrev" type="button" aria-label="Oldingi hafta">‹</button><button id="dailyNext" type="button" aria-label="Keyingi hafta">›</button></div></div>
+                <div class="schedule__days" id="dailyDays" aria-label="7 kunlik vazifalar rejasi"></div>
+                <div class="schedule__calendar-title"><b id="dailyTitle">Bugungi vazifalar</b><span id="dailyMeta"></span></div>
+                <div class="schedule-tasks" id="dailyTasks" aria-live="polite"></div>
+              </section>
             </div>
           </section>
 
@@ -1602,8 +1564,25 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   }
 
   /* ---------- Karusel ---------- */
+  function syncTodayChecklist(card) {
+    if (!card) return;
+    const today = DAILY_PATTERNS[0].map(key => COURSE_PLAN[key]);
+    const first = today[0];
+    const chip = $('.wcard__chip--brand', card);
+    const name = $('.ck-hero__name', card);
+    const kind = $('.ck-hero__kind', card);
+    const progress = $('.wcard__progress', card);
+    const reward = $('.wcard__chip--yellow', card);
+    if (chip) chip.textContent = `0/${today.length}`;
+    if (name && first) name.textContent = first.name;
+    if (kind) kind.textContent = `${today.length} ta kursdan bugungi reja`;
+    if (progress) { progress.setAttribute('aria-label', `0/${today.length} bajarildi`); const bar = $('i', progress); if (bar) bar.style.width = '0%'; }
+    if (reward) reward.textContent = `+${today.length * 100}`;
+  }
   function renderCarousel() {
-    track.replaceChildren(...WIDGETS.filter(([k]) => !hidden.has(k)).map(([k]) => pickState(k).cloneNode(true)));
+    const cards = WIDGETS.filter(([k]) => !hidden.has(k)).map(([k]) => pickState(k).cloneNode(true));
+    syncTodayChecklist(cards.find(card => card.dataset.widget === 'checklist'));
+    track.replaceChildren(...cards);
     dots.replaceChildren(...[...track.children].map(() => make('i', 'dot')));
     updateDots();
   }
@@ -2092,10 +2071,74 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
     gameFrame.src = 'about:blank';
   }
   const scheduleScreen = $('#scheduleScreen');
+  const scheduleMenu = $('#scheduleMenu');
+  const scheduleLive = $('#scheduleLive');
+  const scheduleDaily = $('#scheduleDaily');
+  const COURSE_PLAN = {
+    web: { name: 'Web dasturlash', topic: 'CSS asoslari', time: '18:30 – 19:40', icon: '💻', tone: 'web' },
+    math: { name: 'Matematika', topic: 'Matematika asoslari', time: '17:00 – 18:00', icon: '∑', tone: 'math' },
+    english: { name: 'Ingliz tili', topic: 'Present simple', time: '19:00 – 20:00', icon: 'Aa', tone: 'english' }
+  };
+  const DAILY_PATTERNS = [
+    ['web'], ['math', 'english'], ['web', 'math', 'english'], ['english'], ['web', 'math'], ['math', 'english', 'web'], [],
+    ['web'], ['english', 'math'], ['web', 'math', 'english'], ['math'], ['web', 'english'], ['math', 'web', 'english'], [],
+    ['english'], ['web', 'math'], ['web', 'math', 'english'], ['web'], ['math', 'english'], ['english', 'web', 'math'], [],
+    ['math'], ['web', 'english'], ['web', 'math', 'english'], ['english'], ['web', 'math'], ['math', 'english', 'web'], [],
+    ['web'], ['math', 'english'], ['web', 'math', 'english']
+  ];
+  const DAILY_START = new Date(2026, 9, 12);
+  const DAY_NAMES = ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'];
+  const MONTH_NAMES = ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'];
+  let dailyWeek = 0;
+  let dailySelected = 0;
+  let scheduleView = 'menu';
+
+  function planDate(index) {
+    const d = new Date(DAILY_START);
+    d.setDate(d.getDate() + index);
+    return d;
+  }
+  function showScheduleView(view) {
+    scheduleView = view;
+    if (scheduleMenu) scheduleMenu.hidden = view !== 'menu';
+    if (scheduleLive) scheduleLive.hidden = view !== 'live';
+    if (scheduleDaily) scheduleDaily.hidden = view !== 'daily';
+    scheduleScreen?.querySelector('.schedule__body')?.scrollTo({ top: 0, behavior: 'instant' });
+    if (view === 'daily') renderDailySchedule();
+  }
+  function renderDailySchedule() {
+    const days = $('#dailyDays');
+    const tasks = $('#dailyTasks');
+    if (!days || !tasks) return;
+    const visible = Array.from({ length: 7 }, (_, offset) => dailyWeek + offset);
+    days.innerHTML = visible.map(index => {
+      if (index >= DAILY_PATTERNS.length) return '<span class="schedule__day schedule__day--empty"></span>';
+      const date = planDate(index);
+      const active = index === dailySelected ? ' schedule__day--active' : '';
+      const count = DAILY_PATTERNS[index].length;
+      return `<button class="schedule__day${active}" type="button" data-daily-day="${index}" aria-label="${date.getDate()} ${MONTH_NAMES[date.getMonth()]}, ${count} ta vazifa"><b>${DAY_NAMES[date.getDay()]}</b><small>${date.getDate()}</small><i></i></button>`;
+    }).join('');
+    const first = planDate(dailyWeek);
+    const lastIndex = Math.min(dailyWeek + 6, DAILY_PATTERNS.length - 1);
+    const last = planDate(lastIndex);
+    $('#dailyRange').textContent = first.getMonth() === last.getMonth() ? `${first.getDate()} – ${last.getDate()} ${MONTH_NAMES[first.getMonth()]}` : `${first.getDate()} ${MONTH_NAMES[first.getMonth()]} – ${last.getDate()} ${MONTH_NAMES[last.getMonth()]}`;
+    $('#dailyYear').textContent = String(first.getFullYear());
+    $('#dailyPrev').disabled = dailyWeek === 0;
+    $('#dailyNext').disabled = dailyWeek + 7 >= DAILY_PATTERNS.length;
+    const selectedDate = planDate(dailySelected);
+    const selectedCourses = DAILY_PATTERNS[dailySelected];
+    $('#dailyTitle').textContent = dailySelected === 0 ? 'Bugungi vazifalar' : `${selectedDate.getDate()} ${MONTH_NAMES[selectedDate.getMonth()]} vazifalari`;
+    $('#dailyMeta').textContent = selectedCourses.length ? `Tanlangan kunda ${selectedCourses.length} ta kursdan vazifa bor` : 'Bu kun dam olish kuni';
+    tasks.innerHTML = selectedCourses.length ? selectedCourses.map(key => {
+      const c = COURSE_PLAN[key];
+      return `<button class="schedule-task schedule-task--${c.tone}" type="button" data-toast="${c.name}: ${c.topic}"><span class="schedule-task__icon">${c.icon}</span><span class="schedule-task__body"><b>${c.name}</b><span>${c.topic}</span><small>${c.time}</small></span><span class="schedule-task__check" aria-hidden="true"></span></button>`;
+    }).join('') : '<div class="schedule-empty">Bugun vazifa yo‘q. Dam oling va keyingi kun uchun kuch to‘plang ✨</div>';
+  }
   function openSchedule() {
     if (!scheduleScreen) return;
     closeGame();
     closeSheet();
+    showScheduleView('menu');
     scheduleScreen.hidden = false;
     requestAnimationFrame(() => scheduleScreen.classList.add('is-open'));
   }
@@ -2107,6 +2150,17 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   $('#gameClose')?.addEventListener('click', closeGame);
   $('#scheduleClose')?.addEventListener('click', closeSchedule);
   document.addEventListener('click', e => {
+    const open = e.target.closest('[data-schedule-open]');
+    if (open) { showScheduleView(open.dataset.scheduleOpen); return; }
+    if (e.target.closest('[data-schedule-back]')) { showScheduleView('menu'); return; }
+    const day = e.target.closest('[data-daily-day]');
+    if (day) { dailySelected = Number(day.dataset.dailyDay); renderDailySchedule(); return; }
+    const task = e.target.closest('.schedule-task');
+    if (task) task.classList.toggle('is-done');
+  });
+  $('#dailyPrev')?.addEventListener('click', () => { dailyWeek = Math.max(0, dailyWeek - 7); dailySelected = dailyWeek; renderDailySchedule(); });
+  $('#dailyNext')?.addEventListener('click', () => { dailyWeek = Math.min(28, dailyWeek + 7); dailySelected = dailyWeek; renderDailySchedule(); });
+  document.addEventListener('click', e => {
     const g = e.target.closest('[data-game]'); if (!g) return;
     e.preventDefault();
     openGame(g.dataset.game);
@@ -2114,6 +2168,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!gameHost.hidden) closeGame();
+    else if (!scheduleScreen?.hidden && scheduleView !== 'menu') showScheduleView('menu');
     else closeSchedule();
   });
   window.__openSchedule = openSchedule;
