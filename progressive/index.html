@@ -2119,6 +2119,13 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
       list.appendChild(empty);
     }
   }
+  function applySelectedDailyPlan() {
+    syncHomeDailyTasks(dailySelected);
+    syncTodayChecklist($('#track [data-widget="checklist"]'));
+    const url = new URL(location.href);
+    url.searchParams.set('task_day', String(dailySelected + 1));
+    history.replaceState(null, '', url);
+  }
   syncHomeDailyTasks(dailySelected);
 
   function planDate(index) {
@@ -2182,12 +2189,12 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
     if (open) { showScheduleView(open.dataset.scheduleOpen); return; }
     if (e.target.closest('[data-schedule-back]')) { showScheduleView('menu'); return; }
     const day = e.target.closest('[data-daily-day]');
-    if (day) { dailySelected = Number(day.dataset.dailyDay); renderDailySchedule(); return; }
+    if (day) { dailySelected = Number(day.dataset.dailyDay); applySelectedDailyPlan(); renderDailySchedule(); return; }
     const task = e.target.closest('.schedule-task');
     if (task) task.classList.toggle('is-done');
   });
-  $('#dailyPrev')?.addEventListener('click', () => { dailyWeek = Math.max(0, dailyWeek - 7); dailySelected = dailyWeek; renderDailySchedule(); });
-  $('#dailyNext')?.addEventListener('click', () => { dailyWeek = Math.min(28, dailyWeek + 7); dailySelected = dailyWeek; renderDailySchedule(); });
+  $('#dailyPrev')?.addEventListener('click', () => { dailyWeek = Math.max(0, dailyWeek - 7); dailySelected = dailyWeek; applySelectedDailyPlan(); renderDailySchedule(); });
+  $('#dailyNext')?.addEventListener('click', () => { dailyWeek = Math.min(28, dailyWeek + 7); dailySelected = dailyWeek; applySelectedDailyPlan(); renderDailySchedule(); });
   document.addEventListener('click', e => {
     const g = e.target.closest('[data-game]'); if (!g) return;
     e.preventDefault();
