@@ -926,10 +926,16 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
    nom, mavzu, amber tanga pilyulyasi va o'ngda strelka.
    Faol qator to'ldirilmaydi — faqat apelsin chegara oladi.
    ============================================================ */
+.mk__heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:0 16px}
 .mk__title{
-  margin:0 0 14px; padding:0 16px;
+  margin:0; padding:0;
   font:600 21px/26px var(--f); color:var(--c-text);
 }
+.mk__timer{flex:none;min-width:112px;padding:7px 10px;border:1px solid #FFD2C5;border-radius:13px;background:#FFF4EF;color:#FF5733;text-align:right;box-shadow:0 3px 10px rgba(255,87,51,.08)}
+.mk__timer small{display:block;font:700 9px/11px var(--f);letter-spacing:.3px;text-transform:uppercase;color:#9A756C}
+.mk__timer b{display:block;margin-top:2px;font:800 16px/18px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2px}
+.mk__timer.is-expired{border-color:#E1E5EB;background:#F5F6F8;color:#8B929E}.mk__timer.is-expired small{color:#8B929E}
+html[data-theme="dark"] .mk__timer{border-color:#674036;background:#2A1E1B;color:#FF795C}html[data-theme="dark"] .mk__timer small{color:#C79A8F}
 .mk__list{ display:flex; flex-direction:column; gap:14px; padding:0 12px 0 16px; }
 .mk__empty{list-style:none;padding:22px;border:1px dashed #D8E0EA;border-radius:16px;background:var(--c-card);color:#7B8391;text-align:center;font:600 14px/20px var(--f)}
 
@@ -1324,7 +1330,7 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
                 </button>
               </nav>
 
-                <h2 class="mk__title">Kunlik vazifalar</h2>
+                <div class="mk__heading"><h2 class="mk__title">Kunlik vazifalar</h2><span class="mk__timer" id="dailyCountdown" aria-live="polite"><small id="dailyCountdownLabel">23:00 gacha</small><b id="dailyCountdownValue">00:00:00</b></span></div>
                 <ul class="mk__list" id="dailyHomeList">
                   <li class="mk__row mk__row--now" data-course="math">
                     <span class="mk__num">1</span>
@@ -2126,7 +2132,32 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
     url.searchParams.set('task_day', String(dailySelected + 1));
     history.replaceState(null, '', url);
   }
+  function updateDailyCountdown() {
+    const timer = $('#dailyCountdown');
+    const label = $('#dailyCountdownLabel');
+    const value = $('#dailyCountdownValue');
+    if (!timer || !label || !value) return;
+    const now = new Date();
+    const start = new Date(now); start.setHours(6, 0, 0, 0);
+    const end = new Date(now); end.setHours(23, 0, 0, 0);
+    if (now >= end) {
+      timer.classList.add('is-expired');
+      label.textContent = 'Vaqt tugadi';
+      value.textContent = '00:00:00';
+      return;
+    }
+    timer.classList.remove('is-expired');
+    const target = now < start ? start : end;
+    label.textContent = now < start ? '06:00 da boshlanadi' : '23:00 gacha';
+    const total = Math.max(0, Math.floor((target - now) / 1000));
+    const hours = String(Math.floor(total / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+    const seconds = String(total % 60).padStart(2, '0');
+    value.textContent = `${hours}:${minutes}:${seconds}`;
+  }
   syncHomeDailyTasks(dailySelected);
+  updateDailyCountdown();
+  setInterval(updateDailyCountdown, 1000);
 
   function planDate(index) {
     const d = new Date(DAILY_START);
