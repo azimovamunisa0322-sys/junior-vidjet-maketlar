@@ -14,11 +14,11 @@
   const params = new URLSearchParams(window.location.search);
   const qaDays = params.get('qa') === 'days' || params.has('day');
   const forcePushPrompt = params.get('push') === '1';
-  // 1-kun onboarding bilan, 2-kun esa odatiy ilova holatida ko‘rsatiladi.
-  const availableDays = new Set([1, 2]);
+  // 1-kun olib tashlangan: testda faqat odatiy ilova holati qoladi.
+  const availableDays = new Set([2]);
   const normalizeDay = value => {
-    const day = Number(value) || 1;
-    return availableDays.has(day) ? day : 1;
+    const day = Number(value) || 2;
+    return availableDays.has(day) ? day : 2;
   };
   let selectedDay = normalizeDay(params.get('day'));
   if (params.has('day') && Number(params.get('day')) !== selectedDay) {
@@ -734,7 +734,6 @@
   dayPicker.setAttribute('aria-label', 'Onboarding test kuni');
   dayPicker.innerHTML = `
     <span>TEST</span>
-    <button type="button" data-tour-day="1">1-kun</button>
     <button type="button" data-tour-day="2">2-kun</button>
     <button type="button" data-tour-push aria-label="Push ruxsat oynasini ko‘rish">🔔</button>`;
   // QA boshqaruvi ilova ekranining bir qismi emas: uni telefon maketidan
