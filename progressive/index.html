@@ -1192,6 +1192,16 @@ html[data-theme="dark"] .mk__timer{border-color:#674036;background:#2A1E1B;color
   .st__ring>svg path, .st__ice, .st__ico--ice{ animation:none !important; }
 }
 /* PLAN:CSS:END */</style>
+<style>/* COMPACT-HOME:START */
+.plan--compact{padding-top:0}.plan--compact .plan__hero,.plan--compact .plan__shortcuts{display:none}
+.compact-streak{margin:0 16px 12px;padding:12px;border-radius:18px;background:#F4F6F9;color:var(--c-text)}
+.compact-streak__head{display:flex;align-items:center;gap:8px;margin-bottom:9px}.compact-streak__head strong{font:800 18px/22px var(--f)}.compact-streak__head strong i{font-style:normal;color:#FF5733}.compact-streak__record{margin-left:auto;padding:5px 9px;border-radius:999px;background:#fff;font:700 11px/14px var(--f);color:#596273}
+.compact-streak__days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.compact-streak__day{display:grid;place-items:center;min-width:0;height:45px;border:1px solid #E5E9EF;border-radius:12px;background:#fff;color:#A8AFBA}.compact-streak__day b{font:700 10px/12px var(--f)}.compact-streak__day span{font-size:17px;line-height:1;filter:grayscale(1);opacity:.24}.compact-streak__day.is-done{border-color:#FFB69F;background:#FFF2ED;color:#C2340D}.compact-streak__day.is-done span{filter:none;opacity:1}.compact-streak__day.is-today{box-shadow:inset 0 0 0 1px #FF5733}
+.compact-streak__bonus{display:flex;align-items:center;gap:9px;margin-top:9px;padding:8px 10px;border-radius:13px;background:#fff}.compact-streak__bonus-ic{font-size:24px;line-height:1}.compact-streak__bonus-txt{min-width:0;flex:1}.compact-streak__bonus-txt b{display:block;font:700 13px/16px var(--f)}.compact-streak__bonus-txt small{display:block;margin-top:1px;color:#7B8391;font:600 10px/13px var(--f)}.compact-streak__bonus-coin{padding:5px 9px;border:1px solid #F2B800;border-radius:999px;background:#FFFBE9;color:#B78300;font:800 12px/15px var(--f)}
+.plan--compact .mk__heading{margin-bottom:9px}.plan--compact .mk__title{font-size:19px;line-height:23px}.plan--compact .mk__timer{min-width:102px;padding:5px 8px}.plan--compact .mk__timer b{font-size:14px;line-height:16px}.plan--compact .mk__list{gap:9px}.plan--compact .mk__row{gap:8px}.plan--compact .mk__row:not(:last-child)::after{top:36px;bottom:-14px}.plan--compact .mk__num{width:26px;height:26px;font-size:12px}.plan--compact .mk__card{min-height:78px;padding:9px 10px;gap:9px;border-radius:13px}.plan--compact .mk__cover{width:98px;height:56px}.plan--compact .mk__cover-img{width:124px;height:56px}.plan--compact .mk__hello{font-size:11px;top:8px}.plan--compact .mk__cover-tag{left:5px;bottom:5px;padding:2px 5px;font-size:9px;line-height:11px}.plan--compact .mk__name{font-size:14px;line-height:17px}.plan--compact .mk__topic{margin-top:2px;font-size:11px;line-height:14px}.plan--compact .mk__coin{margin-top:5px;min-height:20px;padding:0 7px;font-size:10px}.plan--compact .mk__coin svg{width:12px;height:12px}.mk__card.is-complete{border-color:#77D7B6!important;background:#F0FCF7}.mk__card.is-complete .mk__chev{color:#00A875}.mk__card.is-complete .mk__chev svg{display:none}.mk__card.is-complete .mk__chev::after{content:'✓';font:800 17px/1 var(--f)}
+.compact-recs{margin:14px 0 6px}.compact-recs__head{display:flex;align-items:center;justify-content:space-between;padding:0 16px 8px}.compact-recs__head h3{margin:0;font:800 18px/22px var(--f)}.compact-recs__head span{font:700 11px/14px var(--f);color:#C2340D}.compact-recs__rail{display:flex;gap:12px;overflow-x:auto;padding:0 16px 6px;scrollbar-width:none;overscroll-behavior-x:contain}.compact-recs__rail::-webkit-scrollbar{display:none}.compact-rec{flex:0 0 64px;min-width:0;padding:0;border:0;background:transparent;color:var(--c-text);font-family:var(--f);text-align:center;cursor:pointer}.compact-rec__icon{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 5px;border-radius:18px;background:#F3F5F8;font-size:27px;box-shadow:inset 0 0 0 1px #E9EDF2}.compact-rec__icon img{width:44px;height:44px;object-fit:contain}.compact-rec b{display:block;font:700 10px/12px var(--f);white-space:normal}.compact-rec:active .compact-rec__icon{transform:scale(.96)}
+html[data-theme="dark"] .compact-streak,html[data-theme="dark"] .compact-rec__icon{background:#171E2A}html[data-theme="dark"] .compact-streak__day,html[data-theme="dark"] .compact-streak__record,html[data-theme="dark"] .compact-streak__bonus{background:#202836;border-color:#303A4B;color:#F5F7FA}html[data-theme="dark"] .compact-streak__day.is-done{background:#3A2622;border-color:#7A4538;color:#FF8A6E}html[data-theme="dark"] .mk__card.is-complete{background:#153329;border-color:#397B65!important}
+/* COMPACT-HOME:END */</style>
 <style>/* SCHEDULE:CSS:START */
 .schedule{position:absolute;inset:0;z-index:46;overflow:hidden;background:#F8F9FB;color:#111;font-family:var(--f);opacity:0;transform:translate3d(18px,0,0);transition:opacity .28s ease,transform .42s cubic-bezier(.22,.8,.25,1);container-type:inline-size}
 .schedule[hidden],.schedule__view[hidden]{display:none!important}.schedule.is-open{opacity:1;transform:none}
@@ -1286,7 +1296,7 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
 
 
             <!-- PLAN:START -->
-            <section class="plan">
+            <section class="plan plan--compact">
               <!-- hero -->
               <div class="plan__hero plan__hero--robo">
                 <span class="plan__decowrap"><span class="plan__deco"></span></span>
@@ -1330,6 +1340,20 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
                 </button>
               </nav>
 
+                <section class="compact-streak" aria-label="7 kunlik streak">
+                  <div class="compact-streak__head"><span aria-hidden="true">🔥</span><strong><i id="compactStreakCount">1</i> kun ketma-ket</strong><span class="compact-streak__record">Rekord 6</span></div>
+                  <div class="compact-streak__days" id="compactStreakDays">
+                    <span class="compact-streak__day is-done"><b>Du</b><span>🔥</span></span>
+                    <span class="compact-streak__day is-today" data-streak-today><b>Se</b><span>🔥</span></span>
+                    <span class="compact-streak__day"><b>Ch</b><span>🔥</span></span>
+                    <span class="compact-streak__day"><b>Pa</b><span>🔥</span></span>
+                    <span class="compact-streak__day"><b>Ju</b><span>🔥</span></span>
+                    <span class="compact-streak__day"><b>Sh</b><span>🔥</span></span>
+                    <span class="compact-streak__day"><b>Ya</b><span>🔥</span></span>
+                  </div>
+                  <div class="compact-streak__bonus"><span class="compact-streak__bonus-ic" aria-hidden="true">🎁</span><span class="compact-streak__bonus-txt"><b>Kunlik bonus</b><small id="compactBonusText">Bugungi darslarni tugating</small></span><span class="compact-streak__bonus-coin" id="compactBonusCoin">+60 coin</span></div>
+                </section>
+
                 <div class="mk__heading"><h2 class="mk__title">Kunlik vazifalar</h2><span class="mk__timer" id="dailyCountdown" aria-live="polite"><small id="dailyCountdownLabel">23:00 gacha</small><b id="dailyCountdownValue">00:00:00</b></span></div>
                 <ul class="mk__list" id="dailyHomeList">
                   <li class="mk__row mk__row--now" data-course="math">
@@ -1369,6 +1393,18 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
                     </button>
                   </li>
                 </ul>
+
+                <section class="compact-recs" aria-label="Tavsiyalar">
+                  <div class="compact-recs__head"><h3>Tavsiyalar</h3><span>Yon tomonga suring</span></div>
+                  <div class="compact-recs__rail">
+                    <button class="compact-rec" type="button" data-toast="Matematika kursi"><span class="compact-rec__icon" aria-hidden="true">➗</span><b>Matematika</b></button>
+                    <button class="compact-rec" type="button" data-toast="Typing mashqlari"><span class="compact-rec__icon" aria-hidden="true">⌨️</span><b>Typing</b></button>
+                    <button class="compact-rec" type="button" data-toast="Sun’iy intellekt kursi"><span class="compact-rec__icon" aria-hidden="true">AI</span><b>Sun’iy intellekt</b></button>
+                    <button class="compact-rec" type="button" data-go="coinshop"><span class="compact-rec__icon" aria-hidden="true"><img src="./assets/navigation/coinshop-chest.png" alt=""></span><b>CoinShop</b></button>
+                    <button class="compact-rec" type="button" data-go="certificates"><span class="compact-rec__icon" aria-hidden="true"><img src="./assets/navigation/certificate-podium.png" alt=""></span><b>Sertifikatlar</b></button>
+                    <button class="compact-rec" type="button" data-tab="leaders"><span class="compact-rec__icon" aria-hidden="true">🏆</span><b>Liderboard</b></button>
+                  </div>
+                </section>
 
             </section>
             <!-- PLAN:END -->
@@ -2088,16 +2124,17 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
     english: { name: 'Ingliz tili', topic: 'Present simple', time: '19:00 – 20:00', tone: 'english' }
   };
   const DAILY_PATTERNS = [
-    ['web'], ['math', 'english'], ['web', 'math', 'english'], ['english'], ['web', 'math'], ['math', 'english', 'web'], [],
-    ['web'], ['english', 'math'], ['web', 'math', 'english'], ['math'], ['web', 'english'], ['math', 'web', 'english'], [],
-    ['english'], ['web', 'math'], ['web', 'math', 'english'], ['web'], ['math', 'english'], ['english', 'web', 'math'], [],
-    ['math'], ['web', 'english'], ['web', 'math', 'english'], ['english'], ['web', 'math'], ['math', 'english', 'web'], [],
-    ['web'], ['math', 'english'], ['web', 'math', 'english']
+    ['web'], ['math', 'english'], ['web', 'math'], ['english'], ['web', 'math'], ['math', 'english'], [],
+    ['web'], ['english', 'math'], ['web', 'english'], ['math'], ['web', 'english'], ['math', 'web'], [],
+    ['english'], ['web', 'math'], ['web', 'english'], ['web'], ['math', 'english'], ['english', 'web'], [],
+    ['math'], ['web', 'english'], ['web', 'math'], ['english'], ['web', 'math'], ['math', 'english'], [],
+    ['web'], ['math', 'english'], ['web', 'english']
   ];
   const DAILY_START = new Date(2026, 9, 12);
   const DAY_NAMES = ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'];
   const MONTH_NAMES = ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'];
-  const requestedTaskDay = Number(new URLSearchParams(location.search).get('task_day') || 1);
+  const pageParams = new URLSearchParams(location.search);
+  const requestedTaskDay = Number(pageParams.get('task_day') || pageParams.get('day') || 1);
   let dailySelected = Math.max(0, Math.min(DAILY_PATTERNS.length - 1, Number.isFinite(requestedTaskDay) ? requestedTaskDay - 1 : 0));
   let dailyWeek = Math.floor(dailySelected / 7) * 7;
   let scheduleView = 'menu';
@@ -2107,7 +2144,11 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
     if (!list) return;
     list.querySelector('.mk__empty')?.remove();
     const rows = new Map([...list.querySelectorAll('[data-course]')].map(row => [row.dataset.course, row]));
-    rows.forEach(row => { row.hidden = true; row.classList.remove('mk__row--now'); });
+    rows.forEach(row => {
+      row.hidden = true;
+      row.classList.remove('mk__row--now');
+      $('.mk__card', row)?.classList.remove('is-complete');
+    });
     const courses = DAILY_PATTERNS[index] || [];
     courses.forEach((key, position) => {
       const row = rows.get(key);
@@ -2124,6 +2165,18 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
       empty.textContent = 'Bugun vazifa yo‘q. Dam olish kuni.';
       list.appendChild(empty);
     }
+    updateCompactStreak();
+  }
+  function updateCompactStreak() {
+    const visibleCards = [...document.querySelectorAll('#dailyHomeList .mk__row:not([hidden]) .mk__card')];
+    const complete = visibleCards.length > 0 && visibleCards.every(card => card.classList.contains('is-complete'));
+    $('[data-streak-today]')?.classList.toggle('is-done', complete);
+    const count = $('#compactStreakCount');
+    const bonusText = $('#compactBonusText');
+    const bonusCoin = $('#compactBonusCoin');
+    if (count) count.textContent = complete ? '2' : '1';
+    if (bonusText) bonusText.textContent = complete ? 'Bonus tayyor!' : 'Bugungi darslarni tugating';
+    if (bonusCoin) bonusCoin.textContent = complete ? 'Olish' : '+60 coin';
   }
   function applySelectedDailyPlan() {
     syncHomeDailyTasks(dailySelected);
@@ -2158,6 +2211,13 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
   syncHomeDailyTasks(dailySelected);
   updateDailyCountdown();
   setInterval(updateDailyCountdown, 1000);
+
+  document.addEventListener('click', e => {
+    const card = e.target.closest('#dailyHomeList .mk__card');
+    if (!card || card.closest('[hidden]')) return;
+    card.classList.toggle('is-complete');
+    updateCompactStreak();
+  });
 
   function planDate(index) {
     const d = new Date(DAILY_START);
