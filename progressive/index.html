@@ -1215,6 +1215,7 @@ html[data-theme="dark"] .compact-streak,html[data-theme="dark"] .compact-rec__ic
 .schedule-menu__cards{display:grid;gap:14px}.schedule-menu__card{position:relative;min-height:146px;padding:22px 70px 22px 22px;border:1px solid #E7EAF0;border-radius:24px;background:#fff;color:#171A23;text-align:left;font-family:var(--f);box-shadow:0 10px 30px rgba(38,48,73,.07);cursor:pointer;overflow:hidden}.schedule-menu__card:active{transform:scale(.985)}.schedule-menu__card--daily{background:linear-gradient(135deg,#FFF4EA,#FFF)}.schedule-menu__card--live{background:linear-gradient(135deg,#EEF7FF,#FFF)}.schedule-menu__icon{width:48px;height:48px;display:grid;place-items:center;margin-bottom:16px;border-radius:16px;background:#fff;box-shadow:0 7px 18px rgba(38,48,73,.10)}.schedule-menu__icon svg{display:block;width:32px;height:32px}.schedule-menu__card b{display:block;font:800 20px/25px var(--f)}.schedule-menu__card small{display:block;margin-top:6px;color:#777F8C;font:600 13px/18px var(--f)}.schedule-menu__arrow{position:absolute;right:22px;top:50%;translate:0 -50%;font:400 34px/1 var(--f);color:#A0A7B3}
 .schedule__weekhead{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}.schedule__range{display:flex;flex-direction:column;gap:4px}.schedule__range b{font:700 18px/23px var(--f)}.schedule__range span{font:600 13px/18px var(--f);color:#7B8391}.schedule__arrows{display:flex;gap:8px}.schedule__arrows button{width:42px;height:42px;border:0;border-radius:50%;background:#fff;color:#77808D;font:400 34px/35px var(--f);cursor:pointer}.schedule__arrows button:disabled{opacity:.35;cursor:default}
 .schedule__days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:25px}.schedule__day{height:72px;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:12px;background:#fff;color:#171717;font:700 15px/18px var(--f);cursor:pointer}.schedule__day small{font:600 13px/16px var(--f);color:#7C838E}.schedule__day i{width:7px;height:7px;border-radius:50%;background:#EDEFF3}.schedule__day--active{box-shadow:inset 0 0 0 1.5px #FF4F28;background:#FFF6F3}.schedule__day--active i{background:#FF5B36}.schedule__day--empty{visibility:hidden}.schedule__calendar-title{margin:0 0 17px}.schedule__calendar-title b{display:block;font:800 20px/25px var(--f)}.schedule__calendar-title span{display:block;margin-top:5px;color:#767E8C;font:600 13px/18px var(--f)}
+.schedule.is-single-day #scheduleDaily .schedule__weekhead,.schedule.is-single-day #scheduleDaily .schedule__days{display:none}.schedule.is-single-day #scheduleDaily .schedule__top{margin-bottom:36px}
 .schedule__board-scroll{margin:0 -16px;padding:0 16px 22px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}.schedule__board-scroll::-webkit-scrollbar{display:none}.schedule__board{min-width:840px;display:grid;grid-template-columns:repeat(7,120px);border:1px solid #EDF0F4;border-radius:18px;overflow:hidden;background:#fff}.schedule__column{min-height:390px;padding:13px 9px;border-right:1px solid #EDF0F4;scroll-snap-align:start}.schedule__column:last-child{border-right:0}.schedule__lesson{display:block;width:100%;margin:0 0 14px;padding:0;border:0;background:transparent;color:#161A25;text-align:left;font-family:var(--f);cursor:pointer}.schedule__lesson img{display:block;box-sizing:border-box;width:100%;height:70px;padding:3px;border-radius:12px;object-fit:contain;background:#FFE3D8;box-shadow:0 4px 10px rgba(28,39,76,.10)}.schedule__lesson b{display:block;margin-top:8px;font:800 14px/17px var(--f)}.schedule__lesson small{display:block;margin-top:5px;color:#8B919B;font:600 12px/15px var(--f)}.schedule__lesson--design img{background:#F4E3CF;filter:saturate(.72) brightness(1.08)}
 .schedule-tasks{display:grid;gap:12px;padding-bottom:18px}.schedule-task{display:grid;grid-template-columns:58px 1fr 28px;align-items:center;gap:14px;min-height:94px;padding:14px 15px;border:0;border-radius:20px;color:#171A23;text-align:left;font-family:var(--f);cursor:pointer}.schedule-task--web{background:#FFE2D8}.schedule-task--math{background:#DCEBFF}.schedule-task--english{background:#EADFFF}.schedule-task__icon{width:58px;height:58px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.72);font-size:27px}.schedule-task__body b{display:block;font:800 16px/20px var(--f)}.schedule-task__body span{display:block;margin-top:4px;color:#667080;font:600 13px/17px var(--f)}.schedule-task__body small{display:block;margin-top:7px;color:#8A909A;font:600 12px/15px var(--f)}.schedule-task__check{width:25px;height:25px;border:2px solid #6F7784;border-radius:50%;box-sizing:border-box}.schedule-task.is-done .schedule-task__body b{text-decoration:line-through}.schedule-task.is-done .schedule-task__check{border-color:#20C997;background:#20C997;box-shadow:inset 0 0 0 5px #fff}.schedule-empty{padding:32px 20px;border-radius:20px;background:#fff;text-align:center;color:#747C89;font:600 14px/20px var(--f)}
 html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-theme="dark"] .schedule__back{color:#F5F7FA}html[data-theme="dark"] .schedule-menu__card,html[data-theme="dark"] .schedule__arrows button,html[data-theme="dark"] .schedule__day,html[data-theme="dark"] .schedule__board,html[data-theme="dark"] .schedule-empty{background:#171E2A;color:#F5F7FA;border-color:#303A4B}html[data-theme="dark"] .schedule-menu__card--daily,html[data-theme="dark"] .schedule-menu__card--live{background:#171E2A}html[data-theme="dark"] .schedule-task{color:#F5F7FA}html[data-theme="dark"] .schedule-task--web{background:#3A2622}html[data-theme="dark"] .schedule-task--math{background:#1B3048}html[data-theme="dark"] .schedule-task--english{background:#302748}
@@ -2261,10 +2262,11 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
       return `<button class="schedule-task schedule-task--${c.tone}" type="button" data-toast="${c.name}: ${c.topic}"><span class="schedule-task__icon"><img data-a="a2" alt="Junior kursi oblojkasi"></span><span class="schedule-task__body"><b>${c.name}</b><span>${c.topic}</span><small>${c.time}</small></span><span class="schedule-task__check" aria-hidden="true"></span></button>`;
     }).join('') : '<div class="schedule-empty">Bugun vazifa yo‘q. Dam oling va keyingi kun uchun kuch to‘plang ✨</div>';
   }
-  function openSchedule(view = 'menu') {
+  function openSchedule(view = 'menu', singleDay = false) {
     if (!scheduleScreen) return;
     closeGame();
     closeSheet();
+    scheduleScreen.classList.toggle('is-single-day', singleDay);
     showScheduleView(view);
     scheduleScreen.hidden = false;
     requestAnimationFrame(() => scheduleScreen.classList.add('is-open'));
@@ -2282,12 +2284,16 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
       dailySelected = Number(streakDay.dataset.streakDay);
       dailyWeek = Math.floor(dailySelected / 7) * 7;
       applySelectedDailyPlan();
-      openSchedule('daily');
+      openSchedule('daily', true);
       return;
     }
     const open = e.target.closest('[data-schedule-open]');
     if (open) { showScheduleView(open.dataset.scheduleOpen); return; }
-    if (e.target.closest('[data-schedule-back]')) { showScheduleView('menu'); return; }
+    if (e.target.closest('[data-schedule-back]')) {
+      if (scheduleScreen?.classList.contains('is-single-day')) closeSchedule();
+      else showScheduleView('menu');
+      return;
+    }
     const day = e.target.closest('[data-daily-day]');
     if (day) { dailySelected = Number(day.dataset.dailyDay); applySelectedDailyPlan(); renderDailySchedule(); return; }
     const task = e.target.closest('.schedule-task');
@@ -2303,6 +2309,7 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!gameHost.hidden) closeGame();
+    else if (!scheduleScreen?.hidden && scheduleScreen.classList.contains('is-single-day')) closeSchedule();
     else if (!scheduleScreen?.hidden && scheduleView !== 'menu') showScheduleView('menu');
     else closeSchedule();
   });
