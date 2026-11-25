@@ -464,6 +464,7 @@ code { font: 500 11px/14px ui-monospace, SFMono-Regular, Menlo, monospace; }
   box-shadow: 0 0 0 7px rgba(255, 255, 255, .96), 0 8px 18px rgba(28, 39, 76, .13);
   display: flex; align-items: center; justify-content: center; cursor: default;
 }
+.screen--home .fab { top: -50px; }
 .fab__art { width: 52px; height: 52px; object-fit: contain; display: block; }   /* bosh rasmda markazda va atrofida zaxira bor — doira kesmaydi */
 .home-ind { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #000; }
 
@@ -1222,7 +1223,7 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
   <section class="stage" id="stage" style="--zoom:1">
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone">
-        <div class="screen">
+        <div class="screen screen--home">
 
           <header class="status">
             <span class="status__time">9:41</span>
@@ -2064,6 +2065,7 @@ html[data-theme="dark"] .schedule{background:#0C111B;color:#F5F7FA}html[data-the
   function showTab(key, remember = true) {
     if (remember && key !== tab && tabHistory[tabHistory.length - 1] !== key) tabHistory.push(key);
     tab = key;
+    document.querySelector('.screen')?.classList.toggle('screen--home', key === 'home');
     document.querySelectorAll('.content .scr').forEach(n => { n.hidden = n.dataset.screen !== key; });
     document.querySelectorAll('.tab[data-tab]').forEach(b => b.classList.toggle('is-active', b.dataset.tab === key));
     const c = $('#content'); if (c) c.scrollTop = 0;
